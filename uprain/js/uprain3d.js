@@ -195,7 +195,7 @@ export function createUprainScene(canvas, opts = {}) {
     geo.setAttribute('size', new THREE.Float32BufferAttribute(new Float32Array(MIST), 1));
     const mat = new THREE.ShaderMaterial({
       transparent: true, depthWrite: false, blending: dark ? THREE.AdditiveBlending : THREE.NormalBlending,
-      uniforms: { map: { value: radialTexture(0, 0.5) }, tint: { value: new THREE.Color('#ffffff').lerp(lightColor, 0.35) }, scale: { value: 600 }, gain: { value: dark ? 0.16 : 0.32 } },
+      uniforms: { map: { value: radialTexture(0, 0.5) }, tint: { value: new THREE.Color('#ffffff').lerp(lightColor, 0.35) }, scale: { value: 600 }, gain: { value: o.mistGain ?? (dark ? 0.16 : 0.32) } },
       vertexShader: 'attribute float alpha; attribute float size; varying float vA; uniform float scale; void main(){ vA = alpha; vec4 mv = modelViewMatrix * vec4(position,1.0); gl_PointSize = size * scale / -mv.z; gl_Position = projectionMatrix * mv; }',
       fragmentShader: 'uniform sampler2D map; uniform vec3 tint; uniform float gain; varying float vA; void main(){ vec4 t = texture2D(map, gl_PointCoord); gl_FragColor = vec4(tint, t.a * vA * gain); }',
     });
@@ -213,10 +213,12 @@ export function createUprainScene(canvas, opts = {}) {
   const view = Object.assign({}, VIEWS[o.view] || VIEWS.hero);
   if (o.fill) view.fill = o.fill;
   const radius = 0.19;
+  let freeCam = false;
   function frame() {
     const w = canvas.clientWidth || canvas.width, h = canvas.clientHeight || canvas.height;
     renderer.setSize(w, h, false); composer.setSize(w, h);
     camera.aspect = w / h;
+    if (freeCam) { camera.updateProjectionMatrix(); if (mist) mist.material.uniforms.scale.value = h * 0.9; return; }
     const vFov = THREE.MathUtils.degToRad(camera.fov);
     const target = view.target ? new THREE.Vector3(...view.target) : CENTRE.clone();
     if (view.dy) target.y += view.dy;
@@ -256,7 +258,7 @@ export function createUprainScene(canvas, opts = {}) {
     const v = rate * strobeMix + realFall * (1 - strobeMix);
     phase = (phase + v * dt) % 1; if (phase < 0) phase += 1;
     const span = NOZZLE_Y - (WATER_Y + 0.004);
-    const streak = 1 + 5.5 * (1 - strobeMix);
+    const streak = 1 + 3.5 * (1 - strobeMix);
     camQ.copy(camera.quaternion);
     const invPivot = new THREE.Quaternion().copy(pivot.quaternion).invert();
     for (let k = 0; k < DROPS; k++) {
@@ -369,7 +371,10 @@ export function createUprainScene(canvas, opts = {}) {
     setCamera(c) { Object.assign(view, { target: null, dist: null, dy: 0 }, c); if (c.ax != null) o.anchorX = c.ax; frame(); },
     setLit(k) { litK = k; },
     setExposure(e) { renderer.toneMappingExposure = e; },
-    step(dt) { time += dt; pose(dt, time); composer.render(); },
+    step(dt) { time += dt; pose(dt, time); if (o.beforeRender) o.beforeRender(time); composer.render(); },
+    // a free camera for the films: position, target and field of view in metres and degrees
+    lookFrom(pos, target, fov = 28, roll = 0) { freeCam = true; camera.fov = fov; camera.position.set(...pos); camera.up.set(Math.sin(roll), Math.cos(roll), 0); camera.lookAt(...target); camera.updateProjectionMatrix(); },
+    get three() { return { scene, camera, renderer, pivot, product: P, mats, bloom, mist, pool, lightColor, strobeLight, key, rim }; },
     pause() { paused = true; },
     resume() { paused = false; },
     destroy() { cancelAnimationFrame(raf); ro.disconnect(); renderer.dispose(); },

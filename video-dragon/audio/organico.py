@@ -5,6 +5,7 @@ import json, wave, numpy as np
 
 SR = 44100
 G = json.load(open('../js/guion.json')); DUR = G['dur']; Ls = G['lines']
+DUR = json.load(open('cues-organico.json')).get('dur', DUR)   # the film runs on past the voice, into the flyer
 N = int(DUR * SR); rng = np.random.default_rng(5)
 B = [0] + [(Ls[i - 1]['t1'] + Ls[i]['t0']) / 2 for i in range(1, len(Ls))]
 word = lambda li, wi: Ls[li]['words'][wi][1]
@@ -109,6 +110,11 @@ for k, c in enumerate(C['chunks']):
         for j in range(3): add(sfx, bell(notes[j * 2], 1, 0.5), t0 + j * 0.16, 0.07, -0.4 + j * 0.4)
 for k, b0 in enumerate(C['cuts']): add(sfx, whoosh(), b0 - 0.16, 0.24, -0.5 if k % 2 else 0.5); add(sfx, thump(0.6), b0, 0.12)
 add(sfx, thump(1), 0.15, 0.35); add(sfx, swish(0.5), 0.0, 0.18)       # the hook: the head rears up
+F = C['flyer']                                                    # the closing flyer
+add(sfx, whoosh(0.5), F - 0.3, 0.3); add(sfx, thump(1), F + 0.1, 0.4); add(sfx, shimmer(2.0), F + 0.15, 0.22)
+add(sfx, pop(1), F + 1.0, 0.25)
+for i in range(3): add(sfx, tap(1, 1700 + i * 300), F + 1.25 + i * 0.12, 0.08)
+add(sfx, bell(93, 1, 1.2), F + 1.7, 0.12); add(sfx, bell(98, 1, 1.4), F + 2.1, 0.12)
 add(sfx, pop(1), word(0, 8), 0.25)                            # "obsesionado"
 add(sfx, click(1), C['lightsOff'], 0.6)                       # the light switch
 add(sfx, shimmer(), C['glow'], 0.35); add(sfx, thump(1), C['glow'], 0.25)   # it glows

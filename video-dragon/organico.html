@@ -12,6 +12,7 @@
   @font-face { font-family: Bebas; src: url(fonts/bebas.woff2) format("woff2"); }
   @font-face { font-family: PlayfairI; src: url(fonts/playfair-italic.woff2) format("woff2"); font-style: italic; font-weight: 900; }
   @font-face { font-family: Syne; src: url(fonts/syne.woff2) format("woff2"); font-weight: 800; }
+  @font-face { font-family: Han; src: url(fonts/han.woff2) format("woff2"); font-weight: 900; }
   html, body { margin: 0; background: #000; overflow: hidden; }
   #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #000; font-family: Manrope, system-ui, sans-serif; }
   #gl { position: absolute; inset: 0; width: 1080px; height: 1920px; display: block; }
@@ -32,6 +33,24 @@
   /* the app's own text box, for the hook and the stickers */
   .box { position: absolute; left: 50%; transform: translateX(-50%); padding: 14px 30px 18px; border-radius: 22px; background: #fff; color: #111; font: 700 56px/1.15 Manrope, sans-serif; white-space: nowrap; opacity: 0; box-shadow: 0 6px 24px rgba(0,0,0,.25); }
   .box.dark { background: rgba(0,0,0,.72); color: #fff; }
+  /* the closing flyer */
+  #flyer { position: absolute; inset: 0; opacity: 0; font-family: Inter, sans-serif; color: #fff; }
+  #flyer .veil { position: absolute; inset: 0; background: radial-gradient(120% 70% at 50% 40%, rgba(40,26,10,.35), rgba(5,4,8,.82)); }
+  #flyer .dust i { position: absolute; left: 0; top: 0; width: 5px; height: 5px; border-radius: 50%; background: #ffe2a0; box-shadow: 0 0 10px #ffcf6a; }
+  #flyer .kicker { position: absolute; top: 250px; left: 0; right: 0; text-align: center; font: 600 28px Inter; letter-spacing: .42em; color: #e9c77b; }
+  #flyer .brand { position: absolute; top: 302px; left: 0; right: 0; text-align: center; font: 800 92px/1 Inter; letter-spacing: -0.04em; }
+  #flyer .brand b { font: 900 84px/1 Han, serif; color: #e8222f; margin-left: 18px; vertical-align: 4px; text-shadow: 0 0 30px rgba(232,34,47,.55); }
+  #flyer .photo { position: absolute; top: 440px; left: 170px; width: 740px; height: 740px; border-radius: 40px; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,.6), 0 0 0 1.5px rgba(233,199,123,.7), 0 0 60px rgba(233,199,123,.18); transform-origin: 50% 80%; }
+  #flyer .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #flyer .shine { position: absolute; top: -10%; bottom: -10%; width: 40%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent); mix-blend-mode: screen; }
+  #flyer .thumb { position: absolute; top: 925px; left: 770px; width: 250px; height: 250px; border-radius: 24px; overflow: hidden; border: 6px solid #fff; box-shadow: 0 20px 50px rgba(0,0,0,.55); opacity: 0; }
+  #flyer .thumb img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+  #flyer .chips { position: absolute; top: 1218px; left: 0; right: 0; display: flex; justify-content: center; gap: 14px; }
+  #flyer .chip { padding: 12px 24px; border-radius: 999px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.25); backdrop-filter: blur(10px); font: 700 30px Inter; letter-spacing: -0.02em; opacity: 0; }
+  #flyer .price { position: absolute; top: 1292px; left: 0; right: 0; text-align: center; opacity: 0; }
+  #flyer .price b { font: 800 112px/1 Inter; letter-spacing: -0.05em; background: linear-gradient(180deg, #fff6dc, #f1c76a 60%, #c98b23); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 4px 20px rgba(241,199,106,.35)); }
+  #flyer .price span { display: block; font: 600 34px Inter; letter-spacing: -0.02em; color: rgba(255,255,255,.8); margin-top: 6px; }
+  #flyer .cta { position: absolute; top: 1478px; left: 290px; width: 500px; height: 92px; border-radius: 999px; background: #fff; color: #111; display: flex; align-items: center; justify-content: center; font: 800 38px Inter; letter-spacing: -0.03em; opacity: 0; box-shadow: 0 0 40px rgba(255,255,255,.35); }
 </style>
 <script type="importmap">{"imports":{"three":"../dragon/vendor/three/three.module.min.js","three/addons/":"../dragon/vendor/three/addons/"}}</script>
 </head>
@@ -41,6 +60,16 @@
   <div id="scrim"></div>
   <div id="ui">
     <div id="cap"></div>
+    <div id="flyer">
+      <div class="veil"></div><div class="dust"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="kicker">DRAGÓN ARTICULADO</div>
+      <div class="brand">LÓNG<b>龍</b></div>
+      <div class="photo"><img src="img/producto-muneca.jpg" alt=""><div class="shine"></div></div>
+      <div class="thumb"><img src="img/producto-colores.jpg" alt=""></div>
+      <div class="chips"><span class="chip">88 cm</span><span class="chip">Brilla en la oscuridad</span><span class="chip">4 colores</span></div>
+      <div class="price"><b>39,95 €</b><span>o 2 por 69,95 € · envío gratis</span></div>
+      <div class="cta">Link en mi perfil</div>
+    </div>
   </div>
 </div>
 <script type="module" src="js/organico.js"></script>

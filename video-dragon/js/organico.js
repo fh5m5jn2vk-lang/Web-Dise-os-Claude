@@ -13,7 +13,8 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { createDragon, SEG, SPACING } from '../../dragon/js/dragon.js';
 
 const G = await (await fetch('js/guion.json')).json();
-const DUR = G.dur, W = 1080, H = 1920;
+const FLYER = G.lines[G.lines.length - 1].t1 + 0.15;   // the closing flyer comes in as the voice ends
+const DUR = FLYER + 3.6, W = 1080, H = 1920;
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const lerp = (a, b, t) => a + (b - a) * t;
 const prog = (t, a, b) => clamp((t - a) / (b - a));
@@ -65,8 +66,11 @@ function woodTextures() {
   const tr = new THREE.CanvasTexture(rgh); tr.wrapS = tr.wrapT = THREE.RepeatWrapping; tr.repeat.copy(t.repeat);
   return [t, tr];
 }
-const [woodMap, woodRough] = woodTextures();
-const desk = new THREE.Mesh(new THREE.PlaneGeometry(16, 9), new THREE.MeshPhysicalMaterial({ map: woodMap, roughnessMap: woodRough, roughness: 0.75, clearcoat: 0.15, clearcoatRoughness: 0.5 }));
+// a scanned walnut table top (Poly Haven, CC0): colour 4K, normal and roughness 2K, the grain along the desk
+const texLoader = new THREE.TextureLoader();
+const loadTex = (u, srgb) => new Promise((r) => texLoader.load(u, (t) => { if (srgb) t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = renderer.capabilities.getMaxAnisotropy(); t.center.set(0.5, 0.5); t.rotation = Math.PI / 2; t.repeat.set(1.55, 2.75); r(t); }));
+const [woodMap, woodNor, woodRough] = await Promise.all([loadTex('tex/wood_diff.jpg', true), loadTex('tex/wood_nor.jpg'), loadTex('tex/wood_rough.jpg')]);
+const desk = new THREE.Mesh(new THREE.PlaneGeometry(16, 9), new THREE.MeshPhysicalMaterial({ map: woodMap, normalMap: woodNor, normalScale: new THREE.Vector2(0.8, 0.8), roughnessMap: woodRough, roughness: 0.85, clearcoat: 0.3, clearcoatRoughness: 0.22 }));
 desk.rotation.x = -Math.PI / 2; desk.position.z = -1; desk.receiveShadow = true; scene.add(desk);
 // the desk's front edge, so low shots see a real board
 const edge = new THREE.Mesh(new THREE.BoxGeometry(16, 0.5, 0.1), new THREE.MeshStandardMaterial({ map: woodMap, roughness: 0.7 })); edge.position.set(0, -0.25, 3.5); scene.add(edge);
@@ -432,6 +436,34 @@ function captions(t) {
 }
 function boxes() {}
 
+/* ---------- the closing flyer: the real product photo, premium and calm ---------- */
+const fl = document.getElementById('flyer'), $f = (sel) => fl.querySelector(sel);
+const dust = [...fl.querySelectorAll('.dust i')];
+function flyer(t) {
+  const a = t - FLYER;
+  if (a < 0) { fl.style.opacity = 0; return; }
+  fl.style.opacity = 1;
+  const bg = E.out(prog(a, 0, 0.6));
+  $f('.veil').style.opacity = bg; $f('.veil').style.backdropFilter = `blur(${bg * 22}px) saturate(${1 + bg * 0.2}) brightness(${1 - bg * 0.45})`;
+  const rv = (sel, t0, d = 0.6, y = 40, extra = '') => { const p = E.out(prog(a, t0, t0 + d)); const el = $f(sel); el.style.opacity = p; el.style.filter = `blur(${(1 - p) * 10}px)`; el.style.transform = `translateY(${(1 - p) * y}px) ${extra}`; return p; };
+  rv('.kicker', 0.25, 0.7, -16); $f('.kicker').style.letterSpacing = `${lerp(0.7, 0.42, E.out(prog(a, 0.25, 1.0)))}em`;
+  rv('.brand', 0.35, 0.7, -20);
+  // the photo rises, tips back flat, then floats; a slow push in and a sweep of light across it
+  const pp = E.out(prog(a, 0.12, 1.0));
+  const card = $f('.photo');
+  card.style.opacity = pp; card.style.filter = `blur(${(1 - pp) * 12}px)`;
+  card.style.transform = `perspective(1400px) translateY(${(1 - pp) * 140 + Math.sin(a * 1.6) * 6}px) rotateX(${(1 - pp) * 16}deg) rotateY(${Math.sin(a * 0.9) * 2.5}deg) scale(${lerp(0.9, 1, pp)})`;
+  $f('.photo img').style.transform = `scale(${1.04 + a * 0.012})`;
+  $f('.shine').style.transform = `translateX(${lerp(-120, 160, E.inOut(prog(a, 0.9, 1.8)))}%) skewX(-18deg)`;
+  const tp = E.back(prog(a, 1.0, 1.45)); const th = $f('.thumb');
+  th.style.opacity = prog(a, 1.0, 1.15); th.style.transform = `rotate(${lerp(18, 7, tp)}deg) scale(${lerp(0.3, 1, tp)}) translateY(${Math.sin(a * 2 + 1) * 4}px)`;
+  [...fl.querySelectorAll('.chip')].forEach((c, i) => { const p = E.back(prog(a, 1.25 + i * 0.12, 1.65 + i * 0.12)); c.style.opacity = clamp(p * 1.5); c.style.transform = `translateY(${(1 - p) * 26}px) scale(${lerp(0.7, 1, p)})`; });
+  rv('.price', 1.7, 0.6, 30, `scale(${lerp(1.12, 1, E.out(prog(a, 1.7, 2.3)))})`);
+  const cp = E.back(prog(a, 2.1, 2.5)); const cta = $f('.cta');
+  cta.style.opacity = clamp(cp * 1.4); cta.style.transform = `scale(${lerp(0.6, 1, cp) * (a > 2.6 ? 1 + 0.03 * Math.max(0, Math.sin((a - 2.6) * 6)) : 1)})`;
+  dust.forEach((d, i) => { const s = (i * 0.618) % 1, y = (1 - ((a * (0.05 + s * 0.06) + s) % 1)) * 1920, x = (s * 997) % 1080; d.style.transform = `translate(${x + Math.sin(a + i) * 20}px, ${y}px)`; d.style.opacity = bg * (0.25 + 0.5 * Math.abs(Math.sin(a * 2 + i))); });
+}
+
 /* ---------- one frame ---------- */
 let lastS = -1;
 function render(t) {
@@ -466,17 +498,18 @@ function render(t) {
   dof.uniforms.focus.value = lerp(cam.focus * 1.35, cam.focus, settle);
   dof.uniforms.aperture.value = 0.0035; dof.uniforms.maxblur.value = 0.011;
   bloom.strength = 0.3 + s.glow * 0.3; bloom.threshold = lerp(0.9, 0.7, s.glow);
-  captions(t);
+  captions(t); flyer(t);
   composer.render();
 }
 
 /* ---------- start ---------- */
+await Promise.all([...document.images].map((im) => im.decode().catch(() => {})));
+await document.fonts.load('900 80px Han', '龍'); await document.fonts.load('600 30px Inter');
 for (const f of ['700 80px Inter', '800 80px Inter', 'italic 400 80px Serif', '800 80px Manrope']) await document.fonts.load(f, 'Aáé');
-woodMap.needsUpdate = true;
 const q = new URLSearchParams(location.search);
 window.__dur = DUR;
 // cues for the sound design (audio/organico.py): every caption, every cut, the switch and the glow
-window.__cues = { chunks: chunks.map((c) => ({ t: +(c.ws[c.kind === 'w' || c.kind === 'multi' ? 0 : Math.min(c.ws.length - 1, (c.o.top ?? 1))][1]).toFixed(3), kind: c.kind })), cuts: B.slice(1, -1), lightsOff: tLightsOff, glow: tGlow, gift: B[6] + 0.1 };
+window.__cues = { chunks: chunks.map((c) => ({ t: +(c.ws[c.kind === 'w' || c.kind === 'multi' ? 0 : Math.min(c.ws.length - 1, (c.o.top ?? 1))][1]).toFixed(3), kind: c.kind })), cuts: B.slice(1, -1), lightsOff: tLightsOff, glow: tGlow, gift: B[6] + 0.1, flyer: FLYER, dur: DUR };
 window.__render = (t) => render(t);
 render(0);
 window.__ready = true;

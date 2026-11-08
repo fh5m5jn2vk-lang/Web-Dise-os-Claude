@@ -44,7 +44,10 @@ a { color: inherit; }
 #intro .half--top { top: 0; } #intro .half--bot { bottom: 0; }
 #intro .seal { position: relative; display: grid; place-items: center; gap: 22px; text-align: center; }
 #intro svg { width: min(46vw, 260px); height: auto; overflow: visible; }
-#intro .han { font: 900 220px/1 var(--han); fill: none; stroke: var(--red); stroke-width: 2.2; stroke-dasharray: 1400; stroke-dashoffset: 1400; filter: drop-shadow(0 0 18px rgba(255,59,78,.55)); }
+#intro .han { font: 900 220px/1 var(--han); fill: none; stroke: var(--gold); stroke-width: 1.6; stroke-dasharray: 2600; stroke-dashoffset: 2600; filter: drop-shadow(0 0 14px rgba(232,194,122,.45)); }
+#intro .han--fill { fill: url(#inkG); stroke: none; stroke-dasharray: none; filter: drop-shadow(0 0 30px rgba(255,59,78,.6)); }
+#intro svg { opacity: 0; }
+.fonts-ready #intro svg { opacity: 1; transition: opacity .4s; }
 #intro .brand { font: 700 15px/1 var(--display); letter-spacing: .42em; padding-left: .42em; }
 #intro .count { font: 500 13px/1 var(--text); letter-spacing: .2em; color: var(--muted); font-variant-numeric: tabular-nums; }
 #intro .bar { width: 160px; height: 1px; background: var(--line); overflow: hidden; }
@@ -73,7 +76,8 @@ main { position: relative; z-index: 5; }
 .sec { position: relative; min-height: 100vh; display: grid; align-items: center; padding: 120px var(--gut); }
 .sec--tall { min-height: 160vh; align-items: start; }
 .sec--tall .panel { position: sticky; top: 22vh; }
-.panel { max-width: 540px; }
+.panel { max-width: 560px; padding: 40px 44px; border-radius: 26px; background: linear-gradient(160deg, rgba(10,12,24,.62), rgba(6,7,14,.42)); border: 1px solid rgba(255,255,255,.09); backdrop-filter: blur(16px) saturate(1.25); -webkit-backdrop-filter: blur(16px) saturate(1.25); box-shadow: 0 30px 80px -30px rgba(0,0,0,.6); }
+#hero .panel { background: linear-gradient(160deg, rgba(10,12,24,.5), rgba(6,7,14,.28)); }
 .panel--right { justify-self: end; text-align: left; margin-right: 3vw; }
 .eyebrow { display: inline-flex; align-items: center; gap: 12px; font: 600 12px/1 var(--text); letter-spacing: .26em; text-transform: uppercase; color: var(--gold); margin: 0 0 22px; }
 .eyebrow::before { content: ""; width: 28px; height: 1px; background: currentColor; }
@@ -87,6 +91,7 @@ h1 em, h2 em { font-style: normal; color: var(--red); text-shadow: 0 0 40px rgba
 .hint { position: absolute; left: var(--gut); bottom: 36px; display: flex; align-items: center; gap: 12px; font: 500 13px/1.4 var(--text); color: var(--muted); }
 .hint .dot { width: 10px; height: 10px; border-radius: 50%; background: #ffb36b; box-shadow: 0 0 18px 4px rgba(255,179,107,.6); animation: pulse 2.2s ease-in-out infinite; }
 @keyframes pulse { 50% { transform: scale(1.4); opacity: .7 } }
+.big-han--hero { -webkit-text-stroke: 1.5px rgba(232,194,122,.2); right: 4vw; opacity: 0; }
 .big-han { position: absolute; right: -2vw; top: 50%; transform: translateY(-50%); font: 900 min(60vh, 46vw)/1 var(--han); color: transparent; -webkit-text-stroke: 1px rgba(255,59,78,.16); pointer-events: none; user-select: none; z-index: -1; }
 
 /* the ruler in section two */
@@ -120,7 +125,7 @@ h1 em, h2 em { font-style: normal; color: var(--red); text-shadow: 0 0 40px rgba
 .pack { position: relative; }
 .pack input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
 .pack span { display: flex; justify-content: space-between; align-items: center; min-height: 60px; padding: 0 22px; border: 1px solid var(--line); border-radius: 14px; background: rgba(7,8,12,.5); backdrop-filter: blur(12px); transition: border-color .2s; }
-.pack b { font: 700 18px/1 var(--display); }
+.pack b { font: 700 18px/1 var(--display); white-space: nowrap; }
 .pack input:checked + span { border-color: var(--red); box-shadow: inset 0 0 0 1px var(--red); }
 .pack input:focus-visible + span { outline: 2px solid var(--jade); outline-offset: 3px; }
 .note { font-size: 14px; color: var(--muted); }
@@ -152,7 +157,7 @@ footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-t
   .hint { display: none; }
   .stat { gap: 26px; }
   .big-han { opacity: .6; }
-  .panel { background: linear-gradient(180deg, transparent, rgba(5,6,9,.65) 30%); padding-top: 30px; }
+  .panel { padding: 26px 22px; border-radius: 20px; }
 }
 @media (prefers-reduced-motion: reduce) { .grain, .hint .dot { animation: none; } }
 </style>
@@ -165,7 +170,14 @@ footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-t
 <div id="intro" role="status" aria-label="Cargando">
   <div class="half half--top"></div><div class="half half--bot"></div>
   <div class="seal">
-    <svg viewBox="0 0 240 240" aria-hidden="true"><text class="han" x="120" y="196" text-anchor="middle">龍</text></svg>
+    <svg viewBox="0 0 240 240" aria-hidden="true">
+      <defs>
+        <linearGradient id="inkG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6a4a"/><stop offset="1" stop-color="#d4142f"/></linearGradient>
+        <clipPath id="ink"><rect id="inkRect" x="-20" y="240" width="280" height="260"/></clipPath>
+      </defs>
+      <text class="han han--fill" x="120" y="198" text-anchor="middle" clip-path="url(#ink)">龍</text>
+      <text class="han" x="120" y="198" text-anchor="middle">龍</text>
+    </svg>
     <div class="brand">LÓNG</div>
     <div class="bar"><i></i></div>
     <div class="count">000</div>
@@ -184,6 +196,7 @@ footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-t
 
 <main id="top">
   <section class="sec" id="hero" data-pose="free" aria-labelledby="hero-h">
+    <div class="big-han big-han--hero" aria-hidden="true">龍</div>
     <div class="panel">
       <p class="eyebrow rv">Impreso en 3D, pieza a pieza</p>
       <h1 id="hero-h" class="rv">Dragón de <em>cristal</em> articulado</h1>

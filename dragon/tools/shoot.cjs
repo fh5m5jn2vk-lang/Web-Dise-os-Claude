@@ -10,7 +10,7 @@ const types = { '.html': 'text/html', '.js': 'text/javascript', '.svg': 'image/s
   const errs = []; p.on('pageerror', (e) => errs.push(e.message)); p.on('console', (m) => m.type() === 'error' && errs.push(m.text()));
   fs.mkdirSync(out, { recursive: true });
   await p.goto(`http://127.0.0.1:${srv.address().port}/`);
-  await p.waitForTimeout(1500); await p.screenshot({ path: `${out}/0-intro.jpg`, quality: 80 });
+  await p.waitForTimeout(1800); await p.screenshot({ path: `${out}/0-intro.jpg`, quality: 80 }); await p.waitForTimeout(1500); await p.screenshot({ path: `${out}/0-intro-b.jpg`, quality: 80 });
   await p.mouse.move(+W * 0.7, +H * 0.4);
   await p.waitForTimeout(9000); await p.screenshot({ path: `${out}/1-hero.jpg`, quality: 80 });
   for (const id of ['largo', 'mueve', 'brilla', 'colores', 'comprar', 'faq']) {

@@ -6,6 +6,8 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { createDragon, SEG, SPACING } from './dragon.js';
+import { createPhoto } from './photo.js';
 
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -172,70 +174,6 @@ function buildCity(scene, uniforms) {
   return { signs, mists, lanterns };
 }
 
-/* ---------------- the dragon ---------------- */
-const SEG = 34, SPACING = 0.19;
-
-function gemMaterial(hex) {
-  return new THREE.MeshPhysicalMaterial({ color: hex, metalness: 0.15, roughness: 0.16, clearcoat: 1, clearcoatRoughness: 0.08, iridescence: 1, iridescenceIOR: 1.7, flatShading: true, emissive: new THREE.Color(hex), emissiveIntensity: 0.12, transparent: true, opacity: 0.94 });
-}
-
-function buildDragon(scene) {
-  const root = new THREE.Group(); scene.add(root);
-  const segs = [];
-  const bodyGeo = new THREE.IcosahedronGeometry(1, 0);
-  const finGeo = new THREE.ConeGeometry(0.5, 1, 4); finGeo.translate(0, 0.5, 0);
-  const plateGeo = new THREE.OctahedronGeometry(1, 0);
-  for (let i = 0; i < SEG; i++) {
-    const u = i / (SEG - 1);
-    const r = (0.2 + 0.12 * Math.sin(Math.min(1, u * 1.6) * Math.PI * 0.95)) * (1 - 0.72 * Math.pow(u, 1.6));
-    const grp = new THREE.Group();
-    const mat = gemMaterial('#3fffd2');
-    const body = new THREE.Mesh(bodyGeo, mat); body.scale.set(r * 1.05, r * 0.92, SPACING * 0.95); grp.add(body);
-    const fin = new THREE.Mesh(finGeo, mat); fin.scale.set(r * 0.5, r * (1.1 - 0.4 * u), r * 0.35); fin.position.y = r * 0.75; fin.rotation.x = -0.45; grp.add(fin);
-    [-1, 1].forEach((sd) => { const pl = new THREE.Mesh(plateGeo, mat); pl.scale.set(r * 0.35, r * 0.5, SPACING * 0.5); pl.position.set(sd * r * 0.85, -r * 0.1, 0); pl.rotation.z = sd * 0.5; grp.add(pl); });
-    root.add(grp); segs.push({ grp, mat, r, u });
-  }
-  // legs with three claws, at two places along the body
-  const legs = [];
-  const goldMat = new THREE.MeshStandardMaterial({ color: '#f3d38a', metalness: 1, roughness: 0.25, emissive: '#3a2a08', emissiveIntensity: 0.4 });
-  [6, 19].forEach((si) => [-1, 1].forEach((sd) => {
-    const leg = new THREE.Group();
-    const r = segs[si].r;
-    const thigh = new THREE.Mesh(new THREE.CylinderGeometry(r * 0.32, r * 0.22, r * 1.6, 6), segs[si].mat); thigh.position.y = -r * 0.8; leg.add(thigh);
-    for (let c = -1; c <= 1; c++) { const claw = new THREE.Mesh(new THREE.ConeGeometry(r * 0.09, r * 0.5, 5), goldMat); claw.position.set(c * r * 0.16, -r * 1.7, r * 0.15); claw.rotation.x = 1.9; leg.add(claw); }
-    leg.position.set(sd * segs[si].r * 0.9, -segs[si].r * 0.3, 0); leg.rotation.z = sd * 0.55;
-    segs[si].grp.add(leg); legs.push({ leg, sd, si });
-  }));
-  // the head
-  const head = new THREE.Group();
-  const headMat = gemMaterial('#3fffd2');
-  const skull = new THREE.Mesh(new THREE.IcosahedronGeometry(1, 1), headMat); skull.scale.set(0.3, 0.24, 0.34); head.add(skull);
-  const snout = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.2, 0.42), headMat); snout.position.set(0, -0.04, 0.38); head.add(snout);
-  const nose = new THREE.Mesh(new THREE.IcosahedronGeometry(0.11, 0), headMat); nose.position.set(0, 0.02, 0.6); head.add(nose);
-  const jaw = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.08, 0.4), headMat); jaw.position.set(0, -0.17, 0.32); jaw.rotation.x = 0.18; head.add(jaw);
-  const hornMat = goldMat;
-  const horns = [];
-  [-1, 1].forEach((sd) => {
-    const curve = new THREE.CatmullRomCurve3([new THREE.Vector3(sd * 0.12, 0.16, -0.05), new THREE.Vector3(sd * 0.22, 0.36, -0.28), new THREE.Vector3(sd * 0.3, 0.42, -0.62), new THREE.Vector3(sd * 0.26, 0.5, -0.86)]);
-    const horn = new THREE.Mesh(new THREE.TubeGeometry(curve, 24, 0.03, 6), hornMat); head.add(horn); horns.push(horn);
-    const eye = new THREE.Mesh(new THREE.SphereGeometry(0.045, 12, 10), new THREE.MeshBasicMaterial({ color: new THREE.Color(3, 2.2, 0.7), toneMapped: false })); eye.position.set(sd * 0.16, 0.08, 0.2); head.add(eye); horns.push(eye);
-  });
-  // whiskers: long, flowing, rebuilt every frame
-  const whiskers = [-1, 1].map((sd) => {
-    const geo = new THREE.TubeGeometry(new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(0, 0, -1)]), 30, 0.008, 4);
-    const w = new THREE.Mesh(geo, hornMat); scene.add(w); return { w, sd };
-  });
-  // a mane of flames behind the head
-  const mane = [];
-  for (let k = 0; k < 9; k++) { const f = new THREE.Mesh(new THREE.ConeGeometry(0.05, 0.38, 4), headMat); const a = -1.2 + (k / 8) * 2.4; f.position.set(Math.sin(a) * 0.22, Math.cos(a) * 0.2, -0.22); f.rotation.set(-1.9, 0, -a * 0.6); head.add(f); mane.push(f); }
-  root.add(head);
-  // the tail fan
-  const tail = new THREE.Group();
-  for (let k = 0; k < 5; k++) { const f = new THREE.Mesh(new THREE.ConeGeometry(0.06, 0.5, 4), segs[SEG - 1].mat); const a = -0.8 + (k / 4) * 1.6; f.position.set(Math.sin(a) * 0.12, Math.cos(a) * 0.1, -0.2); f.rotation.set(-1.7, 0, -a); tail.add(f); }
-  root.add(tail);
-  return { root, segs, head, headMat, horns, whiskers, mane, tail, legs, goldMat };
-}
-
 /* ---------------- the pearl ---------------- */
 function buildPearl(scene) {
   const g = new THREE.Group();
@@ -269,29 +207,30 @@ export function createScene(canvas) {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, innerWidth < 800 ? 1.5 : 1.75));
-  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+  // neutral tone mapping keeps the photograph's colours as they are
+  renderer.toneMapping = THREE.NeutralToneMapping; renderer.toneMappingExposure = 1.0;
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(FOG, 0.005);
   const pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; scene.environmentIntensity = 0.55;
   const camera = new THREE.PerspectiveCamera(40, 1, 0.05, 2000);
   const uniforms = { fogColor: { value: FOG.clone() }, fogDensity: { value: 0.005 }, lights: { value: 1 }, time: { value: 0 } };
 
-  const city = buildCity(scene, uniforms);
-  const D = buildDragon(scene);
+  const photo = createPhoto(renderer, innerWidth > 1700 || devicePixelRatio > 1.5 ? 'img/hongkong.jpg' : 'img/hongkong-1600.jpg');
+  const D = createDragon(scene);
   const pearl = buildPearl(scene);
   const key = new THREE.DirectionalLight('#ffd9b0', 1.4); key.position.set(-3, 5, 6); scene.add(key);
   const rim = new THREE.DirectionalLight('#5fd0ff', 1.6); rim.position.set(4, 2, -5); scene.add(rim);
   const neonFill = new THREE.PointLight('#ff3b5c', 6, 14, 2); neonFill.position.set(3, 1, -2); scene.add(neonFill);
 
   const composer = new EffectComposer(renderer);
-  composer.addPass(new RenderPass(scene, camera));
-  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.7, 0.5, 0.8); composer.addPass(bloom);
+  composer.addPass(new RenderPass(photo.scene, photo.camera));          // the harbour first
+  const dragonPass = new RenderPass(scene, camera); dragonPass.clear = false; composer.addPass(dragonPass);   // the dragon over it
+  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.45, 0.6, 0.86); composer.addPass(bloom);
   composer.addPass(new OutputPass());
 
   // state
   const S = { pose: 'free', poseW: 0, glow: 0, glowT: 0, color: 'aurora', ptr: new THREE.Vector2(0.25, -0.1), ptrS: new THREE.Vector2(0.25, -0.1), scroll: 0, fly: 1, yaw: 0, side: 0.32 };
-  const trail = []; const headPos = new THREE.Vector3(1.5, 0.5, 0); const headVel = new THREE.Vector3(-1, 0, 0);
-  for (let i = 0; i < 400; i++) trail.push(headPos.clone().add(new THREE.Vector3(i * 0.03, 0, 0)));
+  const trail = []; const headPos = new THREE.Vector3(1.2, 0.5, 0);
+  for (let i = 0; i < 400; i++) trail.push(headPos.clone().add(new THREE.Vector3(i * 0.02, -Math.sin(i * 0.02) * 0.3, 0)));
   const spineFree = Array.from({ length: SEG + 1 }, () => new THREE.Vector3());
   const spinePose = Array.from({ length: SEG + 1 }, () => new THREE.Vector3());
   const spine = Array.from({ length: SEG + 1 }, () => new THREE.Vector3());
@@ -299,37 +238,47 @@ export function createScene(canvas) {
   const raycaster = new THREE.Raycaster(); const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
   const target = new THREE.Vector3();
 
-  function setColor(id) {
-    S.color = id; const c = COLORS[id];
-    D.segs.forEach((s, i) => { const k = (i / (SEG - 1)) * (c.body.length - 1); const a = new THREE.Color(c.body[Math.floor(k)]), b = new THREE.Color(c.body[Math.min(c.body.length - 1, Math.ceil(k))]); s.mat.color.copy(a.lerp(b, k % 1)); s.base = s.mat.color.clone(); });
-    D.headMat.color.set(c.body[0]); D.headMat.userData.base = D.headMat.color.clone();
-    D.goldMat.color.set(c.horn);
-    D.horns.forEach((h) => { if (h.material.isMeshBasicMaterial) h.material.color.set(c.eye).multiplyScalar(2.6); });
-  }
+  function setColor(id) { S.color = id; D.setColor(id); }
   setColor('aurora');
 
   function frame() {
     const w = canvas.clientWidth, h = canvas.clientHeight;
-    renderer.setSize(w, h, false); composer.setSize(w, h);
+    renderer.setSize(w, h, false); composer.setSize(w, h); photo.resize(w, h);
     camera.aspect = w / h; camera.updateProjectionMatrix();
   }
   frame();
   new ResizeObserver(frame).observe(canvas);
 
-  let t = 0, last = performance.now(), raf = 0, paused = false;
+  let t = 0, last = performance.now(), raf = 0, paused = false, acc = 0, simT = 0; const STEP = 1 / 60;
+  const lead = new THREE.Vector3(), aim = new THREE.Vector3(), dir = new THREE.Vector3(-1, 0, 0);
+  const tSmooth = new THREE.Vector3(1, 0.4, 0), tVel = new THREE.Vector3();
   function placeSpine(time, dt) {
-    // free: the head chases the pearl, the body follows its own trail
+    // the pointer on the dragon's plane, smoothed by a critically damped spring (no jumps, no jitter)
     raycaster.setFromCamera(S.ptrS, camera);
     raycaster.ray.intersectPlane(plane, target);
-    target.x = clamp(target.x, -4.2, 4.2); target.y = clamp(target.y, -1.8, 2.2);
-    // circle the pearl rather than stop on it
-    const toT = tmp.copy(target).sub(headPos); const dist = toT.length();
-    const orbitDir = tmp2.set(-toT.y, toT.x, 0.6 * Math.sin(time * 0.9)).normalize();
-    const desire = toT.normalize().multiplyScalar(dist > 0.9 ? 1 : 0.25).add(orbitDir.multiplyScalar(dist > 0.9 ? 0.25 : 0.9));
-    desire.z += Math.sin(time * 0.7) * 0.25 - headPos.z * 0.6;
-    headVel.lerp(desire.normalize().multiplyScalar(2.4 + Math.min(3, dist) * 0.9), Math.min(1, dt * 2.6));
-    headPos.addScaledVector(headVel, dt);
-    trail.unshift(headPos.clone()); if (trail.length > 600) trail.pop();
+    target.x = clamp(target.x, -4.2, 4.2); target.y = clamp(target.y, -1.4, 2.4);
+    const kS = 9;
+    tVel.addScaledVector(tmp.copy(target).sub(tSmooth), kS * kS * dt).multiplyScalar(Math.exp(-2 * kS * dt));
+    tSmooth.addScaledVector(tVel, dt);
+    // the head never stops on the pearl: it aims at a point that circles it, so it swims in calm loops
+    const ang = time * 0.75;
+    lead.set(tSmooth.x + Math.cos(ang) * 0.85, tSmooth.y + Math.sin(ang) * 0.55, Math.sin(time * 0.43) * 0.6);
+    aim.copy(lead).sub(headPos);
+    const dist = aim.length();
+    aim.normalize();
+    // turn toward it at a capped rate: smooth arcs, never a snap
+    const maxTurn = 2.6 * dt;
+    const cosA = clamp(dir.dot(aim), -1, 1), a = Math.acos(cosA);
+    if (a > 1e-4) {
+      const axis = tmp2.crossVectors(dir, aim); if (axis.lengthSq() < 1e-8) axis.set(0, 0, 1);
+      dir.applyAxisAngle(axis.normalize(), Math.min(a, maxTurn)).normalize();
+    }
+    const speed = 1.5 + clamp(dist - 0.8, 0, 3) * 0.9;
+    headPos.addScaledVector(dir, speed * dt);
+    headPos.z = clamp(headPos.z, -1.4, 1.4);
+    // record the path densely; the body is laid along it
+    if (trail[0].distanceToSquared(headPos) > 1e-6) trail.unshift(headPos.clone());
+    if (trail.length > 900) trail.pop();
     // sample the trail at even arc lengths
     let acc = 0, j = 0; spineFree[0].copy(trail[0]);
     for (let i = 1; i <= SEG; i++) {
@@ -338,7 +287,7 @@ export function createScene(canvas) {
       if (j >= trail.length - 1) spineFree[i].copy(trail[trail.length - 1]);
     }
     // a living ripple through the body
-    for (let i = 1; i <= SEG; i++) spineFree[i].y += Math.sin(time * 3 - i * 0.45) * 0.035 * (i / SEG);
+    for (let i = 1; i <= SEG; i++) spineFree[i].y += Math.sin(time * 2.2 - i * 0.32) * 0.03 * (i / SEG);
     // posed: the section's shape, turned toward the pointer
     resample(S.pose === 'line' ? poseLine : S.pose === 'coil' ? poseCoil : poseS, time, spinePose);
     const yaw = S.yaw;
@@ -346,33 +295,16 @@ export function createScene(canvas) {
     for (let i = 0; i <= SEG; i++) { const p = spinePose[i]; const x = p.x * cy + p.z * sy, z = -p.x * sy + p.z * cy; p.set(x + S.side * 9, p.y + 0.55, z); }
     const w = smooth(S.poseW);
     for (let i = 0; i <= SEG; i++) spine[i].copy(spineFree[i]).lerp(spinePose[i], w);
-    if (w > 0.98) { headPos.copy(spine[0]); trail.length = 0; for (let i = 0; i <= SEG; i++) trail.push(spine[i].clone()); }
+    for (let pass = 0; pass < 2; pass++) for (let i = 1; i < SEG; i++) spine[i].lerp(tmp.copy(spine[i - 1]).add(spine[i + 1]).multiplyScalar(0.5), 0.25);
+    // while posed, the free dragon waits where the posed one is, so letting go is seamless
+    if (w > 0.98) { headPos.copy(spine[0]); dir.copy(spine[0]).sub(spine[1]).normalize(); trail.length = 0; for (let i = 0; i <= SEG; i++) trail.push(spine[i].clone()); }
   }
   function orient(obj, from, to) { mtx.lookAt(to, from, up); obj.quaternion.setFromRotationMatrix(mtx); }
 
-  function updateDragon(time, dt) {
-    placeSpine(time, dt);
-    const glow = S.glowT;
-    for (let i = 0; i < SEG; i++) {
-      const s = D.segs[i]; const a = spine[i + 1], b = spine[i];
-      s.grp.position.copy(a).lerp(b, 0.5); orient(s.grp, a, b);
-      s.mat.emissive.copy(s.base || s.mat.color).lerp(new THREE.Color('#7dffb0'), glow);
-      s.mat.emissiveIntensity = 0.12 + glow * 0.55;
-    }
-    D.headMat.emissive.copy(D.headMat.userData.base || D.headMat.color).lerp(new THREE.Color('#7dffb0'), glow); D.headMat.emissiveIntensity = 0.05 + glow * 0.55;
-    D.head.position.copy(spine[0]); orient(D.head, spine[1], spine[0]);
-    D.tail.position.copy(spine[SEG]); orient(D.tail, spine[SEG], spine[SEG - 1]);
-    D.mane.forEach((f, k) => { f.scale.y = 1 + 0.15 * Math.sin(time * 6 + k); });
-    D.legs.forEach((L, k) => { L.leg.rotation.x = Math.sin(time * 4 + k * 1.7) * 0.45; });
-    // whiskers trail back from the snout, waving
-    D.whiskers.forEach(({ w, sd }) => {
-      const base = new THREE.Vector3(sd * 0.14, -0.05, 0.5).applyQuaternion(D.head.quaternion).add(D.head.position);
-      const pts = [base];
-      for (let k = 1; k <= 6; k++) { const seg = spine[Math.min(SEG, k)]; pts.push(seg.clone().add(new THREE.Vector3(sd * (0.25 + k * 0.05), 0.08 * Math.sin(time * 2.5 + k * 0.9) - 0.05 * k, 0).applyQuaternion(D.head.quaternion))); }
-      w.geometry.dispose(); w.geometry = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 30, 0.008, 4);
-    });
+  function updateDragonSim(time, dt) { placeSpine(time, dt); }
+  function updatePearl(time) {
     // the pearl at the pointer, only while the dragon is free
-    pearl.g.position.lerp(target, 0.25);
+    pearl.g.position.copy(tSmooth);
     const pv = 1 - smooth(S.poseW);
     pearl.g.scale.setScalar(Math.max(0.001, pv));
     pearl.flames.forEach((f, k) => { const a = (k / pearl.flames.length) * Math.PI * 2 + time * 2; f.position.set(Math.cos(a) * 0.15, Math.sin(a) * 0.15, 0); f.rotation.z = a - Math.PI / 2; f.scale.y = 0.8 + 0.4 * Math.sin(time * 9 + k * 2); });
@@ -380,14 +312,12 @@ export function createScene(canvas) {
   }
 
   function updateCity(time, dt) {
-    uniforms.time.value = time;
     const lights = lerp(1, 0.12, S.glowT);
     uniforms.lights.value = lights;
-    city.signs.forEach((s, i) => { const flick = Math.sin(time * 13 + s.seed) > 0.985 ? 0.3 : 1; s.mat.color.setScalar(1.6 * flick * lerp(1, 0.15, S.glowT)); });
-    city.mists.forEach((m) => { m.mm.position.x += m.v * dt; if (m.mm.position.x > 260) m.mm.position.x = -260; m.mm.lookAt(camera.position); });
-    city.lanterns.forEach((l) => { l.l.position.y = l.y + Math.sin(time * 0.6 + l.s) * 0.4; });
-    neonFill.intensity = 6 * lights;
+    photo.set({ mouse: S.ptrS, time, scroll: S.scroll, lights, zoom: 1.06 + smooth(S.fly) * 0.35 });
+    neonFill.intensity = 2.5 * lights;
   }
+
 
   function updateCamera(time) {
     const fly = smooth(S.fly);   // 1 = still high above the harbour (the intro), 0 = in place
@@ -404,8 +334,11 @@ export function createScene(canvas) {
     const dt = Math.min(0.05, (now - last) / 1000); last = now; t += dt;
     S.glowT += (S.glow - S.glowT) * Math.min(1, dt * 2.5);
     S.yaw += ((S.ptrS.x * 0.9) - S.yaw) * Math.min(1, dt * 3);
-    updateCamera(t); updateCity(t, dt); updateDragon(t, reduce ? 0 : dt);
-    bloom.strength = 0.7 + S.glowT * 0.1;
+    updateCamera(t); updateCity(t, dt);
+    if (reduce) updateDragonSim(simT, 0);
+    else { acc += dt; let n = 0; while (acc >= STEP && n < 4) { simT += STEP; updateDragonSim(simT, STEP); acc -= STEP; n++; } if (n === 4) acc = 0; }
+    D.update(spine, simT, S.glowT); updatePearl(simT);
+    bloom.strength = 0.45 + S.glowT * 0.25;
     composer.render();
   }
   raf = requestAnimationFrame(tick);

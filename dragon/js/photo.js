@@ -7,7 +7,8 @@ import * as THREE from 'three';
 export function createPhoto(renderer, src) {
   const scene = new THREE.Scene();
   const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-  const tex = new THREE.TextureLoader().load(src, () => { uniforms.img.value.set(tex.image.width, tex.image.height); });
+  let loaded; const ready = new Promise((r) => (loaded = r));
+  const tex = new THREE.TextureLoader().load(src, () => { uniforms.img.value.set(tex.image.width, tex.image.height); loaded(); });
   // raw sRGB values: the effects work on the photo as it looks, and main() converts to linear at the end
   tex.colorSpace = THREE.NoColorSpace;
   tex.generateMipmaps = true; tex.minFilter = THREE.LinearMipmapLinearFilter; tex.magFilter = THREE.LinearFilter;
@@ -100,7 +101,7 @@ export function createPhoto(renderer, src) {
   });
   scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat));
   return {
-    scene, camera,
+    scene, camera, ready,
     set({ mouse, time, scroll, lights, zoom }) {
       if (zoom != null) uniforms.zoom.value = zoom;
       if (mouse) uniforms.mouse.value.copy(mouse);

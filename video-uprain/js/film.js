@@ -59,12 +59,13 @@ export function orbit({ t0, t1, at, a0, a1, r0, r1 = r0, y0, y1 = y0, fov = 32, 
 }
 // keys that chase a moving point p(t): offset(t, p, dir) gives the camera position, lead is how far ahead it looks
 export function follow({ t0, t1, p, offset, lead = 0.15, fov = 30, roll = 0, ap = null, n = 6 }) {
+  n = Math.max(n, Math.ceil((t1 - t0) * 10));          // dense keys: a portrait frame is only ~17 degrees wide
   return Array.from({ length: n + 1 }, (_, i) => {
     const t = t0 + (t1 - t0) * (i / n);
     const a = p(t), b = p(t + 0.05), dir = [b[0] - a[0], b[1] - a[1], b[2] - a[2]];
     const L = Math.hypot(...dir) || 1; const d = dir.map((x) => x / L);
     const look = p(t + lead);
-    const key = { t, pos: offset(t, a, d), at: look, fov, roll, ramp: 0.1 };
+    const key = { t, pos: offset(t, a, d), at: look, fov, roll, ramp: 0 };
     if (ap != null) key.ap = ap;
     return key;
   });

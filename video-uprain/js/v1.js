@@ -54,7 +54,8 @@ export async function setup(c) {
 
   /* ball 1: from the last domino to the cradle */
   const bpath = new THREE.CatmullRomCurve3([[-0.06, 0.018, 1.06], [0.22, 0.018, 1.2], [0.42, 0.018, 1.08], [0.3, 0.018, 0.94], [0.08, 0.018, 0.9], [0, 0.018, 0.88]].map((p) => new THREE.Vector3(...p)));
-  const ball = new THREE.Mesh(new THREE.SphereGeometry(0.018, 40, 28), chrome); sc.add(ball);
+  const ball = new THREE.Mesh(new THREE.SphereGeometry(0.018, 40, 28), new THREE.MeshPhysicalMaterial({ color: '#e9eef3', metalness: 1, roughness: 0.08, emissive: new THREE.Color(ICE), emissiveIntensity: 0.35 })); sc.add(ball);
+  const ballLight = new THREE.PointLight(ICE, 0.05, 0.5, 2); sc.add(ballLight);
   const ballGlow = new THREE.Mesh(new THREE.TorusGeometry(0.0185, 0.0012, 8, 48), glowMat(ICE, 2.2)); sc.add(ballGlow);
 
   /* the Newton's cradle, its balls along z in front of the product */
@@ -95,14 +96,14 @@ export async function setup(c) {
   const v = (p, x, y, z) => [p.x + x, p.y + y, p.z + z];
   const B = (u) => bpath.getPointAt(u), M = (u) => mpath.getPointAt(u);
   S = {
-    path, doms, body, edge, side, H, W, D, drop, dropGlow, splash, ring, bpath, ball, ballGlow, cb, R, LEN, mpath, marble, marbleGlow, brand, line, price,
+    ballLight, path, doms, body, edge, side, H, W, D, drop, dropGlow, splash, ring, bpath, ball, ballGlow, cb, R, LEN, mpath, marble, marbleGlow, brand, line, price,
     cam: (() => {
       const { orbit, follow, prog, ease, clamp, lerp } = c;
       const up = new THREE.Vector3(0, 1, 0);
       const P = (p) => [p.x, p.y, p.z];
       const topY = H + 0.004;
-      const dropP = (t) => [D0.x, lerp(0.95, topY, Math.pow(prog(t, 1.6, 6.0), 1.7)), D0.z];
-      const front = (t) => { const f = clamp((t - 6.0) / 0.046, 0, N - 1.001); const a = doms[Math.floor(f)].p, b = doms[Math.ceil(f)].p; return P(a.clone().lerp(b, f % 1)); };
+      const dropP = (t) => [D0.x, Math.max(topY + 0.03, lerp(0.95, topY, Math.pow(prog(t, 1.6, 6.0), 1.7)) - 0.03 * prog(t, 4.5, 6.0)), D0.z];
+      const front = (t) => { const f = clamp((t - 6.0) / 0.046, 0, N - 1.001); const a = doms[Math.floor(f)].p, b = doms[Math.ceil(f)].p; const q = P(a.clone().lerp(b, f % 1)); q[1] = 0.05; return q; };
       const ballP = (t) => P(bpath.getPointAt(clamp(ballU(t, c))));
       const marbleP = (t) => P(mpath.getPointAt(clamp(marbleU(t, c))));
       const side = (d, k) => { const n = new THREE.Vector3().crossVectors(up, new THREE.Vector3(...d)).normalize(); return [n.x * k, n.z * k]; };
@@ -112,17 +113,17 @@ export async function setup(c) {
         { t: 1.1, pos: v(Dm, 0.15, 0.04, 0.17), at: v(D0, 0, 0.06, 0), fov: 30, roll: 0.04, ap: 0.02 },
         // B: a spiral round the falling drop, down with it
         ...follow({ t0: 2.2, t1: 6.0, p: dropP, lead: 0, n: 10, fov: 30, ap: 0.03,
-          offset: (t, a) => { const k = prog(t, 2.2, 6.0), ang = 0.9 - 1.6 * k, r = 0.34 - 0.1 * k; return [D0.x + Math.sin(ang) * r, a[1] + 0.04 - 0.02 * k, D0.z + Math.cos(ang) * r]; } }),
+          offset: (t, a) => { const k = prog(t, 2.2, 6.0), ang = 0.9 - 1.6 * k, r = 0.3 - 0.06 * k; return [D0.x + Math.sin(ang) * r, a[1] + 0.03, D0.z + Math.cos(ang) * r]; } }),
         // C: tracking beside the wave of falling dominoes
-        ...follow({ t0: 6.15, t1: 7.25, p: front, lead: 0.12, n: 5, fov: 31, ap: 0.018,
-          offset: (t, a, d) => { const [sx, sz] = side(d, -0.26); return [a[0] + sx - d[0] * 0.1, 0.09, a[2] + sz - d[2] * 0.1]; } }),
+        ...follow({ t0: 6.15, t1: 7.25, p: front, lead: 0.0, n: 12, fov: 33, ap: 0.016,
+          offset: (t, a, d) => { const [sx, sz] = side(d, 0.3); return [a[0] + sx - d[0] * 0.16, 0.15, a[2] + sz - d[2] * 0.16]; } }),
         // D: chasing the chrome ball
-        ...follow({ t0: 7.5, t1: 9.9, p: ballP, lead: 0.25, n: 6, fov: 30, ap: 0.02,
-          offset: (t, a, d) => { const [sx, sz] = side(d, 0.09); return [a[0] - d[0] * 0.24 + sx, 0.07, a[2] - d[2] * 0.24 + sz]; } }),
+        ...follow({ t0: 7.5, t1: 9.9, p: ballP, lead: 0.08, n: 24, fov: 33, ap: 0.02,
+          offset: (t, a, d) => { const [sx, sz] = side(d, 0.08); return [a[0] - d[0] * 0.17 + sx, 0.06, a[2] - d[2] * 0.17 + sz]; } }),
         // E: round the Newton's cradle
         ...orbit({ t0: 10.1, t1: 11.8, at: [0, 0.08, 0.74], a0: 0.95, a1: -0.35, r0: 0.44, r1: 0.36, y0: 0.17, y1: 0.12, fov: 30, ap: 0.018, n: 5 }),
         // F: chasing the marble, low, to the button
-        ...follow({ t0: 12.1, t1: 13.75, p: marbleP, lead: 0.2, n: 5, fov: 29, ap: 0.028,
+        ...follow({ t0: 12.1, t1: 13.75, p: marbleP, lead: 0.08, n: 16, fov: 31, ap: 0.028,
           offset: (t, a, d) => { const [sx, sz] = side(d, 0.07); return [a[0] - d[0] * 0.17 + sx, 0.045, a[2] - d[2] * 0.17 + sz]; } }),
         { t: 14.0, pos: [0.07, 0.045, 0.27], at: [0, 0.03, 0.105], fov: 27, ap: 0.035 },
         // G: up and back as it wakes
@@ -207,7 +208,8 @@ export function update(c, t, dt) {
   const mv = bp.clone().sub(bpPrev); mv.y = 0;
   if (mv.lengthSq() > 1e-10 && t > 0.05) { const ax = new THREE.Vector3().crossVectors(up, mv).normalize(); S.chromeRoll.premultiply(new THREE.Quaternion().setFromAxisAngle(ax, mv.length() / 0.018)); }
   S.ball.quaternion.copy(S.chromeRoll);
-  S.ballGlow.position.copy(bp); S.ballGlow.rotation.set(Math.PI / 2, 0, 0); S.ballGlow.material.color.set(accent).multiplyScalar(t > 7.1 && t < 10.3 ? 2 : 0.6);
+  S.ballGlow.position.copy(bp); S.ballGlow.rotation.set(Math.PI / 2, 0, 0); S.ballGlow.material.color.set(accent).multiplyScalar(t > 7.1 && t < 10.3 ? 3 : 0.6);
+  S.ballLight.position.set(bp.x, 0.05, bp.z); S.ballLight.color.set(accent); S.ballLight.intensity = t > 6.9 && t < 10.4 ? 0.06 : 0;
 
   /* the cradle */
   const cr = cradleAngles(t);

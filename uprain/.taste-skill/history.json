@@ -1,0 +1,25 @@
+{
+  "moments": [
+    {
+      "id": "iris-opens",
+      "at": "2026-11-08T14:53:29.583Z",
+      "seed": "13aabde1"
+    },
+    {
+      "id": "word-highlight",
+      "at": "2026-11-08T14:53:29.583Z",
+      "seed": "13aabde1"
+    }
+  ],
+  "palettes": [
+    "cool-grey-cobalt"
+  ],
+  "types": [
+    "geist"
+  ],
+  "dealt": [
+    "geist",
+    "suse",
+    "sora"
+  ]
+}

@@ -1,0 +1,4 @@
+[
+ {"check":"shader-lint","target":"three/three.module.min.js \"gl_DrawID\"","reason":"three.js's own #define for multi-draw (gl_DrawID -> _gl_DrawID), emitted only when the extension is present; the vendored library is unchanged (0.170.0) and the shader compiles on WebGL1 and WebGL2."},
+ {"check":"shader-lint","target":"three/three.module.min.js \"common\"","reason":"#include <common> is three.js's chunk include, replaced by the library before compiling, so 'common' never reaches the GLSL compiler; the vendored library is unchanged (0.170.0)."}
+]

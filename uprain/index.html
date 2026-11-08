@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="es" data-type="product" data-radius="soft" data-buttons="block" data-motion>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Uprain: humidificador antigravedad con luz para el dormitorio</title>
+<meta name="description" content="Humidificador de 800 ml en el que las gotas parecen subir gracias a una luz que parpadea más rápido que el agua. Cuatro colores de luz, menos de 36 dB, 44,95 €.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Uprain: humidificador antigravedad con luz para el dormitorio">
+<meta property="og:description" content="Gotas que suben, 800 ml de agua para toda la noche y cuatro colores de luz. 44,95 €.">
+<meta property="og:image" content="share.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#eef0f3">
+<!-- <link rel="canonical" href="https://[el dominio de Uprain]/"> -->
+<meta name="site-kind" content="tech">
+<meta name="page-type" content="product">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400..500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/system.css">
+<link rel="stylesheet" href="assets/ui/cards.css">
+<link rel="stylesheet" href="assets/motion/motion.css">
+<link rel="stylesheet" href="assets/backgrounds/backgrounds.css">
+<link rel="stylesheet" href="assets/layout/layout.css">
+<link rel="stylesheet" href="assets/icons/icon.css">
+<style>
+:root {
+  --p-bg: #eef0f3; --p-surface: #e2e5ea; --p-ink: #0b0c0e; --p-muted: #5d6470;
+  --p-accent: #1f2de6; --p-accent-ink: #ffffff; --p-action: #1f2de6; --p-action-ink: #ffffff;
+  --p-inv-bg: #0b0c0e; --p-inv-surface: #17181a; --p-inv-ink: #eef0f3; --p-inv-muted: #8e8f92;
+  --p-inv-accent: #eef0f3; --p-inv-accent-ink: #0b0c0e; --p-inv-action: #eef0f3; --p-inv-action-ink: #0b0c0e;
+  --font-display: "Geist", system-ui, sans-serif;
+  --font-text: "Geist", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --display-weight: 500;
+  --display-tracking: -0.035em;
+  --display-tracking-xl: -0.045em;
+}
+</style>
+<link rel="stylesheet" href="assets/moments/iris-opens/moment.css">
+<link rel="stylesheet" href="assets/moments/word-highlight/moment.css">
+<script>document.documentElement.classList.add('m-enter');setTimeout(()=>document.documentElement.classList.add('m-enter-done'),700)</script>
+<script src="assets/backgrounds/backgrounds.js"></script>
+<script>document.documentElement.classList.add('mo-js');setTimeout(()=>document.documentElement.classList.add('mo-safe'),2500)</script>
+<link rel="modulepreload" href="assets/moments/moments.js">
+<link rel="modulepreload" href="assets/moments/lib.js">
+<link rel="modulepreload" href="assets/moments/iris-opens/moment.js">
+<link rel="modulepreload" href="assets/moments/word-highlight/moment.js">
+<!-- the live 3D: the poster waits under each canvas only when WebGL can draw; without it the poster is the picture -->
+<script>try{var c=document.createElement('canvas');if((c.getContext('webgl2')||c.getContext('webgl'))&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('gl-3d');setTimeout(function(){if(!document.querySelector('.hero__gl[data-live]'))document.documentElement.classList.remove('gl-3d')},4500)}catch(e){}</script>
+<script type="importmap">{"imports":{"three":"./vendor/three/three.module.min.js","three/addons/":"./vendor/three/addons/"}}</script>
+<style>
+  /* the hero: a night scene, the product live in 3D on the right half, the words straight on the dark left */
+  @media (min-width: 1024px) { .hero--photo { background: #0b0c0e; } }
+  .hero__gl { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; cursor: grab;
+    background: #0b0c0e url(img/hero-uprain.webp) 50% 50% / cover no-repeat; }
+  .hero__gl.is-dragging { cursor: grabbing; }
+  .gl-3d .hero__gl[data-live] { background-image: none; }
+  .hero--photo > .wrap { position: relative; pointer-events: none; }
+  .hero--photo .hero__text, .hero--photo .hero__facts, .hero--photo .hero__pause { pointer-events: auto; }
+  /* below 1024 the words sit on the page ground under the 3D band, so they take the page ink (layout.css keeps white on two of them) */
+  @media (max-width: 1023px) {
+    html .hero--photo[data-box="none"][data-tone="dark"] { color: var(--p-ink); --ink: var(--p-ink); --muted: var(--p-muted); --line: color-mix(in oklab, var(--p-ink) 11%, transparent); --line-strong: color-mix(in oklab, var(--p-ink) 20%, transparent); }
+    html:is([data-buttons="arrow"], [data-buttons="block"]) .hero--photo[data-box="none"][data-tone="dark"] .btn--secondary { color: var(--p-ink); text-decoration-color: var(--line-strong); }
+  }
+  .hero__pause { right: 0; bottom: 24px; }
+  @media (max-width: 1023px) {
+    .hero__gl { top: var(--nav); bottom: auto; height: var(--photo); background-position: 50% 50%; background-image: url(img/hero-uprain-movil.webp); }
+    .hero--photo > .wrap { position: static; }
+    .hero__pause { right: 16px; bottom: auto; top: calc(var(--nav) + var(--photo) - 60px); }
+  }
+  @media (max-width: 479px) { .nav__actions { display: none; } }
+  a.card:focus-visible { outline-color: var(--ink); }
+
+  /* pictures inside frames: renders on their own ground, covering the frame */
+  .still { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+  /* the live demo of the effect */
+  #efecto .demo { position: relative; aspect-ratio: 8 / 9; background: #0b0c0e; overflow: hidden; border-radius: var(--r-lg); }
+  #efecto .demo canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+    background: #0b0c0e url(img/efecto-columna.webp) 50% 50% / cover no-repeat; }
+  .gl-3d #efecto .demo canvas[data-live] { background-image: none; }
+  #efecto .t-lead { margin-top: var(--s-5); }
+  #efecto .controls { display: grid; gap: var(--s-5); margin-top: var(--s-6); padding-top: var(--s-5); border-top: 1px solid var(--line); }
+  .switch { display: inline-flex; align-items: center; gap: var(--s-3); min-height: 44px; padding: 0; border: 0; background: none; color: var(--ink); font: 500 16px/1.2 var(--font-text); cursor: pointer; }
+  .switch__track { position: relative; width: 48px; height: 28px; border-radius: 14px; background: var(--muted); transition: background-color .2s ease; flex: none; }
+  .switch__track::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; transition: transform .2s cubic-bezier(.2,.8,.2,1); }
+  .switch[aria-pressed="true"] .switch__track { background: var(--action); }
+  .switch[aria-pressed="true"] .switch__track::after { transform: translateX(20px); }
+  .rate { display: grid; gap: var(--s-2); }
+  .rate label { font: 500 14px/1.3 var(--font-text); }
+  .rate input[type="range"] { width: 100%; height: 44px; margin: 0; accent-color: var(--action); cursor: pointer; }
+  .rate__ends { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); }
+  .rate input:disabled { opacity: .4; cursor: not-allowed; }
+  #efecto-estado { font-size: 18px; line-height: 1.5; min-height: 54px; }
+
+  /* light colours: the swatch row swaps the picture */
+  .swatches { display: flex; flex-wrap: wrap; gap: var(--s-2); border: 0; margin: 0; padding: 0; min-width: 0; }
+  .swatches legend { font: 500 14px/1.3 var(--font-text); margin-bottom: var(--s-3); padding: 0; }
+  .swatch { position: relative; }
+  .swatch input { position: absolute; left: 0; top: 0; margin: 0; opacity: 0; width: 1px; height: 1px; }
+  .swatch span { display: inline-flex; align-items: center; gap: var(--s-2); min-height: 44px; padding: 0 var(--s-4) 0 var(--s-2); border: 1px solid var(--line); border-radius: 22px; font: 500 15px/1 var(--font-text); cursor: pointer; transition: border-color .15s ease, background-color .15s ease; }
+  .swatch span::before { content: ""; width: 26px; height: 26px; border-radius: 50%; background: var(--sw); box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
+  .swatch input:checked + span { border-color: var(--ink); background: var(--surface); }
+  .swatch input:focus-visible + span { outline: 2px solid var(--action); outline-offset: 2px; }
+  .swatch:hover span { border-color: var(--ink); }
+  #luz .frame--luz { aspect-ratio: 12 / 5; background: #0b0c0e; margin-top: var(--s-6); }
+  #luz .frame--luz img { transition: opacity .35s ease; }
+  #luz .frame--luz img.is-swapping { opacity: .25; }
+  #luz .section-head--split { align-items: end; }
+
+  /* parts on the brand band */
+  #detalles .panel { --p-h: 420px; position: relative; padding: 0; overflow: hidden; background: #0b0c0e; }
+  #detalles .panel .still { position: absolute; inset: 0; }
+  #preguntas .frame--faq { aspect-ratio: 10 / 9; margin-top: var(--s-4); }
+
+  /* specs and order */
+  #specs .frame--split, #pedido .frame--split { aspect-ratio: 8 / 9; }
+  .buy { display: grid; gap: var(--s-5); }
+  .packs { display: grid; gap: var(--s-2); border: 0; margin: 0; padding: 0; min-width: 0; }
+  .packs legend { font: 500 14px/1.3 var(--font-text); margin-bottom: var(--s-3); padding: 0; }
+  .pack { position: relative; }
+  .pack input { position: absolute; left: 0; top: 0; margin: 0; opacity: 0; width: 1px; height: 1px; }
+  .pack span { display: flex; justify-content: space-between; align-items: center; gap: var(--s-4); min-height: 56px; padding: 0 var(--s-5); border: 1px solid var(--line); border-radius: var(--r-md); cursor: pointer; font-size: 16px; transition: border-color .15s ease, background-color .15s ease; }
+  .pack span b { font-weight: 500; }
+  .pack input:checked + span { border-color: var(--ink); background: var(--surface); }
+  .pack input:focus-visible + span { outline: 2px solid var(--action); outline-offset: 2px; }
+  .pack:hover span { border-color: var(--ink); }
+  .buy .btn { width: 100%; justify-content: center; }
+  .buy__note { font-size: 16px; }
+  #detalles .card p { color: var(--ink); }
+  #preguntas .faq__item h3 { font-size: var(--t-card); }
+  @media (min-width: 1024px) and (max-width: 1279px) { #detalles { --h: 2; } #detalles .panel { --p-h: 300px; } #efecto .demo { aspect-ratio: 1 / 1; } }
+  @media (min-width: 640px) and (max-width: 1023px) {
+    #detalles { --h: 2; } #detalles .panel { --p-h: 320px; }
+    #efecto .demo { aspect-ratio: 2 / 1; } #specs .frame--split { aspect-ratio: 2 / 1; } #pedido .frame--split { aspect-ratio: 5 / 2; }
+    #luz .frame--luz { aspect-ratio: 16 / 10; } #preguntas .frame--faq { aspect-ratio: 3 / 1; }
+  }
+  @media (max-width: 639px) { #detalles { --hm: 2; } #detalles .panel { --p-h: 290px; } #luz .frame--luz { aspect-ratio: 4 / 3; } #efecto .demo { aspect-ratio: 1 / 1; } }
+  @media (prefers-reduced-motion: reduce) { #luz .frame--luz img { transition: none; } .switch__track, .switch__track::after { transition: none; } }
+</style>
+</head>
+<body>
+<!-- type: product (hardware: a humidifier with a strobe light, site-kind tech)
+     deal: hero photo -> the photograph is a live 3D layer (the brief asks for the product in 3D on the first screen;
+     the product is taller than wide, so it stands on the calm right half), nav nav-mega, close close-type,
+     footer footer-dark, rhythm brand-band, buttons block, mark wordmark, ground sand (unused: no lit ground)
+     palette cool-grey-cobalt (cool off-white like the white plastic and steel of home appliances; cobalt for water), type geist
+     moments: word-highlight on #noche (the statement), iris-opens on #detalles (the brand band, a new ground)
+     live WebGL contexts: 2 (the hero and the demo in #efecto), each paused off screen -->
+<header class="nav">
+  <div class="wrap nav__bar">
+    <a class="skip-link" href="#top">Saltar al contenido</a>
+    <a class="nav__logo" href="#top">Uprain</a>
+    <nav class="nav__links" aria-label="Principal">
+      <div class="nav__item">
+        <a class="nav__link" href="#efecto">Efecto <svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="nav__menu">
+          <div class="wrap grid">
+            <div class="menu-col span-3">
+              <p class="t-label">El humidificador</p>
+              <a href="#efecto">Cómo suben las gotas<span>Pruébalo con la luz</span></a>
+              <a href="#luz">Colores de luz<span>Hielo, ámbar, cobalto, menta</span></a>
+              <a href="#detalles">Piezas<span>Boquilla, cuenco y botón</span></a>
+            </div>
+            <div class="menu-col span-3">
+              <p class="t-label">Antes de comprar</p>
+              <a href="#specs">Especificaciones<span>Medidas, depósito y ruido</span></a>
+              <a href="#preguntas">Preguntas<span>Agua, envío y devoluciones</span></a>
+              <a href="#pedido">Precios<span>Uno, pack regalo o dos</span></a>
+            </div>
+            <a class="menu-card span-4 start-9" href="#luz">
+              <div class="panel"><img class="frame__img" src="img/menu-uprain.webp" alt="El humidificador Uprain grafito con la luz ámbar encendida" width="800" height="600" loading="lazy"></div>
+              <span class="t-card">Cuatro colores de luz</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="nav__item"><a class="nav__link" href="#luz">Luz</a></div>
+      <div class="nav__item"><a class="nav__link" href="#detalles">Piezas</a></div>
+      <div class="nav__item"><a class="nav__link" href="#preguntas">Preguntas</a></div>
+    </nav>
+    <div class="nav__actions">
+      <a class="btn btn--primary" href="#pedido">Comprar Uprain</a>
+    </div>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Menú">
+      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+<main id="top">
+  <section class="hero hero--photo" data-enter data-calm="left" data-box="none" data-tone="dark" data-hero-3d aria-labelledby="hero-h">
+    <canvas class="hero__gl" aria-hidden="true"></canvas>
+    <div class="wrap">
+    <button class="loop-pause hero__pause" type="button" aria-pressed="false" aria-label="Pausar el humidificador en 3D" hidden>
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 3h3v10H4zM9 3h3v10H9z"/></svg>
+    </button>
+    <div class="hero-text">
+      <div class="hero__text">
+        <h1 id="hero-h">Humidificador antigravedad</h1>
+        <p class="hero__lead">Las gotas caen de verdad, pero una luz que parpadea más rápido que ellas las hace subir ante tus ojos. 800 ml de agua para toda la noche, por <span data-assumed>44,95 €</span>.</p>
+        <div class="btn-row"><a class="btn btn--primary" href="#pedido">Comprar Uprain<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a><a class="btn btn--secondary" href="#efecto">Ver cómo funciona</a></div>
+      </div>
+      <dl class="hero__facts">
+        <div><dt>Depósito</dt><dd data-assumed>800 ml</dd></div>
+        <div><dt>Ruido</dt><dd data-assumed>Menos de 36 dB</dd></div>
+        <div><dt>Envío</dt><dd data-assumed>24-72 h desde España</dd></div>
+        <div><dt>Garantía</dt><dd>3 años</dd></div>
+      </dl>
+    </div></div>
+  </section>
+
+  <section class="section" id="efecto" aria-labelledby="efecto-h">
+    <div class="wrap">
+      <div class="grid grid--top">
+        <div class="span-5">
+          <h2 id="efecto-h">Cómo suben las gotas. <span class="muted">Es un truco de luz, y puedes probarlo aquí.</span></h2>
+          <p class="t-lead measure">El agua cae de la boquilla a un ritmo fijo. Si el anillo de luz parpadea un poco más rápido que las gotas, cada destello las encuentra algo más arriba y el ojo las ve subir.</p>
+          <div class="controls">
+            <button class="switch" type="button" id="efecto-luz" aria-pressed="true"><span class="switch__track" aria-hidden="true"></span>Luz estroboscópica</button>
+            <div class="rate">
+              <label for="efecto-ritmo">Ritmo de la luz</label>
+              <input id="efecto-ritmo" type="range" min="-100" max="100" step="1" value="60" aria-describedby="efecto-estado">
+              <div class="rate__ends" aria-hidden="true"><span>Más lenta</span><span>Igual</span><span>Más rápida</span></div>
+            </div>
+            <p id="efecto-estado" aria-live="polite">La luz va más rápida que las gotas: las ves subir.</p>
+          </div>
+        </div>
+        <div class="span-6 start-7">
+          <div class="demo"><canvas role="img" aria-label="Primer plano de la columna de gotas entre el arco y el cuenco, iluminada por el anillo de luz"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="luz" aria-labelledby="luz-h">
+    <div class="wrap">
+      <div class="section-head--split">
+        <div><h2 id="luz-h">Cuatro colores de luz. <span class="muted">Cambia de color con un toque en la base.</span></h2></div>
+        <fieldset class="swatches" id="luz-colores">
+          <legend class="sr-only">Color de la luz</legend>
+          <label class="swatch"><input type="radio" name="luz" value="hielo" checked><span style="--sw:#a6e1ff">Hielo</span></label>
+          <label class="swatch"><input type="radio" name="luz" value="ambar"><span style="--sw:#ffb259">Ámbar</span></label>
+          <label class="swatch"><input type="radio" name="luz" value="cobalto"><span style="--sw:#3d63ff">Cobalto</span></label>
+          <label class="swatch"><input type="radio" name="luz" value="menta"><span style="--sw:#6dffc8">Menta</span></label>
+        </fieldset>
+      </div>
+      <div class="frame frame--photo frame--luz">
+        <img class="still" id="luz-foto" src="img/luz-hielo.webp" srcset="img/luz-hielo-700.webp 700w, img/luz-hielo-1200.webp 1200w, img/luz-hielo.webp 2400w" sizes="(max-width: 639px) 640px, (max-width: 1023px) 1100px, 1280px" alt="El humidificador Uprain grafito con la luz hielo encendida" width="2400" height="1000" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section class="section statement" id="noche" data-moment="word-highlight" aria-label="De noche">
+    <div class="wrap">
+      <p class="t-label">De noche</p>
+      <p class="mo-wh__text">En invierno la calefacción seca el aire del dormitorio. Uprain le devuelve humedad mientras duermes y deja encendida una luz tenue sobre la mesilla: <strong>la lluvia al revés</strong>, a medio metro de la almohada.</p>
+    </div>
+  </section>
+
+  <section class="section ground-brand" id="detalles" data-moment="iris-opens" data-moment-opts='{"from": "base"}' aria-labelledby="detalles-h">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="detalles-h">Las piezas del humidificador</h2>
+        <p>Una boquilla de acero, un cuenco de agua y un solo botón. Nada más que limpiar.</p>
+      </div>
+      <div class="grid">
+        <div class="card card--open span-4">
+          <div class="panel"><img class="still" src="img/pieza-boquilla.webp" srcset="img/pieza-boquilla-480.webp 480w, img/pieza-boquilla.webp 900w" sizes="(max-width: 639px) 342px, (max-width: 1279px) 724px, 410px" alt="Primer plano de la boquilla de acero con el anillo de luz cobalto y una gota formándose" width="900" height="900" loading="lazy"></div>
+          <h3>Marca el ritmo de la luz</h3>
+          <p>La boquilla de acero suelta las gotas a intervalos fijos, y el anillo que la rodea da el destello.</p>
+        </div>
+        <div class="card card--open span-4">
+          <div class="panel"><img class="still" src="img/pieza-cuenco.webp" srcset="img/pieza-cuenco-480.webp 480w, img/pieza-cuenco.webp 900w" sizes="(max-width: 639px) 342px, (max-width: 1279px) 724px, 410px" alt="El cuenco de la base visto desde arriba, con agua iluminada en verde menta" width="900" height="900" loading="lazy"></div>
+          <h3>Recicla el agua del humidificador</h3>
+          <p>Las gotas caen al cuenco y vuelven al depósito, así el agua solo se gasta en vapor.</p>
+        </div>
+        <div class="card card--open span-4">
+          <div class="panel"><img class="still" src="img/pieza-boton.webp" srcset="img/pieza-boton-480.webp 480w, img/pieza-boton.webp 900w" sizes="(max-width: 639px) 342px, (max-width: 1279px) 724px, 410px" alt="El botón táctil iluminado en el frente de la base grafito" width="900" height="900" loading="lazy"></div>
+          <h3>Cambia la luz con un toque</h3>
+          <p>El botón de la base enciende, cambia de color con cada toque y apaga con una pulsación larga.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="specs" aria-labelledby="specs-h">
+    <div class="wrap">
+      <div class="grid grid--top">
+        <div class="span-5 stack-6">
+          <h2 id="specs-h">Especificaciones del humidificador</h2>
+          <ul class="rows rows--spec">
+            <li><span class="rows__name">Medidas</span><span class="rows__value" data-assumed>21 × 21 × 34 cm</span></li>
+            <li><span class="rows__name">Depósito</span><span class="rows__value" data-assumed>800 ml, hasta 8 horas</span></li>
+            <li><span class="rows__name">Ruido</span><span class="rows__value" data-assumed>Menos de 36 dB</span></li>
+            <li><span class="rows__name">Alimentación</span><span class="rows__value" data-assumed>USB-C, 5 V</span></li>
+            <li><span class="rows__name">Seguridad</span><span class="rows__value" data-assumed>Se apaga solo sin agua</span></li>
+            <li><span class="rows__name">En la caja</span><span class="rows__value" data-assumed>Humidificador, cable y manual en español</span></li>
+          </ul>
+        </div>
+        <div class="frame frame--split frame--photo span-6 start-7">
+          <img class="still" src="img/specs-arena.webp" srcset="img/specs-arena-560.webp 560w, img/specs-arena.webp 1000w" sizes="(max-width: 639px) 342px, (max-width: 1023px) 724px, 628px" alt="La base del humidificador Uprain en acabado arena, con el arco champán y el botón ámbar" width="1000" height="1250" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="preguntas" aria-labelledby="preguntas-h">
+    <div class="wrap">
+      <div class="grid grid--top">
+        <div class="span-5 stack-4">
+          <h2 id="preguntas-h">Preguntas sobre el humidificador</h2>
+          <p class="muted">Lo que más nos preguntan antes de comprar.</p>
+          <a class="link" href="mailto:hola@uprain.example">Escribir a Uprain</a>
+          <div class="frame frame--photo frame--faq"><img class="still" src="img/preguntas-cuenco.webp" srcset="img/preguntas-cuenco-640.webp 640w, img/preguntas-cuenco.webp 1200w" sizes="(max-width: 639px) 342px, (max-width: 1023px) 724px, 519px" alt="El cuenco del humidificador Uprain arena visto desde arriba, con el agua y las gotas cayendo" width="1200" height="900" loading="lazy"></div>
+        </div>
+        <div class="faq span-6 start-7">
+          <div class="faq__item"><h3>¿Las gotas del humidificador suben de verdad?</h3><p>No. El agua cae como siempre; es la luz la que hace que la veas subir. Con la luz apagada verás las gotas caer.</p></div>
+          <div class="faq__item"><h3>¿Qué agua lleva el depósito?</h3><p>Agua del grifo. Si en tu zona tiene mucha cal, usa agua embotellada o destilada para que la boquilla no se atasque.</p></div>
+          <div class="faq__item"><h3>¿Cuánto tarda en llegar el humidificador?</h3><p>Sale de nuestro almacén en España y llega en <span data-assumed>24 a 72 horas</span> laborables a la península.</p></div>
+          <div class="faq__item"><h3>¿Y si el humidificador no me convence?</h3><p>Tienes 14 días para devolverlo desde que lo recibes, y 3 años de garantía si falla.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="pedido" aria-labelledby="pedido-h">
+    <div class="wrap">
+      <div class="grid grid--top">
+        <div class="span-5 stack-6">
+          <h2 id="pedido-h">Precios del humidificador</h2>
+          <!-- Shopify: js/tienda.js sends this form to the store's cart once SHOPIFY.store and the variant ids are filled in;
+               until then the form opens an email to the stand-in address below -->
+          <form class="buy" id="comprar" action="mailto:pedidos@uprain.example" method="post" enctype="text/plain">
+            <fieldset class="swatches">
+              <legend>Acabado</legend>
+              <label class="swatch"><input type="radio" name="acabado" value="grafito" checked data-pic="img/pedido-grafito.webp" data-alt="El humidificador Uprain en acabado grafito, de frente, con la luz hielo encendida"><span style="--sw:#1a1b1e">Grafito</span></label>
+              <label class="swatch"><input type="radio" name="acabado" value="arena" data-pic="img/pedido-arena.webp" data-alt="El humidificador Uprain en acabado arena, de frente, con la luz ámbar encendida"><span style="--sw:#d9d3c7">Arena</span></label>
+            </fieldset>
+            <fieldset class="packs">
+              <legend>Cantidad</legend>
+              <label class="pack"><input type="radio" name="pack" value="uno" checked><span>1 humidificador <b data-assumed>44,95 €</b></span></label>
+              <label class="pack"><input type="radio" name="pack" value="regalo"><span>Pack regalo, con caja rígida y tarjeta <b data-assumed>49,95 €</b></span></label>
+              <label class="pack"><input type="radio" name="pack" value="dos"><span>2 humidificadores <b data-assumed>79,95 €</b></span></label>
+            </fieldset>
+            <button class="btn btn--primary" type="submit">Comprar Uprain</button>
+            <p class="buy__note">Envío gratis a la península en <span data-assumed>24-72 h</span>. Pago con tarjeta, Bizum o PayPal en la caja de Shopify.</p>
+          </form>
+        </div>
+        <div class="frame frame--split frame--photo span-6 start-7">
+          <img class="still" id="pedido-foto" src="img/pedido-grafito.webp" srcset="img/pedido-grafito-560.webp 560w, img/pedido-grafito.webp 1000w" sizes="(max-width: 639px) 342px, (max-width: 1023px) 724px, 628px" alt="El humidificador Uprain en acabado grafito, de frente, con la luz hielo encendida" width="1000" height="1250" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer closing footer--dark ground-inverse" id="contact" aria-labelledby="close-h">
+  <div class="wrap">
+    <div class="closing__cta close--type">
+      <div class="section-head">
+        <h2 id="close-h">Gotas que suben en tu mesilla</h2>
+        <p><span data-assumed>44,95 €</span> con envío gratis y 3 años de garantía.</p>
+      </div>
+      <a class="btn btn--primary btn--xl btn--wide" href="#pedido">Comprar Uprain<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
+    </div>
+    <div class="closing__links">
+      <div class="grid">
+        <div class="span-4 stack-4">
+          <a class="nav__logo" href="#top">Uprain</a>
+          <p class="footer__lede">Humidificadores antigravedad con luz, enviados desde España.</p>
+        </div>
+        <div class="span-2 footer__col"><h3>Efecto</h3><ul><li><a href="#efecto">Cómo funciona</a></li><li><a href="#noche">De noche</a></li></ul></div>
+        <div class="span-2 footer__col"><h3>Luz</h3><ul><li><a href="#luz">Colores</a></li><li><a href="#detalles">Piezas</a></li></ul></div>
+        <div class="span-2 footer__col"><h3>Compra</h3><ul><li><a href="#specs">Especificaciones</a></li><li><a href="#pedido">Precios</a></li></ul></div>
+        <div class="span-2 footer__col"><h3>Ayuda</h3><ul><li><a href="#preguntas">Preguntas</a></li><li><a href="mailto:hola@uprain.example">Contacto</a></li><li><a href="privacidad.html">Privacidad</a></li><li><a href="condiciones.html">Condiciones de venta</a></li></ul></div>
+      </div>
+      <div class="footer__legal">
+        <span>&copy; 2026 Uprain</span>
+        <div class="socials"></div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="assets/system.js"></script>
+<script type="module" src="assets/motion/motion.js"></script>
+<script type="module" src="assets/layout/layout.js"></script>
+<script type="module" src="assets/moments/moments.js"></script>
+<script type="module" src="js/hero.js"></script>
+<script type="module" src="js/efecto.js"></script>
+<script type="module" src="js/tienda.js"></script>
+</body>
+</html>

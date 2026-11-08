@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Uprain render</title><meta name="robots" content="noindex">
+<style>html,body{margin:0;background:#0b0c0e}canvas{display:block;width:100vw;height:100vh}</style>
+<script type="importmap">{"imports":{"three":"./vendor/three/three.module.min.js","three/addons/":"./vendor/three/addons/"}}</script>
+</head><body><canvas id="c"></canvas>
+<script type="module">
+import { createUprainScene } from './js/uprain3d.js';
+const q = new URLSearchParams(location.search);
+const num = (k, d) => (q.has(k) ? +q.get(k) : d);
+createUprainScene(document.getElementById('c'), {
+  view: q.get('view') || 'hero', bg: '#' + (q.get('bg') || '0b0c0e'), finish: q.get('finish') || 'grafito',
+  light: q.get('light') || 'hielo', preserve: true, dpr: num('dpr', 1), anchorX: num('ax', 0.5),
+  fill: q.get('fill') ? +q.get('fill') : null, yaw: num('yaw', 0), rate: num('rate', -0.55), strobe: q.get('strobe') !== '0',
+  mist: q.get('mist') !== '0', floor: q.get('floor') !== '0', bloom: num('bloom', 1),
+});
+setTimeout(() => { document.title = 'ready'; }, 400);
+</script></body></html>

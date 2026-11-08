@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Casa Rural Santa Creu — entrada y página principal</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&amp;family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#5F6E22}a:hover{color:#22170E}
+button{font:inherit}
+@keyframes scFloat{0%,100%{transform:translate3d(0,0,var(--z,0px)) rotate(0deg)}50%{transform:translate3d(0,-22px,var(--z,0px)) rotate(10deg)}}
+@keyframes scSpinY{from{transform:rotateX(-8deg) rotateY(0deg)}to{transform:rotateX(-8deg) rotateY(-360deg)}}
+@keyframes scSpin{to{transform:rotate(360deg)}}
+@keyframes scIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes scPulse{0%,100%{transform:scale(1);opacity:.55}50%{transform:scale(1.35);opacity:0}}
+@keyframes scWind{from{transform:translate3d(-12vw,0,0)}to{transform:translate3d(112vw,22vh,0)}}
+@keyframes scSway{0%,100%{transform:translateY(-16px)}50%{transform:translateY(16px)}}
+@keyframes scFlutter{0%{transform:rotateZ(-22deg) rotateX(8deg) rotateY(12deg)}35%{transform:rotateZ(6deg) rotateX(58deg) rotateY(-18deg)}70%{transform:rotateZ(18deg) rotateX(20deg) rotateY(8deg)}100%{transform:rotateZ(-22deg) rotateX(8deg) rotateY(12deg)}}
+@keyframes scGlow{from{opacity:0}to{opacity:1}}
+/* motion system: one strong ease-out for UI, one ease-in-out for things that travel across the screen */
+:root{--ease-out:cubic-bezier(0.23,1,0.32,1);--ease-io:cubic-bezier(0.77,0,0.175,1)}
+.sc-btn{transition:transform 160ms var(--ease-out),background-color 200ms ease,color 200ms ease,border-color 200ms ease}
+.sc-btn:active:not(:disabled){transform:scale(0.97)}
+.sc-day{transition:transform 140ms var(--ease-out),background-color 200ms ease,color 200ms ease}
+.sc-day:active:not(:disabled){transform:scale(0.92)}
+.sc-photo{overflow:hidden}
+.sc-photo img{transition:transform 700ms var(--ease-out)}
+.sc-nav a{background-image:linear-gradient(currentColor,currentColor);background-size:0% 1.5px;background-position:0 100%;background-repeat:no-repeat;transition:background-size 240ms var(--ease-out);padding-bottom:3px}
+@media (hover:hover) and (pointer:fine){
+  .sc-photo:hover img{transform:scale(1.035)}
+  .sc-nav a:hover{background-size:100% 1.5px}
+  .sc-btn-dark:hover{background-color:#3A2B1E}
+  .sc-btn-line:hover{background-color:#22170E;color:#FFFFFF}
+  .sc-thumb:hover{transform:translateY(-3px)}
+}
+.sc-thumb{transition:transform 240ms var(--ease-out)}
+.sc-paused *{animation-play-state:paused!important}
+@keyframes scModal{from{opacity:0;transform:scale(0.96)}to{opacity:1;transform:none}}
+@keyframes scFade{from{opacity:0}to{opacity:1}}
+.sc-mbar{display:none}
+@media (max-width:720px){.sc-mbar{display:flex}.sc-hide-m{display:none}}
+.sc-plaster{background-color:#F1ECE2;background-image:url(/_blob/ecad85743948aae227734caf11f18beb);background-size:cover}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}.sc-btn,.sc-day,.sc-photo img,.sc-thumb{transition:background-color 200ms ease,color 200ms ease!important;transform:none!important}}
+</style>
+</helmet>
+
+<div ref="{{setRoot}}" class="{{rootClass}}" style="--mx: 0; --my: 0; background: #FFFFFF; color: #22170E; font-family: 'Newsreader', Georgia, serif; overflow: clip">
+
+<!-- ================= ENTRADA ================= -->
+<sc-if value="{{showIntro}}" hint-placeholder-val="{{ true }}">
+  <section aria-label="Entrada" style="position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; background: #FFFFFF; {{introFade}}">
+    <div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 4">
+      <sc-for list="{{introLeaves}}" as="lf" hint-placeholder-count="10">
+        <div style="position: absolute; left: 0; perspective: 500px; animation-name: scWind; animation-timing-function: linear; animation-iteration-count: infinite; {{lf.wind}}">
+          <div style="animation-name: scSway; animation-timing-function: ease-in-out; animation-iteration-count: infinite; {{lf.sway}}">
+            <img src="{{lf.src}}" alt="" style="display: block; height: auto; animation-name: scFlutter; animation-timing-function: ease-in-out; animation-iteration-count: infinite; {{lf.leaf}}">
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="position: absolute; top: 28px; left: clamp(20px, 4vw, 48px); right: clamp(20px, 4vw, 48px); display: flex; justify-content: space-between; align-items: center; z-index: 3">
+      <span style="display: flex; align-items: center; gap: 10px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px">
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 1v16M3 6h12" stroke="#5F6E22" stroke-width="2" fill="none" stroke-linecap="round"></path></svg>
+        Santa Creu
+      </span>
+      <span style="display: flex; align-items: center; gap: 20px"><span class="sc-hide-m" style="font-size: 16px; color: #6B5F52">Casa rural con piscina privada</span><button type="button" class="sc-btn sc-btn-line" onClick="{{skip}}" style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1.5px solid #22170E; background: transparent; color: #22170E; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 15px; cursor: pointer">Saltar entrada</button></span>
+    </div>
+
+    <div style="perspective: 1300px; width: 100%; display: flex; justify-content: center; {{introZoom}}">
+      <div style="position: relative; width: min(340px, 72vw); aspect-ratio: 2 / 3; transform-style: preserve-3d; transform: rotateY(calc(var(--mx) * 18deg)) rotateX(calc(var(--my) * -12deg)); transition: transform 0.25s ease-out">
+
+        <!-- nombre gigante detrás -->
+        <p aria-hidden="true" style="position: absolute; left: 50%; top: 50%; margin: 0; white-space: nowrap; transform: translate3d(-50%, -50%, -260px); font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(110px, 21vw, 330px); letter-spacing: -0.06em; line-height: 0.8; color: transparent; -webkit-text-stroke: 1.5px rgba(95,110,34,0.35)">Santa Creu</p>
+
+
+        <!-- sombra en el suelo -->
+        <div aria-hidden="true" style="position: absolute; left: 6%; right: 6%; bottom: -46px; height: 40px; border-radius: 50%; background: radial-gradient(closest-side, rgba(34,23,14,0.22), transparent); transform: translateZ(-40px)"></div>
+
+        <!-- grosor del muro -->
+        <div aria-hidden="true" style="position: absolute; inset: -30px -30px -14px; border-radius: 50% 50% 4px 4px / 33.33% 33.33% 4px 4px; background: #CFC4B0; transform: translateZ(-40px)"></div>
+        <!-- marco encalado -->
+        <div aria-hidden="true" class="sc-plaster" style="position: absolute; inset: -30px -30px -14px; border-radius: 50% 50% 4px 4px / 33.33% 33.33% 4px 4px; box-shadow: 0 50px 90px rgba(34,23,14,0.18), inset 0 0 0 1px rgba(34,23,14,0.06)"></div>
+        <!-- jamba interior (profundidad del muro) -->
+        <div aria-hidden="true" style="position: absolute; inset: -6px -6px 0; border-radius: 50% 50% 0 0 / 33.33% 33.33% 0 0; background: linear-gradient(90deg, #B9AD97, #D8CFBE 18%, #D8CFBE 82%, #B3A690); transform: translateZ(-8px)"></div>
+        <!-- escalón de piedra -->
+        <div aria-hidden="true" style="position: absolute; left: -46px; right: -46px; bottom: -32px; height: 22px; border-radius: 3px; background: linear-gradient(#D9D0BE, #BDB29C); box-shadow: 0 14px 24px rgba(34,23,14,0.18); transform: translateZ(18px)"></div>
+
+        <!-- lo que hay detrás de la puerta -->
+        <div style="position: absolute; inset: 0; overflow: hidden; border-radius: 50% 50% 0 0 / 33.33% 33.33% 0 0; background: #2E1C10">
+          <img src="/_blob/03e10d1763da333529f80b9534701239" alt="" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%">
+          <div style="position: absolute; inset: 0; background: radial-gradient(70% 50% at 50% 40%, rgba(255,226,170,0.35), rgba(20,12,6,0.65)); transition: opacity 1.2s; {{innerShade}}"></div>
+        </div>
+
+        <!-- hojas de la puerta -->
+        <button type="button" onClick="{{enter}}" aria-label="Abrir la puerta y entrar" style="position: absolute; inset: 0; padding: 0; border: 0; background: transparent; cursor: pointer; transform-style: preserve-3d">
+          <span style="position: absolute; left: 0; top: 0; width: 50%; height: 100%; overflow: hidden; transform-origin: left center; border-top-left-radius: 100% 33.33%; background: #4A2E1A; box-shadow: inset -2px 0 0 rgba(0,0,0,0.45), inset 0 0 40px rgba(0,0,0,0.35); transition: transform 1.4s cubic-bezier(.7,0,.2,1); {{leafL}}">
+            <img src="/_blob/8ced888f1a079c34987269e41d9e0b2a" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block">
+            <span style="position: absolute; inset: 0; border-top-left-radius: 100% 33.33%; box-shadow: inset 0 0 0 6px rgba(28,16,8,0.55), inset 10px 14px 30px rgba(255,220,170,0.08)"></span>
+          </span>
+          <span style="position: absolute; right: 0; top: 0; width: 50%; height: 100%; overflow: hidden; transform-origin: right center; border-top-right-radius: 100% 33.33%; background: #4A2E1A; box-shadow: inset 2px 0 0 rgba(0,0,0,0.45), inset 0 0 40px rgba(0,0,0,0.35); transition: transform 1.4s cubic-bezier(.7,0,.2,1); {{leafR}}">
+            <img src="/_blob/e0ce26526dea694bb6f104f62499eb59" alt="" style="width: 100%; height: 100%; object-fit: cover; display: block">
+            <span style="position: absolute; inset: 0; border-top-right-radius: 100% 33.33%; box-shadow: inset 0 0 0 6px rgba(28,16,8,0.55)"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div style="position: relative; z-index: 3; margin-top: 88px; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; padding: 0 20px">
+      <p style="margin: 0; font-size: 19px; color: #6B5F52">Mueve el ratón para rodear la puerta. Ábrela para entrar.</p>
+      <button type="button" class="sc-btn sc-btn-dark" onClick="{{enter}}" style="position: relative; min-height: 58px; padding: 0 34px; border: 0; border-radius: 999px; background: #22170E; color: #FFFFFF; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 17px; cursor: pointer">
+        <span aria-hidden="true" style="position: absolute; inset: 0; border-radius: 999px; border: 1px solid #5F6E22; animation: scPulse 2.4s ease-out infinite"></span>
+        Entrar en Santa Creu
+      </button>
+    </div>
+  </section>
+</sc-if>
+
+<!-- ================= PÁGINA ================= -->
+<sc-if value="{{showPage}}" hint-placeholder-val="{{ false }}">
+<div style="animation: scIn 1s cubic-bezier(.22,1,.36,1) both">
+  <!-- Navegación -->
+  <header style="position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,0.86); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(34,23,14,0.07)">
+    <nav aria-label="Principal" style="max-width: 1500px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; padding: 14px clamp(20px, 4vw, 48px)">
+      <a href="#top" style="display: flex; align-items: center; gap: 10px; color: #22170E; text-decoration: none; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px">
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 1v16M3 6h12" stroke="#5F6E22" stroke-width="2" fill="none" stroke-linecap="round"></path></svg>
+        Santa Creu
+      </a>
+      <div class="sc-nav sc-hide-m" style="display: flex; flex-wrap: wrap; gap: 28px; font-size: 18px">
+        <a href="#dia" style="color: #22170E; text-decoration: none">Un día aquí</a>
+        <a href="#casa" style="color: #22170E; text-decoration: none">La casa</a>
+        <a href="#fotos" style="color: #22170E; text-decoration: none">Fotos</a>
+        <a href="#fechas" style="color: #22170E; text-decoration: none">Disponibilidad</a>
+      </div>
+      <a href="#fechas" class="sc-btn" style="display: inline-flex; align-items: center; min-height: 46px; padding: 0 22px; border-radius: 999px; background: {{accent}}; color: #FFFFFF; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 15px; text-decoration: none">Reservar</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section id="top" style="position: relative; max-width: 1500px; margin: 0 auto; padding: 72px clamp(20px, 4vw, 48px) 120px; display: flex; flex-wrap: wrap; align-items: center; gap: 56px">
+    <div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0">
+      <sc-for list="{{pageLeaves}}" as="lf" hint-placeholder-count="10">
+        <div style="position: absolute; left: 0; perspective: 500px; animation-name: scWind; animation-timing-function: linear; animation-iteration-count: infinite; {{lf.wind}}">
+          <div style="animation-name: scSway; animation-timing-function: ease-in-out; animation-iteration-count: infinite; {{lf.sway}}">
+            <img src="{{lf.src}}" alt="" style="display: block; height: auto; animation-name: scFlutter; animation-timing-function: ease-in-out; animation-iteration-count: infinite; {{lf.leaf}}">
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="position: relative; z-index: 1; flex: 1 1 520px; min-width: 0">
+      <p style="margin: 0; display: flex; align-items: center; gap: 12px; font-family: 'Bricolage Grotesque', sans-serif; font-size: 17px; color: #5F6E22"><span style="display: inline-block; width: 36px; height: 2px; background: #5F6E22"></span>Casa rural</p>
+      <h1 style="margin: 18px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(76px, 12vw, 196px); line-height: 0.8; letter-spacing: -0.055em">Santa<br>Creu<span style="color: #8B5A2B">.</span></h1>
+      <p style="margin: 36px 0 0; max-width: 40ch; font-size: 23px; line-height: 1.5; color: #4A3F33">Una casa de campo encalada, una piscina entre palmeras y una terraza a la sombra. Toda para ti, sin vecinos de hamaca.</p>
+      <div style="margin-top: 36px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px">
+        <a href="#fechas" class="sc-btn sc-btn-dark" style="display: inline-flex; align-items: center; min-height: 58px; padding: 0 30px; border-radius: 999px; background: #22170E; color: #FFFFFF; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 17px; text-decoration: none">Ver fechas libres</a>
+        <a href="#casa" class="sc-btn sc-btn-line" style="display: inline-flex; align-items: center; min-height: 58px; padding: 0 30px; border-radius: 999px; border: 1.5px solid #22170E; color: #22170E; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 17px; text-decoration: none">Recorrer la casa</a>
+      </div>
+      <p style="margin: 18px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; color: #6B5F52">Desde <strong style="color: #22170E">140 €</strong> la noche · mínimo 3 noches · alquiler de la casa entera</p>
+      <ul style="margin: 36px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 36px">
+        <li><span style="display: block; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 30px">[8]</span><span style="font-size: 16px; color: #6B5F52">huéspedes</span></li>
+        <li><span style="display: block; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 30px">[4]</span><span style="font-size: 16px; color: #6B5F52">dormitorios</span></li>
+        <li><span style="display: block; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 30px">1</span><span style="font-size: 16px; color: #6B5F52">piscina privada</span></li>
+      </ul>
+    </div>
+
+    <!-- pila 3D de fotos -->
+    <div style="position: relative; z-index: 1; flex: 1 1 460px; min-width: 0; height: 660px; perspective: 1400px; display: flex; align-items: center; justify-content: center">
+      <div style="position: relative; width: min(380px, 78vw); height: 560px; transform-style: preserve-3d; transform: rotateY(calc(var(--mx) * -16deg)) rotateX(calc(var(--my) * 10deg)); transition: transform 0.3s ease-out">
+        <div style="position: absolute; inset: 0; transform: translate3d(-34%, -6%, -180px) rotate(-7deg); border-radius: 999px 999px 22px 22px; overflow: hidden; box-shadow: 0 40px 80px rgba(34,23,14,0.18)">
+          <img src="/_blob/b3a47a7d2d1b0c7c61991936faa8e0b5" alt="Palmeras y sombrilla junto a la piscina" style="width: 100%; height: 100%; object-fit: cover">
+        </div>
+        <div style="position: absolute; inset: 12% 0 auto auto; width: 72%; height: 62%; transform: translate3d(34%, 10%, -60px) rotate(5deg); border-radius: 22px; overflow: hidden; box-shadow: 0 40px 80px rgba(34,23,14,0.2)">
+          <img src="/_blob/88675a7d5c2604660f1743c105aaa8d7" alt="Terraza con pérgola" style="width: 100%; height: 100%; object-fit: cover">
+        </div>
+        <div style="position: absolute; inset: 0; transform: translateZ(70px); border-radius: 999px 999px 22px 22px; overflow: hidden; box-shadow: 0 50px 100px rgba(34,23,14,0.28); outline: 10px solid #FFFFFF">
+          <img src="/_blob/03e10d1763da333529f80b9534701239" alt="La casa vista desde la piscina" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%">
+        </div>
+        <!-- sello giratorio -->
+        <div aria-hidden="true" style="position: absolute; right: -60px; bottom: 40px; width: 148px; height: 148px; transform: translateZ(170px)">
+          <div style="width: 100%; height: 100%; border-radius: 50%; background: #FFFFFF; box-shadow: 0 20px 40px rgba(34,23,14,0.18); animation: scSpin 18s linear infinite">
+            <svg viewBox="0 0 148 148" width="148" height="148"><defs><path id="scCirc" d="M74,74 m-52,0 a52,52 0 1,1 104,0 a52,52 0 1,1 -104,0"></path></defs><text font-family="Bricolage Grotesque, sans-serif" font-size="14.5" font-weight="600" fill="#5F6E22" letter-spacing="2.2"><textPath href="#scCirc">casa rural santa creu  piscina privada  </textPath></text></svg>
+          </div>
+          <svg width="30" height="30" viewBox="0 0 18 18" style="position: absolute; left: 59px; top: 59px"><path d="M9 1v16M3 6h12" stroke="#8B5A2B" stroke-width="2" fill="none" stroke-linecap="round"></path></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Anillo 3D de palabras -->
+  <section aria-label="La casa en palabras" style="background: #F6F6F1; padding: 120px 0 140px; overflow: hidden">
+    <p style="margin: 0 auto; max-width: 1500px; box-sizing: border-box; padding: 0 clamp(20px, 4vw, 48px); font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(34px, 4.6vw, 72px); line-height: 1.04; letter-spacing: -0.03em"><span style="display: block; max-width: 22ch">Palmeras arriba, piedra cálida bajo los pies y una piscina solo para ti. <span style="color: #8B5A2B">Aquí los días van a su ritmo.</span></span></p>
+    <div style="max-width: 1500px; margin: 24px auto 0; box-sizing: border-box; padding: 0 clamp(20px, 4vw, 48px)">
+      <button type="button" class="sc-btn" onClick="{{togglePause}}" aria-pressed="{{pausedStr}}" style="min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1.5px solid rgba(34,23,14,0.25); background: #FFFFFF; color: #22170E; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 15px; cursor: pointer">{{pauseLabel}}</button>
+    </div>
+    <div aria-hidden="true" style="margin-top: 56px; height: 200px; perspective: 1100px; display: flex; align-items: center; justify-content: center">
+      <div style="position: relative; width: 10px; height: 80px; transform-style: preserve-3d; animation: scSpinY 30s linear infinite">
+        <sc-for list="{{ringWords}}" as="rw" hint-placeholder-count="8">
+          <span style="position: absolute; left: 50%; top: 0; white-space: nowrap; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 74px; line-height: 80px; letter-spacing: -0.04em; backface-visibility: hidden; {{rw.style}}">{{rw.word}}</span>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- Un día aquí -->
+  <section id="dia" style="max-width: 1500px; margin: 0 auto; padding: 130px clamp(20px, 4vw, 48px)">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px">
+      <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(52px, 7vw, 116px); line-height: 0.86; letter-spacing: -0.05em">Un día aquí</h2>
+      <p style="margin: 0; max-width: 38ch; font-size: 20px; line-height: 1.5; color: #4A3F33">La misma casa, cuatro luces. Pasa el ratón por cada arco.</p>
+    </div>
+    <div style="margin-top: 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px">
+      <sc-for list="{{moments}}" as="m" hint-placeholder-count="4">
+        <article style="display: flex; flex-direction: column; gap: 18px">
+          <div class="sc-photo" style="position: relative; height: 460px; border-radius: 999px 999px 22px 22px; background: #2E1C10">
+            <img src="{{m.img}}" alt="{{m.alt}}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: {{m.pos}}">
+            <div style="position: absolute; inset: 0; {{m.tint}}"></div>
+            <span style="position: absolute; left: 18px; bottom: 16px; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,0.92); font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 14px; color: #22170E">{{m.time}}</span>
+          </div>
+          <div>
+            <h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 38px; letter-spacing: -0.035em">{{m.title}}</h3>
+            <p style="margin: 8px 0 0; font-size: 19px; line-height: 1.45; color: #4A3F33">{{m.text}}</p>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- Carrusel 3D -->
+  <section id="casa" style="background: #F6F6F1; padding: 130px 0 120px; overflow: hidden">
+    <div style="max-width: 1500px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px">
+      <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(52px, 7vw, 116px); line-height: 0.86; letter-spacing: -0.05em">Todo es<br>para ti</h2>
+      <div style="display: flex; gap: 10px">
+        <button type="button" class="sc-btn" onClick="{{cPrev}}" aria-label="Espacio anterior" style="width: 56px; height: 56px; border-radius: 50%; border: 1.5px solid #22170E; background: #FFFFFF; color: #22170E; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"></path></svg></button>
+        <button type="button" class="sc-btn" onClick="{{cNext}}" aria-label="Espacio siguiente" style="width: 56px; height: 56px; border-radius: 50%; border: 0; background: #22170E; color: #FFFFFF; cursor: pointer"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"></path></svg></button>
+      </div>
+    </div>
+    <div style="margin-top: 40px; height: 600px; perspective: 1600px; display: flex; justify-content: center; align-items: center">
+      <div style="position: relative; width: min(400px, 74vw); height: 540px; transform-style: preserve-3d">
+        <sc-for list="{{slides}}" as="sl" hint-placeholder-count="5">
+          <button type="button" onClick="{{sl.pick}}" aria-label="{{sl.title}}" aria-current="{{sl.current}}" style="position: absolute; inset: 0; padding: 0; border: 0; border-radius: 999px 999px 22px 22px; overflow: hidden; cursor: pointer; background: #2E1C10; transition: transform 650ms var(--ease-io), opacity 650ms var(--ease-io), filter 650ms var(--ease-io); box-shadow: 0 40px 80px rgba(34,23,14,0.22); {{sl.style}}">
+            <img src="{{sl.img}}" alt="" style="width: 100%; height: 100%; object-fit: cover; object-position: {{sl.pos}}">
+          </button>
+        </sc-for>
+      </div>
+    </div>
+    <div style="max-width: 640px; margin: 28px auto 0; padding: 0 20px; text-align: center; min-height: 120px">
+      <p style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 15px; color: #5F6E22">{{slideCount}}</p>
+      <h3 style="margin: 8px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 38px; letter-spacing: -0.03em">{{slideTitle}}</h3>
+      <p style="margin: 10px 0 0; font-size: 20px; line-height: 1.5; color: #4A3F33">{{slideText}}</p>
+    </div>
+    <ul style="max-width: 1100px; margin: 48px auto 0; padding: 0 20px; list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px">
+      <li style="padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(95,110,34,0.45); font-size: 17px">Piscina privada</li>
+      <li style="padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(95,110,34,0.45); font-size: 17px">Aire acondicionado</li>
+      <li style="padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(95,110,34,0.45); font-size: 17px">Terraza con pérgola</li>
+      <li style="padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(95,110,34,0.45); font-size: 17px">Jardín</li>
+      <li style="padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(95,110,34,0.45); font-size: 17px">Sombrillas y tumbonas</li>
+      <li style="padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(139,90,43,0.45); font-size: 17px">[Wi‑Fi]</li>
+    </ul>
+  </section>
+
+  <!-- Fotos -->
+  <section id="fotos" style="max-width: 1500px; margin: 0 auto; padding: 130px clamp(20px, 4vw, 48px) 0">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px">
+      <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(52px, 7vw, 116px); line-height: 0.86; letter-spacing: -0.05em">Fotos de<br>la casa</h2>
+      <p style="margin: 0; max-width: 38ch; font-size: 20px; line-height: 1.5; color: #4A3F33">Toca una foto para verla en grande.</p>
+    </div>
+    <ul style="margin: 56px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); grid-auto-rows: 220px; gap: 14px">
+      <sc-for list="{{gallery}}" as="g" hint-placeholder-count="10">
+        <li style="{{g.span}}">
+          <button type="button" class="sc-thumb sc-photo" onClick="{{g.open}}" aria-label="{{g.label}}" style="display: block; width: 100%; height: 100%; padding: 0; border: 0; border-radius: 20px; background: #2E1C10; cursor: zoom-in">
+            <img src="{{g.src}}" alt="" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: {{g.pos}}">
+          </button>
+        </li>
+      </sc-for>
+    </ul>
+  </section>
+
+  <sc-if value="{{lightOpen}}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-modal="true" aria-label="{{lightLabel}}" style="position: fixed; inset: 0; z-index: 60; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(20,13,8,0.88); animation: scFade 200ms ease-out both">
+      <button type="button" onClick="{{closeLight}}" aria-label="Cerrar" style="position: absolute; inset: 0; border: 0; background: transparent; cursor: zoom-out"></button>
+      <figure style="position: relative; margin: 0; max-width: min(1200px, 100%); max-height: 100%; display: flex; flex-direction: column; gap: 14px; animation: scModal 240ms cubic-bezier(0.23,1,0.32,1) both">
+        <img src="{{lightSrc}}" alt="{{lightLabel}}" style="display: block; max-width: 100%; max-height: calc(100vh - 140px); border-radius: 18px; object-fit: contain">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #FFFFFF">
+          <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px">{{lightCount}}</span>
+          <span style="display: flex; gap: 10px">
+            <button type="button" class="sc-btn" onClick="{{lightPrev}}" aria-label="Foto anterior" style="width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.5); background: transparent; color: #FFFFFF; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"></path></svg></button>
+            <button type="button" class="sc-btn" onClick="{{lightNext}}" aria-label="Foto siguiente" style="width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.5); background: transparent; color: #FFFFFF; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"></path></svg></button>
+            <button type="button" class="sc-btn" onClick="{{closeLight}}" aria-label="Cerrar la foto" style="width: 48px; height: 48px; border-radius: 50%; border: 0; background: #FFFFFF; color: #22170E; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"></path></svg></button>
+          </span>
+        </div>
+      </figure>
+    </div>
+  </sc-if>
+
+  <!-- Disponibilidad -->
+  <section id="fechas" style="max-width: 1500px; margin: 0 auto; padding: 130px clamp(20px, 4vw, 48px)">
+    <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px">
+      <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(52px, 7vw, 116px); line-height: 0.86; letter-spacing: -0.05em">Elige tus<br>fechas</h2>
+      <p style="margin: 0; max-width: 40ch; font-size: 20px; line-height: 1.5; color: #4A3F33">Reservas con doce meses de antelación. Mínimo 3 noches; alquilas la casa entera. Precios y ocupación de ejemplo.</p>
+    </div>
+
+    <ul style="margin: 56px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px">
+      <sc-for list="{{months}}" as="mo" hint-placeholder-count="12">
+        <li>
+          <button type="button" class="sc-day" onClick="{{mo.pick}}" aria-pressed="{{mo.active}}" aria-label="{{mo.aria}}" style="width: 100%; min-height: 78px; padding: 12px; border-radius: 16px; text-align: left; cursor: pointer; color: #22170E; {{mo.style}}">
+            <span style="display: flex; justify-content: space-between; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 15px"><span>{{mo.short}}</span><span style="font-weight: 400; font-size: 12px; color: #6B5F52">{{mo.year}}</span></span>
+            <span style="display: block; margin-top: 8px; height: 4px; border-radius: 99px; background: rgba(34,23,14,0.08); overflow: hidden"><span style="display: block; height: 100%; border-radius: 99px; background: {{accent}}; width: {{mo.free}}%"></span></span>
+            <span style="display: block; margin-top: 6px; font-size: 13px; color: #6B5F52">{{mo.free}}% libre</span>
+          </button>
+        </li>
+      </sc-for>
+    </ul>
+
+    <div style="margin-top: 48px; display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-start">
+      <div style="flex: 999 1 560px; min-width: 0">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px">
+          <p style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 20px">{{rangeLabel}}</p>
+          <div style="display: flex; gap: 8px">
+            <button type="button" class="sc-btn" onClick="{{prev}}" aria-label="Mes anterior" style="width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid rgba(34,23,14,0.25); background: #FFFFFF; color: #22170E; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"></path></svg></button>
+            <button type="button" class="sc-btn" onClick="{{next}}" aria-label="Mes siguiente" style="width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid rgba(34,23,14,0.25); background: #FFFFFF; color: #22170E; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"></path></svg></button>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px">
+          <sc-for list="{{visible}}" as="vm" hint-placeholder-count="2">
+            <div>
+              <h3 style="margin: 0 0 14px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 18px; text-transform: capitalize">{{vm.title}}</h3>
+              <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; text-align: center">
+                <sc-for list="{{weekdays}}" as="w" hint-placeholder-count="7">
+                  <div style="padding-bottom: 8px; font-size: 13px; color: #6B5F52">{{w}}</div>
+                </sc-for>
+                <sc-for list="{{vm.cells}}" as="c" hint-placeholder-count="35">
+                  <sc-if value="{{c.blank}}" hint-placeholder-val="{{ false }}"><div></div></sc-if>
+                  <sc-if value="{{c.real}}" hint-placeholder-val="{{ true }}">
+                    <button type="button" class="sc-day" disabled="{{c.disabled}}" onClick="{{c.pick}}" aria-label="{{c.aria}}" style="aspect-ratio: 1; min-height: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; border: 0; border-radius: 12px; font-size: 16px; {{c.style}}">
+                      <span>{{c.n}}</span>
+                      <span style="font-size: 10px; opacity: 0.75">{{c.rate}}</span>
+                    </button>
+                  </sc-if>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <ul style="margin: 28px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 28px; font-size: 16px; color: #4A3F33">
+          <li style="display: flex; align-items: center; gap: 10px"><span style="width: 12px; height: 12px; border-radius: 99px; border: 1.5px solid rgba(34,23,14,0.4)"></span>Libre</li>
+          <li style="display: flex; align-items: center; gap: 10px"><span style="width: 12px; height: 12px; border-radius: 99px; background: #ECEAE3"></span>Reservado</li>
+          <li style="display: flex; align-items: center; gap: 10px"><span style="width: 12px; height: 12px; border-radius: 99px; background: {{accent}}"></span>Tu estancia</li>
+        </ul>
+      </div>
+
+      <aside style="flex: 1 1 340px; box-sizing: border-box; padding: 32px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(34,23,14,0.1); box-shadow: 0 30px 70px rgba(34,23,14,0.08)">
+        <h3 style="margin: 0; display: flex; align-items: center; gap: 10px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 26px"><svg width="16" height="16" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 1v16M3 6h12" stroke="#8B5A2B" stroke-width="2.2" fill="none" stroke-linecap="round"></path></svg>Tu estancia</h3>
+        <div style="margin-top: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid rgba(34,23,14,0.14); border-radius: 16px; overflow: hidden">
+          <div style="padding: 12px 16px"><p style="margin: 0; font-size: 13px; color: #6B5F52">Entrada</p><p style="margin: 4px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 17px">{{startLabel}}</p></div>
+          <div style="padding: 12px 16px; border-left: 1px solid rgba(34,23,14,0.14)"><p style="margin: 0; font-size: 13px; color: #6B5F52">Salida</p><p style="margin: 4px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 17px">{{endLabel}}</p></div>
+        </div>
+        <div style="margin-top: 12px; display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; border: 1px solid rgba(34,23,14,0.14); border-radius: 16px">
+          <span style="font-size: 18px">Huéspedes</span>
+          <div style="display: flex; align-items: center; gap: 14px">
+            <button type="button" class="sc-btn" onClick="{{lessGuests}}" aria-label="Quitar un huésped" style="width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid rgba(34,23,14,0.25); background: #FFFFFF; color: #22170E; cursor: pointer; font-size: 20px">−</button>
+            <span style="min-width: 20px; text-align: center; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 18px">{{guests}}</span>
+            <button type="button" class="sc-btn" onClick="{{moreGuests}}" aria-label="Añadir un huésped" style="width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid rgba(34,23,14,0.25); background: #FFFFFF; color: #22170E; cursor: pointer; font-size: 20px">+</button>
+          </div>
+        </div>
+        <sc-if value="{{msg}}" hint-placeholder-val="{{ false }}">
+          <p role="alert" style="margin: 14px 0 0; font-size: 16px; line-height: 1.4; color: #8B3A1B">{{msg}}</p>
+        </sc-if>
+        <div style="margin-top: 22px; min-height: 120px">
+          <sc-if value="{{hasQuote}}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 17px">
+              <sc-for list="{{quoteLines}}" as="q" hint-placeholder-count="1">
+                <div style="display: flex; justify-content: space-between; gap: 12px; color: #4A3F33"><span>{{q.label}}</span><span>{{q.amount}}</span></div>
+              </sc-for>
+              <div style="display: flex; justify-content: space-between; color: #4A3F33"><span>Limpieza</span><span>90 €</span></div>
+              <div style="display: flex; justify-content: space-between; align-items: baseline; padding-top: 14px; border-top: 1px solid rgba(34,23,14,0.14)"><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 18px">Total, {{nights}} noches</span><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 34px; letter-spacing: -0.02em">{{total}}</span></div>
+            </div>
+          </sc-if>
+          <sc-if value="{{noQuote}}" hint-placeholder-val="{{ true }}">
+            <p style="margin: 0; font-size: 17px; line-height: 1.5; color: #6B5F52">{{hint}}</p>
+          </sc-if>
+        </div>
+        <sc-if value="{{sent}}" hint-placeholder-val="{{ false }}">
+          <p role="status" style="margin: 22px 0 0; padding: 16px; border-radius: 16px; background: #EEF1DC; color: #22170E; font-size: 17px; line-height: 1.4"><strong style="font-family: 'Bricolage Grotesque', sans-serif; color: #4A5619">Tu solicitud está lista.</strong> Se ha abierto tu correo con las fechas y el precio; solo tienes que enviarlo.</p>
+        </sc-if>
+        <sc-if value="{{notSent}}" hint-placeholder-val="{{ true }}">
+          <sc-if value="{{hasQuote}}" hint-placeholder-val="{{ false }}">
+            <a href="{{mailto}}" class="sc-btn sc-btn-dark" onClick="{{request}}" style="margin-top: 22px; display: flex; align-items: center; justify-content: center; width: 100%; min-height: 58px; border-radius: 999px; background: #22170E; color: #FFFFFF; text-decoration: none; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 18px">Solicitar reserva</a>
+          </sc-if>
+          <sc-if value="{{noQuote}}" hint-placeholder-val="{{ true }}">
+            <button type="button" disabled="disabled" style="margin-top: 22px; width: 100%; min-height: 58px; border: 0; border-radius: 999px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 18px; background: #ECEAE3; color: #6B6257; cursor: not-allowed">Solicitar reserva</button>
+          </sc-if>
+        </sc-if>
+      </aside>
+    </div>
+  </section>
+
+  <div class="sc-mbar" style="position: sticky; bottom: 0; z-index: 25; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 20px calc(12px + env(safe-area-inset-bottom)); background: rgba(255,255,255,0.94); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-top: 1px solid rgba(34,23,14,0.08)">
+    <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 15px; color: #4A3F33">Desde <strong style="font-size: 20px; color: #22170E">140 €</strong> / noche</span>
+    <a href="#fechas" class="sc-btn" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border-radius: 999px; background: {{accent}}; color: #FFFFFF; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 16px; text-decoration: none">Ver fechas libres</a>
+  </div>
+
+  <!-- Pie -->
+  <footer style="border-top: 1px solid rgba(34,23,14,0.08); padding: 100px clamp(20px, 4vw, 48px) 32px">
+    <div style="max-width: 1500px; margin: 0 auto">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 40px">
+        <div>
+          <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 42px; letter-spacing: -0.03em">¿Dudas antes de reservar?</h2>
+          <a href="mailto:hola@santacreu.com" style="display: inline-block; margin-top: 18px; font-size: 24px">[hola@santacreu.com]</a>
+        </div>
+        <div>
+          <h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 18px; color: #8B5A2B">Dónde</h3>
+          <p style="margin: 10px 0 0; font-size: 19px; color: #4A3F33">[Pueblo, provincia]</p>
+        </div>
+        <div>
+          <button type="button" class="sc-btn" onClick="{{replay}}" style="min-height: 48px; padding: 0 22px; border-radius: 999px; border: 1.5px solid #5F6E22; background: #FFFFFF; color: #5F6E22; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 15px; cursor: pointer">Ver la entrada otra vez</button>
+        </div>
+      </div>
+      <p aria-hidden="true" style="margin: 96px 0 0; white-space: nowrap; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 15vw; line-height: 0.8; letter-spacing: -0.06em; color: transparent; -webkit-text-stroke: 1.5px #5F6E22">Santa Creu</p>
+      <div style="margin-top: 28px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 15px; color: #6B5F52">
+        <span>© 2026 Casa Rural Santa Creu</span>
+        <span style="display: inline-block; width: 64px; height: 3px; align-self: center; background: #8B5A2B"></span>
+      </div>
+    </div>
+  </footer>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#5F6E22","options":["#5F6E22","#4A5619","#8B5A2B"]},"intro":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":6200}}'>
+class Component extends DCLogic {
+  state = { view: 0, start: null, end: null, guests: 2, sent: false, msg: '', opening: false, entered: false, slide: 0, light: -1, paused: false };
+
+  componentDidMount() {
+    this._move = (e) => {
+      const x = (e.clientX / window.innerWidth) * 2 - 1;
+      const y = (e.clientY / window.innerHeight) * 2 - 1;
+      if (this._raf) return;
+      this._raf = requestAnimationFrame(() => {
+        this._raf = null;
+        if (!this._root) return;
+        this._root.style.setProperty('--mx', x.toFixed(3));
+        this._root.style.setProperty('--my', y.toFixed(3));
+      });
+    };
+    window.addEventListener('pointermove', this._move, { passive: true });
+  }
+  componentWillUnmount() {
+    window.removeEventListener('pointermove', this._move);
+    clearTimeout(this._t);
+    if (this._raf) cancelAnimationFrame(this._raf);
+  }
+
+  leaves(n, seed) {
+    if (!this._leaves) this._leaves = {};
+    if (this._leaves[seed]) return this._leaves[seed];
+    const srcs = ['/_blob/64b980f24e4e588d5ce0f59271c170ea', '/_blob/08616ecd9d6f06240739857991c3b709', '/_blob/fdea955fdf0bcec654670d52ec75753d', '/_blob/4ffb820e4c8729dd620c854c01b17512'];
+    let a = seed * 9301 + 49297;
+    const rnd = () => { a = (a * 16807) % 2147483647; return a / 2147483647; };
+    const out = [];
+    for (let i = 0; i < n; i++) {
+      const depth = rnd();                       // 0 lejos, 1 cerca
+      const w = Math.round(26 + depth * 46);
+      const dur = (34 - depth * 14 + rnd() * 6).toFixed(1);
+      const blur = depth > 0.85 ? 1.2 : depth < 0.2 ? 0.8 : 0;
+      out.push({
+        src: srcs[i % 4 === 3 && rnd() > 0.4 ? 3 : Math.floor(rnd() * 3)],
+        wind: 'top: ' + Math.round(rnd() * 80 - 10) + '%; animation-duration: ' + dur + 's; animation-delay: -' + (rnd() * dur).toFixed(1) + 's; opacity: ' + (0.55 + depth * 0.45).toFixed(2),
+        sway: 'animation-duration: ' + (3.2 + rnd() * 2.6).toFixed(1) + 's; animation-delay: -' + (rnd() * 4).toFixed(1) + 's',
+        leaf: 'width: ' + w + 'px; animation-duration: ' + (2.4 + rnd() * 2.2).toFixed(1) + 's; animation-delay: -' + (rnd() * 3).toFixed(1) + 's; filter: drop-shadow(0 ' + Math.round(4 + depth * 8) + 'px ' + Math.round(4 + depth * 6) + 'px rgba(34,23,14,0.18))' + (blur ? ' blur(' + blur + 'px)' : ''),
+      });
+    }
+    this._leaves[seed] = out;
+    return out;
+  }
+  day0() { const t = new Date(); t.setHours(0, 0, 0, 0); return t; }
+  key(d) { return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
+  add(d, n) { const x = new Date(d); x.setDate(x.getDate() + n); return x; }
+  rate(d) {
+    const md = (d.getMonth() + 1) * 100 + d.getDate();
+    if (md >= 615 && md <= 915) return { name: 'temporada alta', r: 260 };
+    if (md >= 1220 || md <= 106 || (md >= 401 && md <= 614) || (md >= 916 && md <= 1031)) return { name: 'temporada media', r: 190 };
+    return { name: 'temporada baja', r: 140 };
+  }
+  booked(today) {
+    if (this._b) return this._b;
+    let a = 7;
+    const rnd = () => { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+    const set = new Set();
+    const end = new Date(today.getFullYear(), today.getMonth() + 12, 1);
+    let d = this.add(today, Math.floor(rnd() * 4));
+    while (d < end) {
+      const m = d.getMonth(); const summer = m >= 5 && m <= 8;
+      d = this.add(d, summer ? Math.floor(rnd() * 3) : 2 + Math.floor(rnd() * 9));
+      const len = (summer ? 5 : 3) + Math.floor(rnd() * 5);
+      for (let i = 0; i < len; i++) set.add(this.key(this.add(d, i)));
+      d = this.add(d, len);
+    }
+    this._b = set;
+    return set;
+  }
+  free(s, e, b) { for (let d = new Date(s); d < e; d = this.add(d, 1)) if (b.has(this.key(d))) return false; return true; }
+  nights(s, e) { return Math.round((e - s) / 86400000); }
+  money(n) { return n.toLocaleString('es-ES') + ' €'; }
+  fmt(t) { return t ? new Date(t).toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' }) : 'Añadir fecha'; }
+
+  pick(d, b) {
+    const { start, end } = this.state;
+    const s = start ? new Date(start) : null;
+    const reset = { msg: '', sent: false };
+    if (!s || end) { if (!b.has(this.key(d))) this.setState({ ...reset, start: d.getTime(), end: null }); return; }
+    if (d <= s) { if (!b.has(this.key(d))) this.setState({ ...reset, start: d.getTime() }); return; }
+    if (!this.free(s, d, b)) { this.setState({ msg: 'Esas fechas incluyen una noche reservada. Elige una estancia más corta u otras fechas.' }); return; }
+    if (this.nights(s, d) < 3) { this.setState({ msg: 'La estancia mínima es de 3 noches. Elige una salida más tarde.' }); return; }
+    this.setState({ ...reset, end: d.getTime() });
+  }
+
+  renderVals() {
+    const accent = this.props.accent ?? '#5F6E22';
+    const introOn = this.props.intro ?? true;
+    const today = this.day0();
+    const b = this.booked(today);
+    const { view, start, end, guests, sent, msg, opening, entered, slide, light, paused } = this.state;
+    const showIntro = introOn && !entered;
+    const s = start ? new Date(start) : null;
+    const e = end ? new Date(end) : null;
+    const selectingEnd = s && !e;
+
+    // Carrusel 3D
+    const slidesData = [
+      { title: 'La piscina', text: 'Piscina privada entre palmeras, con sombrillas y sitio de sobra para tomar el sol.', img: '/_blob/e69c87afcff37b5c2de94de97af82cc3', pos: '50% 50%' },
+      { title: 'La terraza', text: 'Terraza con pérgola y una mesa larga donde cabe todo el grupo.', img: '/_blob/88675a7d5c2604660f1743c105aaa8d7', pos: '50% 50%' },
+      { title: 'La casa', text: 'Dos plantas de paredes encaladas, con aire acondicionado en las habitaciones.', img: '/_blob/03e10d1763da333529f80b9534701239', pos: '50% 30%' },
+      { title: 'El jardín', text: 'Setos recortados, agaves y plataneras sobre piedra cálida.', img: '/_blob/4268caa34df1486d76a896942e0af389', pos: '40% 50%' },
+      { title: 'Las palmeras', text: 'Sombra natural todo el día y el cielo azul como techo.', img: '/_blob/7ee454fe930bfe82052214afc86d9fb7', pos: '50% 30%' },
+    ];
+    const N = slidesData.length;
+    const slides = slidesData.map((sd, i) => {
+      let o = i - slide;
+      if (o > N / 2) o -= N;
+      if (o < -N / 2) o += N;
+      const a = Math.abs(o);
+      return {
+        ...sd,
+        current: o === 0 ? 'true' : 'false',
+        style: 'transform: translateX(' + (o * 66) + '%) translateZ(' + (-a * 260) + 'px) rotateY(' + (o * -32) + 'deg); z-index: ' + (10 - a) + '; opacity: ' + (a > 2 ? 0 : 1 - a * 0.18) + '; filter: saturate(' + (1 - a * 0.25) + ')',
+        pick: () => this.setState({ slide: i }),
+      };
+    });
+
+    const photos = [
+      { src: '/_blob/03e10d1763da333529f80b9534701239', label: 'La casa vista desde la piscina', pos: '50% 40%', span: 'grid-column: span 2; grid-row: span 2' },
+      { src: '/_blob/e69c87afcff37b5c2de94de97af82cc3', label: 'La piscina privada', pos: '50% 50%', span: '' },
+      { src: '/_blob/7f97e175023ca94cfc138e31bd3464b3', label: 'La fachada con la pérgola', pos: '50% 50%', span: '' },
+      { src: '/_blob/88675a7d5c2604660f1743c105aaa8d7', label: 'La terraza con pérgola', pos: '50% 50%', span: 'grid-row: span 2' },
+      { src: '/_blob/230ad3faf61f70be245e10b8e57bbfcc', label: 'El agua de la piscina', pos: '50% 50%', span: '' },
+      { src: '/_blob/b3a47a7d2d1b0c7c61991936faa8e0b5', label: 'Palmeras y sombrilla junto a la piscina', pos: '50% 40%', span: 'grid-row: span 2' },
+      { src: '/_blob/4268caa34df1486d76a896942e0af389', label: 'El jardín', pos: '40% 50%', span: '' },
+      { src: '/_blob/85558823f6d2ab406d595a4519ab0a17', label: 'El jardín junto a la piscina', pos: '50% 50%', span: '' },
+      { src: '/_blob/7ee454fe930bfe82052214afc86d9fb7', label: 'Las palmeras', pos: '50% 30%', span: '' },
+    ];
+    const P = photos.length;
+    const gallery = photos.map((ph, i) => ({ ...ph, open: () => this.setState({ light: i }) }));
+    const qs = (o) => Object.keys(o).map((k) => encodeURIComponent(k) + '=' + encodeURIComponent(o[k])).join('&');
+
+    const months = Array.from({ length: 12 }, (_, i) => {
+      const m = new Date(today.getFullYear(), today.getMonth() + i, 1);
+      const days = new Date(m.getFullYear(), m.getMonth() + 1, 0).getDate();
+      let tot = 0, bk = 0;
+      for (let k = 1; k <= days; k++) { const d = new Date(m.getFullYear(), m.getMonth(), k); if (d >= today) { tot++; if (b.has(this.key(d))) bk++; } }
+      const free = tot ? Math.round((1 - bk / tot) * 100) : 0;
+      const active = i === view || i === view + 1;
+      return {
+        short: m.toLocaleDateString('es-ES', { month: 'short' }).replace('.', ''),
+        year: (i === 0 || m.getMonth() === 0) ? String(m.getFullYear()) : '',
+        free,
+        active,
+        aria: m.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' }) + ', ' + free + '% de noches libres',
+        style: active ? 'background: #F3F5E6; border: 1.5px solid ' + accent : 'background: #FFFFFF; border: 1.5px solid rgba(34,23,14,0.08)',
+        pick: () => this.setState({ view: Math.min(i, 10) }),
+      };
+    });
+
+    const visible = [view, view + 1].map((i) => {
+      const m = new Date(today.getFullYear(), today.getMonth() + i, 1);
+      const offset = (m.getDay() + 6) % 7;
+      const days = new Date(m.getFullYear(), m.getMonth() + 1, 0).getDate();
+      const cells = [];
+      for (let k = 0; k < offset; k++) cells.push({ blank: true, real: false });
+      for (let k = 1; k <= days; k++) {
+        const d = new Date(m.getFullYear(), m.getMonth(), k);
+        const past = d < today;
+        const isB = b.has(this.key(d));
+        const canOut = selectingEnd && d > s && this.free(s, d, b);
+        const disabled = past || (isB && !canOut);
+        const edge = (s && d.getTime() === s.getTime()) || (e && d.getTime() === e.getTime());
+        const inRange = s && e && d > s && d < e;
+        const r = this.rate(d).r;
+        let style = 'background: transparent; color: #22170E; cursor: pointer';
+        if (past) style = 'background: transparent; color: rgba(34,23,14,0.25); cursor: default';
+        else if (isB && !canOut) style = 'background: #F1EFE9; color: rgba(34,23,14,0.35); text-decoration: line-through; cursor: not-allowed';
+        if (inRange) style = 'background: #E7EBCF; color: #22170E; cursor: pointer';
+        if (edge) style = 'background: ' + accent + '; color: #FFFFFF; font-weight: 700; cursor: pointer';
+        cells.push({
+          blank: false, real: true, n: k,
+          rate: past || isB ? '' : r,
+          disabled,
+          style,
+          aria: d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' }) + (isB ? ', reservado' : ', ' + r + ' € la noche'),
+          pick: () => this.pick(d, b),
+        });
+      }
+      return { title: m.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' }), cells };
+    });
+
+    let quoteLines = [], total = '', n = 0;
+    if (s && e) {
+      const lines = {}; let sub = 0;
+      for (let d = new Date(s); d < e; d = this.add(d, 1)) { const x = this.rate(d); sub += x.r; lines[x.name] = lines[x.name] || { r: x.r, n: 0 }; lines[x.name].n++; }
+      quoteLines = Object.keys(lines).map((k) => ({ label: lines[k].r + ' € × ' + lines[k].n + (lines[k].n === 1 ? ' noche' : ' noches') + ' (' + k + ')', amount: this.money(lines[k].r * lines[k].n) }));
+      n = this.nights(s, e);
+      total = this.money(sub + 90);
+    }
+    const hasQuote = quoteLines.length > 0;
+
+    const words = ['Piscina', 'Palmeras', 'Pérgola', 'Silencio', 'Sol', 'Jardín', 'Calma', 'Estrellas'];
+    const ringWords = words.map((w, i) => ({
+      word: w,
+      style: 'transform: translateX(-50%) rotateY(' + (i * 45) + 'deg) translateZ(440px); color: ' + (i % 2 ? '#8B5A2B' : accent),
+    }));
+
+    return {
+      accent,
+      setRoot: (el) => { this._root = el; },
+      showIntro,
+      showPage: !showIntro,
+      introZoom: opening ? 'transform: scale(2.4); opacity: 0; transition: transform 1.5s cubic-bezier(.7,0,.2,1) 0.5s, opacity 0.6s ease 1.3s' : 'transition: none',
+      introFade: '',
+      innerShade: opening ? 'opacity: 0.25' : 'opacity: 1',
+      introLeaves: this.leaves(14, 1),
+      pageLeaves: this.leaves(5, 2),
+      leafL: opening ? 'transform: rotateY(-112deg)' : 'transform: rotateY(-6deg)',
+      leafR: opening ? 'transform: rotateY(112deg)' : 'transform: rotateY(6deg)',
+      enter: () => {
+        if (this.state.opening) return;
+        this.setState({ opening: true });
+        this._t = setTimeout(() => {
+          this.setState({ entered: true, opening: false });
+          if (this._root && this._root.scrollIntoView) this._root.scrollIntoView({ block: 'start' });
+        }, 1900);
+      },
+      skip: () => this.setState({ entered: true, opening: false }),
+      rootClass: paused ? 'sc-paused' : '',
+      togglePause: () => this.setState({ paused: !paused }),
+      pausedStr: paused ? 'true' : 'false',
+      pauseLabel: paused ? 'Reanudar movimiento' : 'Pausar movimiento',
+      gallery,
+      lightOpen: light >= 0,
+      lightSrc: light >= 0 ? photos[light].src : '',
+      lightLabel: light >= 0 ? photos[light].label : '',
+      lightCount: light >= 0 ? (light + 1) + ' de ' + P + ' · ' + photos[light].label : '',
+      lightPrev: () => this.setState({ light: (light - 1 + P) % P }),
+      lightNext: () => this.setState({ light: (light + 1) % P }),
+      closeLight: () => this.setState({ light: -1 }),
+      mailto: hasQuote ? 'mailto:hola@santacreu.com?' + qs({ subject: 'Solicitud de reserva: ' + this.fmt(start) + ' a ' + this.fmt(end), body: 'Hola,\n\nMe gustaría reservar Santa Creu:\n\nEntrada: ' + this.fmt(start) + '\nSalida: ' + this.fmt(end) + '\nNoches: ' + n + '\nHuéspedes: ' + guests + '\nTotal orientativo: ' + total + '\n\nNombre:\nTeléfono:\n\nGracias.' }).replace(/\+/g, '%20') : '',
+      replay: () => { this.setState({ entered: false, opening: false }); if (this._root && this._root.scrollIntoView) this._root.scrollIntoView({ block: 'start' }); },
+      ringWords,
+      slides,
+      slideTitle: slidesData[slide].title,
+      slideText: slidesData[slide].text,
+      slideCount: (slide + 1) + ' de ' + N,
+      cPrev: () => this.setState({ slide: (slide - 1 + N) % N }),
+      cNext: () => this.setState({ slide: (slide + 1) % N }),
+      moments: [
+        { time: '08:00', title: 'Mañana', text: 'Café junto a la piscina mientras las palmeras cogen la primera luz.', img: '/_blob/3f2ca5c86ff5c0aa1660882d389b6e4e', alt: 'La piscina con la casa al fondo por la mañana', pos: '50% 50%', tint: 'background: linear-gradient(160deg, rgba(255,206,150,0.3), rgba(164,178,58,0.1)); mix-blend-mode: soft-light' },
+        { time: '13:00', title: 'Mediodía', text: 'Sombrilla abierta, pies en el agua y un buen baño antes de comer.', img: '/_blob/51547d60c2384f8c8689a64de370c845', alt: 'Sombrilla y palmeras junto a la piscina a mediodía', pos: '50% 50%', tint: 'background: transparent' },
+        { time: '19:30', title: 'Tarde', text: 'Cena bajo la pérgola mientras las paredes se vuelven doradas.', img: '/_blob/88675a7d5c2604660f1743c105aaa8d7', alt: 'La terraza con pérgola', pos: '50% 50%', tint: 'background: linear-gradient(180deg, rgba(150,72,18,0.42), rgba(67,42,24,0.32)); mix-blend-mode: multiply' },
+        { time: '23:00', title: 'Noche', text: 'Piedra templada, el jardín en silencio y el cielo lleno de estrellas.', img: '/_blob/7ee454fe930bfe82052214afc86d9fb7', alt: 'Las palmeras', pos: '50% 30%', tint: 'background: radial-gradient(55% 35% at 50% 58%, rgba(255,170,80,0.24), rgba(10,14,28,0.86))' },
+      ],
+      months,
+      visible,
+      weekdays: ['L', 'M', 'X', 'J', 'V', 'S', 'D'],
+      rangeLabel: visible.map((v) => v.title).join(' y '),
+      prev: () => this.setState({ view: Math.max(0, view - 1) }),
+      next: () => this.setState({ view: Math.min(10, view + 1) }),
+      startLabel: this.fmt(start),
+      endLabel: this.fmt(end),
+      guests,
+      lessGuests: () => this.setState({ guests: Math.max(1, guests - 1) }),
+      moreGuests: () => this.setState({ guests: Math.min(8, guests + 1) }),
+      msg,
+      hasQuote,
+      noQuote: !hasQuote,
+      hint: s ? 'Ahora elige el día de salida.' : 'Elige el día de entrada en el calendario para ver el precio.',
+      quoteLines,
+      nights: n,
+      total,
+      sent,
+      notSent: !sent,
+      request: () => this.setState({ sent: true }),
+    };
+  }
+}
+</script>
+</body>
+</html>

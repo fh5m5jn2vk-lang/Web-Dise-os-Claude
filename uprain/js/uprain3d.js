@@ -135,7 +135,7 @@ function buildProduct(mats) {
 export function createUprainScene(canvas, opts = {}) {
   const o = Object.assign({
     view: 'hero', bg: '#0b0c0e', finish: 'grafito', light: 'hielo', live: false, entrance: false, drag: false,
-    rate: -0.55, strobe: true, dpr: 1, anchorX: 0.5, fill: null, preserve: false, bloom: 1, mist: true, floor: true, yaw: 0,
+    rate: -0.55, strobe: true, dpr: 1, anchorX: 0.5, fill: null, preserve: false, bloom: 1, mist: true, floor: true, yaw: 0, manual: false,
   }, opts);
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const live = o.live && !reduce;
@@ -292,6 +292,7 @@ export function createUprainScene(canvas, opts = {}) {
   }
 
   let entranceT = live && o.entrance ? 0 : 99;
+  let litK = 1;
   function pose(dt, time) {
     if (entranceT < 99) entranceT += dt;
     const k = easeOut(entranceT / 2.4);
@@ -302,7 +303,7 @@ export function createUprainScene(canvas, opts = {}) {
     }
     pivot.rotation.y = yaw + (1 - k) * -1.1;
     pivot.position.y = (1 - k) * -0.05 + (live ? Math.sin(time * 0.9) * 0.0015 : 0);
-    const lit = smooth(0.4, 2.2, entranceT);
+    const lit = smooth(0.4, 2.2, entranceT) * litK;
     mats.glow.color.copy(lightColor).multiplyScalar(0.2 + 1.6 * lit);
     strobeLight.intensity = (dark ? 0.22 : 0.08) * lit;
     if (pool) pool.material.opacity = (dark ? 0.2 : 0.08) * lit;
@@ -348,12 +349,12 @@ export function createUprainScene(canvas, opts = {}) {
     strobeLight.color.copy(lightColor); basinLight.color.copy(lightColor);
     if (pool) pool.material.color.copy(lightColor);
     if (mist) mist.material.uniforms.tint.value.set('#ffffff').lerp(lightColor, 0.35);
-    if (!live || paused) renderOnce();
+    if ((!live || paused) && !o.manual) renderOnce();
   }
   function setFinish(id) {
     const f = FINISHES[id]; if (!f) return;
     mats.body.color.set(f.body); mats.body.roughness = f.bodyRough; mats.frame.color.set(f.frame); mats.frame.roughness = f.frameRough;
-    if (!live || paused) renderOnce();
+    if ((!live || paused) && !o.manual) renderOnce();
   }
 
   // true when a shader failed to compile or the context is gone: the caller then shows the poster instead
@@ -361,9 +362,14 @@ export function createUprainScene(canvas, opts = {}) {
 
   return {
     renderOnce, setLight, setFinish, failed,
-    setStrobe(on) { strobe = !!on; if (!live) { strobeMix = strobe ? 1 : 0; renderOnce(); } },
-    setRate(v) { rateTarget = v; if (!live) { rate = v; } },
-    setYaw(r) { yaw = r; if (!live) renderOnce(); },
+    setStrobe(on) { strobe = !!on; if (!live && !o.manual) { strobeMix = strobe ? 1 : 0; renderOnce(); } },
+    setRate(v) { rateTarget = v; if (!live && !o.manual) { rate = v; } },
+    setYaw(r) { yaw = r; if (!live && !o.manual) renderOnce(); },
+    // manual mode (the ad videos): place the camera, set the light's strength, advance time by dt and draw one frame
+    setCamera(c) { Object.assign(view, { target: null, dist: null, dy: 0 }, c); if (c.ax != null) o.anchorX = c.ax; frame(); },
+    setLit(k) { litK = k; },
+    setExposure(e) { renderer.toneMappingExposure = e; },
+    step(dt) { time += dt; pose(dt, time); composer.render(); },
     pause() { paused = true; },
     resume() { paused = false; },
     destroy() { cancelAnimationFrame(raf); ro.disconnect(); renderer.dispose(); },

@@ -209,9 +209,9 @@ mesh(sculpt(neckF, [-1, -2.05, -0.8], [1, -0.4, 0.7], 80), skin, [0, 0, 0], [1, 
 const faceF = (p) => {
   const m = mir(p);
   let d = sdE(p, [0, 0.12, -0.08], [0.84, 0.98, 0.94]);
-  d = smin(d, sdE(p, [0, -0.2, 0.33], [0.64, 0.72, 0.62]), 0.3);
-  d = smin(d, sdC(m, [0.52, -0.22, 0.0], [0.26, -0.76, 0.5], 0.17), 0.26);
-  d = smin(d, sdE(p, [0, -0.84, 0.6], [0.23, 0.15, 0.19]), 0.14);
+  d = smin(d, sdE(p, [0, -0.2, 0.33], [0.6, 0.74, 0.6]), 0.32);
+  d = smin(d, sdC(m, [0.47, -0.22, 0.0], [0.22, -0.75, 0.48], 0.15), 0.3);
+  d = smin(d, sdE(p, [0, -0.84, 0.58], [0.2, 0.15, 0.18]), 0.16);
   d = smin(d, sdE(m, [0.43, -0.02, 0.62], [0.22, 0.14, 0.2]), 0.2);
   d = smin(d, sdC(m, [0.04, 0.3, 0.87], [0.42, 0.32, 0.77], 0.085), 0.14);
   d = smax(d, -sdE(m, [0.3, 0.13, 0.93], [0.15, 0.09, 0.1]), 0.08);
@@ -266,19 +266,25 @@ const hairGeo = (() => {
   g.setAttribute('hh', new THREE.Float32BufferAttribute(hh, 1)); return g;
 })();
 hairFade.side = THREE.DoubleSide;
-const beardMat = hairMat.clone(); beardMat.side = THREE.DoubleSide; beardMat.color.set('#241811');
+const beardMat = hairMat.clone(); beardMat.side = THREE.DoubleSide; beardMat.color.set('#2a1c14');
 beardMat.onBeforeCompile = (sh) => {
   sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vP;').replace('#include <begin_vertex>', '#include <begin_vertex>\nvP = position;');
   sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vP;\nfloat h3(vec3 p){ return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453); }')
     .replace('void main() {', `void main() {
-      float jaw = smoothstep(-0.12, -0.42, vP.y) * smoothstep(-0.25, 0.2, vP.z);
-      float e = pow(vP.x / 0.25, 2.0) + pow((vP.y + 0.48) / 0.115, 2.0); float lipGap = mix(1.0, smoothstep(0.75, 1.25, e), step(0.7, vP.z));
-      float side = smoothstep(0.55, 0.8, abs(vP.x)) * smoothstep(-0.1, -0.35, vP.y + 0.0) ;
-      float dens = clamp(max(jaw, side * 0.0) * lipGap, 0.0, 1.0) * 0.9;
-      if (h3(floor(vP * 240.0)) > dens) discard;`);
+      float ax = abs(vP.x);
+      float cheekLine = mix(-0.31, 0.06, smoothstep(0.28, 0.82, ax));                    // the groomed line across the cheek up to the sideburn
+      float beard = smoothstep(cheekLine + 0.035, cheekLine - 0.035, vP.y) * step(-0.38, vP.z) * (1.0 - step(0.76, ax) * step(vP.z, 0.12) * step(-0.4, vP.y));
+      float must = smoothstep(0.3, 0.26, ax) * smoothstep(-0.28, -0.32, vP.y) * smoothstep(-0.46, -0.42, vP.y) * step(0.72, vP.z);
+      float e = pow(vP.x / 0.205, 2.0) + pow((vP.y + 0.485) / 0.07, 2.0);
+      float lips = mix(1.0, smoothstep(0.85, 1.15, e), step(0.75, vP.z));
+      float dens = max(beard, must) * lips;
+      float n = h3(floor(vP * 330.0));
+      if (n > dens * 0.985) discard;`)
+    .replace('#include <color_fragment>', '#include <color_fragment>\n diffuseColor.rgb *= 0.7 + 0.6 * h3(floor(vP * 330.0) + 7.0);');
 };
-hm(sculpt((p) => faceUpF(p) - 0.011, [-1.05, -0.9, -0.6], [1.05, 0.1, 1.2], 130), beardMat, [0, 0, 0], [1, 1, 1]);
-jm(sculpt((p) => faceLowF(p) - 0.011, [-1.0, -1.1, -0.5], [1.0, -0.15, 1.15], 120), beardMat, [0, 0, 0], [1, 1, 1]);
+const beardLift = (p) => 0.016 + 0.05 * Math.exp(-Math.pow((p[1] + 0.86) / 0.17, 2)) * Math.exp(-Math.pow(p[0] / 0.3, 2));
+hm(sculpt((p) => faceUpF(p) - beardLift(p), [-1.05, -0.9, -0.6], [1.05, 0.1, 1.2], 130), beardMat, [0, 0, 0], [1, 1, 1]);
+jm(sculpt((p) => faceLowF(p) - beardLift(p), [-1.0, -1.1, -0.5], [1.0, -0.15, 1.15], 120), beardMat, [0, 0, 0], [1, 1, 1]);
 hm(hairGeo, hairFade, [0, 0, 0], [1, 1, 1]);
 const brows = [-1, 1].map((s) => hm(new THREE.CapsuleGeometry(0.055, 0.26, 6, 12), hairMat, [s * 0.32, 0.4, 0.86], [1, 1, 0.7], [0, 0, Math.PI / 2 + s * 0.14]));
 // sunglasses
@@ -379,7 +385,7 @@ function presenter(t) {
   const onset = Math.max(0, talk - prevTalk); prevTalk = talk;
   // the mouth: opens with the voice, rounder or wider from syllable to syllable
   const vowel = 0.5 + 0.5 * Math.sin(t * 13.7 + Math.sin(t * 5.1) * 2);
-  jawPivot.rotation.x = spring('jaw', talk * (0.09 + (1 - vowel) * 0.06), dt, 420, 30);
+  jawPivot.rotation.x = spring('jaw', talk * (0.065 + (1 - vowel) * 0.045), dt, 420, 30);
   jaw.scale.x = 1 - talk * vowel * 0.03;
   // emphasis on the key words: brows up, a nod, a little hop of the shoulders
   const kw = KEYTIMES.reduce((a, k) => Math.max(a, Math.exp(-Math.abs(t - k - 0.08) * 7) * (t > k - 0.15 ? 1 : 0)), 0);

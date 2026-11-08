@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>LÓNG: vídeo orgánico</title>
+<style>
+  @font-face { font-family: Manrope; src: url(fonts/manrope.woff2) format("woff2"); font-weight: 500 800; }
+  @font-face { font-family: Anton; src: url(fonts/anton.woff2) format("woff2"); }
+  @font-face { font-family: ArchivoBlack; src: url(fonts/archivo-black.woff2) format("woff2"); }
+  @font-face { font-family: Marker; src: url(fonts/marker.woff2) format("woff2"); }
+  @font-face { font-family: Bebas; src: url(fonts/bebas.woff2) format("woff2"); }
+  @font-face { font-family: PlayfairI; src: url(fonts/playfair-italic.woff2) format("woff2"); font-style: italic; font-weight: 900; }
+  @font-face { font-family: Syne; src: url(fonts/syne.woff2) format("woff2"); font-weight: 800; }
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #000; font-family: Manrope, system-ui, sans-serif; }
+  #gl { position: absolute; inset: 0; width: 1080px; height: 1920px; display: block; }
+  #ui { position: absolute; inset: 0; pointer-events: none; }
+  /* captions: one chunk at a time, each style its own face, colour and entrance */
+  #cap { position: absolute; left: 50px; right: 50px; text-align: center; white-space: nowrap; }
+  #cap .w { display: inline-block; margin: 0 .1em; transform-origin: 50% 75%; will-change: transform, opacity, filter; }
+  .s-pop { font: 800 88px/1.05 Manrope, sans-serif; color: #fff; -webkit-text-stroke: 15px #000; paint-order: stroke fill; letter-spacing: -0.015em; }
+  .s-pop .w.on { color: #ffe14d; }
+  .s-big { font: 400 210px/0.95 Anton, sans-serif; text-transform: uppercase; color: #ffe14d; -webkit-text-stroke: 16px #000; paint-order: stroke fill; letter-spacing: .01em; }
+  .s-big.red { color: #ff3b3b; }
+  .s-marker { font: 400 118px/1.05 Marker, cursive; color: #fff; -webkit-text-stroke: 12px #000; paint-order: stroke fill; }
+  .s-marker svg { position: absolute; left: 6%; width: 88%; height: 60px; overflow: visible; }
+  .s-serif { font: italic 900 150px/1 PlayfairI, serif; color: transparent; background: linear-gradient(180deg, #fff3c9, #ffcf5a 55%, #d58c1c); -webkit-background-clip: text; background-clip: text; filter: drop-shadow(0 0 2px #000) drop-shadow(0 5px 0 #000) drop-shadow(0 10px 30px rgba(0,0,0,.6)); }
+  .s-serif.red { background: linear-gradient(180deg, #ffd6d6, #ff4040 55%, #b80f1f); -webkit-background-clip: text; background-clip: text; }
+  .s-type { font: 400 150px/1 Bebas, sans-serif; letter-spacing: .04em; color: #fff; -webkit-text-stroke: 12px #000; paint-order: stroke fill; }
+  .s-type .cur { display: inline-block; width: .08em; height: .8em; background: #ffe14d; margin-left: .05em; vertical-align: -.05em; }
+  .s-glow { font: 800 230px/1 Syne, sans-serif; text-transform: uppercase; color: #eafff1; text-shadow: 0 0 18px #6dffb0, 0 0 50px #2bff8a, 0 0 110px #13d46a, 0 0 180px #0f9f50; }
+  .s-rainbow { font: 400 170px/1 ArchivoBlack, sans-serif; text-transform: uppercase; -webkit-text-stroke: 14px #000; paint-order: stroke fill; }
+  .s-count { font: 400 260px/0.9 Anton, sans-serif; color: #fff; -webkit-text-stroke: 16px #000; paint-order: stroke fill; }
+  .s-count small { font-size: 120px; color: #ffe14d; }
+  /* the app's own text box, for the hook and the stickers */
+  .box { position: absolute; left: 50%; transform: translateX(-50%); padding: 14px 30px 18px; border-radius: 22px; background: #fff; color: #111; font: 700 56px/1.15 Manrope, sans-serif; white-space: nowrap; opacity: 0; box-shadow: 0 6px 24px rgba(0,0,0,.25); }
+  .box.dark { background: rgba(0,0,0,.72); color: #fff; }
+</style>
+<script type="importmap">{"imports":{"three":"../dragon/vendor/three/three.module.min.js","three/addons/":"../dragon/vendor/three/addons/"}}</script>
+</head>
+<body>
+<div id="stage">
+  <canvas id="gl" width="1080" height="1920"></canvas>
+  <div id="scrim"></div>
+  <div id="ui">
+    <div id="cap"></div>
+    <div class="box" id="hook" style="top:270px">esto me tiene obsesionado</div>
+    <div class="box" id="link" style="top:300px">link en mi perfil</div>
+  </div>
+</div>
+<script type="module" src="js/organico.js"></script>
+</body>
+</html>

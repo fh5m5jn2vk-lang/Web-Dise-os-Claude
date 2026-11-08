@@ -341,88 +341,76 @@ function shot(t) {
   return { s, glow, four, handAmt, punch };
 }
 
-/* ---------- captions: chunks of the spoken words, each with its own look and entrance ---------- */
-// [line, first word, count, style, variant]
+/* ---------- captions, as in the reference: one or two words at a time, key words stacked and bigger ---------- */
+// [line, first word, count, kind, options]; kind: 'w' plain words (split one or two at a time), 'stack' small line over a
+// big italic serif, 'heavy' small line over a big bold sans (with an optional line under), 'multi' one colour per word
 const CHUNKS = [
-  [0, 0, 1, 'pop'], [0, 1, 3, 'pop'], [0, 4, 3, 'pop'], [0, 7, 1, 'pop'], [0, 8, 1, 'big', 'red shake'],
-  [1, 0, 2, 'pop'], [1, 2, 1, 'serif'], [1, 3, 3, 'type'], [1, 6, 2, 'pop'], [1, 8, 3, 'marker'],
-  [2, 0, 2, 'pop'], [2, 2, 2, 'big', 'stamp'], [2, 4, 2, 'pop'], [2, 6, 3, 'pop'], [2, 9, 2, 'marker'],
-  [3, 0, 3, 'pop'], [3, 3, 2, 'count'],
-  [4, 0, 3, 'pop'], [4, 3, 2, 'pop'], [4, 5, 3, 'type'], [4, 8, 2, 'glow'],
-  [5, 0, 2, 'pop'], [5, 2, 1, 'rainbow'], [5, 3, 3, 'pop'], [5, 6, 2, 'marker'],
-  [6, 0, 2, 'pop'], [6, 2, 2, 'serif', 'red'], [6, 4, 2, 'pop'], [6, 6, 2, 'big', 'stamp'],
-  [7, 0, 3, 'pop'], [7, 3, 3, 'pop'], [7, 6, 3, 'big', 'stamp'], [7, 9, 2, 'pop'], [7, 11, 1, 'marker'],
+  [0, 0, 5, 'w'], [0, 5, 4, 'stack', { top: 3, mint: true }],
+  [1, 0, 3, 'heavy', { top: 2 }], [1, 3, 3, 'stack', { top: 1 }], [1, 6, 2, 'w'], [1, 8, 3, 'stack', { top: 2, mint: true }],
+  [2, 0, 2, 'w'], [2, 2, 2, 'stack', { top: 1 }], [2, 4, 2, 'w'], [2, 6, 2, 'w'], [2, 8, 3, 'stack', { top: 2, mint: true }],
+  [3, 0, 2, 'w'], [3, 2, 3, 'heavy', { top: 1, under: 1 }],
+  [4, 0, 5, 'w'], [4, 5, 3, 'stack', { top: 1 }], [4, 8, 2, 'stack', { top: 1, mint: true, glow: true }],
+  [5, 0, 3, 'multi'], [5, 3, 3, 'w'], [5, 6, 2, 'stack', { top: 1 }],
+  [6, 0, 2, 'w'], [6, 2, 2, 'stack', { top: 1, mint: true }], [6, 4, 2, 'w'], [6, 6, 2, 'heavy', { top: 1 }],
+  [7, 0, 6, 'w'], [7, 6, 3, 'stack', { top: 2, mint: true }], [7, 9, 2, 'w'], [7, 11, 1, 'stack', { top: 0 }],
 ];
-const capEl = document.getElementById('cap');
-const chunks = CHUNKS.map(([li, w0, n, style, variant = ''], i) => {
+const clean = (w) => { const c = w.replace(/[.,¿?…]+$/g, '').replace(/^¿/, '').toLowerCase(); return c === '3d' ? '3D' : c; };
+// plain runs become one word at a time, a short word (3 letters or less) riding with the next
+const chunks = [];
+CHUNKS.forEach(([li, w0, n, kind, o = {}]) => {
   const ws = L[li].words.slice(w0, w0 + n);
-  const next = CHUNKS[i + 1]; const end = next && next[0] === li ? L[li].words[next[1]][1] : L[li].t1 + 0.22;
-  return { li, ws, style, variant, t0: ws[0][1] - 0.04, t1: end - 0.04, text: ws.map((w) => w[0]).join(' ') };
+  if (kind === 'w') {
+    let g = [];
+    ws.forEach((w, i) => { g.push(w); const short = clean(w[0]).length <= 3 && i < ws.length - 1; if (!short) { chunks.push({ li, ws: g, kind: 'w', o }); g = []; } });
+    if (g.length) chunks.push({ li, ws: g, kind: 'w', o });
+  } else chunks.push({ li, ws, kind, o });
 });
-const RAIN = ['#ffd23f', '#9be15d', '#38c6d9', '#5b7cff', '#b45cff', '#ff6fa8', '#ff8a3d'];
+chunks.forEach((c, i) => { const nx = chunks[i + 1]; c.t0 = c.ws[0][1] - 0.03; c.t1 = nx && nx.li === c.li ? nx.ws[0][1] - 0.03 : L[c.li].t1 + 0.25; });
+// where each kind sits: words at the middle, stacks a little higher, and they wander a touch so it feels edited
+const capEl = document.getElementById('cap');
+const MULTI = ['#ff3b3b', '#2fdc5a', '#b04bff'];
 let built = null;
-function build(c) {
-  capEl.className = 's-' + c.style + ' ' + c.variant; capEl.innerHTML = '';
-  const top = { pop: 1150, big: 1000, marker: 1080, serif: 1040, type: 1080, glow: 980, rainbow: 1040, count: 980 }[c.style];
-  capEl.style.top = top + 'px';
-  const parts = [];
-  if (c.style === 'count') { capEl.innerHTML = '<span class="w"><b class="n">0</b><small> CM</small></span>'; parts.push(capEl.firstChild); }
-  else if (c.style === 'type' || c.style === 'rainbow') {
-    const txt = c.style === 'rainbow' ? c.text.replace(/[,.]$/, '') : c.text;
-    [...txt].forEach((ch, i) => { const s = document.createElement('span'); s.className = 'w'; s.style.margin = '0'; s.textContent = ch === ' ' ? ' ' : ch; if (c.style === 'rainbow') s.style.color = RAIN[i % RAIN.length]; capEl.appendChild(s); parts.push(s); });
-    if (c.style === 'type') { const cur = document.createElement('span'); cur.className = 'cur'; capEl.appendChild(cur); }
-  } else {
-    c.ws.forEach((w) => { const s = document.createElement('span'); s.className = 'w'; s.textContent = c.style === 'glow' ? w[0].replace(/[.]/g, '') : w[0]; capEl.appendChild(s); parts.push(s); });
+function build(c, i) {
+  capEl.innerHTML = '';
+  const lines = [];
+  const line = (cls, text, ws) => { const d = document.createElement('span'); d.className = 'ln ' + cls; d.textContent = text; capEl.appendChild(d); lines.push({ d, t: ws[0][1] }); return d; };
+  const txt = (ws) => ws.map((w) => clean(w[0])).join(' ');
+  if (c.kind === 'w') line('sans', txt(c.ws), c.ws);
+  else if (c.kind === 'multi') c.ws.forEach((w, k) => { const d = line('multi', clean(w[0]), [w]); d.style.color = MULTI[k % 3]; });
+  else {
+    const top = c.o.top ?? 1, under = c.o.under ?? 0;
+    const head = c.ws.slice(0, top), main = c.ws.slice(top, c.ws.length - under), tail = c.ws.slice(c.ws.length - under);
+    if (head.length) line('small', txt(head), head);
+    const d = line(c.kind === 'stack' ? 'serif' : 'heavy', txt(main), main);
+    if (c.o.mint) d.classList.add('mint');
+    if (c.o.glow) d.style.textShadow = '0 0 24px rgba(63,227,194,.9), 0 0 70px rgba(63,227,194,.6)';
+    if (tail.length) line('under', txt(tail), tail);
   }
-  if (c.style === 'marker') capEl.insertAdjacentHTML('beforeend', '<svg viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M2 12 C 25 4, 45 18, 70 9 S 95 10, 98 7" fill="none" stroke="#ffe14d" stroke-width="5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>');
-  // squeeze to the safe width
-  capEl.style.fontSize = ''; let px = parseFloat(getComputedStyle(capEl).fontSize);
-  capEl.style.right = 'auto'; capEl.style.opacity = 0;
-  while (capEl.offsetWidth > 960 && px > 30) { px -= 4; capEl.style.fontSize = px + 'px'; }
-  capEl.style.right = '';
-  built = { c, parts };
+  capEl.style.fontSize = '';
+  capEl.style.top = (c.kind === 'w' ? 1060 : 930 + (i % 3) * 30) + 'px';
+  capEl.style.marginLeft = (c.kind === 'w' ? 0 : [-40, 30, 0][i % 3]) + 'px';
+  // keep the widest line inside the frame
+  lines.forEach(({ d }) => { d.style.display = 'inline-block'; let px = parseFloat(getComputedStyle(d).fontSize); while (d.offsetWidth > 980 && px > 30) { px -= 4; d.style.fontSize = px + 'px'; } d.style.display = ''; });
+  built = { c, lines };
 }
 function captions(t) {
-  const c = chunks.find((k) => t >= k.t0 && t < k.t1);
-  if (!c) { capEl.style.opacity = 0; built = null; return; }
-  if (!built || built.c !== c) build(c);
+  const i = chunks.findIndex((k) => t >= k.t0 && t < k.t1);
+  if (i < 0) { capEl.style.opacity = 0; built = null; return; }
+  const c = chunks[i];
+  if (!built || built.c !== c) build(c, i);
   capEl.style.opacity = 1;
-  const a = t - c.t0, out = E.in(prog(t, c.t1 - 0.07, c.t1));
-  const parts = built.parts;
-  capEl.style.transform = `scale(${1 - out * 0.15})`; capEl.style.filter = out ? `blur(${out * 8}px)` : '';
-  if (c.style === 'pop') {
-    parts.forEach((s, i) => { const w = c.ws[i]; const p = prog(t, w[1] - 0.05, w[1] + 0.12); s.style.opacity = p > 0 ? 1 : 0; s.style.transform = `scale(${lerp(0.4, 1, E.back(p))}) translateY(${(1 - E.out(p)) * 30}px)`; s.classList.toggle('on', t >= w[1] && t < w[2] + 0.05); });
-  } else if (c.style === 'big') {
-    const p = prog(a, 0, 0.22);
-    const shake = c.variant.includes('shake') ? Math.sin(a * 70) * 10 * Math.exp(-a * 3) : 0;
-    parts.forEach((s) => { s.style.opacity = 1; s.style.transform = `translateX(${shake}px) rotate(${lerp(-14, -3, E.back(p))}deg) scale(${lerp(2.6, 1, E.out(p)) + Math.sin(a * 18) * 0.015})`; s.style.filter = `blur(${(1 - p) * 10}px)`; });
-  } else if (c.style === 'serif') {
-    parts.forEach((s, i) => { const p = prog(a, i * 0.08, i * 0.08 + 0.4); s.style.opacity = E.out(p); s.style.transform = `translateY(${(1 - E.out(p)) * 60}px) skewX(${(1 - p) * -18}deg)`; s.style.letterSpacing = `${(1 - E.out(p)) * 0.3}em`; s.style.filter = `blur(${(1 - p) * 12}px)`; });
-  } else if (c.style === 'type') {
-    const dur = Math.max(0.25, (c.t1 - c.t0) * 0.6), n = Math.ceil(parts.length * clamp(a / dur));
-    parts.forEach((s, i) => { s.style.opacity = i < n ? 1 : 0; s.style.transform = i === n - 1 ? 'translateY(-6px)' : ''; });
-    const cur = capEl.querySelector('.cur'); if (cur) cur.style.opacity = Math.floor(a * 6) % 2 ? 1 : 0.2;
-  } else if (c.style === 'marker') {
-    parts.forEach((s, i) => { const p = prog(a, i * 0.07, i * 0.07 + 0.25); s.style.opacity = p > 0 ? 1 : 0; s.style.transform = `rotate(${lerp(10, -4 + i * 2, E.elastic(p))}deg) scale(${lerp(0.3, 1, E.elastic(p))})`; });
-    const path = capEl.querySelector('path'); if (path) { capEl.querySelector('svg').style.top = (capEl.offsetHeight - 10) + 'px'; path.style.strokeDashoffset = 1 - E.out(prog(a, 0.15, 0.5)); }
-  } else if (c.style === 'glow') {
-    const p = prog(a, 0, 0.35);
-    parts.forEach((s, i) => { s.style.opacity = clamp(p * 2 - i * 0.3) * (0.85 + 0.15 * Math.sin(a * 30 + i)); s.style.transform = `scale(${lerp(0.7, 1, E.out(p))})`; s.style.filter = `blur(${(1 - p) * 20}px)`; });
-  } else if (c.style === 'rainbow') {
-    parts.forEach((s, i) => { const p = prog(a, i * 0.04, i * 0.04 + 0.25); s.style.opacity = p > 0 ? 1 : 0; s.style.transform = `translateY(${(1 - E.back(p)) * 120 + Math.sin(a * 8 + i) * 8}px) rotate(${Math.sin(i * 1.7) * 8 * (1 - p) + Math.sin(a * 6 + i) * 3}deg)`; });
-  } else if (c.style === 'count') {
-    const p = prog(a, 0, 0.55);
-    parts[0].style.opacity = 1; parts[0].style.transform = `scale(${lerp(1.8, 1, E.back(prog(a, 0, 0.3)))})`;
-    capEl.querySelector('.n').textContent = Math.round(88 * E.out(p));
-  }
+  const out = E.in(prog(t, c.t1 - 0.08, c.t1));
+  built.lines.forEach(({ d, t: tw }, k) => {
+    // each line comes out of a blur as its word is said; the big ones settle from a little larger
+    const big = d.classList.contains('serif') || d.classList.contains('heavy');
+    const p = prog(t, tw - 0.04, tw + (big ? 0.2 : 0.12)), e = E.out(p);
+    d.style.opacity = Math.min(1, p * 1.6) * (1 - out);
+    d.style.filter = `blur(${((1 - e) * (big ? 16 : 9) + out * 10).toFixed(1)}px)`;
+    d.style.transform = `translateY(${(1 - e) * (big ? 14 : 8)}px) scale(${lerp(big ? 1.12 : 0.94, 1, e) * (1 + out * 0.04)})`;
+    if (big) d.style.letterSpacing = `${lerp(0.02, -0.035, e)}em`;
+  });
 }
-const hookEl = document.getElementById('hook'), linkEl = document.getElementById('link');
-function boxes(t) {
-  const hp = E.back(prog(t, 0.05, 0.35)), ho = E.in(prog(t, B[1] - 0.2, B[1]));
-  hookEl.style.opacity = t < B[1] ? 1 - ho : 0; hookEl.style.transform = `translateX(-50%) scale(${lerp(0.5, 1, hp)}) rotate(${-2 + Math.sin(t * 3) * 0.5}deg)`;
-  const lp = E.back(prog(t, tWord(7, 5), tWord(7, 5) + 0.3));
-  linkEl.style.opacity = t >= tWord(7, 5) ? 1 : 0; linkEl.style.transform = `translateX(-50%) scale(${lerp(0.4, 1, lp) * (1 + 0.04 * Math.sin(t * 8))})`;
-}
+function boxes() {}
 
 /* ---------- one frame ---------- */
 let lastS = -1;
@@ -458,12 +446,12 @@ function render(t) {
   dof.uniforms.focus.value = lerp(cam.focus * 1.35, cam.focus, settle);
   dof.uniforms.aperture.value = 0.0035; dof.uniforms.maxblur.value = 0.011;
   bloom.strength = 0.3 + s.glow * 0.3; bloom.threshold = lerp(0.9, 0.7, s.glow);
-  captions(t); boxes(t);
+  captions(t);
   composer.render();
 }
 
 /* ---------- start ---------- */
-for (const f of ['800 80px Manrope', '400 80px Anton', '400 80px ArchivoBlack', '400 80px Marker', '400 80px Bebas', 'italic 900 80px PlayfairI', '800 80px Syne']) await document.fonts.load(f, 'Aáé');
+for (const f of ['700 80px Inter', '800 80px Inter', 'italic 400 80px Serif', '800 80px Manrope']) await document.fonts.load(f, 'Aáé');
 woodMap.needsUpdate = true;
 const q = new URLSearchParams(location.search);
 window.__dur = DUR;

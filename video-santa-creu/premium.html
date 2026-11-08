@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080">
+<title>Casa Rural Santa Creu · anuncio premium</title>
+<style>
+@font-face { font-family: "Playfair"; src: url(fonts/playfair-500.woff2) format("woff2"); font-weight: 500; }
+@font-face { font-family: "Playfair"; src: url(fonts/playfair-700.woff2) format("woff2"); font-weight: 700; }
+@font-face { font-family: "Playfair"; src: url(fonts/playfair-italic.woff2) format("woff2"); font-weight: 400; font-style: italic; }
+@font-face { font-family: "Poppins"; src: url(fonts/poppins-300.woff2) format("woff2"); font-weight: 300; }
+@font-face { font-family: "Poppins"; src: url(fonts/poppins-500.woff2) format("woff2"); font-weight: 500; }
+:root { --night: #0E0905; --brown: #392A1C; --gold: #C29544; --gold2: #E2C17E; --cream: #F4ECDD; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #000; }
+#stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: var(--night); color: var(--cream); font-family: "Poppins", sans-serif; font-weight: 300; }
+.sc { position: absolute; inset: 0; overflow: hidden; opacity: 0; }
+.fill { position: absolute; inset: 0; }
+.ph { position: absolute; inset: -2%; width: 104%; height: 104%; object-fit: cover; will-change: transform, filter; filter: contrast(1.06) saturate(.92) sepia(.1) brightness(.92); }
+.serif { font-family: "Playfair", serif; }
+.it { font-family: "Playfair", serif; font-style: italic; font-weight: 400; }
+.caps { text-transform: uppercase; letter-spacing: .42em; font-size: 26px; font-weight: 500; color: var(--gold2); }
+.ch { display: inline-block; will-change: transform, filter, opacity; }
+.line { height: 1.5px; background: linear-gradient(90deg, transparent, var(--gold) 15%, var(--gold2) 50%, var(--gold) 85%, transparent); transform-origin: center; }
+.rv { will-change: transform, filter, opacity; }
+.sun { display: inline-block; }
+.frame { position: absolute; overflow: hidden; outline: 1.5px solid rgba(226,193,126,.7); outline-offset: 14px; }
+#dust i { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(255,228,170,.95), rgba(255,210,140,0) 70%); }
+#leak { position: absolute; inset: 0; pointer-events: none; z-index: 30; mix-blend-mode: screen; background: radial-gradient(60% 40% at 80% 20%, rgba(255,170,80,.75), transparent 70%), radial-gradient(50% 35% at 10% 85%, rgba(255,120,40,.45), transparent 70%); opacity: 0; }
+.grain { position: absolute; inset: 0; pointer-events: none; opacity: .09; mix-blend-mode: overlay; z-index: 40;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+.vig { position: absolute; inset: 0; pointer-events: none; z-index: 39; background: radial-gradient(110% 75% at 50% 50%, transparent 50%, rgba(0,0,0,.55)); }
+.bar { position: absolute; left: 0; right: 0; height: 0; background: #000; z-index: 35; }
+.shine { position: relative; display: inline-block; }
+.shine::after { content: ""; position: absolute; inset: -10% -5%; background: linear-gradient(105deg, transparent 40%, rgba(255,240,205,.85) 50%, transparent 60%); mix-blend-mode: overlay; transform: translateX(var(--sx, -120%)); }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- A · the name -->
+  <section class="sc" id="A">
+    <div style="position: absolute; left: 0; right: 0; top: 700px; text-align: center">
+      <div id="A-title" class="serif shine" style="font-weight: 700; font-size: 184px; letter-spacing: -.02em; line-height: 1; color: var(--cream)"><span data-split>SantaCreu</span></div>
+      <div style="margin: 40px auto 0; width: 760px; display: flex; align-items: center; justify-content: space-between">
+        <span id="A-sub" style="font-size: 64px; font-weight: 300; color: var(--gold2); letter-spacing: .02em">CasaRural</span>
+        <span id="A-suns" style="display: flex; gap: 22px"></span>
+      </div>
+      <div id="A-line" class="line" style="margin: 70px auto 0; width: 760px"></div>
+      <div id="A-where" class="caps" style="margin-top: 46px">Elche · Santa Pola</div>
+    </div>
+  </section>
+
+  <!-- B · the house at dusk -->
+  <section class="sc" id="B">
+    <div id="B-cam" class="fill" style="perspective: 1600px"><div id="B-plane" class="fill"><img class="ph" id="B-ph" src="img/portada.jpg" alt="" style="object-position: 44% 50%"></div></div>
+    <div class="fill" style="background: linear-gradient(180deg, rgba(14,9,5,.35), transparent 30%, transparent 50%, rgba(14,9,5,.92))"></div>
+    <div style="position: absolute; left: 100px; right: 100px; bottom: 300px">
+      <div id="B-k" class="caps rv">Antigua Hacienda Santa Cruz</div>
+      <div class="it" style="margin-top: 34px; font-size: 88px; line-height: 1.06; color: var(--cream)">
+        <div id="B-l1" class="rv">Una casa de 1800,</div>
+        <div id="B-l2" class="rv">renovada con mimo.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- C · three panels -->
+  <section class="sc" id="C">
+    <div id="C-row" class="fill" style="display: flex; gap: 10px">
+      <div class="pan" style="position: relative; flex: 1; overflow: hidden"><img class="ph" src="img/fachada.jpg" alt="" style="object-position: 30% 50%"><div class="fill" style="background: linear-gradient(180deg, transparent 60%, rgba(14,9,5,.85))"></div><div class="cap caps" style="position: absolute; left: 0; right: 0; bottom: 170px; text-align: center; font-size: 22px">Hacienda</div></div>
+      <div class="pan" style="position: relative; flex: 1; overflow: hidden"><img class="ph" src="img/casa-piscina.jpg" alt="" style="object-position: 50% 60%"><div class="fill pshade" style="background: linear-gradient(180deg, transparent 60%, rgba(14,9,5,.85))"></div><div class="cap caps" style="position: absolute; left: 0; right: 0; bottom: 170px; text-align: center; font-size: 22px">Piscina</div></div>
+      <div class="pan" style="position: relative; flex: 1; overflow: hidden"><img class="ph" src="img/olivos.jpg" alt="" style="object-position: 40% 50%"><div class="fill" style="background: linear-gradient(180deg, transparent 60%, rgba(14,9,5,.85))"></div><div class="cap caps" style="position: absolute; left: 0; right: 0; bottom: 170px; text-align: center; font-size: 22px">Jardín</div></div>
+    </div>
+    <div id="C-txt" style="position: absolute; left: 100px; right: 100px; top: 1180px">
+      <div class="serif" style="font-weight: 500; font-size: 128px; line-height: 1.02; letter-spacing: -.01em">
+        <div id="C-l1" class="rv">Tu piscina,</div>
+      </div>
+      <div class="it" style="font-size: 116px; line-height: 1.02; color: var(--gold2)"><div id="C-l2" class="rv">solo para ti.</div></div>
+      <div id="C-l3" class="rv" style="margin-top: 40px; font-size: 40px; line-height: 1.4; max-width: 780px">La casa entera es vuestra: no se comparte con ningún otro grupo.</div>
+    </div>
+  </section>
+
+  <!-- D · inside, in a gold frame -->
+  <section class="sc" id="D">
+    <div style="position: absolute; left: 0; right: 0; top: 230px; text-align: center">
+      <div id="D-k" class="caps rv">Dentro de la casa</div>
+      <div class="serif" style="margin-top: 26px; height: 150px; position: relative; font-weight: 500; font-size: 120px; line-height: 150px">
+        <div class="D-t rv" style="position: absolute; inset: 0">La bodega</div>
+        <div class="D-t rv" style="position: absolute; inset: 0">El cenador</div>
+        <div class="D-t rv" style="position: absolute; inset: 0">Las habitaciones</div>
+      </div>
+    </div>
+    <div id="D-frame" class="frame" style="left: 110px; right: 110px; top: 560px; height: 900px">
+      <img class="ph D-ph" src="img/bodega.jpg" alt="">
+      <img class="ph D-ph" src="img/cenador.jpg" alt="">
+      <img class="ph D-ph" src="img/habitacion.jpg" alt="">
+    </div>
+    <div style="position: absolute; left: 0; right: 0; top: 1560px; text-align: center; height: 120px">
+      <div class="D-s rv" style="position: absolute; left: 120px; right: 120px; font-size: 40px; line-height: 1.4">Barra, ping-pong, futbolín y mesa para todos.</div>
+      <div class="D-s rv" style="position: absolute; left: 120px; right: 120px; font-size: 40px; line-height: 1.4">Barbacoa y comidas largas a la sombra.</div>
+      <div class="D-s rv" style="position: absolute; left: 120px; right: 120px; font-size: 40px; line-height: 1.4">Aire acondicionado y calefacción en todas.</div>
+    </div>
+  </section>
+
+  <!-- E · the numbers -->
+  <section class="sc" id="E">
+    <img class="ph" id="E-ph" src="img/suite.jpg" alt="" style="filter: blur(14px) brightness(.32) sepia(.4)">
+    <div style="position: absolute; left: 120px; right: 120px; top: 330px">
+      <div id="E-k" class="caps rv">Para familias y grupos</div>
+      <div id="E-rows" style="margin-top: 70px">
+        <div class="E-r"><div class="E-n serif" data-to="9">0</div><div class="E-u">habitaciones</div><div class="E-line line"></div></div>
+        <div class="E-r"><div class="E-n serif" data-to="16">0</div><div class="E-u">huéspedes</div><div class="E-line line"></div></div>
+        <div class="E-r"><div class="E-n serif" data-to="601">0</div><div class="E-u">m² de casa</div><div class="E-line line"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- F · the sea -->
+  <section class="sc" id="F">
+    <img class="ph" id="F-ph" src="img/tabarca.jpg" alt="" style="object-position: 42% 50%">
+    <div class="fill" style="background: linear-gradient(180deg, rgba(5,18,26,.25), transparent 35%, rgba(5,14,20,.88) 80%)"></div>
+    <div style="position: absolute; left: 100px; right: 100px; bottom: 300px">
+      <div id="F-k" class="caps rv" style="color: #CFE7EE">Entre el campo y el mar</div>
+      <div class="serif" style="margin-top: 30px; font-weight: 500; font-size: 124px; line-height: 1.02"><div id="F-l1" class="rv">A 5 minutos</div></div>
+      <div class="it" style="font-size: 112px; line-height: 1.04; color: var(--gold2)"><div id="F-l2" class="rv">del Mediterráneo.</div></div>
+      <div id="F-l3" class="rv" style="margin-top: 44px; font-size: 38px; letter-spacing: .02em">Elche a 8 km &nbsp;·&nbsp; Aeropuerto a 15 min</div>
+    </div>
+  </section>
+
+  <!-- G · end -->
+  <section class="sc" id="G">
+    <img class="ph" id="G-ph" src="img/fachada-casa.jpg" alt="" style="filter: brightness(.3) sepia(.35) blur(3px)">
+    <div style="position: absolute; left: 0; right: 0; top: 560px; text-align: center">
+      <div id="G-quote" class="it rv" style="font-size: 54px; line-height: 1.35; color: var(--cream); padding: 0 130px">“El sitio es precioso, acogedor y muy amplio.”</div>
+      <div id="G-who" class="caps rv" style="margin-top: 26px; font-size: 22px">Juande · huésped</div>
+      <div id="G-logo" class="rv" style="margin-top: 150px">
+        <div class="serif shine" id="G-title" style="font-weight: 700; font-size: 168px; line-height: 1; letter-spacing: -.02em">SantaCreu</div>
+        <div style="margin: 26px auto 0; width: 600px; display: flex; align-items: center; justify-content: space-between">
+          <span style="font-size: 52px; color: var(--gold2)">CasaRural</span><span id="G-suns" style="display: flex; gap: 18px"></span>
+        </div>
+      </div>
+      <div id="G-line" class="line" style="margin: 64px auto 0; width: 700px"></div>
+      <div id="G-price" class="rv" style="margin-top: 52px; font-size: 42px">Casa entera desde <span class="serif" style="font-weight: 700; color: var(--gold2)">880 €</span> la noche</div>
+      <div id="G-code" class="rv" style="margin-top: 22px; font-size: 34px; color: rgba(244,236,221,.8)">Código <span style="font-weight: 500; color: var(--gold2); letter-spacing: .08em">SANTACREU15</span> · 15 % de descuento</div>
+      <div id="G-web" class="rv serif" style="margin-top: 70px; font-weight: 500; font-size: 56px">casaruralsantacreu.com</div>
+      <div id="G-tel" class="rv" style="margin-top: 14px; font-size: 34px; letter-spacing: .06em; color: rgba(244,236,221,.75)">WhatsApp 661 531 053</div>
+    </div>
+  </section>
+
+  <div id="dust" class="fill" style="z-index: 25; pointer-events: none"></div>
+  <div id="leak"></div>
+  <div class="bar" id="barT" style="top: 0"></div><div class="bar" id="barB" style="bottom: 0"></div>
+  <div class="vig"></div>
+  <div class="grain"></div>
+</div>
+
+<script>
+const DUR = 30;
+const $ = (s) => document.querySelector(s), $$ = (s) => [...document.querySelectorAll(s)];
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const p = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const E = {
+  out: (k) => 1 - Math.pow(1 - k, 3),
+  out5: (k) => 1 - Math.pow(1 - k, 5),
+  inOut: (k) => (k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2),
+  sine: (k) => -(Math.cos(Math.PI * k) - 1) / 2,
+};
+const S = (el) => (typeof el === 'string' ? $(el) : el).style;
+// a soft, premium reveal: blur to sharp, a short rise, opacity
+function reveal(el, t, a, d = 1.1, dist = 40, blur = 16) {
+  const k = E.out5(p(t, a, a + d));
+  const s = S(el); s.opacity = k; s.transform = `translateY(${(1 - k) * dist}px)`; s.filter = `blur(${(1 - k) * blur}px)`;
+}
+function hide(el, t, a, d = .6) { const k = E.inOut(p(t, a, a + d)); const s = S(el); if (k > 0) { s.opacity = (1 - k) * (+s.opacity || 1); s.filter = `blur(${k * 12}px)`; } }
+
+const sun = (size) => `<svg class="sun" width="${size}" height="${size}" viewBox="0 0 40 40"><g fill="#C29544"><circle cx="20" cy="20" r="9"/>${Array.from({ length: 12 }, (_, i) => `<path transform="rotate(${i * 30} 20 20)" d="M20 2 L22.4 10 L17.6 10 Z"/>`).join('')}</g></svg>`;
+$('#A-suns').innerHTML = [0, 1, 2, 3].map(() => sun(46)).join('');
+$('#G-suns').innerHTML = [0, 1, 2, 3].map(() => sun(38)).join('');
+$$('[data-split]').forEach((el) => { const tx = el.textContent; el.textContent = ''; for (const c of tx) { const s = document.createElement('span'); s.className = 'ch'; s.textContent = c; el.appendChild(s); } });
+// rows of numbers
+$$('.E-r').forEach((r) => { r.style.cssText = 'position:relative;display:flex;align-items:baseline;gap:34px;padding:34px 0'; });
+$$('.E-n').forEach((n) => { n.style.cssText = 'font-weight:500;font-size:230px;line-height:.9;color:#E2C17E;min-width:420px;letter-spacing:-.02em'; });
+$$('.E-u').forEach((u) => { u.style.cssText = 'font-size:52px;font-weight:300;color:#F4ECDD'; });
+$$('.E-line').forEach((l) => { l.style.cssText += ';position:absolute;left:0;right:0;bottom:0;transform-origin:left center'; });
+// gold dust
+{ let a = 5; const r = () => (a = (a * 16807) % 2147483647) / 2147483647;
+  $('#dust').innerHTML = Array.from({ length: 46 }, () => { const s = 4 + r() * 16; return `<i data-x="${r()}" data-y="${r()}" data-s="${(.3 + r() * .9).toFixed(3)}" data-ph="${r() * 6.28}" style="width:${s}px;height:${s}px;filter:blur(${(r() * 2.5).toFixed(1)}px)"></i>`; }).join(''); }
+
+// scene windows (fade in, fade out)
+const W = { A: [0, 4.1], B: [3.7, 8.2], C: [7.8, 13.0], D: [12.6, 19.0], E: [18.6, 22.6], F: [22.2, 26.0], G: [25.6, 30.5] };
+const cuts = [3.9, 8.0, 12.8, 18.8, 22.4, 25.8];
+
+function render(t) {
+  for (const id in W) { const [a, b] = W[id]; const o = p(t, a, a + .5) * (1 - p(t, b - .5, b)); S('#' + id).opacity = o; S('#' + id).visibility = o > 0 ? 'visible' : 'hidden'; }
+  // light leak peaks on each cut
+  let leak = 0; for (const c of cuts) leak = Math.max(leak, 1 - Math.abs(t - c) / .55);
+  S('#leak').opacity = clamp(leak) * .55;
+  // cinema bars: in for the photography, out for type
+  const bars = Math.max(p(t, 3.7, 4.6) * (1 - p(t, 7.6, 8.3)), p(t, 22.2, 23.0) * (1 - p(t, 25.5, 26.0)));
+  S('#barT').height = S('#barB').height = E.inOut(bars) * 150 + 'px';
+  // dust drifts up the whole time
+  $$('#dust i').forEach((d) => { const sp = +d.dataset.s, x = +d.dataset.x, y = +d.dataset.y, ph = +d.dataset.ph;
+    const yy = ((y - t * sp * .028) % 1 + 1) % 1; d.style.transform = `translate(${(x * 1080 + Math.sin(t * .6 + ph) * 30).toFixed(1)}px, ${(yy * 1920).toFixed(1)}px)`; d.style.opacity = (.25 + .35 * Math.sin(t * 1.3 + ph) ** 2) * (t > 18.6 && t < 22.6 || t < 4 || t > 25.6 ? 1 : .45); });
+
+  // A · name
+  if (t < 4.2) {
+    $$('#A-title .ch').forEach((c, i) => { const k = E.out5(p(t, .35 + i * .07, 1.6 + i * .07)); c.style.opacity = k; c.style.filter = `blur(${(1 - k) * 22}px)`; c.style.transform = `translateY(${(1 - k) * 50}px) scale(${1.15 - .15 * k})`; });
+    S('#A-title').letterSpacing = lerp(.06, -.02, E.out(p(t, .3, 2.6))) + 'em';
+    reveal('#A-sub', t, 1.6, 1.0, 20, 10);
+    $$('#A-suns svg').forEach((s, i) => { const k = E.out5(p(t, 1.8 + i * .12, 2.5 + i * .12)); s.style.opacity = k; s.style.transform = `rotate(${(1 - k) * -120}deg) scale(${.4 + .6 * k})`; });
+    S('#A-line').transform = `scaleX(${E.inOut(p(t, 1.4, 2.6))})`;
+    reveal('#A-where', t, 2.4, 1.0, 16, 8);
+    $('#A-title').style.setProperty('--sx', lerp(-120, 140, E.sine(p(t, 2.5, 3.6))) + '%');
+    S('#A').transform = `scale(${1 + p(t, 0, 4.1) * .04})`;
+  }
+  // B · dusk
+  if (t > 3.6 && t < 8.3) {
+    const l = t - 3.7;
+    S('#B-plane').transform = `rotateX(${lerp(5, 0, E.out(p(l, 0, 4.5)))}deg) rotateY(${lerp(-4, 2, E.sine(p(l, 0, 4.5)))}deg) scale(${lerp(1.22, 1.04, E.out(p(l, 0, 4.5)))})`;
+    S('#B-ph').filter = `contrast(1.06) saturate(.92) sepia(.1) brightness(${lerp(.55, .95, E.out(p(l, 0, 1.6)))})`;
+    reveal('#B-k', l, .9); reveal('#B-l1', l, 1.2, 1.3, 50, 20); reveal('#B-l2', l, 1.55, 1.3, 50, 20);
+  }
+  // C · panels
+  if (t > 7.7 && t < 13.1) {
+    const l = t - 7.8;
+    $$('#C .pan').forEach((pn, i) => {
+      const k = E.inOut(p(l, .1 + i * .22, 1.2 + i * .22));
+      pn.style.clipPath = `inset(${(1 - k) * 100}% 0 0 0)`;
+      pn.querySelector('img').style.transform = `scale(${lerp(1.35, 1.08, E.out(p(l, i * .22, 3.2)))}) translateY(${lerp(80, -30, p(l, 0, 5))}px)`;
+      const cap = pn.querySelector('.cap'); reveal(cap, l, 1.0 + i * .2, .9, 20, 8); hide(cap, l, 2.4, .5);
+    });
+    // the middle panel opens to the whole screen
+    const g = E.inOut(p(l, 2.6, 3.7));
+    const pans = $$('#C .pan');
+    pans[0].style.flex = pans[2].style.flex = String(1 - g * .999);
+    pans[1].style.flex = String(1 + g * 30);
+    S('#C-row').gap = lerp(10, 0, g) + 'px';
+    $$('#C .pshade').forEach((s) => (s.style.background = `linear-gradient(180deg, rgba(14,9,5,${.0 + g * .25}) 0%, transparent 35%, rgba(14,9,5,${.85 * (1 - g) + .9 * g}) ${lerp(60, 72, g)}%)`));
+    reveal('#C-l1', l, 3.4, 1.2, 50, 20); reveal('#C-l2', l, 3.7, 1.2, 50, 20); reveal('#C-l3', l, 4.1, 1.0, 24, 10);
+  }
+  // D · interiors in a gold frame
+  if (t > 12.5 && t < 19.1) {
+    const l = t - 12.6;
+    const k = E.out5(p(l, .2, 1.6));
+    S('#D-frame').clipPath = `inset(${(1 - k) * 50}% 0 ${(1 - k) * 50}% 0)`;
+    reveal('#D-k', l, .5);
+    const seg = [[.6, 2.4], [2.4, 4.3], [4.3, 6.4]];
+    $$('.D-ph').forEach((im, i) => { const [a, b] = seg[i]; const o = i === 0 ? 1 - p(l, b - .3, b + .3) : p(l, a - .3, a + .3) * (i === 2 ? 1 : 1 - p(l, b - .3, b + .3));
+      im.style.opacity = o; im.style.transform = `scale(${lerp(1.18, 1.04, E.out(p(l, a - .3, b + .5)))}) translateX(${lerp(40, -40, p(l, a - .3, b + .3))}px)`; });
+    $$('.D-t').forEach((el, i) => { const [a, b] = seg[i]; reveal(el, l, a + .1, .9, 40, 16); if (i < 2) hide(el, l, b - .35, .4); });
+    $$('.D-s').forEach((el, i) => { const [a, b] = seg[i]; reveal(el, l, a + .35, .9, 20, 10); if (i < 2) hide(el, l, b - .35, .4); });
+  }
+  // E · numbers
+  if (t > 18.5 && t < 22.7) {
+    const l = t - 18.6;
+    S('#E-ph').transform = `scale(${1.2 - p(l, 0, 4) * .1})`;
+    reveal('#E-k', l, .3);
+    $$('.E-r').forEach((r, i) => { const a = .6 + i * .45;
+      reveal(r.querySelector('.E-n'), l, a, 1.0, 40, 18); reveal(r.querySelector('.E-u'), l, a + .2, .9, 20, 10);
+      r.querySelector('.E-line').style.transform = `scaleX(${E.inOut(p(l, a + .1, a + 1.2))})`;
+      const n = r.querySelector('.E-n'); n.textContent = Math.round(+n.dataset.to * E.out(p(l, a, a + 1.3))); });
+  }
+  // F · sea
+  if (t > 22.1 && t < 26.1) {
+    const l = t - 22.2;
+    S('#F-ph').transform = `scale(${lerp(1.45, 1.1, E.out(p(l, 0, 3.8)))}) rotate(${lerp(-5, 0, E.out(p(l, 0, 3.8)))}deg)`;
+    reveal('#F-k', l, .5); reveal('#F-l1', l, .8, 1.2, 50, 20); reveal('#F-l2', l, 1.1, 1.2, 50, 20); reveal('#F-l3', l, 1.7, 1.0, 20, 10);
+  }
+  // G · end
+  if (t > 25.5) {
+    const l = t - 25.6;
+    S('#G-ph').transform = `scale(${1.15 - p(l, 0, 4.4) * .08})`;
+    reveal('#G-quote', l, .3, 1.2, 30, 14); reveal('#G-who', l, .8, .9, 14, 8);
+    reveal('#G-logo', l, 1.4, 1.4, 40, 22);
+    $$('#G-suns svg').forEach((s, i) => { const k = E.out5(p(l, 1.9 + i * .1, 2.5 + i * .1)); s.style.opacity = k; s.style.transform = `rotate(${(1 - k) * -120}deg) scale(${.4 + .6 * k})`; });
+    $('#G-title').style.setProperty('--sx', lerp(-120, 140, E.sine(p(l, 2.3, 3.4))) + '%');
+    S('#G-line').transform = `scaleX(${E.inOut(p(l, 2.0, 3.0))})`;
+    reveal('#G-price', l, 2.4, 1.0, 20, 10); reveal('#G-code', l, 2.65, 1.0, 20, 10);
+    reveal('#G-web', l, 3.0, 1.1, 24, 12); reveal('#G-tel', l, 3.25, 1.0, 16, 8);
+  }
+}
+window.__render = render; window.__dur = DUR;
+window.__ready = Promise.all([document.fonts.ready, ...$$('img').map((i) => i.decode().catch(() => {}))]);
+if (!new URLSearchParams(location.search).has('record')) {
+  const fit = () => { const s = Math.min(innerWidth / 1080, innerHeight / 1920); $('#stage').style.transform = `scale(${s})`; $('#stage').style.transformOrigin = '0 0'; };
+  fit(); addEventListener('resize', fit);
+  window.__ready.then(() => { const t0 = performance.now(); const loop = (n) => { render(((n - t0) / 1000) % DUR); requestAnimationFrame(loop); }; requestAnimationFrame(loop); });
+} else render(0);
+</script>
+</body>
+</html>

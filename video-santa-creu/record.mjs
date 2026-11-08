@@ -10,7 +10,7 @@ await new Promise((r) => srv.on('listening', r));
 const b = await pw.chromium.launch();
 const p = await b.newPage({ viewport: { width: 1080, height: 1920 } });
 p.on('pageerror', (e) => console.log('[err]', e.message));
-await p.goto(`http://127.0.0.1:${srv.address().port}/video.html?record`);
+await p.goto(`http://127.0.0.1:${srv.address().port}/${args.page || 'video.html'}?record`);
 await p.evaluate(() => window.__ready);
 const dur = await p.evaluate(() => window.__dur);
 fs.mkdirSync(out, { recursive: true });

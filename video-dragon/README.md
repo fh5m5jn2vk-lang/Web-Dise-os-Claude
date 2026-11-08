@@ -28,3 +28,16 @@ ffmpeg -framerate 30 -i frames/f%05d.jpg -i audio/dragon.wav -c:v libx264 -prese
 - **Precios y envío gratis:** son supuestos. Cámbialos en `film.html` (`#card`) si tu oferta es distinta.
 - **El vídeo es 3D animado, no el producto real.** Úsalo junto a vídeos grabados con el producto real. En los anuncios, que el resto del material enseñe el dragón de verdad.
 - **Música:** original y generada con código, sin derechos de terceros. Puedes usarla también en anuncios de pago. Para orgánico, puedes cambiarla por un sonido en tendencia dentro de la propia app.
+
+---
+
+# Versión orgánica (recomendada para orgánico y Spark Ads)
+`out/long-dragon-organico.mp4`: 23 s, con voz en off, subtítulos animados (siete estilos que cambian según la palabra clave) y cinco ambientes que se van transformando (escritorio de noche, atardecer, a oscuras, mañana y Navidad). No hay ninguna foto de ciudad. El guion completo está en `GUION.md`.
+
+```bash
+python3 voz/voz.py <carpeta con las voces de Piper>   # voz/voz.wav y js/guion.json (los tiempos de cada palabra)
+python3 audio/organico.py                             # audio/organico.wav (voz, música original que baja bajo la voz y efectos)
+node record.mjs --page organico --fps 30 --out frames-org
+ffmpeg -framerate 30 -i frames-org/f%05d.jpg -i audio/organico.wav -c:v libx264 -preset slow -crf 17 -pix_fmt yuv420p -c:a aac -b:a 192k -shortest -movflags +faststart out/long-dragon-organico.mp4
+```
+- **Voz:** sintética, con la voz libre «davefx» de Piper (es_ES). No imita a ninguna persona real. Para que sea de verdad orgánico, lo ideal es grabarla tú (lee `GUION.md`).

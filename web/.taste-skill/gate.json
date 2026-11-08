@@ -1,0 +1,649 @@
+{
+ "start": "2026-11-08T12:43:56.347Z",
+ "round": 3,
+ "idle": 0,
+ "errors": 0,
+ "status": "open",
+ "history": [
+  {
+   "at": "2026-11-08T13:06:28.671Z",
+   "mode": "manual",
+   "status": "fail",
+   "fails": 23,
+   "round": 1,
+   "reused": false,
+   "stopHookActive": false
+  },
+  {
+   "at": "2026-11-08T13:11:33.091Z",
+   "mode": "manual",
+   "status": "fail",
+   "fails": 13,
+   "round": 2,
+   "reused": false,
+   "stopHookActive": false
+  },
+  {
+   "at": "2026-11-08T13:15:30.904Z",
+   "mode": "manual",
+   "status": "open",
+   "fails": 10,
+   "round": 3,
+   "reused": false,
+   "stopHookActive": false
+  }
+ ],
+ "max": 3,
+ "marker": {
+  "page": "index.html",
+  "dir": "/home/user/Web-Dise-os-Claude/web",
+  "kind": "tech",
+  "start": "2026-11-08T12:43:56.347Z",
+  "by": "start.mjs",
+  "url": null
+ },
+ "manual": true,
+ "roundKey": "19111b19daa30eec:9497180b",
+ "roundFree": false,
+ "idleFree": false,
+ "blockKey": null,
+ "fp": "19111b19daa30eec",
+ "page": "index.html",
+ "found": {
+  "fails": [
+   {
+    "check": "shader-lint",
+    "where": "three/three.module.min.js \"gl_DrawID\"",
+    "msg": "a shader uses \"gl_DrawID\" as a name (line 3: \\t#define gl_DrawID _gl_DrawID): GLSL ES reserves it, so a strict GPU rejects the whole shader and the picture stays empty",
+    "fix": "rename it (flat, smooth, centroid, sample, patch, input, output, filter and the rest are GLSL ES reserved words)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "shader-lint"
+    ],
+    "wheres": [
+     "three/three.module.min.js \"gl_DrawID\""
+    ]
+   },
+   {
+    "check": "shader-lint",
+    "where": "three/three.module.min.js \"common\"",
+    "msg": "a shader uses \"common\" as a name (line 2: #include <common>): GLSL ES reserves it, so a strict GPU rejects the whole shader and the picture stays empty",
+    "fix": "rename it (flat, smooth, centroid, sample, patch, input, output, filter and the rest are GLSL ES reserved words)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "shader-lint"
+    ],
+    "wheres": [
+     "three/three.module.min.js \"common\""
+    ]
+   },
+   {
+    "check": "no-visual",
+    "where": "section#preguntas \"Preguntas sobre la mascarilla\"",
+    "msg": "no picture, effect or mock in this section; a feature section needs a visual",
+    "fix": "give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "no-visual"
+    ],
+    "wheres": [
+     "section#preguntas \"Preguntas sobre la mascarilla\""
+    ]
+   },
+   {
+    "check": "copy-headings",
+    "where": "div.wrap > div.grid.modes > div.span-4.mode:nth-of-type(1) > h3 \"Modo rojo\"",
+    "msg": "\"Modo rojo\" names no product, part, place or section (4 headings like it; at most one brand line per page) (and 3 more like it: \"Modo infrarrojo\", \"Modo combinado\", \"Precios y pedido\")",
+    "fix": "name the thing in every heading: the product, a part, the place or a section noun",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "copy-headings"
+    ],
+    "wheres": [
+     "div.wrap > div.grid.modes > div.span-4.mode:nth-of-type(1) > h3 \"Modo rojo\""
+    ]
+   },
+   {
+    "check": "heading-scale",
+    "where": "div.wrap > div.grid.modes > div.span-4.mode:nth-of-type(1) > h3 \"Modo rojo\"",
+    "msg": "h3 headings in 3 sizes, 18px (\"Mascarilla facial\") to 28px (x1.56)",
+    "fix": "size headings by level: the h1 largest, one size per level, each level below the one above",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "heading-scale"
+    ],
+    "wheres": [
+     "div.wrap > div.grid.modes > div.span-4.mode:nth-of-type(1) > h3 \"Modo rojo\""
+    ]
+   },
+   {
+    "check": "section-gaps",
+    "where": "main#top > section.hero.hero--photo / section#gama",
+    "msg": "114px between these sections, -63% against the median 305px",
+    "fix": "use one gap between sections (all within 25% of each other)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-gaps"
+    ],
+    "wheres": [
+     "main#top > section.hero.hero--photo / section#gama"
+    ]
+   },
+   {
+    "check": "section-gaps",
+    "where": "section#luz / section#silicona",
+    "msg": "51px between these sections, -82% against the median 282px of gaps at a change of ground",
+    "fix": "use one gap between sections (all within 25% of each other)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-gaps"
+    ],
+    "wheres": [
+     "section#luz / section#silicona"
+    ]
+   },
+   {
+    "check": "section-height",
+    "where": "section#luz \"Tres modos de luz en cada mascarilla Luz\"",
+    "msg": "the section's content does not fit it: its lowest content ends 866px below its top, past 828px (the section less 72px of bottom padding) (SR-2)",
+    "fix": "fit the content above the section's bottom padding (--padb), or make it two screens (.g2) in two groups",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-height"
+    ],
+    "wheres": [
+     "section#luz \"Tres modos de luz en cada mascarilla Luz\""
+    ]
+   },
+   {
+    "check": "container-edges",
+    "where": "main#top > section.hero.hero--photo > canvas.hero__gl \"La mascarilla facial Rubra de silicona b\"",
+    "msg": "a child of section 1 beside its .wrap is no valid background layer: a hero layer with neither alt nor aria-hidden=\"true\" (SR-6)",
+    "fix": "build the page as header.nav, a main of sections (each one in-flow .wrap plus background layers) and footer.closing",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "container-edges"
+    ],
+    "wheres": [
+     "main#top > section.hero.hero--photo > canvas.hero__gl \"La mascarilla facial Rubra de silicona b\""
+    ]
+   },
+   {
+    "check": "section-gaps",
+    "where": "section#silicona / section#ritual",
+    "msg": "389px between these sections, +176% against the median 141px of gaps at a change of ground",
+    "fix": "use one gap between sections (all within 25% of each other)",
+    "widths": [
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-gaps"
+    ],
+    "wheres": [
+     "section#silicona / section#ritual"
+    ]
+   },
+   {
+    "check": "off-viewport",
+    "where": "header.nav.nav--split > div.wrap.nav__bar > button.nav__toggle",
+    "msg": "at 320px wide it runs 22px past the screen's right edge (cut there: the page clips what runs past it)",
+    "fix": "keep it inside the screen at this width: let it shrink, wrap or stack",
+    "widths": [
+     320
+    ],
+    "from": "consistency",
+    "ids": [
+     "off-viewport"
+    ],
+    "wheres": [
+     "header.nav.nav--split > div.wrap.nav__bar > button.nav__toggle"
+    ]
+   }
+  ],
+  "warns": [
+   {
+    "check": "flush",
+    "where": "section#silicona > div.mo-io__stage > div.mo-io__cover",
+    "msg": "its first line sits 17px under the top edge of section#silicona, where the ground changes",
+    "fix": "give the section its padding at the edge where the ground changes (the closing call keeps a clear gap above the footer)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "section-gaps",
+    "where": "section#ritual / section#detalles",
+    "msg": "388px between these sections, +27% against the median 305px",
+    "fix": "use one gap between sections (all within 25% of each other)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "section-gaps",
+    "where": "section#detalles / section#preguntas",
+    "msg": "392px between these sections, +29% against the median 305px",
+    "fix": "use one gap between sections (all within 25% of each other)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "links",
+    "where": "div.wrap > div.grid.grid--top > div.span-5.stack-4 > a.link \"Escribir a Rubra\"",
+    "msg": "\"Escribir a Rubra\" goes to #contact, in the footer",
+    "fix": "point every link at a real section, page or file",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "photo-credit",
+    "where": "(the page text)",
+    "msg": "1 library source (wikimedia): the page credits wikimedia; confirm each shows the client's own product, place or people",
+    "fix": "confirm the library photograph shows the client's own product, place or people; otherwise replace it",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav-labels",
+    "where": "div.nav__item:nth-of-type(1) > div.nav__menu > div.wrap.grid > a.menu-card.span-4:nth-of-type(1) \"Mascarilla facial 189 €\"",
+    "msg": "\"Mascarilla facial 189 €\" opens a section headed \"Precios y pedido\"",
+    "fix": "name each nav link after the heading of the section it opens",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav-labels",
+    "where": "div.nav__item:nth-of-type(1) > div.nav__menu > div.wrap.grid > a.menu-card.span-4:nth-of-type(2) \"Cuello y escote 149 €\"",
+    "msg": "\"Cuello y escote 149 €\" opens a section headed \"Precios y pedido\"",
+    "fix": "name each nav link after the heading of the section it opens",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav-labels",
+    "where": "div.nav__item:nth-of-type(1) > div.nav__menu > div.wrap.grid > a.menu-card.span-4:nth-of-type(3) \"Las dos juntas 299 €\"",
+    "msg": "\"Las dos juntas 299 €\" opens a section headed \"Precios y pedido\"",
+    "fix": "name each nav link after the heading of the section it opens",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav-labels",
+    "where": "div.wrap.nav__bar > nav.nav__links > div.nav__item:nth-of-type(3) > a.nav__link \"Uso\"",
+    "msg": "\"Uso\" opens a section headed \"Diez minutos con la mascarilla, de tres a cinco ve\"",
+    "fix": "name each nav link after the heading of the section it opens",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav-labels",
+    "where": "header.nav.nav--split > div.wrap.nav__bar > a.nav__logo \"R Rubra\"",
+    "msg": "\"R Rubra\" opens a section headed \"Mascarilla de luz roja para casa\"",
+    "fix": "name each nav link after the heading of the section it opens",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "label-centre",
+    "where": "header.nav.nav--split > div.wrap.nav__bar > div.nav__actions > a.btn.btn--primary \"Comprar la mascarilla\"",
+    "msg": "its label sits 18px off-centre (25px of room at the left, 43px at the right) (and 1 more like it: \"Comprar la mascarilla\")",
+    "fix": "centre the label in its button, or fill the empty side with an icon",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-length",
+    "where": "section#preguntas \"Preguntas sobre la mascarilla\"",
+    "msg": "1 section over 90 words a screen outside the UI mocks (\"Preguntas sobre la masca\" 146); 61 words a screen across the page (490 words in 8 screens): a tech page says it in about 80 or fewer",
+    "fix": "cut every section to its heading, one line and the product UI: the UI says the rest; no second paragraph, no list of feature sentences",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "nav-current",
+    "where": "header.nav.nav--split",
+    "msg": "the nav stays on screen with 4 links to the page's sections, but never marks the one you are in (no link changes as the page scrolls)",
+    "fix": "mark the link of the section on screen (a colour, a weight or a line under it) as the visitor scrolls",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "button-contrast",
+    "where": "div.hero-text > div.hero__text > div.btn-row > a.btn.btn--secondary \"Ver las dos mascarillas\"",
+    "msg": "the button \"Ver las dos mascarillas\" (#181818) stands only 1.10:1 off the ground around it: it reads as part of the ground, or as switched off",
+    "fix": "give the button a fill that stands at least 1.5:1 off what is around it, or an outline in the ink",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "action-repeat",
+    "where": "header.nav.nav--split > div.wrap.nav__bar > div.nav__actions > a.btn.btn--primary \"comprar la mascarilla\"",
+    "msg": "\"comprar la mascarilla\" shows 2 times on the first screen at 1440px (nav, hero): the nav's button and the hero's; nothing else on the screen may repeat it",
+    "fix": "show the action once a screen besides the nav's button: the hero's, the close's or the phone bar's, never all at once",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "assumed",
+    "where": "div.nav__menu > div.wrap.grid > a.menu-card.span-4:nth-of-type(1) > span.t-small.muted:nth-of-type(2) \"189 €\"",
+    "msg": "18 facts marked as assumed, for the report: \"189 €\", \"149 €\", \"299 €\", \"189 €\", \"Toda España\", \"USB-C\", \"189 €\", \"149 €\", \"8 sesiones por carga\", \"2 horas\" and more",
+    "fix": "list each assumed fact in the report for the client to confirm, or take it from the brief",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "form-send",
+    "where": "div.wrap > div.grid.grid--top > div.span-5.stack-6:nth-of-type(1) > form.form \"mailto:pedidos@rubra.example\"",
+    "msg": "the form opens a mail to pedidos@rubra.example: a stand-in until the client gives its form address; list it in the report",
+    "fix": "send the form to the client's address (data-endpoint) and show the confirmation only after it answers; list a mailto stand-in in the report",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "no-visual",
+    "where": "section#luz \"Tres modos de luz en cada mascarilla\"",
+    "msg": "pictures, effects and mocks cover 19% of this section; a feature section needs a visual (about 25% or more)",
+    "fix": "give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "section-gaps",
+    "where": "section#luz / section#silicona",
+    "msg": "uneven space at the edge of a band: 51px outside its edge, 93px inside it (the space on either side of a change of ground reads as one gap only when the two match)",
+    "fix": "use one gap between sections (all within 25% of each other)",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "photo-set",
+    "where": "section#silicona > div.wrap > div.frame.frame--photo > img.frame__img \"silicona-perfil.webp\"",
+    "msg": "7 photographs in more than one look: saturation from 0.28 to 0.77; the odd one out is silicona-perfil.webp",
+    "fix": "grade the photographs to one look (light, colour, warmth), or replace the odd one out",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "photo-weight",
+    "where": "div.wrap > div.grid.grid--top > div.frame.frame--split > img.frame__img \"ritual-lampara.jpg\"",
+    "msg": "a photograph is 3x or more wider than drawn on the phone, with no srcset: ritual-lampara.jpg is 1280px (251 KB) for a 342px frame; on a phone it arrives late and its frame shows only its ground until then",
+    "fix": "give each photograph srcset and sizes (a 800px and a 1600px file), or a smaller file: the frame never shows empty",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "fold-cut",
+    "where": "div.hero-text > div.hero__text > div.btn-row > a.btn.btn--secondary \"Ver las dos mascarillas\"",
+    "msg": "the hero's button \"Ver las dos mascarillas\" is cut by the bottom of the first screen (12px of its 44px below the fold)",
+    "fix": "size the hero so the heading ends above the fold, or starts below it",
+    "widths": [
+     320
+    ],
+    "from": "consistency"
+   }
+  ],
+  "crashed": [],
+  "seconds": {
+   "consistency": 193,
+   "layout": 11
+  }
+ },
+ "open": [
+  {
+   "check": "shader-lint",
+   "where": "three/three.module.min.js \"gl_DrawID\"",
+   "msg": "a shader uses \"gl_DrawID\" as a name (line 3: \\t#define gl_DrawID _gl_DrawID): GLSL ES reserves it, so a strict GPU rejects the whole shader and the picture stays empty",
+   "fix": "rename it (flat, smooth, centroid, sample, patch, input, output, filter and the rest are GLSL ES reserved words)",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "shader-lint"
+   ],
+   "wheres": [
+    "three/three.module.min.js \"gl_DrawID\""
+   ]
+  },
+  {
+   "check": "shader-lint",
+   "where": "three/three.module.min.js \"common\"",
+   "msg": "a shader uses \"common\" as a name (line 2: #include <common>): GLSL ES reserves it, so a strict GPU rejects the whole shader and the picture stays empty",
+   "fix": "rename it (flat, smooth, centroid, sample, patch, input, output, filter and the rest are GLSL ES reserved words)",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "shader-lint"
+   ],
+   "wheres": [
+    "three/three.module.min.js \"common\""
+   ]
+  },
+  {
+   "check": "copy-headings",
+   "where": "div.wrap > div.grid.modes > div.span-4.mode:nth-of-type(1) > h3 \"Modo rojo\"",
+   "msg": "\"Modo rojo\" names no product, part, place or section (4 headings like it; at most one brand line per page) (and 3 more like it: \"Modo infrarrojo\", \"Modo combinado\", \"Precios y pedido\")",
+   "fix": "name the thing in every heading: the product, a part, the place or a section noun",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "copy-headings"
+   ],
+   "wheres": [
+    "div.wrap > div.grid.modes > div.span-4.mode:nth-of-type(1) > h3 \"Modo rojo\""
+   ]
+  },
+  {
+   "check": "heading-scale",
+   "where": "div.wrap > div.grid.modes > div.span-4.mode:nth-of-type(1) > h3 \"Modo rojo\"",
+   "msg": "h3 headings in 3 sizes, 18px (\"Mascarilla facial\") to 28px (x1.56)",
+   "fix": "size headings by level: the h1 largest, one size per level, each level below the one above",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "heading-scale"
+   ],
+   "wheres": [
+    "div.wrap > div.grid.modes > div.span-4.mode:nth-of-type(1) > h3 \"Modo rojo\""
+   ]
+  },
+  {
+   "check": "section-gaps",
+   "where": "main#top > section.hero.hero--photo / section#gama",
+   "msg": "114px between these sections, -63% against the median 305px",
+   "fix": "use one gap between sections (all within 25% of each other)",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-gaps"
+   ],
+   "wheres": [
+    "main#top > section.hero.hero--photo / section#gama"
+   ]
+  },
+  {
+   "check": "section-gaps",
+   "where": "section#luz / section#silicona",
+   "msg": "51px between these sections, -82% against the median 282px of gaps at a change of ground",
+   "fix": "use one gap between sections (all within 25% of each other)",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-gaps"
+   ],
+   "wheres": [
+    "section#luz / section#silicona"
+   ]
+  },
+  {
+   "check": "section-height",
+   "where": "section#luz \"Tres modos de luz en cada mascarilla Luz\"",
+   "msg": "the section's content does not fit it: its lowest content ends 866px below its top, past 828px (the section less 72px of bottom padding) (SR-2)",
+   "fix": "fit the content above the section's bottom padding (--padb), or make it two screens (.g2) in two groups",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-height"
+   ],
+   "wheres": [
+    "section#luz \"Tres modos de luz en cada mascarilla Luz\""
+   ]
+  },
+  {
+   "check": "container-edges",
+   "where": "main#top > section.hero.hero--photo > canvas.hero__gl \"La mascarilla facial Rubra de silicona b\"",
+   "msg": "a child of section 1 beside its .wrap is no valid background layer: a hero layer with neither alt nor aria-hidden=\"true\" (SR-6)",
+   "fix": "build the page as header.nav, a main of sections (each one in-flow .wrap plus background layers) and footer.closing",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "container-edges"
+   ],
+   "wheres": [
+    "main#top > section.hero.hero--photo > canvas.hero__gl \"La mascarilla facial Rubra de silicona b\""
+   ]
+  },
+  {
+   "check": "section-gaps",
+   "where": "section#silicona / section#ritual",
+   "msg": "389px between these sections, +176% against the median 141px of gaps at a change of ground",
+   "fix": "use one gap between sections (all within 25% of each other)",
+   "widths": [
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-gaps"
+   ],
+   "wheres": [
+    "section#silicona / section#ritual"
+   ]
+  },
+  {
+   "check": "off-viewport",
+   "where": "header.nav.nav--split > div.wrap.nav__bar > button.nav__toggle",
+   "msg": "at 320px wide it runs 22px past the screen's right edge (cut there: the page clips what runs past it)",
+   "fix": "keep it inside the screen at this width: let it shrink, wrap or stack",
+   "widths": [
+    320
+   ],
+   "from": "consistency",
+   "ids": [
+    "off-viewport"
+   ],
+   "wheres": [
+    "header.nav.nav--split > div.wrap.nav__bar > button.nav__toggle"
+   ]
+  }
+ ],
+ "waived": [
+  {
+   "check": "no-visual",
+   "where": "section#preguntas \"Preguntas sobre la mascarilla\"",
+   "msg": "no picture, effect or mock in this section; a feature section needs a visual",
+   "fix": "give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "no-visual"
+   ],
+   "wheres": [
+    "section#preguntas \"Preguntas sobre la mascarilla\""
+   ],
+   "reason": "The FAQ recipe (sections-library.md, faq) is the page's split of heading and open answers with no picture; every other section already carries a render or photograph."
+  }
+ ],
+ "warnCount": 22,
+ "at": "2026-11-08T13:15:30.904Z",
+ "openTold": true
+}

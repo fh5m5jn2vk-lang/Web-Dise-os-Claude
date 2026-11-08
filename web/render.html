@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Rubra render</title><meta name="robots" content="noindex">
+<style>html,body{margin:0;background:#0a0a0a}canvas{display:block;width:100vw;height:100vh}</style>
+<script type="importmap">{"imports":{"three":"./vendor/three/three.module.min.js","three/addons/":"./vendor/three/addons/"}}</script>
+</head><body><canvas id="c"></canvas>
+<script type="module">
+import { createMaskScene } from './js/mask3d.js';
+const q = new URLSearchParams(location.search);
+const s = createMaskScene(document.getElementById('c'), { product: q.get('p') || 'face', view: q.get('view') || 'hero', bg: '#' + (q.get('bg') || '0a0a0a'), live: q.get('live') === '1', preserve: true, dpr: +(q.get('dpr') || 1), anchorX: +(q.get('ax') || 0.5), viewOverride: q.get('fill') ? { fill: +q.get('fill') } : undefined, halo: q.get('halo') !== '0' });
+window.__leds = s.leds;
+setTimeout(() => { s.renderOnce(); document.title = 'ready'; }, 300);
+</script></body></html>

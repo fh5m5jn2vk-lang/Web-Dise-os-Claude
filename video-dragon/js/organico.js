@@ -153,8 +153,8 @@ for (const s of [-1, 1]) { const bow = new THREE.Mesh(new THREE.TorusGeometry(0.
 lid.position.set(BX / 2 + 0.25, 0.75, 0.1); lid.rotation.set(0.1, 0.4, 1.25);
 
 /* ---------- the dragons ---------- */
-const main = createDragon(scene);
-const extra = ['galaxia', 'plata', 'fuego'].map((c) => { const d = createDragon(scene); d.setColor(c); d.group.visible = false; return d; });
+const main = createDragon(scene, { hq: true });
+const extra = ['galaxia', 'plata', 'fuego'].map((c) => { const d = createDragon(scene, { hq: true }); d.setColor(c); d.group.visible = false; return d; });
 [main, ...extra].forEach((d) => d.group.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } }));
 const spine = Array.from({ length: SEG + 1 }, () => V());
 const spines = extra.map(() => Array.from({ length: SEG + 1 }, () => V()));
@@ -231,7 +231,7 @@ const bodyY = (k) => 0.2 * (1 - 0.82 * Math.pow(k / SEG, 1.2)) + 0.025;
 function onDesk(out, lift = 0.4, look = V(0, 0, 0), t = 0) {
   for (let k = 0; k <= SEG; k++) out[k].y = bodyY(k);
   const n = 6;
-  for (let k = 0; k < n; k++) { const f = Math.pow(1 - k / n, 2); out[k].y += lift * f; out[k].x += look.x * f; out[k].z += look.z * f; }
+  for (let k = 0; k < n; k++) { const f = Math.pow(1 - k / n, 2); out[k].y += lift * f + Math.sin(t * 2.1 + 1) * 0.025 * f; out[k].x += look.x * f + Math.sin(t * 1.7) * 0.05 * f; out[k].z += look.z * f + Math.cos(t * 1.3) * 0.04 * f; }
 }
 function alongPath(c, tau, out) {
   out[0].copy(c(tau)); let prev = out[0].clone(), total = 0, k = 1, tt = tau, n = 0;
@@ -261,7 +261,7 @@ function coil(out, t, cx = 0, cz = 0, rot = 0) {
 const cam = { pos: V(), at: V(), fov: 48, focus: null };
 function handheld(t, amt = 1) {
   const n = (f, p) => Math.sin(t * f + p) * 0.5 + Math.sin(t * f * 2.3 + p * 1.7) * 0.3 + Math.sin(t * f * 5.1 + p * 0.3) * 0.2;
-  return { p: V(n(1.1, 0), n(1.3, 2), n(0.9, 4)).multiplyScalar(0.035 * amt), r: n(0.8, 1) * 0.012 * amt };
+  return { p: V(n(0.9, 0), n(1.1, 2), n(0.7, 4)).multiplyScalar(0.02 * amt), r: n(0.6, 1) * 0.007 * amt };
 }
 
 /* ---------- the shots, one per line of the script ---------- */
@@ -275,9 +275,9 @@ function shot(t) {
   tape.visible = tapeCase.visible = s === 3; gift.visible = s >= 6; props.visible = s !== 6 && s !== 7; kb.visible = s <= 1 || s === 4;
   if (s === 0) {
     // HOOK: walking up to the desk, the dragon coiled, its head up and turning to us
-    coil(spine, t, 0, 0.2, t * 0.15); onDesk(spine, 0.55 + 0.05 * Math.sin(t * 2), V(Math.sin(t * 1.3) * 0.1, 0, 0.12), t);
+    coil(spine, t, 0, 0.2, t * 0.15); onDesk(spine, lerp(0.12, 0.6, E.back(prog(t, 0.15, 0.75))) + 0.04 * Math.sin(t * 2), V(Math.sin(t * 1.3) * 0.1, 0, lerp(0, 0.2, E.out(prog(t, 0.15, 0.75)))), t);
     const k = E.out(p);
-    cam.pos.set(lerp(-0.8, 0.35, k), lerp(3.4, 1.55, k), lerp(6.8, 2.9, k)); cam.at.set(0, 0.35, 0.2); cam.fov = 50;
+    cam.pos.set(lerp(-0.9, 0.5, k), lerp(3.2, 1.85, k), lerp(6.4, 3.5, k)); cam.at.set(0, lerp(0.25, 0.5, k), 0.25); cam.fov = 48;
     if (t > tWord(0, 8) - 0.05) punch = E.out(prog(t, tWord(0, 8) - 0.05, tWord(0, 8) + 0.15)) * 0.25;    // "obsesionado": a quick zoom
   } else if (s === 1) {
     // "mirad cómo se mueve": it slithers toward the lens, we are down at desk height
@@ -386,12 +386,32 @@ function build(c, i) {
     if (c.o.glow) d.style.textShadow = '0 0 24px rgba(63,227,194,.9), 0 0 70px rgba(63,227,194,.6)';
     if (tail.length) line('under', txt(tail), tail);
   }
-  capEl.style.fontSize = '';
-  capEl.style.top = (c.kind === 'w' ? 1060 : 930 + (i % 3) * 30) + 'px';
-  capEl.style.marginLeft = (c.kind === 'w' ? 0 : [-40, 30, 0][i % 3]) + 'px';
   // keep the widest line inside the frame
-  lines.forEach(({ d }) => { d.style.display = 'inline-block'; let px = parseFloat(getComputedStyle(d).fontSize); while (d.offsetWidth > 980 && px > 30) { px -= 4; d.style.fontSize = px + 'px'; } d.style.display = ''; });
+  lines.forEach(({ d }) => { d.style.display = 'inline-block'; let px = parseFloat(getComputedStyle(d).fontSize); while (d.offsetWidth > 960 && px > 30) { px -= 4; d.style.fontSize = px + 'px'; } d.style.display = ''; });
+  place(c);
   built = { c, lines };
+}
+// put the words where the shot leaves room: away from the dragon (its head counts most), inside the app's safe area,
+// and not always in the same spot; plain words keep to the centre line, the stacked ones may sit left or right
+let lastPlace = '';
+const proj = V();
+function place(c) {
+  const w = capEl.offsetWidth, h = capEl.offsetHeight;
+  const pts = [];
+  const add = (sp, wgt) => sp.forEach((p, k) => { proj.copy(p).project(camera); if (proj.z < 1) pts.push([(proj.x * 0.5 + 0.5) * W, (-proj.y * 0.5 + 0.5) * H, k < 6 ? wgt * 4 : wgt]); });
+  add(spine, 1); if (extra[0].group.visible) spines.forEach((sp) => add(sp, 0.6));
+  const ys = c.kind === 'w' ? [560, 760, 1010, 1230, 1380] : [430, 640, 900, 1150, 1330];
+  const xs = c.kind === 'w' ? [['center', (W - w) / 2]] : [['left', 70], ['center', (W - w) / 2], ['right', W - 70 - w]];
+  let best = null;
+  for (const y0 of ys) for (const [al, x0] of xs) {
+    const y = y0 - h / 2; if (y < 300 || y + h > 1500) continue;
+    let hit = 0; for (const [x, yy, wt] of pts) if (x > x0 - 40 && x < x0 + w + 40 && yy > y - 40 && yy < y + h + 40) hit += wt;
+    const key = al + y0;
+    const score = hit * 10 + Math.abs(y0 + 0 - 1050) * 0.02 + (key === lastPlace && c.kind !== 'w' ? 25 : 0) + (al !== 'center' ? 4 : 0);
+    if (!best || score < best.score) best = { score, x0, y, al, key };
+  }
+  lastPlace = best.key;
+  capEl.style.left = best.x0 + 'px'; capEl.style.top = best.y + 'px'; capEl.style.textAlign = best.al;
 }
 function captions(t) {
   const i = chunks.findIndex((k) => t >= k.t0 && t < k.t1);
@@ -455,6 +475,8 @@ for (const f of ['700 80px Inter', '800 80px Inter', 'italic 400 80px Serif', '8
 woodMap.needsUpdate = true;
 const q = new URLSearchParams(location.search);
 window.__dur = DUR;
+// cues for the sound design (audio/organico.py): every caption, every cut, the switch and the glow
+window.__cues = { chunks: chunks.map((c) => ({ t: +(c.ws[c.kind === 'w' || c.kind === 'multi' ? 0 : Math.min(c.ws.length - 1, (c.o.top ?? 1))][1]).toFixed(3), kind: c.kind })), cuts: B.slice(1, -1), lightsOff: tLightsOff, glow: tGlow, gift: B[6] + 0.1 };
 window.__render = (t) => render(t);
 render(0);
 window.__ready = true;

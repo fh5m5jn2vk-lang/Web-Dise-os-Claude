@@ -86,14 +86,35 @@ def pop(g=1.0):
     t = tt(int(0.15 * SR)); f = 400 + 900 * np.exp(-t * 40); return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t * 30) * g
 def ding(g=1.0):
     t = tt(int(1.0 * SR)); return (np.sin(2 * np.pi * 1318 * t) + 0.5 * np.sin(2 * np.pi * 2637 * t) * np.exp(-t * 4)) * np.exp(-t * 4) * g
-for k, b0 in enumerate(B[1:]): add(sfx, whoosh(), b0 - 0.16, 0.22, -0.5 if k % 2 else 0.5)
+# the picture's cues, written by the recorder (node record.mjs --page organico)
+C = json.load(open('cues-organico.json'))
+def swish(dur=0.18, g=1.0, up=True):
+    n = int(dur * SR); t = tt(n); x = rng.normal(0, 1, n)
+    lo = band(x, 2500, 9000); e = (t / dur) ** 1.5 * np.exp(-t * 4) if up else np.exp(-t * 18)
+    return lo * e * g
+def tap(g=1.0, f=1600):
+    n = int(0.06 * SR); t = tt(n); return (np.sin(2 * np.pi * f * t) * np.exp(-t * 90) + band(rng.normal(0, 1, n), 3000, 10000) * np.exp(-t * 160) * 0.4) * g
+def bell(m, g=1.0, dur=0.9):
+    t = tt(int(dur * SR)); f = hz(m)
+    return (np.sin(2 * np.pi * f * t) + 0.4 * np.sin(2 * np.pi * f * 2.01 * t) * np.exp(-t * 6) + 0.2 * np.sin(2 * np.pi * f * 3.98 * t) * np.exp(-t * 9)) * np.exp(-t * 5) * np.minimum(1, t / 0.003) * g
+def thump(g=1.0):
+    t = tt(int(0.35 * SR)); f = 55 + 120 * np.exp(-t * 30); return np.tanh(np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t * 10) * 1.6) * g
+notes = [86, 89, 91, 93, 96, 98]
+for k, c in enumerate(C['chunks']):
+    t0 = c['t']; kind = c['kind']
+    if kind == 'w': add(sfx, tap(1, 1500 + (k % 3) * 220), t0, 0.05, (k % 3 - 1) * 0.3)
+    elif kind == 'stack': add(sfx, swish(0.22), t0 - 0.16, 0.16, 0.2); add(sfx, bell(notes[k % len(notes)]), t0, 0.07, -0.2)
+    elif kind == 'heavy': add(sfx, thump(1), t0, 0.32); add(sfx, swish(0.2), t0 - 0.14, 0.14)
+    elif kind == 'multi':
+        for j in range(3): add(sfx, bell(notes[j * 2], 1, 0.5), t0 + j * 0.16, 0.07, -0.4 + j * 0.4)
+for k, b0 in enumerate(C['cuts']): add(sfx, whoosh(), b0 - 0.16, 0.24, -0.5 if k % 2 else 0.5); add(sfx, thump(0.6), b0, 0.12)
+add(sfx, thump(1), 0.15, 0.35); add(sfx, swish(0.5), 0.0, 0.18)       # the hook: the head rears up
 add(sfx, pop(1), word(0, 8), 0.25)                            # "obsesionado"
-add(sfx, click(1), word(4, 7) + 0.1, 0.6)                     # the light switch
-add(sfx, shimmer(), word(4, 9), 0.35)                         # it glows
+add(sfx, click(1), C['lightsOff'], 0.6)                       # the light switch
+add(sfx, shimmer(), C['glow'], 0.35); add(sfx, thump(1), C['glow'], 0.25)   # it glows
 add(sfx, pop(1), B[6] + 0.1, 0.3); add(sfx, shimmer(1.2), B[6] + 0.2, 0.15)   # out of the box
-add(sfx, ding(1), word(7, 5), 0.18)                           # the link
 # the beat stops for the dark, and comes back with the glow
-gate = np.ones(N); a, z = int((word(4, 7) + 0.1) * SR), int(word(4, 9) * SR)
+gate = np.ones(N); a, z = int(C['lightsOff'] * SR), int(C['glow'] * SR)
 gate[a:z] = 0.08; gate = np.convolve(gate, np.ones(int(0.04 * SR)) / int(0.04 * SR), 'same')
 
 mix = music * (duck * gate * 0.55)[:, None] + voice[:, None] * 1.0 + sfx

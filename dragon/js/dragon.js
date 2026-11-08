@@ -1,7 +1,8 @@
 // The 3D-printed articulated dragon, modelled on the product: a chain of separate printed segments, each a cluster
 // of pointed leaf scales with a dorsal spike and a belly plate, in two-tone "silk" filament that shifts colour along
 // the body; a chunky head with branching horns and stiff wavy whiskers; four small legs with claws; a finned tail.
-// createDragon(scene) -> { update(spine, time, glow), setColor(id), group }
+// createDragon(scene, { hq }) -> { update(spine, time, glow), setColor(id), group }
+// hq (the films): smooth, finer scales, a sculpted head with an open mouth, and fine print layer lines on every surface
 import * as THREE from 'three';
 
 export const SEG = 40, SPACING = 0.16;            // spine points and their spacing: a body 6.4 long
@@ -25,7 +26,7 @@ const radiusAt = (u) => {
 function merge(parts) {
   const pos = [], nor = [], col = [];
   parts.forEach(({ g, m, tint }) => {
-    const ng = g.index ? g.toNonIndexed() : g.clone(); ng.applyMatrix4(m); ng.computeVertexNormals();
+    let ng = g.clone(); ng.applyMatrix4(m); if (ng.index) { ng.computeVertexNormals(); ng = ng.toNonIndexed(); } else ng.computeVertexNormals();
     const p = ng.attributes.position.array, n = ng.attributes.normal.array;
     for (let i = 0; i < p.length; i += 3) { pos.push(p[i], p[i + 1], p[i + 2]); nor.push(n[i], n[i + 1], n[i + 2]); col.push(tint, tint, tint); }
   });
@@ -39,10 +40,10 @@ const M = (p = [0, 0, 0], q = new THREE.Quaternion(), s = [1, 1, 1]) => new THRE
 const qFromTo = (a, b) => new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(...a).normalize(), new THREE.Vector3(...b).normalize());
 
 // one printed segment, in unit size: +z points to the head, +y is the back
-function segmentGeometry() {
+function segmentGeometry(hq = false) {
   const parts = [];
-  const leaf = new THREE.ConeGeometry(0.38, 0.72, 4); leaf.translate(0, 0.36, 0);          // a pointed scale, grown along +y
-  parts.push({ g: new THREE.CylinderGeometry(0.5, 0.5, 0.9, 10).rotateX(Math.PI / 2), m: M(), tint: 0.62 });   // the core, mostly hidden
+  const leaf = hq ? new THREE.ConeGeometry(0.38, 0.72, 10, 2) : new THREE.ConeGeometry(0.38, 0.72, 4); leaf.translate(0, 0.36, 0);          // a pointed scale, grown along +y
+  parts.push({ g: new THREE.CylinderGeometry(0.5, 0.5, 0.9, hq ? 24 : 10).rotateX(Math.PI / 2), m: M(), tint: 0.62 });   // the core, mostly hidden
   [0.22, -0.18].forEach((z, row) => {
     const n = 9;
     for (let k = 0; k < n; k++) {
@@ -54,36 +55,94 @@ function segmentGeometry() {
     }
   });
   // the dorsal spike and the belly plate
-  const spike = new THREE.ConeGeometry(0.2, 1.25, 4); spike.translate(0, 0.62, 0);
+  const spike = new THREE.ConeGeometry(0.2, 1.25, hq ? 8 : 4); spike.translate(0, 0.62, 0);
   parts.push({ g: spike, m: M([0, 0.55, 0.05], qFromTo([0, 1, 0], [0, 1, -0.75])), tint: 1.15 });
   parts.push({ g: new THREE.BoxGeometry(0.62, 0.12, 0.8), m: M([0, -0.5, 0]), tint: 1.25 });
   return merge(parts);
 }
 
-export function createDragon(scene) {
+// print layer lines: a fine bump across the local height of every printed part, faded out where it would shimmer
+function printLines(mat) {
+  mat.onBeforeCompile = (sh) => {
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying float vLayer;').replace('#include <begin_vertex>', '#include <begin_vertex>\nvLayer = position.y;');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vLayer;').replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
+      {
+        float k = 200.0; float ph = vLayer * k;
+        float fw = fwidth(ph); float fade = 1.0 - smoothstep(0.6, 1.6, fw);
+        float h = sin(ph) * fade;
+        vec3 dpx = dFdx(-vViewPosition), dpy = dFdy(-vViewPosition);
+        float dhx = dFdx(h), dhy = dFdy(h);
+        vec3 r1 = cross(dpy, normal), r2 = cross(normal, dpx); float det = dot(dpx, r1);
+        vec3 grad = sign(det) * (dhx * r1 + dhy * r2);
+        normal = normalize(abs(det) * normal - grad * 0.0006);
+      }`);
+  };
+  return mat;
+}
+
+// a dragon's head, sculpted from a sphere: skull, brows, a long snout and a nose, +z forward
+function headGeometry(lower = false) {
+  const g = new THREE.SphereGeometry(1, 96, 64), p = g.attributes.position, v = new THREE.Vector3();
+  for (let i = 0; i < p.count; i++) {
+    v.fromBufferAttribute(p, i);
+    const z = v.z * 0.27 + 0.1;                                    // -0.17 back .. 0.37 snout
+    const f = THREE.MathUtils.clamp((z + 0.17) / 0.54, 0, 1);       // 0 back .. 1 tip
+    let w = 0.14 - 0.06 * f * f, hgt = 0.14 - 0.06 * f;
+    let x = v.x * w, y = v.y * hgt;
+    if (!lower) {
+      y += Math.exp(-Math.pow((z - 0.06) / 0.06, 2)) * Math.exp(-Math.pow((Math.abs(x) - 0.07) / 0.04, 2)) * 0.05 * Math.max(0, v.y);   // brow ridges
+      y += Math.exp(-Math.pow((z - 0.33) / 0.04, 2)) * 0.025 * Math.max(0, v.y);                  // the nose bump
+      x *= 1 + 0.12 * Math.exp(-Math.pow((z - 0.33) / 0.05, 2));                                  // flared nostrils
+      if (v.y < 0) y *= 0.35;                                                                    // a flat palate
+      y += 0.02;
+    } else {
+      w = 0.12 - 0.05 * f; x = v.x * w; y = v.y * 0.05; if (v.y > 0) y *= 0.3; y -= 0.035;
+    }
+    p.setXYZ(i, x, y, z - (lower ? 0.03 : 0));
+  }
+  g.computeVertexNormals();
+  return g;
+}
+
+export function createDragon(scene, opts = {}) {
+  const hq = !!opts.hq;
   const group = new THREE.Group(); scene.add(group);
-  const silk = new THREE.MeshPhysicalMaterial({ vertexColors: true, flatShading: true, metalness: 0.55, roughness: 0.3, clearcoat: 0.6, clearcoatRoughness: 0.25, iridescence: 0.35, iridescenceIOR: 1.6, sheen: 0.5, sheenColor: new THREE.Color('#ffffff'), emissive: new THREE.Color('#000') });
+  const silk = new THREE.MeshPhysicalMaterial({ vertexColors: true, flatShading: !hq, metalness: 0.55, roughness: 0.3, clearcoat: 0.6, clearcoatRoughness: 0.25, iridescence: 0.35, iridescenceIOR: 1.6, sheen: 0.5, sheenColor: new THREE.Color('#ffffff'), emissive: new THREE.Color('#000') });
 
   /* the body: one instanced printed segment, many times */
-  const segGeo = segmentGeometry();
+  const segGeo = segmentGeometry(hq); if (hq) printLines(silk);
   const body = new THREE.InstancedMesh(segGeo, silk, PIECES); body.frustumCulled = false; group.add(body);
   body.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(PIECES * 3), 3);
 
   /* the head */
   const head = new THREE.Group(); group.add(head); head.scale.setScalar(1.35);
-  const headMat = new THREE.MeshPhysicalMaterial({ color: '#ffd23f', flatShading: true, metalness: 0.55, roughness: 0.32, clearcoat: 0.6, iridescence: 0.35, sheen: 0.5, emissive: new THREE.Color('#000') });
+  const headMat = new THREE.MeshPhysicalMaterial({ color: '#ffd23f', flatShading: !hq, metalness: 0.55, roughness: 0.32, clearcoat: 0.6, iridescence: 0.35, sheen: 0.5, emissive: new THREE.Color('#000') });
   const hornMat = new THREE.MeshPhysicalMaterial({ color: '#ffe9a8', metalness: 0.6, roughness: 0.28, clearcoat: 0.6, emissive: new THREE.Color('#000') });
   const whiskerMat = new THREE.MeshPhysicalMaterial({ color: '#c9f3ff', metalness: 0.7, roughness: 0.22, iridescence: 1, emissive: new THREE.Color('#000') });
   const add = (geom, mat, p, s, r = [0, 0, 0], parent = head) => { const m = new THREE.Mesh(geom, mat); m.position.set(...p); m.scale.set(...s); m.rotation.set(...r); parent.add(m); return m; };
   const ico = new THREE.IcosahedronGeometry(1, 2), box = new THREE.BoxGeometry(1, 1, 1);
-  add(ico, headMat, [0, 0.02, -0.03], [0.19, 0.16, 0.2]);                       // skull
-  add(box, headMat, [0, -0.02, 0.17], [0.22, 0.13, 0.26]);                      // muzzle
-  add(ico, headMat, [0, 0.0, 0.31], [0.12, 0.08, 0.07]);                        // nose
-  add(box, headMat, [0, -0.1, 0.16], [0.18, 0.05, 0.24], [0.1, 0, 0]);           // lower jaw
+  if (hq) {
+    printLines(headMat);
+    add(headGeometry(), headMat, [0, 0, 0], [1, 1, 1]);                                       // skull and snout
+    const jaw = add(headGeometry(true), headMat, [0, -0.045, 0.02], [1, 1, 1], [0.22, 0, 0]);  // the lower jaw, a little open
+    const toothMat = new THREE.MeshPhysicalMaterial({ color: '#fff8ea', roughness: 0.3, clearcoat: 0.8 });
+    const tooth = new THREE.ConeGeometry(0.012, 0.045, 6);
+    for (const sd of [-1, 1]) for (let k = 0; k < 5; k++) {
+      const z = 0.3 - k * 0.055, xw = 0.14 - 0.06 * Math.pow((z + 0.17) / 0.54, 2);
+      add(tooth, toothMat, [sd * xw * 0.82, -0.005, z], [1, k === 0 ? 1.6 : 1, 1], [Math.PI, 0, 0]);
+      add(tooth, toothMat, [sd * xw * 0.7, 0.02, z - 0.02], [1, 0.9, 1], [0, 0, 0], jaw);
+    }
+    add(new THREE.SphereGeometry(1, 24, 16), new THREE.MeshPhysicalMaterial({ color: '#a8203a', roughness: 0.4, clearcoat: 0.6 }), [0, -0.03, 0.12], [0.07, 0.015, 0.16], [0, 0, 0], jaw);   // tongue
+  } else {
+    add(ico, headMat, [0, 0.02, -0.03], [0.19, 0.16, 0.2]);                       // skull
+    add(box, headMat, [0, -0.02, 0.17], [0.22, 0.13, 0.26]);                      // muzzle
+    add(ico, headMat, [0, 0.0, 0.31], [0.12, 0.08, 0.07]);                        // nose
+    add(box, headMat, [0, -0.1, 0.16], [0.18, 0.05, 0.24], [0.1, 0, 0]);           // lower jaw
+  }
   [-1, 1].forEach((s) => {
-    add(ico, headMat, [s * 0.085, 0.11, 0.06], [0.075, 0.04, 0.12], [0.35, 0, s * -0.3]);         // heavy brow
-    add(new THREE.SphereGeometry(1, 16, 12), new THREE.MeshPhysicalMaterial({ color: '#111', roughness: 0.15, clearcoat: 1 }), [s * 0.1, 0.06, 0.12], [0.028, 0.028, 0.028]).userData.eye = true;
-    add(new THREE.TorusGeometry(1, 0.25, 6, 16), headMat, [s * 0.1, 0.06, 0.125], [0.034, 0.034, 0.034], [0, s * 0.5, 0]);   // eye ring
+    if (!hq) add(ico, headMat, [s * 0.085, 0.11, 0.06], [0.075, 0.04, 0.12], [0.35, 0, s * -0.3]);         // heavy brow
+    add(new THREE.SphereGeometry(1, 16, 12), new THREE.MeshPhysicalMaterial({ color: '#111', roughness: 0.15, clearcoat: 1 }), hq ? [s * 0.108, 0.088, 0.07] : [s * 0.1, 0.06, 0.12], hq ? [0.03, 0.03, 0.03] : [0.028, 0.028, 0.028]).userData.eye = true;
+    add(new THREE.TorusGeometry(1, 0.25, 6, 16), headMat, hq ? [s * 0.112, 0.088, 0.072] : [s * 0.1, 0.06, 0.125], [0.034, 0.034, 0.034], [0, s * (hq ? 1.2 : 0.5), 0]);   // eye ring
     add(new THREE.SphereGeometry(1, 10, 8), new THREE.MeshStandardMaterial({ color: '#0a0a0a' }), [s * 0.045, 0.03, 0.37], [0.022, 0.018, 0.012]);   // nostril
     add(new THREE.ConeGeometry(0.03, 0.12, 4), headMat, [s * 0.1, -0.02, 0.3], [1, 1, 1], [Math.PI / 2, 0, s * 0.4]);       // lip spike
   });
@@ -111,9 +170,9 @@ export function createDragon(scene) {
   [[0.17, 0], [0.5, 1.9]].forEach(([u, ph]) => [-1, 1].forEach((s) => {
     const root = new THREE.Group(); group.add(root);
     const thigh = new THREE.Group(); root.add(thigh);
-    add(box, headMat, [0, -0.07, 0], [0.06, 0.15, 0.07], [0, 0, 0], thigh);
+    if (hq) add(new THREE.CapsuleGeometry(0.03, 0.1, 6, 12), headMat, [0, -0.07, 0], [1, 1, 1.1], [0, 0, 0], thigh); else add(box, headMat, [0, -0.07, 0], [0.06, 0.15, 0.07], [0, 0, 0], thigh);
     const shin = new THREE.Group(); shin.position.y = -0.14; thigh.add(shin);
-    add(box, headMat, [0, -0.05, 0.02], [0.045, 0.1, 0.05], [0.4, 0, 0], shin);
+    if (hq) add(new THREE.CapsuleGeometry(0.022, 0.07, 6, 12), headMat, [0, -0.05, 0.02], [1, 1, 1.1], [0.4, 0, 0], shin); else add(box, headMat, [0, -0.05, 0.02], [0.045, 0.1, 0.05], [0.4, 0, 0], shin);
     const foot = new THREE.Group(); foot.position.set(0, -0.11, 0.04); shin.add(foot);
     for (let c = 0; c < 3; c++) { const a = (c - 1) * 0.45; add(clawGeo, hornMat, [Math.sin(a) * 0.03, 0, 0.02], [1, 1, 1], [1.5, a, 0], foot); }
     legs.push({ u, s, ph, root, thigh, shin, foot });

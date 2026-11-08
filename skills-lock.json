@@ -7,6 +7,24 @@
       "skillPath": "skills/agent-browser/SKILL.md",
       "computedHash": "60a9cbe5af176150582c019e16e5d3703a41bb02d88438e881349876120d7944"
     },
+    "bunshin": {
+      "source": "AThevon/genjutsu",
+      "sourceType": "github",
+      "skillPath": "skills/bunshin/SKILL.md",
+      "ref": "5e00595ab7495d6bb966639f2f5ff1dbee364389"
+    },
+    "cast": {
+      "source": "AThevon/genjutsu",
+      "sourceType": "github",
+      "skillPath": "skills/cast/SKILL.md",
+      "ref": "5e00595ab7495d6bb966639f2f5ff1dbee364389"
+    },
+    "design-dna": {
+      "source": "zanwei/design-dna",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "ref": "593e39bc9e3652734653bd75544a333d7d43615e"
+    },
     "design-taste-frontend": {
       "source": "Leonxlnx/taste-skill",
       "sourceType": "github",
@@ -18,6 +36,144 @@
       "sourceType": "github",
       "skillPath": "skills/emil-design-eng/SKILL.md",
       "computedHash": "2483020b5bbaab030d6b3463bfba49c8d9c2cd8dea4d9fba836dbd471f1fb706"
+    },
+    "gsap-core": {
+      "source": "greensock/gsap-skills",
+      "sourceType": "github",
+      "skillPath": "skills/gsap-core/SKILL.md",
+      "ref": "aed9cfd3277740755f6bfc1155c7aa645403b760"
+    },
+    "gsap-frameworks": {
+      "source": "greensock/gsap-skills",
+      "sourceType": "github",
+      "skillPath": "skills/gsap-frameworks/SKILL.md",
+      "ref": "aed9cfd3277740755f6bfc1155c7aa645403b760"
+    },
+    "gsap-performance": {
+      "source": "greensock/gsap-skills",
+      "sourceType": "github",
+      "skillPath": "skills/gsap-performance/SKILL.md",
+      "ref": "aed9cfd3277740755f6bfc1155c7aa645403b760"
+    },
+    "gsap-plugins": {
+      "source": "greensock/gsap-skills",
+      "sourceType": "github",
+      "skillPath": "skills/gsap-plugins/SKILL.md",
+      "ref": "aed9cfd3277740755f6bfc1155c7aa645403b760"
+    },
+    "gsap-react": {
+      "source": "greensock/gsap-skills",
+      "sourceType": "github",
+      "skillPath": "skills/gsap-react/SKILL.md",
+      "ref": "aed9cfd3277740755f6bfc1155c7aa645403b760"
+    },
+    "gsap-scrolltrigger": {
+      "source": "greensock/gsap-skills",
+      "sourceType": "github",
+      "skillPath": "skills/gsap-scrolltrigger/SKILL.md",
+      "ref": "aed9cfd3277740755f6bfc1155c7aa645403b760"
+    },
+    "gsap-timeline": {
+      "source": "greensock/gsap-skills",
+      "sourceType": "github",
+      "skillPath": "skills/gsap-timeline/SKILL.md",
+      "ref": "aed9cfd3277740755f6bfc1155c7aa645403b760"
+    },
+    "gsap-utils": {
+      "source": "greensock/gsap-skills",
+      "sourceType": "github",
+      "skillPath": "skills/gsap-utils/SKILL.md",
+      "ref": "aed9cfd3277740755f6bfc1155c7aa645403b760"
+    },
+    "motion-design": {
+      "source": "lottiefiles/motion-design-skill",
+      "sourceType": "github",
+      "skillPath": "skills/motion-design/SKILL.md",
+      "ref": "f9a8a041b85185ee4881b3471d3415e939aac772"
+    },
+    "paint": {
+      "source": "AThevon/genjutsu",
+      "sourceType": "github",
+      "skillPath": "skills/paint/SKILL.md",
+      "ref": "5e00595ab7495d6bb966639f2f5ff1dbee364389"
+    },
+    "threejs-animation": {
+      "source": "CloudAI-X/threejs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-animation/SKILL.md",
+      "ref": "0e181866f095b5f06d005133876e926515390d95"
+    },
+    "threejs-asset-pipeline": {
+      "source": "CloudAI-X/threejs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-asset-pipeline/SKILL.md",
+      "ref": "0e181866f095b5f06d005133876e926515390d95"
+    },
+    "threejs-fundamentals": {
+      "source": "CloudAI-X/threejs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-fundamentals/SKILL.md",
+      "ref": "0e181866f095b5f06d005133876e926515390d95"
+    },
+    "threejs-geometry": {
+      "source": "CloudAI-X/threejs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-geometry/SKILL.md",
+      "ref": "0e181866f095b5f06d005133876e926515390d95"
+    },
+    "threejs-interaction": {
+      "source": "CloudAI-X/threejs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-interaction/SKILL.md",
+      "ref": "0e181866f095b5f06d005133876e926515390d95"
+    },
+    "threejs-lighting": {
+      "source": "CloudAI-X/threejs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-lighting/SKILL.md",
+      "ref": "0e181866f095b5f06d005133876e926515390d95"
+    },
+    "threejs-loaders": {
+      "source": "CloudAI-X/threejs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-loaders/SKILL.md",
+      "ref": "0e181866f095b5f06d005133876e926515390d95"
+    },
+    "threejs-materials": {
+      "source": "CloudAI-X/threejs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-materials/SKILL.md",
+      "ref": "0e181866f095b5f06d005133876e926515390d95"
+    },
+    "threejs-performance": {
+      "source": "CloudAI-X/threejs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-performance/SKILL.md",
+      "ref": "0e181866f095b5f06d005133876e926515390d95"
+    },
+    "threejs-postprocessing": {
+      "source": "CloudAI-X/threejs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-postprocessing/SKILL.md",
+      "ref": "0e181866f095b5f06d005133876e926515390d95"
+    },
+    "threejs-react-three-fiber": {
+      "source": "CloudAI-X/threejs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-react-three-fiber/SKILL.md",
+      "ref": "0e181866f095b5f06d005133876e926515390d95"
+    },
+    "threejs-shaders": {
+      "source": "CloudAI-X/threejs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-shaders/SKILL.md",
+      "ref": "0e181866f095b5f06d005133876e926515390d95"
+    },
+    "threejs-textures": {
+      "source": "CloudAI-X/threejs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/threejs-textures/SKILL.md",
+      "ref": "0e181866f095b5f06d005133876e926515390d95"
     }
   }
 }

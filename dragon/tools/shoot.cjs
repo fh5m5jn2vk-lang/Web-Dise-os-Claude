@@ -11,7 +11,7 @@ const types = { '.html': 'text/html', '.js': 'text/javascript', '.svg': 'image/s
   fs.mkdirSync(out, { recursive: true });
   await p.goto(`http://127.0.0.1:${srv.address().port}/`);
   await p.waitForTimeout(1800); await p.screenshot({ path: `${out}/0-intro.jpg`, quality: 80 }); await p.waitForTimeout(1500); await p.screenshot({ path: `${out}/0-intro-b.jpg`, quality: 80 });
-  await p.mouse.move(+W * 0.7, +H * 0.4);
+  await p.waitForTimeout(2500); await p.screenshot({ path: `${out}/0-intro-c.jpg`, quality: 80 }); await p.mouse.move(+W * 0.6, +H * 0.5); await p.mouse.wheel(0, 300); await p.waitForTimeout(700); await p.screenshot({ path: `${out}/0-intro-d.jpg`, quality: 80 }); await p.mouse.move(+W * 0.7, +H * 0.4);
   await p.waitForTimeout(9000); await p.screenshot({ path: `${out}/1-hero.jpg`, quality: 80 });
   for (const id of ['largo', 'mueve', 'brilla', 'colores', 'comprar', 'faq']) {
     await p.evaluate((id) => document.getElementById(id).scrollIntoView(), id);

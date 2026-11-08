@@ -234,12 +234,14 @@ export function createScene(canvas) {
   const spineFree = Array.from({ length: SEG + 1 }, () => new THREE.Vector3());
   const spinePose = Array.from({ length: SEG + 1 }, () => new THREE.Vector3());
   const spine = Array.from({ length: SEG + 1 }, () => new THREE.Vector3());
+  const spinePrev = Array.from({ length: SEG + 1 }, () => new THREE.Vector3());
+  const spineDraw = Array.from({ length: SEG + 1 }, () => new THREE.Vector3());
   const tmp = new THREE.Vector3(), tmp2 = new THREE.Vector3(), up = new THREE.Vector3(0, 1, 0), mtx = new THREE.Matrix4();
   const raycaster = new THREE.Raycaster(); const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
   const target = new THREE.Vector3();
 
   function setColor(id) { S.color = id; D.setColor(id); }
-  setColor('aurora');
+  setColor('arcoiris');
 
   function frame() {
     const w = canvas.clientWidth, h = canvas.clientHeight;
@@ -257,23 +259,25 @@ export function createScene(canvas) {
     raycaster.setFromCamera(S.ptrS, camera);
     raycaster.ray.intersectPlane(plane, target);
     target.x = clamp(target.x, -4.2, 4.2); target.y = clamp(target.y, -1.4, 2.4);
-    const kS = 9;
+    // on a phone the copy sits low: keep the dragon in the upper half
+    if (camera.aspect < 0.8) { target.x = clamp(target.x, -1.1, 1.1); target.y = Math.max(target.y, 1.25); }
+    const kS = 15;
     tVel.addScaledVector(tmp.copy(target).sub(tSmooth), kS * kS * dt).multiplyScalar(Math.exp(-2 * kS * dt));
     tSmooth.addScaledVector(tVel, dt);
     // the head never stops on the pearl: it aims at a point that circles it, so it swims in calm loops
-    const ang = time * 0.75;
-    lead.set(tSmooth.x + Math.cos(ang) * 0.85, tSmooth.y + Math.sin(ang) * 0.55, Math.sin(time * 0.43) * 0.6);
+    const ang = time * 1.25;
+    lead.set(tSmooth.x + Math.cos(ang) * 0.6, tSmooth.y + Math.sin(ang) * 0.38, Math.sin(time * 0.6) * 0.5);
     aim.copy(lead).sub(headPos);
     const dist = aim.length();
     aim.normalize();
     // turn toward it at a capped rate: smooth arcs, never a snap
-    const maxTurn = 2.6 * dt;
+    const maxTurn = 4.8 * dt;
     const cosA = clamp(dir.dot(aim), -1, 1), a = Math.acos(cosA);
     if (a > 1e-4) {
       const axis = tmp2.crossVectors(dir, aim); if (axis.lengthSq() < 1e-8) axis.set(0, 0, 1);
       dir.applyAxisAngle(axis.normalize(), Math.min(a, maxTurn)).normalize();
     }
-    const speed = 1.5 + clamp(dist - 0.8, 0, 3) * 0.9;
+    const speed = 2.6 + clamp(dist - 0.5, 0, 3.5) * 1.9;
     headPos.addScaledVector(dir, speed * dt);
     headPos.z = clamp(headPos.z, -1.4, 1.4);
     // record the path densely; the body is laid along it
@@ -336,11 +340,15 @@ export function createScene(canvas) {
     S.yaw += ((S.ptrS.x * 0.9) - S.yaw) * Math.min(1, dt * 3);
     updateCamera(t); updateCity(t, dt);
     if (reduce) updateDragonSim(simT, 0);
-    else { acc += dt; let n = 0; while (acc >= STEP && n < 4) { simT += STEP; updateDragonSim(simT, STEP); acc -= STEP; n++; } if (n === 4) acc = 0; }
-    D.update(spine, simT, S.glowT); updatePearl(simT);
+    else { acc += dt; let n = 0; while (acc >= STEP && n < 4) { for (let i = 0; i <= SEG; i++) spinePrev[i].copy(spine[i]); simT += STEP; updateDragonSim(simT, STEP); acc -= STEP; n++; } if (n === 4) acc = 0; }
+    // draw between the last two simulation steps, so motion is smooth at any refresh rate
+    const alpha = reduce ? 1 : clamp(acc / STEP);
+    for (let i = 0; i <= SEG; i++) spineDraw[i].copy(spinePrev[i]).lerp(spine[i], alpha);
+    D.update(spineDraw, simT + alpha * STEP, S.glowT); updatePearl(simT);
     bloom.strength = 0.45 + S.glowT * 0.25;
     composer.render();
   }
+  updateDragonSim(0, 0); for (let i = 0; i <= SEG; i++) spinePrev[i].copy(spine[i]);
   raf = requestAnimationFrame(tick);
 
   return {

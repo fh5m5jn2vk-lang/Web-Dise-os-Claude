@@ -18,20 +18,45 @@ try {
 const intro = document.getElementById('intro');
 const han = intro.querySelector('.han--fill'), bar = intro.querySelector('.bar i'), count = intro.querySelector('.count');
 const prog = { v: 0 };
+// split the brand into letters, so they can part one by one
+const brandEl = intro.querySelector('.brand');
+brandEl.innerHTML = [...brandEl.textContent].map((ch) => `<span class="ch">${ch}</span>`).join('');
+const swipe = intro.querySelector('.swipe');
+let entered = false;
 function finishIntro() {
+  if (entered) return; entered = true;
+  removeGestures();
+  const svg = intro.querySelector('svg');
   const tl = gsap.timeline({ defaults: { ease: 'power3.inOut' }, onComplete: () => { intro.remove(); document.body.classList.remove('is-locked'); ScrollTrigger.refresh(); } });
-  tl.to(intro.querySelector('.seal'), { opacity: 0, scale: 0.94, duration: 0.6 })
-    .to(intro.querySelector('.half--top'), { yPercent: -100, duration: 1.1 }, '-=0.1')
-    .to(intro.querySelector('.half--bot'), { yPercent: 100, duration: 1.1 }, '<')
-    .add(() => scene && gsap.to({ k: 1 }, { k: 0, duration: 2.6, ease: 'power2.out', onUpdate() { scene.fly(this.targets()[0].k); } }), '<')
-    .to('#hero .rv', { opacity: 1, y: 0, duration: 1, stagger: 0.12, ease: 'power3.out' }, '-=0.6')
-    .to('.big-han--hero', { opacity: 1, duration: 2, ease: 'power2.out' }, '<');
+  tl.to(swipe, { opacity: 0, y: 20, duration: 0.35, ease: 'power2.in' })
+    // the letters part and rise, the character rushes toward us and dissolves
+    .to(brandEl.querySelectorAll('.ch'), { y: -60, opacity: 0, rotationX: 70, duration: 0.7, stagger: { each: 0.06, from: 'center' }, ease: 'power3.in' }, 0)
+    .to([bar.parentNode, count], { opacity: 0, duration: 0.4 }, 0)
+    .to(svg, { scale: 7, opacity: 0, filter: 'blur(18px)', duration: 1.25, ease: 'power3.in', transformOrigin: '50% 58%' }, 0.1)
+    .to(intro.querySelector('.half--top'), { yPercent: -100, duration: 1.2, ease: 'power4.inOut' }, 0.55)
+    .to(intro.querySelector('.half--bot'), { yPercent: 100, duration: 1.2, ease: 'power4.inOut' }, 0.55)
+    .add(() => scene && gsap.to({ k: 1 }, { k: 0, duration: 2.4, ease: 'power3.out', onUpdate() { scene.fly(this.targets()[0].k); } }), 0.5)
+    .to('#hero .rv', { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: 'power3.out' }, 1.25)
+    .to('.big-han--hero', { opacity: 1, duration: 2, ease: 'power2.out' }, 1.25);
 }
+// the intro waits for a swipe: the wheel, a finger, a key or a click on the hint
+let touchY = null;
+const onWheel = (e) => { e.preventDefault(); if (ready && Math.abs(e.deltaY) > 6) finishIntro(); };
+const onTouchStart = (e) => { touchY = e.touches[0].clientY; };
+const onTouchMove = (e) => { e.preventDefault(); if (ready && touchY != null && Math.abs(e.touches[0].clientY - touchY) > 40) finishIntro(); };
+const onKey = (e) => { if (ready && ['ArrowDown', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); finishIntro(); } };
+let ready = false;
+addEventListener('wheel', onWheel, { passive: false });
+addEventListener('touchstart', onTouchStart, { passive: true });
+addEventListener('touchmove', onTouchMove, { passive: false });
+addEventListener('keydown', onKey);
+swipe.addEventListener('click', () => ready && finishIntro());
+function removeGestures() { removeEventListener('wheel', onWheel); removeEventListener('touchstart', onTouchStart); removeEventListener('touchmove', onTouchMove); removeEventListener('keydown', onKey); }
 // wait for the Chinese face (at most 2.5 s), so the character is drawn whole and never in a fallback font
 const fontReady = Promise.race([document.fonts.load('900 220px "Noto Serif TC"', '龍'), new Promise((r) => setTimeout(r, 2500))]).then(() => document.documentElement.classList.add('fonts-ready'));
 await fontReady;
 const inkRect = document.getElementById('inkRect');
-if (reduce) { gsap.set('.rv, .big-han--hero', { opacity: 1, y: 0 }); inkRect.setAttribute('y', '-20');  if (scene) scene.fly(0); intro.remove(); document.body.classList.remove('is-locked'); }
+if (reduce) { removeGestures(); gsap.set('.rv, .big-han--hero', { opacity: 1, y: 0 }); inkRect.setAttribute('y', '-20'); if (scene) scene.fly(0); intro.remove(); document.body.classList.remove('is-locked'); }
 else {
   const outline = intro.querySelector('.han:not(.han--fill)');
   gsap.timeline()
@@ -39,7 +64,8 @@ else {
     .to(inkRect, { attr: { y: -20 }, duration: 1.3, ease: 'power2.inOut' }, '-=0.6')
     .to(outline, { opacity: 0.35, duration: 0.6 }, '<')
     .to(prog, { v: 100, duration: 3.2, ease: 'power1.inOut', onUpdate: () => { const v = Math.round(prog.v); count.textContent = String(v).padStart(3, '0'); bar.style.width = v + '%'; } }, 0)
-    .add(finishIntro, '+=0.7');
+    .add(() => { ready = true; swipe.hidden = false; }, '+=0.2')
+    .fromTo(swipe, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' });
 }
 
 /* ---------- pointer: the pearl, and the turn of a posed dragon ---------- */
@@ -73,7 +99,7 @@ sw.addEventListener('click', () => { manual = true; setDark(sw.getAttribute('ari
 ScrollTrigger.create({ trigger: '#brilla', start: 'top 45%', end: 'bottom 55%', onEnter: () => !manual && setDark(true), onEnterBack: () => !manual && setDark(true), onLeave: () => setDark(false), onLeaveBack: () => setDark(false) });
 
 /* ---------- colours ---------- */
-const names = { aurora: 'Aurora', jade: 'Jade', rubi: 'Rubí', obsidiana: 'Obsidiana' };
+const names = { arcoiris: 'Arcoíris', galaxia: 'Galaxia', plata: 'Plata', fuego: 'Fuego' };
 document.querySelectorAll('#sw input').forEach((i) => i.addEventListener('change', () => {
   if (!i.checked) return;
   if (scene) scene.setColor(i.value);
@@ -82,7 +108,7 @@ document.querySelectorAll('#sw input').forEach((i) => i.addEventListener('change
 }));
 
 /* ---------- Shopify: fill in the store and the variant ids (one per colour and pack) ---------- */
-const SHOPIFY = { store: '', variants: { aurora: { uno: '', dos: '' }, jade: { uno: '', dos: '' }, rubi: { uno: '', dos: '' }, obsidiana: { uno: '', dos: '' } } };
+const SHOPIFY = { store: '', variants: { arcoiris: { uno: '', dos: '' }, galaxia: { uno: '', dos: '' }, plata: { uno: '', dos: '' }, fuego: { uno: '', dos: '' } } };
 document.getElementById('buy').addEventListener('submit', (e) => {
   const d = new FormData(e.target);
   const id = SHOPIFY.store && SHOPIFY.variants[d.get('color')]?.[d.get('pack')];

@@ -52,6 +52,12 @@ a { color: inherit; }
 #intro .count { font: 500 13px/1 var(--text); letter-spacing: .2em; color: var(--muted); font-variant-numeric: tabular-nums; }
 #intro .bar { width: 160px; height: 1px; background: var(--line); overflow: hidden; }
 #intro .bar i { display: block; height: 100%; width: 0; background: var(--red); }
+#intro .brand .ch { display: inline-block; }
+#intro .swipe { position: absolute; left: 50%; bottom: max(40px, env(safe-area-inset-bottom)); transform: translateX(-50%); display: grid; justify-items: center; gap: 12px; padding: 10px 18px; border: 0; background: none; color: var(--muted); font: 500 12px/1 var(--text); letter-spacing: .28em; text-transform: uppercase; white-space: nowrap; cursor: pointer; }
+#intro .swipe:hover { color: var(--ink); }
+#intro .swipe__line { position: relative; width: 1px; height: 46px; background: rgba(244,239,230,.18); overflow: hidden; }
+#intro .swipe__line::after { content: ""; position: absolute; left: 0; top: -40%; width: 1px; height: 40%; background: var(--gold); animation: swipeLine 1.6s cubic-bezier(.6,0,.2,1) infinite; }
+@keyframes swipeLine { to { top: 100%; } }
 
 /* chrome */
 .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; padding: 22px var(--gut); }
@@ -182,6 +188,7 @@ footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-t
     <div class="bar"><i></i></div>
     <div class="count">000</div>
   </div>
+  <button class="swipe" type="button" hidden><span class="swipe__line" aria-hidden="true"></span>Desliza para entrar</button>
 </div>
 
 <header class="nav">
@@ -199,8 +206,8 @@ footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-t
     <div class="big-han big-han--hero" aria-hidden="true">龍</div>
     <div class="panel">
       <p class="eyebrow rv">Impreso en 3D, pieza a pieza</p>
-      <h1 id="hero-h" class="rv">Dragón de <em>cristal</em> articulado</h1>
-      <p class="lead rv">88 cm de escamas que giran, se doblan y brillan en la oscuridad. Mueve el ratón: el dragón persigue la perla, como en las leyendas.</p>
+      <h1 id="hero-h" class="rv">Dragón <em>articulado</em> de 88 cm</h1>
+      <p class="lead rv">88 cm de escamas articuladas que giran, se doblan y brillan en la oscuridad. Mueve el ratón: el dragón persigue la perla, como en las leyendas.</p>
       <div class="row rv"><a class="btn btn--red" href="#comprar">Comprar el dragón</a><a class="btn btn--ghost" href="#mueve">Ver cómo se mueve</a><span class="price" data-assumed>39,95 €</span></div>
     </div>
     <div class="hint" aria-hidden="true"><span class="dot"></span>La perla sigue a tu cursor</div>
@@ -211,7 +218,7 @@ footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-t
     <div class="panel">
       <p class="eyebrow rv">De los cuernos a la cola</p>
       <h2 id="largo-h" class="rv">88 centímetros de <em>dragón</em></h2>
-      <p class="lead rv">Ocupa media estantería extendido y cabe en la palma enroscado. Las escamas facetadas cambian de color con la luz.</p>
+      <p class="lead rv">Ocupa media estantería extendido y cabe en la palma enroscado. Las escamas en punta cambian de color con la luz.</p>
       <div class="ruler rv" aria-hidden="true"><div class="ruler__bar"></div><div class="ruler__ticks"><span>0</span><span>22</span><span>44</span><span>66</span><span>88 cm</span></div></div>
     </div>
   </section>
@@ -236,15 +243,15 @@ footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-t
 
   <section class="sec" id="colores" data-pose="s" data-side="0.3" aria-labelledby="colores-h">
     <div class="panel">
-      <p class="eyebrow rv">Cuatro cristales</p>
+      <p class="eyebrow rv">Filamento seda de dos tonos</p>
       <h2 id="colores-h" class="rv">Elige el <em>color</em> de tu dragón</h2>
-      <p class="lead rv">Mueve el ratón para girarlo y ver cómo cambian las facetas.</p>
+      <p class="lead rv">El filamento cambia de tono a lo largo del cuerpo y brilla como metal. Mueve el ratón para girarlo.</p>
       <fieldset class="swatches rv" id="sw">
         <legend>Color del dragón</legend>
-        <label class="sw"><input type="radio" name="color" value="aurora" checked><span><i style="--c:conic-gradient(#3fffd2,#3aa8ff,#ff4fd8,#ffcf4a,#3fffd2);--c0:#3aa8ff"></i>Aurora</span></label>
-        <label class="sw"><input type="radio" name="color" value="jade"><span><i style="--c:#2fe39f;--c0:#2fe39f"></i>Jade</span></label>
-        <label class="sw"><input type="radio" name="color" value="rubi"><span><i style="--c:#ff3b4e;--c0:#ff3b4e"></i>Rubí</span></label>
-        <label class="sw"><input type="radio" name="color" value="obsidiana"><span><i style="--c:#2a2d36;--c0:#e8c27a"></i>Obsidiana</span></label>
+        <label class="sw"><input type="radio" name="color" value="arcoiris" checked><span><i style="--c:linear-gradient(135deg,#ffd23f,#9be15d,#38c6d9,#5b7cff,#b45cff,#ff6fa8);--c0:#5b7cff"></i>Arcoíris</span></label>
+        <label class="sw"><input type="radio" name="color" value="galaxia"><span><i style="--c:linear-gradient(135deg,#7b45f0,#a37cff,#d8c25a,#7aa63a,#3e5ee0);--c0:#a37cff"></i>Galaxia</span></label>
+        <label class="sw"><input type="radio" name="color" value="plata"><span><i style="--c:linear-gradient(135deg,#f4f6f9,#a3aab4,#e9ecf1);--c0:#e9ecf1"></i>Plata</span></label>
+        <label class="sw"><input type="radio" name="color" value="fuego"><span><i style="--c:linear-gradient(135deg,#ffcf4a,#ff6a1f,#e8222f);--c0:#ff6a1f"></i>Fuego</span></label>
       </fieldset>
     </div>
   </section>
@@ -255,14 +262,14 @@ footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-t
       <h2 id="comprar-h" class="rv">Llévate el <em>dragón</em></h2>
       <!-- Shopify: js/tienda.js sends the form to the store's cart once SHOPIFY.store and the variant ids are filled in -->
       <form class="buy rv" id="buy" action="mailto:pedidos@long.example" method="post" enctype="text/plain">
-        <input type="hidden" name="color" id="buy-color" value="aurora">
+        <input type="hidden" name="color" id="buy-color" value="arcoiris">
         <fieldset class="packs">
           <legend>Cantidad</legend>
           <label class="pack"><input type="radio" name="pack" value="uno" checked><span>1 dragón <b data-assumed>39,95 €</b></span></label>
           <label class="pack"><input type="radio" name="pack" value="dos"><span>2 dragones, para regalar <b data-assumed>69,95 €</b></span></label>
         </fieldset>
         <button class="btn btn--red" type="submit">Comprar el dragón</button>
-        <p class="note">Color elegido: <strong id="buy-color-label">Aurora</strong>. Envío gratis a la península en <span data-assumed>24-72 h</span>, 14 días de devolución.</p>
+        <p class="note">Color elegido: <strong id="buy-color-label">Arcoíris</strong>. Envío gratis a la península en <span data-assumed>24-72 h</span>, 14 días de devolución.</p>
       </form>
     </div>
   </section>

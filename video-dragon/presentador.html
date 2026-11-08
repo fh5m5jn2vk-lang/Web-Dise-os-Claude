@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>LÓNG: presentador</title>
+<style>
+  @font-face { font-family: Inter; src: url(fonts/inter-tight.woff2) format("woff2"); font-weight: 600 800; }
+  @font-face { font-family: Serif; src: url(fonts/instrument-italic.woff2) format("woff2"); font-style: italic; }
+  @font-face { font-family: Anton; src: url(fonts/anton.woff2) format("woff2"); }
+  @font-face { font-family: Mono; src: url(fonts/geist-mono.woff2) format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: Han; src: url(fonts/han.woff2) format("woff2"); font-weight: 900; }
+  html, body { margin: 0; background: #e9e7e3; overflow: hidden; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: Inter, sans-serif; color: #141414;
+    background: radial-gradient(130% 90% at 50% 35%, #f1efeb 0%, #e6e3de 70%, #d9d5cf 100%); }
+  #dots { position: absolute; inset: 0; background-image: radial-gradient(rgba(0,0,0,.09) 1.6px, transparent 1.8px); background-size: 34px 34px; mask-image: radial-gradient(90% 70% at 50% 40%, #000 30%, transparent 90%); -webkit-mask-image: radial-gradient(90% 70% at 50% 40%, #000 30%, transparent 90%); }
+  #grain { position: absolute; inset: 0; opacity: .05; mix-blend-mode: multiply; }
+  #dim { position: absolute; inset: 0; background: #07080c; opacity: 0; }
+  .it { position: absolute; left: 0; top: 0; opacity: 0; will-change: transform, opacity, filter; transform-origin: 50% 50%; }
+  /* header and caption, top left, as in the reference */
+  #head { position: absolute; left: 70px; top: 228px; font: 500 30px Mono, monospace; color: #8b8781; letter-spacing: .02em; }
+  #capt { position: absolute; left: 70px; top: 272px; right: 60px; font: 700 64px/1.08 Inter, sans-serif; letter-spacing: -0.045em; white-space: nowrap; }
+  #capt .w { display: inline-block; margin-right: .22em; color: #c9c5bf; transition: none; }
+  #capt .w.on { color: #141414; }
+  #capt .w.k { font: italic 400 78px/1 Serif, serif; letter-spacing: -0.02em; }
+  #capt .w.k.on { color: #e0302f; }
+  /* the phone with the live dragon */
+  #phone { width: 440px; height: 880px; border-radius: 64px; background: #101114; padding: 14px; box-sizing: border-box; box-shadow: 0 50px 90px -30px rgba(0,0,0,.45), 0 0 0 2px #2a2c31 inset; }
+  #phone .scr { position: relative; width: 100%; height: 100%; border-radius: 52px; overflow: hidden; background: #0c0d10; }
+  #phone canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  #phone .island { position: absolute; top: 16px; left: 50%; width: 120px; height: 34px; margin-left: -60px; border-radius: 20px; background: #000; z-index: 2; }
+  #phone .ui { position: absolute; right: 18px; bottom: 120px; display: grid; gap: 26px; z-index: 2; }
+  #phone .ui i { width: 46px; height: 46px; border-radius: 50%; background: rgba(255,255,255,.18); display: block; }
+  #phone .tag { position: absolute; left: 22px; bottom: 44px; z-index: 2; font: 700 22px Inter; color: #fff; opacity: .85; }
+  /* polaroids, cards, stickers, stamps */
+  .pol { background: #fff; padding: 16px 16px 58px; box-shadow: 0 22px 40px -18px rgba(0,0,0,.35); border-radius: 6px; }
+  .pol img { display: block; width: 300px; height: 300px; object-fit: cover; border-radius: 2px; }
+  .pol span { position: absolute; left: 0; right: 0; bottom: 12px; text-align: center; font: italic 400 38px Serif, serif; color: #333; }
+  .pin { position: absolute; top: -10px; left: 50%; width: 26px; height: 26px; margin-left: -13px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #ff8a80, #c62828 60%); box-shadow: 0 6px 10px rgba(0,0,0,.3); }
+  .stamp { font: 400 112px/1 Anton, sans-serif; color: #e0302f; border: 9px solid #e0302f; border-radius: 18px; padding: 8px 26px 4px; letter-spacing: .01em; background: rgba(255,255,255,.35); mix-blend-mode: multiply; }
+  .sticker { background: #ffd43b; color: #141414; font: 800 46px/1.05 Inter; letter-spacing: -0.04em; padding: 26px 30px; border-radius: 10px; box-shadow: 0 18px 30px -14px rgba(0,0,0,.4); text-align: center; }
+  .card { background: #fff; border-radius: 24px; padding: 26px 30px; box-shadow: 0 26px 50px -24px rgba(0,0,0,.35); }
+  .card .ttl { font: 500 24px Mono; color: #8b8781; margin-bottom: 14px; }
+  .chk { display: flex; align-items: center; gap: 16px; font: 400 44px/1.25 Anton; letter-spacing: .01em; }
+  .chk b { width: 34px; height: 34px; border: 4px solid #141414; border-radius: 6px; display: grid; place-items: center; font: 900 26px Inter; color: #fff; box-sizing: border-box; }
+  .chk.on b { background: #e0302f; border-color: #e0302f; }
+  .big { font: 400 250px/0.86 Anton; letter-spacing: -0.01em; }
+  .big em { font-style: normal; color: #e0302f; }
+  .chip { background: #141414; color: #fff; font: 700 36px Inter; letter-spacing: -0.03em; padding: 16px 26px; border-radius: 999px; display: flex; align-items: center; gap: 14px; }
+  .sw { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .sw div { background: #fff; border-radius: 18px; padding: 14px; box-shadow: 0 16px 30px -18px rgba(0,0,0,.35); font: 800 30px Inter; letter-spacing: -0.03em; text-align: center; }
+  .sw div i { display: block; height: 90px; border-radius: 12px; margin-bottom: 10px; }
+  .price { background: #fff; border-radius: 28px; padding: 28px 36px; box-shadow: 0 30px 60px -26px rgba(0,0,0,.4); text-align: center; }
+  .price b { display: block; font: 400 150px/0.9 Anton; color: #e0302f; letter-spacing: .005em; }
+  .price span { font: 700 34px Inter; letter-spacing: -0.03em; color: #333; }
+  .btn { background: #141414; color: #fff; font: 800 42px Inter; letter-spacing: -0.04em; padding: 26px 44px; border-radius: 999px; box-shadow: 0 20px 40px -18px rgba(0,0,0,.5); }
+  .bubble { background: #fff; border-radius: 30px 30px 30px 6px; padding: 22px 30px; font: 700 40px Inter; letter-spacing: -0.04em; box-shadow: 0 20px 40px -20px rgba(0,0,0,.35); }
+  .cursor { width: 54px; height: 54px; }
+  #gl2 { position: absolute; inset: 0; width: 1080px; height: 1920px; pointer-events: none; }
+  #snow i { position: absolute; left: 0; top: 0; width: 12px; height: 12px; border-radius: 50%; background: #fff; box-shadow: 0 0 6px rgba(0,0,0,.15); }
+  /* the end card */
+  #endc { position: absolute; inset: 0; opacity: 0; }
+</style>
+<script type="importmap">{"imports":{"three":"../dragon/vendor/three/three.module.min.js","three/addons/":"../dragon/vendor/three/addons/"}}</script>
+</head>
+<body>
+<div id="stage">
+  <div id="dots"></div><canvas id="grain" width="540" height="960"></canvas>
+  <div id="dim"></div>
+  <div id="items"></div>
+  <div id="head"></div><div id="capt"></div>
+  <canvas id="gl2" width="1080" height="1920"></canvas>
+</div>
+<script type="module" src="js/presentador.js"></script>
+</body>
+</html>

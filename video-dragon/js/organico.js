@@ -436,6 +436,77 @@ function captions(t) {
 }
 function boxes() {}
 
+/* ---------- visual elements on the key words: line icons that pop in beside the captions ---------- */
+const SW = 'fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"';
+const D = (d, extra = '') => `<path class="dr" pathLength="1" d="${d}" ${SW} ${extra}/>`;
+const ICONS = {
+  flame: { size: 150, svg: `<defs><linearGradient id="fg" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff3b2f"/><stop offset=".6" stop-color="#ff8a2b"/><stop offset="1" stop-color="#ffd25a"/></linearGradient></defs><path class="fl" d="M50 94c-20 0-32-14-32-31 0-15 9-24 15-33 2 9 7 13 11 14-3-14 4-28 16-38 0 14 8 22 14 31 5 8 8 15 8 26 0 17-12 31-32 31z" fill="url(#fg)"/><path class="fl" d="M50 92c-9 0-15-7-15-15 0-8 6-12 9-18 2 6 6 8 9 8 0-6 3-11 7-14 1 8 6 13 6 22 0 10-7 17-16 17z" fill="#ffe7a0" opacity=".85"/>` },
+  seal: { size: 150, svg: `<rect x="8" y="8" width="84" height="84" rx="14" fill="#e3242b"/><rect x="15" y="15" width="70" height="70" rx="9" fill="none" stroke="#fff" stroke-width="2.5" opacity=".7"/><text x="50" y="72" text-anchor="middle" font-family="Han" font-weight="900" font-size="58" fill="#fff">龍</text>` },
+  printer: { size: 170, svg: D('M22 18h56v22H22z') + D('M42 40h16l-8 14z') + D('M18 70h64', 'class="dr l1"') + D('M22 80h56', 'class="dr l2"') + D('M26 90h48', 'class="dr l3"') },
+  motion: { size: 190, svg: D('M14 74c20-30 52-44 76-40', 'class="dr a1"') + D('M20 88c18-20 40-28 62-26', 'class="dr a2"') + D('M70 22l20 12-14 18', 'class="dr a3"') },
+  joint: { size: 170, svg: D('M38 30a14 14 0 0 1 20 0l12 12a14 14 0 0 1 0 20', 'class="dr"') + D('M62 70a14 14 0 0 1-20 0L30 58a14 14 0 0 1 0-20', 'class="dr"') + D('M42 58l16-16') },
+  pulse: { size: 220, svg: D('M4 54h20l8-18 12 40 12-56 10 34h30', 'stroke="#3fe3c2"') },
+  bracket: { size: 640, h: 90, svg: '' },
+  switch: { size: 150, svg: `<rect x="26" y="10" width="48" height="80" rx="12" ${SW}/><rect class="tog" x="38" y="22" width="24" height="26" rx="6" fill="#fff"/>` },
+  sparkle: { size: 230, svg: [[50, 46, 1], [20, 22, 0.5], [82, 74, 0.6], [80, 18, 0.35]].map(([x, y, k], i) => `<path class="st s${i}" d="M${x} ${y - 26 * k}C${x + 3 * k} ${y - 6 * k} ${x + 6 * k} ${y - 3 * k} ${x + 26 * k} ${y}C${x + 6 * k} ${y + 3 * k} ${x + 3 * k} ${y + 6 * k} ${x} ${y + 26 * k}C${x - 3 * k} ${y + 6 * k} ${x - 6 * k} ${y + 3 * k} ${x - 26 * k} ${y}C${x - 6 * k} ${y - 3 * k} ${x - 3 * k} ${y - 6 * k} ${x} ${y - 26 * k}z" fill="${i % 2 ? '#ffe7a0' : '#d9fff3'}" style="transform-origin:${x}px ${y}px"/>`).join('') },
+  swatches: { size: 260, h: 70, svg: ['#ffd23f,#38c6d9,#b45cff', '#7b45f0,#d8c25a', '#ffffff,#a3aab4', '#ffcf4a,#e8222f'].map((c, i) => `<defs><linearGradient id="sw${i}"><stop offset="0" stop-color="${c.split(',')[0]}"/><stop offset="1" stop-color="${c.split(',').pop()}"/></linearGradient></defs><circle class="dot d${i}" cx="${12 + i * 25}" cy="14" r="10" fill="url(#sw${i})" stroke="#fff" stroke-width="2" style="transform-origin:${12 + i * 25}px 14px"/>`).join(''), vb: '0 0 100 28' },
+  check: { size: 160, svg: D('M50 8a42 42 0 1 1 0 84a42 42 0 1 1 0-84', 'stroke="#3fe3c2"') + D('M32 52l13 13 25-28', 'class="dr c2" stroke="#3fe3c2"') },
+  link: { size: 170, svg: D('M42 58a14 14 0 0 1 0-20l10-10a14 14 0 0 1 20 20l-6 6') + D('M58 42a14 14 0 0 1 0 20L48 72a14 14 0 0 1-20-20l6-6', 'class="dr c2"') },
+};
+const EL = [[0, 8, 'flame'], [1, 2, 'seal'], [1, 5, 'printer'], [1, 10, 'motion'], [2, 3, 'joint'], [2, 10, 'pulse'], [3, 3, 'bracket'],
+  [4, 5, 'switch'], [4, 9, 'sparkle'], [5, 2, 'swatches'], [6, 3, 'snow'], [6, 7, 'check'], [7, 8, 'link']]
+  .map(([li, wi, type]) => ({ li, wi, type, t0: L[li].words[wi][1] - 0.02 }));
+EL.forEach((e, i) => { const nx = EL[i + 1]; e.t1 = Math.min(e.t0 + (e.type === 'snow' ? 99 : 1.5), nx ? nx.t0 - 0.05 : DUR, e.type === 'snow' ? B[7] : 99); if (e.type === 'snow') e.t1 = B[7] + 0.2; });
+const elLayer = document.createElement('div'); elLayer.style.cssText = 'position:absolute;inset:0;pointer-events:none'; document.getElementById('ui').insertBefore(elLayer, document.getElementById('cap'));
+const glowF = 'drop-shadow(0 0 10px rgba(255,255,255,.35)) drop-shadow(0 4px 14px rgba(0,0,0,.35))';
+EL.forEach((e) => {
+  const d = document.createElement('div'); d.style.cssText = `position:absolute;left:0;top:0;opacity:0;filter:${glowF};will-change:transform,opacity`;
+  if (e.type === 'snow') {
+    d.style.cssText = 'position:absolute;inset:0;opacity:0';
+    d.innerHTML = Array.from({ length: 46 }, () => '<i style="position:absolute;left:0;top:0;width:10px;height:10px;border-radius:50%;background:#fff;box-shadow:0 0 8px rgba(255,255,255,.8)"></i>').join('');
+  } else if (e.type === 'bracket') {
+    d.innerHTML = `<svg width="640" height="90" viewBox="0 0 640 90">${D('M10 60H630', 'class="dr"')}${D('M10 40v40M630 40v40')}${D('M34 48L10 60l24 12M606 48l24 12-24 12', 'class="dr c2"')}</svg>`;
+  } else {
+    const ic = ICONS[e.type];
+    d.innerHTML = `<svg width="${ic.size}" height="${ic.h || ic.size}" viewBox="${ic.vb || '0 0 100 100'}" overflow="visible">${ic.svg}</svg>`;
+  }
+  elLayer.appendChild(d); e.el = d;
+  d.querySelectorAll('.dr').forEach((p) => { p.setAttribute('stroke-dasharray', '1'); p.setAttribute('stroke-dashoffset', '1'); });
+});
+function elements(t) {
+  EL.forEach((e) => {
+    const a = t - e.t0, d = e.el;
+    if (a < 0 || t > e.t1) { d.style.opacity = 0; e.placed = false; return; }
+    const out = E.in(prog(t, e.t1 - 0.2, e.t1));
+    if (e.type === 'snow') {
+      d.style.opacity = E.out(prog(a, 0, 0.5)) * (1 - out);
+      [...d.children].forEach((f, i) => { const s = (i * 0.618) % 1, sp = 0.18 + s * 0.22; const y = ((a * sp + s) % 1) * 1920 - 20, x = (s * 1777) % 1080 + Math.sin(a * 1.4 + i) * 30; f.style.transform = `translate(${x}px, ${y}px) scale(${0.4 + s * 0.9})`; f.style.opacity = 0.5 + 0.5 * s; });
+      return;
+    }
+    // place beside the caption on screen right now: to its side when it sits left or right, above it when centred
+    if (!e.placed) {
+      const r = capEl.getBoundingClientRect(), w = d.firstChild.getAttribute('width') * 1, h = d.firstChild.getAttribute('height') * 1;
+      const al = capEl.style.textAlign; let x, y;
+      if (e.type === 'bracket') { x = (W - w) / 2; y = r.top - h - 10; }
+      else if (al === 'left') { x = Math.min(W - w - 50, r.right + 24); y = r.top + r.height / 2 - h / 2; }
+      else if (al === 'right') { x = Math.max(50, r.left - w - 24); y = r.top + r.height / 2 - h / 2; }
+      else { x = (W - w) / 2 + (r.width > 500 ? 0 : 0); y = r.top > 700 ? r.top - h - 18 : r.bottom + 18; }
+      e.x = clamp(x, 40, W - w - 40); e.y = clamp(y, 320, 1480 - h); e.placed = true;
+    }
+    const p = E.back(prog(a, 0, 0.32)), fade = Math.min(1, a * 6) * (1 - out);
+    d.style.opacity = fade;
+    const bob = Math.sin(a * 3) * 5, spin = { seal: lerp(-25, -6, p), check: lerp(-15, 0, p), flame: Math.sin(a * 9) * 3 }[e.type] ?? lerp(-10, 0, p);
+    d.style.transform = `translate(${e.x}px, ${e.y + bob}px) scale(${lerp(0.2, 1, p) * (1 + out * 0.1)}) rotate(${spin}deg)`;
+    // the drawn strokes, in order
+    d.querySelectorAll('.dr').forEach((pth, k) => { pth.setAttribute('stroke-dashoffset', 1 - E.out(prog(a, 0.05 + k * 0.12, 0.45 + k * 0.12))); });
+    if (e.type === 'flame') d.querySelectorAll('.fl').forEach((f, k) => { f.style.transformOrigin = '50px 94px'; f.style.transform = `scale(${1 + Math.sin(a * 14 + k * 2) * 0.05}, ${1 + Math.sin(a * 11 + k) * 0.08})`; });
+    if (e.type === 'switch') { const off = t >= tLightsOff; d.querySelector('.tog').setAttribute('y', off ? 52 : 22); d.style.filter = off ? 'drop-shadow(0 0 6px rgba(255,255,255,.2))' : glowF; }
+    if (e.type === 'sparkle') d.querySelectorAll('.st').forEach((st, k) => { const q = E.back(prog(a, k * 0.08, 0.35 + k * 0.08)); st.style.transform = `scale(${q * (0.85 + 0.25 * Math.sin(a * 7 + k * 2))}) rotate(${a * 40 * (k % 2 ? -1 : 1)}deg)`; });
+    if (e.type === 'swatches') d.querySelectorAll('.dot').forEach((dt, k) => { const q = E.back(prog(a, k * 0.1, 0.3 + k * 0.1)); dt.style.transform = `scale(${q})`; });
+  });
+}
+window.__elements = EL.map((e) => ({ t: +e.t0.toFixed(3), type: e.type }));
+
 /* ---------- the closing flyer: the real product photo, premium and calm ---------- */
 const fl = document.getElementById('flyer'), $f = (sel) => fl.querySelector(sel);
 const dust = [...fl.querySelectorAll('.dust i')];
@@ -498,7 +569,7 @@ function render(t) {
   dof.uniforms.focus.value = lerp(cam.focus * 1.35, cam.focus, settle);
   dof.uniforms.aperture.value = 0.0035; dof.uniforms.maxblur.value = 0.011;
   bloom.strength = 0.3 + s.glow * 0.3; bloom.threshold = lerp(0.9, 0.7, s.glow);
-  captions(t); flyer(t);
+  captions(t); elements(t); flyer(t);
   composer.render();
 }
 
@@ -509,7 +580,7 @@ for (const f of ['700 80px Inter', '800 80px Inter', 'italic 400 80px Serif', '8
 const q = new URLSearchParams(location.search);
 window.__dur = DUR;
 // cues for the sound design (audio/organico.py): every caption, every cut, the switch and the glow
-window.__cues = { chunks: chunks.map((c) => ({ t: +(c.ws[c.kind === 'w' || c.kind === 'multi' ? 0 : Math.min(c.ws.length - 1, (c.o.top ?? 1))][1]).toFixed(3), kind: c.kind })), cuts: B.slice(1, -1), lightsOff: tLightsOff, glow: tGlow, gift: B[6] + 0.1, flyer: FLYER, dur: DUR };
+window.__cues = { chunks: chunks.map((c) => ({ t: +(c.ws[c.kind === 'w' || c.kind === 'multi' ? 0 : Math.min(c.ws.length - 1, (c.o.top ?? 1))][1]).toFixed(3), kind: c.kind })), elements: window.__elements, cuts: B.slice(1, -1), lightsOff: tLightsOff, glow: tGlow, gift: B[6] + 0.1, flyer: FLYER, dur: DUR };
 window.__render = (t) => render(t);
 render(0);
 window.__ready = true;

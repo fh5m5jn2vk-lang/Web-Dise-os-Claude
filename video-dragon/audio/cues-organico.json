@@ -145,6 +145,60 @@
    "kind": "stack"
   }
  ],
+ "elements": [
+  {
+   "t": 2.152,
+   "type": "flame"
+  },
+  {
+   "t": 3.284,
+   "type": "seal"
+  },
+  {
+   "t": 4.273,
+   "type": "printer"
+  },
+  {
+   "t": 5.196,
+   "type": "motion"
+  },
+  {
+   "t": 6.377,
+   "type": "joint"
+  },
+  {
+   "t": 8.439,
+   "type": "pulse"
+  },
+  {
+   "t": 9.603,
+   "type": "bracket"
+  },
+  {
+   "t": 12.162,
+   "type": "switch"
+  },
+  {
+   "t": 13.128,
+   "type": "sparkle"
+  },
+  {
+   "t": 14.352,
+   "type": "swatches"
+  },
+  {
+   "t": 17.028,
+   "type": "snow"
+  },
+  {
+   "t": 18.057,
+   "type": "check"
+  },
+  {
+   "t": 19.82,
+   "type": "link"
+  }
+ ],
  "cuts": [
   2.802,
   5.563000000000001,

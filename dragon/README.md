@@ -13,7 +13,7 @@ Web de producto para el dragón articulado impreso en 3D de AliExpress ([88 cm, 
 
 ## Pendiente antes de publicar
 - **Derechos de la foto:** confirma que la foto de Hong Kong se puede usar comercialmente (si es de un banco de imágenes, revisa su licencia).
-- **Precios supuestos:** 39,95 € y 69,95 € (marcados con `data-assumed`). El proveedor cuesta unos 5-15 € según la oferta.
+- **Precios supuestos:** 21,95 € y 32,95 € (marcados con `data-assumed`). El proveedor cuesta unos 5-15 € según la oferta.
 - **Material y plazos:** confírmalos con la ficha del proveedor. Los colores ofrecidos deben coincidir con las variantes que tenga.
 - **Marca LÓNG:** compruébala en la OEPM y la EUIPO y compra el dominio. El correo `@long.example` es de ejemplo.
 - **Fotos o vídeos reales:** añade algunos del producto cuando tengas la muestra.

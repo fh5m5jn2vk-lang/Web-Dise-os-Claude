@@ -26,7 +26,8 @@ for (let i = 0; i < all.length; i++) {
   const t = all[i];
   if (want) { if (t > Math.max(...want) + 0.001) break; }
   else if (t > to + 1e-6) break;
-  if (want && args.jump && !want.some((w) => Math.abs(w - t) < 0.5 / fps)) continue;   // --jump 1: a quick look, no stepping between shots
+  if (want && args.jump && !want.some((w) => Math.abs(w - t) < 0.5 / fps)) continue;
+  if (!want && args.jump && t < from - 1e-6) continue;                  // --jump 1 --from X: only re-render the tail   // --jump 1: a quick look, no stepping between shots
   await p.evaluate((t) => window.__render(t), t);              // every frame is stepped, so drops and mist stay in order
   const keep = want ? want.some((w) => Math.abs(w - t) < 0.5 / fps) : t >= from - 1e-6;
   if (!keep) continue;

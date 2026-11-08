@@ -11,7 +11,7 @@
 | 10–14 s | «Apaga la luz…», la ciudad se apaga y el dragón brilla | El momento «wow» |
 | 14–16 s | Un color en cada golpe: Arcoíris, Galaxia, Plata, Fuego | Variedad y ritmo |
 | 16–17 s | Los cuatro colgados. «¿Cuál eliges? Te leo en comentarios» | Provoca comentarios, que dan alcance |
-| 17–22 s | Anillo alrededor de la perla, 39,95 €, 2 por 69,95 €, envío gratis y «Link en la bio» | Oferta y llamada a la acción |
+| 17–22 s | Anillo alrededor de la perla, 21,95 €, 2 por 32,95 €, envío gratis y «Link en la bio» | Oferta y llamada a la acción |
 
 Todos los textos quedan fuera de las zonas que tapan los botones de TikTok e Instagram (abajo y a la derecha).
 

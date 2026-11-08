@@ -23,12 +23,12 @@ export async function setup(c) {
     [c.words('Para quien duerme con calefacción.', Object.assign({ top: '270px', fontSize: '64px' }, big)), 6.2, 7.6],
   ];
   const chip = (html, css) => c.box(`<div style="padding:26px 34px;border-radius:28px;background:rgba(255,236,214,.08);border:1px solid rgba(255,220,180,.28);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 20px 60px rgba(0,0,0,.35)">${html}</div>`, css);
-  const k = (n, l) => `<div style="font:600 64px/1 Geist,sans-serif;letter-spacing:-.04em;color:#fff1e2">${n}</div><div style="margin-top:10px;font:500 24px/1.2 'Geist Mono',monospace;letter-spacing:.04em;color:rgba(255,226,196,.8)">${l}</div>`;
+  const k = (n, l) => `<div style="font:600 56px/1 Geist,sans-serif;letter-spacing:-.04em;color:#fff1e2">${n}</div><div style="margin-top:10px;font:500 24px/1.2 'Geist Mono',monospace;letter-spacing:.04em;color:rgba(255,226,196,.8)">${l}</div>`;
   S.chips = [
-    [chip(k('<span class="n" data-to="800">0</span> ml', 'Depósito'), { left: '70px', top: '420px' }), 7.6],
-    [chip(k('Toda la noche', 'Hasta 8 horas'), { right: '150px', top: '640px' }), 8.9],
-    [chip(k('&lt; <span class="n" data-to="36">0</span> dB', 'Silencioso'), { left: '70px', top: '980px' }), 10.2],
-    [chip(k('4 colores', 'De luz, con un toque'), { right: '150px', top: '1200px' }), 11.5],
+    [chip(k('<span class="n" data-to="800">0</span> ml', 'Depósito'), { left: '60px', top: '430px' }), 7.6],
+    [chip(k('Toda la noche', 'Hasta 8 horas'), { left: '60px', top: '650px' }), 8.9],
+    [chip(k('&lt; <span class="n" data-to="36">0</span> dB', 'Silencioso'), { left: '60px', top: '870px' }), 10.2],
+    [chip(k('4 colores', 'De luz, con un toque'), { left: '60px', top: '1090px' }), 11.5],
   ];
   S.pack = c.words('Pack regalo', { top: '200px', fontSize: '150px', fontWeight: '600', letterSpacing: '-0.055em', color: '#fff1e2' });
   S.p1 = c.words('Caja rígida y tarjeta · 49,95 €', { top: '390px', fontSize: '50px', fontWeight: '400', letterSpacing: '-0.02em', color: '#ffe2c4' });
@@ -38,9 +38,10 @@ export async function setup(c) {
   S.cam = c.camPath([
     { t: 0, pos: [0.02, 0.95, 0.12], at: [0, 0.1, 0], fov: 34 },
     { t: 3, pos: [0.3, 0.55, 0.45], at: [0, 0.15, 0], fov: 32 },
-    { t: 7.5, pos: [0.62, 0.2, 0.62], at: [0, 0.17, 0], fov: 32 },
-    { t: 11, pos: [0.08, 0.16, 0.9], at: [0, 0.17, 0], fov: 32 },
-    { t: 14, pos: [-0.5, 0.18, 0.66], at: [0, 0.17, 0], fov: 32 },
+    { t: 7.5, pos: [0.5, 0.2, 0.7], at: [-0.1, 0.17, 0], fov: 32 },
+    { t: 11, pos: [0.0, 0.17, 0.92], at: [-0.11, 0.17, 0], fov: 32 },
+    { t: 13.6, pos: [-0.36, 0.18, 0.78], at: [-0.08, 0.17, 0], fov: 32 },
+    { t: 15, pos: [-0.4, 0.19, 0.86], at: [0, 0.18, 0], fov: 33 },
     { t: 17, pos: [-0.22, 0.2, 1.08], at: [0, 0.19, 0], fov: 34 },
     { t: 20, pos: [-0.08, 0.21, 1.14], at: [0, 0.19, 0], fov: 34 },
   ]);

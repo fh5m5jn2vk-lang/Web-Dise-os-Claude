@@ -27,14 +27,24 @@ export async function setup(c) {
   const dots = c.box(COLS.map((col) => `<i style="display:inline-block;width:22px;height:22px;border-radius:50%;margin:0 9px;background:${col.hex};opacity:.25"></i>`).join(''), { top: '560px', left: '0', right: '0', textAlign: 'center' });
   S = {
     intro, label, names, brand, l1, l2, dots,
-    cams: [
-      c.camPath([{ t: 0, pos: [0.06, 0.22, 0.2], at: [0, 0.24, 0], fov: 30 }, { t: 2, pos: [-0.04, 0.17, 0.19], at: [0, 0.2, 0], fov: 30 }]),
-      c.camPath([{ t: 2, pos: [-0.75, 0.12, 0.55], at: [0, 0.17, 0], fov: 32 }, { t: 4, pos: [-0.2, 0.1, 0.88], at: [0, 0.17, 0], fov: 32 }, { t: 6, pos: [0.55, 0.13, 0.7], at: [0, 0.17, 0], fov: 32 }]),
-      c.camPath([{ t: 6, pos: [0.25, 0.85, 0.45], at: [0, 0.12, 0], fov: 32 }, { t: 8, pos: [0.42, 0.45, 0.62], at: [0, 0.15, 0], fov: 32 }, { t: 10, pos: [0.5, 0.2, 0.7], at: [0, 0.17, 0], fov: 32 }]),
-      c.camPath([{ t: 10, pos: [0.09, 0.07, 0.24], at: [0, 0.08, 0], fov: 30 }, { t: 12, pos: [0.1, 0.19, 0.25], at: [0, 0.2, 0], fov: 30 }, { t: 14, pos: [0.08, 0.32, 0.27], at: [0, 0.3, 0], fov: 30 }]),
-      c.camPath([{ t: 14, pos: [1.0, 0.3, 1.15], at: [0, 0.17, 0], fov: 30, roll: 0.06 }, { t: 15.5, pos: [0.6, 0.2, 0.8], at: [0, 0.17, 0], fov: 32, roll: 0.02 }, { t: 17, pos: [0.42, 0.16, 0.66], at: [0, 0.17, 0], fov: 32, roll: 0 }]),
-      c.camPath([{ t: 17, pos: [0.05, 0.2, 1.2], at: [0, 0.2, 0], fov: 34 }, { t: 21, pos: [-0.12, 0.21, 1.1], at: [0, 0.2, 0], fov: 34 }]),
-    ],
+    cams: (() => {
+      const { orbit, follow, prog } = c;
+      return [
+        // intro: a macro rise along the drops
+        c.camPath(orbit({ t0: 0, t1: 2.05, at: [0, 0.2, 0], a0: 0.4, a1: -0.3, r0: 0.21, r1: 0.18, y0: 0.11, y1: 0.28, fov: 30, ap: 0.035, n: 4 })),
+        // hielo: a low half turn
+        c.camPath(orbit({ t0: 2, t1: 6.05, at: [0, 0.16, 0], a0: -1.5, a1: 1.8, r0: 0.72, r1: 0.6, y0: 0.05, y1: 0.12, fov: 32, ap: 0.012, roll: 0.03, n: 8 })),
+        // ámbar: a spiral down from above
+        c.camPath(orbit({ t0: 6, t1: 10.05, at: [0, 0.13, 0], a0: 0.3, a1: 2.7, r0: 0.22, r1: 0.7, y0: 0.95, y1: 0.18, fov: 33, ap: 0.01, n: 8 })),
+        // cobalto: a macro climb round the column, rolling
+        c.camPath(follow({ t0: 10, t1: 14.05, p: (t) => [0, 0.07 + 0.25 * prog(t, 10, 14), 0], lead: 0.02, fov: 30, ap: 0.035, roll: 0.08, n: 8,
+          offset: (t, a) => { const k = prog(t, 10, 14), ang = -0.7 + 1.5 * k; return [Math.sin(ang) * 0.2, a[1] + 0.012, Math.cos(ang) * 0.2]; } })),
+        // menta: a sweeping dolly in from wide
+        c.camPath(orbit({ t0: 14, t1: 17.05, at: [0, 0.17, 0], a0: -2.5, a1: 0.45, r0: 1.25, r1: 0.6, y0: 0.38, y1: 0.14, fov: 30, fov1: 32, ap: 0.01, roll: 0.02, n: 7 })),
+        // end card: a slow drift
+        c.camPath(orbit({ t0: 17, t1: 21, at: [0, 0.2, 0], a0: 0.5, a1: -0.25, r0: 1.22, r1: 1.12, y0: 0.21, y1: 0.2, fov: 34, ap: 0.006, n: 4 })),
+      ];
+    })(),
   };
 }
 

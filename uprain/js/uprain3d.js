@@ -11,6 +11,7 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
 
 export const LIGHTS = {
   hielo: '#a6e1ff',
@@ -135,7 +136,7 @@ function buildProduct(mats) {
 export function createUprainScene(canvas, opts = {}) {
   const o = Object.assign({
     view: 'hero', bg: '#0b0c0e', finish: 'grafito', light: 'hielo', live: false, entrance: false, drag: false,
-    rate: -0.55, strobe: true, dpr: 1, anchorX: 0.5, fill: null, preserve: false, bloom: 1, mist: true, floor: true, yaw: 0, manual: false,
+    rate: -0.55, strobe: true, dpr: 1, anchorX: 0.5, fill: null, preserve: false, bloom: 1, mist: true, floor: true, yaw: 0, manual: false, msaa: 0, dof: null,
   }, opts);
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const live = o.live && !reduce;
@@ -203,8 +204,12 @@ export function createUprainScene(canvas, opts = {}) {
     for (let i = 0; i < MIST; i++) mistState.push({ age: Math.random(), life: 4 + Math.random() * 4, a: Math.random() * Math.PI * 2, r: 0.03 + Math.random() * 0.03, sway: Math.random() * 6 });
   }
 
-  const composer = new EffectComposer(renderer);
+  // msaa: multisampled composer buffers (the renderer's own antialias never reaches them)
+  const composer = o.msaa ? new EffectComposer(renderer, new THREE.WebGLRenderTarget(canvas.width, canvas.height, { type: THREE.HalfFloatType, samples: o.msaa })) : new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
+  // dof: depth of field for the films, refocused per frame by the caller ({ focus, aperture, maxblur })
+  let bokeh = null;
+  if (o.dof) { bokeh = new BokehPass(scene, camera, Object.assign({ focus: 0.6, aperture: 0.04, maxblur: 0.01 }, o.dof)); composer.addPass(bokeh); }
   const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), (dark ? 0.55 : 0.3) * o.bloom, 0.5, dark ? 0.78 : 0.92);
   composer.addPass(bloom);
   composer.addPass(new OutputPass());
@@ -374,7 +379,7 @@ export function createUprainScene(canvas, opts = {}) {
     step(dt) { time += dt; pose(dt, time); if (o.beforeRender) o.beforeRender(time); composer.render(); },
     // a free camera for the films: position, target and field of view in metres and degrees
     lookFrom(pos, target, fov = 28, roll = 0) { freeCam = true; camera.fov = fov; camera.position.set(...pos); camera.up.set(Math.sin(roll), Math.cos(roll), 0); camera.lookAt(...target); camera.updateProjectionMatrix(); },
-    get three() { return { scene, camera, renderer, pivot, product: P, mats, bloom, mist, pool, lightColor, strobeLight, key, rim }; },
+    get three() { return { scene, camera, renderer, pivot, product: P, mats, bloom, mist, pool, bokeh, composer, lightColor, strobeLight, key, rim }; },
     pause() { paused = true; },
     resume() { paused = false; },
     destroy() { cancelAnimationFrame(raf); ro.disconnect(); renderer.dispose(); },

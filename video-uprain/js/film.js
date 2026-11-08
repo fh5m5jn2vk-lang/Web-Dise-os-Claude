@@ -31,14 +31,43 @@ export function camPath(keys) {
     const u2 = u * u, u3 = u2 * u;
     return 0.5 * (2 * p1 + (-p0 + p2) * u + (2 * p0 - 5 * p1 + 4 * p2 - p3) * u2 + (-p0 + 3 * p1 - 3 * p2 + p3) * u3);
   };
-  const v = (k, f, i) => (Array.isArray(k[f]) ? k[f][i] : k[f]);
+  const DEF = { roll: 0, ap: 0.012 };
+  keys = keys.flat().filter((k, i, all) => i === 0 || k.t > all[i - 1].t + 1e-6);   // arcs and single keys mixed, no repeated time
+  const v = (k, f, i) => { const x = k[f] ?? DEF[f]; return Array.isArray(x) ? x[i] : x; };
   return (t) => {
     let i = 0; while (i < keys.length - 2 && t > keys[i + 1].t) i++;
     const a = keys[Math.max(0, i - 1)], b = keys[i], c = keys[i + 1], d = keys[Math.min(keys.length - 1, i + 2)];
-    const u = clamp((t - b.t) / (c.t - b.t));
+    const u0 = clamp((t - b.t) / (c.t - b.t));
+    // speed ramp: ease toward each key without ever stopping (premium curve, mixed with linear time)
+    const r = c.ramp ?? 0.55;
+    const u = u0 * (1 - r) + ease.inOut(u0) * r;
     const get = (f, n) => Array.from({ length: n }, (_, j) => cr(v(a, f, j), v(b, f, j), v(c, f, j), v(d, f, j), u));
-    return { pos: get('pos', 3), at: get('at', 3), fov: get('fov', 1)[0], roll: keys[0].roll != null ? get('roll', 1)[0] : 0 };
+    const opt = (f, d) => (keys.some((k) => k[f] != null) ? get(f, 1)[0] : d);
+    return { pos: get('pos', 3), at: get('at', 3), fov: get('fov', 1)[0], roll: opt('roll', 0), ap: opt('ap', null) };
   };
+}
+
+// keys along a real arc round a point: angle a0 to a1 (radians, 0 = +z), radius and height eased between ends
+export function orbit({ t0, t1, at, a0, a1, r0, r1 = r0, y0, y1 = y0, fov = 32, fov1 = fov, roll = 0, ap = null, n = 6 }) {
+  return Array.from({ length: n + 1 }, (_, i) => {
+    const u = i / n, k = u;
+    const a = a0 + (a1 - a0) * k, r = r0 + (r1 - r0) * k, y = y0 + (y1 - y0) * k;
+    const key = { t: t0 + (t1 - t0) * u, pos: [at[0] + Math.sin(a) * r, y, at[2] + Math.cos(a) * r], at: [...at], fov: fov + (fov1 - fov) * k, roll, ramp: 0.15 };
+    if (ap != null) key.ap = ap;
+    return key;
+  });
+}
+// keys that chase a moving point p(t): offset(t, p, dir) gives the camera position, lead is how far ahead it looks
+export function follow({ t0, t1, p, offset, lead = 0.15, fov = 30, roll = 0, ap = null, n = 6 }) {
+  return Array.from({ length: n + 1 }, (_, i) => {
+    const t = t0 + (t1 - t0) * (i / n);
+    const a = p(t), b = p(t + 0.05), dir = [b[0] - a[0], b[1] - a[1], b[2] - a[2]];
+    const L = Math.hypot(...dir) || 1; const d = dir.map((x) => x / L);
+    const look = p(t + lead);
+    const key = { t, pos: offset(t, a, d), at: look, fov, roll, ramp: 0.1 };
+    if (ap != null) key.ap = ap;
+    return key;
+  });
 }
 
 /* ---------- the 3D scene ---------- */
@@ -46,9 +75,9 @@ const o = film.scene || {};
 let mirror = null;
 const U = createUprainScene(canvas, Object.assign({
   view: 'hero', bg: '#050608', light: 'hielo', finish: 'grafito', live: false, manual: true, preserve: true, dpr: 1,
-  rate: -0.55, strobe: true, mist: true, floor: true, bloom: 1.25,
+  rate: -0.55, strobe: true, mist: true, floor: true, bloom: 1.25, msaa: 0, dof: { focus: 0.6, aperture: 0.012, maxblur: 0.007 },
   beforeRender: (time) => mirror && mirror.update(),
-}, o));
+}, o, q.has('msaa') ? { msaa: +q.get('msaa') } : {}, q.get('dof') === '0' ? { dof: null } : {}));
 const { scene, camera, renderer } = U.three;
 
 // a glossy floor that reflects the scene: the scene drawn again from a camera mirrored under the floor
@@ -118,19 +147,51 @@ export const fx = {
 };
 
 /* ---------- the clock ---------- */
-const ctx = { THREE, U, scene, camera, renderer, mirror, ui, words, box, wordsIn, fx, camPath, ease, clamp, lerp, prog, smooth, mixColor };
+const ctx = { THREE, U, scene, camera, renderer, mirror, ui, words, box, wordsIn, fx, camPath, orbit, follow, ease, clamp, lerp, prog, smooth, mixColor };
 await film.setup(ctx);
 await document.fonts.ready;
 const fps = 30;
+const SUB = +(q.get('sub') || film.SUB || 2);          // subframes per frame, averaged: motion blur
+const SHUTTER = 0.5;                                    // a 180-degree shutter: half the frame interval
+const acc = document.createElement('canvas'); acc.width = 1080; acc.height = 1920;
+acc.style.cssText = 'position:absolute;inset:0;width:1080px;height:1920px';
+canvas.after(acc); const g2 = acc.getContext('2d');
+canvas.style.visibility = 'hidden';
+// handheld: slow layered sines, the ambient layer of the camera
+const n3 = (t, s) => Math.sin(t * 1.3 + s) * 0.6 + Math.sin(t * 2.9 + s * 2.1) * 0.3 + Math.sin(t * 6.1 + s * 3.7) * 0.1;
 let last = -1, frameNo = 0;
-function render(t) {
-  const dt = last < 0 ? 1 / fps : Math.max(0, t - last);
-  last = t; frameNo++;
-  grain.style.transform = `translate(${(frameNo * 37) % 120 - 60}px, ${(frameNo * 53) % 120 - 60}px)`;
+function drawAt(t) {
+  const dt = last < 0 ? 1 / fps / SUB : Math.max(0, t - last);
+  last = t;
   film.update(ctx, t, dt);
   const c = ctx.cam;
-  if (c) U.lookFrom(c.pos, c.at, c.fov, c.roll || 0);
+  if (c) {
+    const h = (film.HANDHELD ?? 1) * (ctx.shake ?? 1);
+    const pos = [c.pos[0] + n3(t, 1) * 0.0035 * h, c.pos[1] + n3(t, 2) * 0.0028 * h, c.pos[2] + n3(t, 3) * 0.0035 * h];
+    U.lookFrom(pos, c.at, c.fov, (c.roll || 0) + n3(t, 4) * 0.004 * h);
+    const T = U.three;
+    if (T.bokeh) {
+      const d = Math.hypot(pos[0] - c.at[0], pos[1] - c.at[1], pos[2] - c.at[2]);
+      T.bokeh.uniforms.focus.value = c.focus ?? d;
+      T.bokeh.uniforms.aperture.value = c.ap ?? 0.012;
+    }
+  }
+  // half-pixel jitter per subframe: the averaged subframes smooth the edges
+  const J = [[0.25, 0.25], [-0.25, -0.25], [0.25, -0.25], [-0.25, 0.25]][subK % 4];
+  U.three.camera.setViewOffset(1080, 1920, J[0], J[1], 1080, 1920);
   U.step(dt);
+}
+let subK = 0;
+function render(t) {
+  frameNo++;
+  grain.style.transform = `translate(${(frameNo * 37) % 120 - 60}px, ${(frameNo * 53) % 120 - 60}px)`;
+  for (let k = 0; k < SUB; k++) {
+    const tk = t - (SHUTTER / fps) * (1 - (k + 1) / SUB);
+    subK = k; drawAt(Math.max(0, tk));
+    g2.globalAlpha = 1 / (k + 1);
+    g2.drawImage(canvas, 0, 0, 1080, 1920);
+  }
+  g2.globalAlpha = 1;
 }
 window.__dur = film.DUR;
 window.__render = render;

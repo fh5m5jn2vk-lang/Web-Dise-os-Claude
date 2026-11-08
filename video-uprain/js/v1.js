@@ -10,6 +10,9 @@ export const scene = { light: 'hielo', bg: '#040506', mistGain: 0.08, bloom: 0.9
 const ICE = '#a6e1ff', AMBER = '#ffb259';
 let S = {};
 
+export const ballU = (t, c) => (t < 7.12 ? 0 : t < 10.1 ? c.ease.out(c.prog(t, 7.12, 10.1)) * 0.25 + c.prog(t, 7.12, 10.1) * 0.75 : 1);
+export const marbleU = (t, c) => { const ml = c.prog(t, 10.2, 14.0); return ml <= 0 ? 0 : 0.18 * c.ease.out(Math.min(1, ml / 0.2)) + 0.82 * c.clamp((ml - 0.06) / 0.94); };
+
 export async function setup(c) {
   const { THREE, U, scene: sc } = c;
   const T = U.three;
@@ -93,26 +96,44 @@ export async function setup(c) {
   const B = (u) => bpath.getPointAt(u), M = (u) => mpath.getPointAt(u);
   S = {
     path, doms, body, edge, side, H, W, D, drop, dropGlow, splash, ring, bpath, ball, ballGlow, cb, R, LEN, mpath, marble, marbleGlow, brand, line, price,
-    cam: c.camPath([
-      { t: 0.0, pos: v(De, 0.7, 0.32, 0.7), at: v(Dm, 0, 0.03, 0), fov: 34 },
-      { t: 2.2, pos: v(D0, 0.62, 0.5, 0.5), at: v(D0, 0, 0.3, 0), fov: 32 },
-      { t: 4.4, pos: v(D0, 0.42, 0.26, 0.38), at: v(D0, 0, 0.15, 0), fov: 30 },
-      { t: 6.0, pos: v(D0, 0.36, 0.14, 0.36), at: v(D0, 0.04, 0.06, 0.04), fov: 30 },
-      { t: 6.6, pos: v(Dm, 0.55, 0.22, 0.5), at: v(doms[16].p, 0, 0.03, 0), fov: 32 },
-      { t: 7.3, pos: v(De, 0.45, 0.16, 0.45), at: v(De, 0.12, 0.03, 0), fov: 30 },
-      { t: 8.7, pos: v(B(0.5), 0.4, 0.18, 0.42), at: v(B(0.62), 0, 0.02, 0), fov: 30 },
-      { t: 10.1, pos: [0.48, 0.2, 1.22], at: [0, 0.08, 0.76], fov: 30 },
-      { t: 11.6, pos: [0.4, 0.24, 1.02], at: v(M(0.3), 0, 0.04, 0), fov: 32 },
-      { t: 13.1, pos: [-0.42, 0.12, 0.5], at: v(M(0.8), 0, 0.02, 0), fov: 30 },
-      { t: 14.0, pos: [0.11, 0.065, 0.38], at: [0, 0.035, 0.105], fov: 28 },
-      { t: 15.2, pos: [0.3, 0.16, 0.8], at: [0, 0.15, 0], fov: 30 },
-      { t: 16.4, pos: [0.5, 0.2, 0.86], at: [0, 0.17, 0], fov: 32 },
-      { t: 18.6, pos: [-0.46, 0.26, 0.76], at: [0, 0.19, 0], fov: 32 },
-      { t: 20.6, pos: [-0.2, 0.36, 0.5], at: [0, 0.26, 0], fov: 30 },
-      { t: 21.45, pos: [0.14, 0.33, 0.56], at: [0, 0.23, 0], fov: 32 },
-      { t: 22.9, pos: [0.42, 0.2, 1.16], at: [0, 0.19, 0], fov: 34 },
-      { t: 24.3, pos: [0.46, 0.21, 1.24], at: [0, 0.19, 0], fov: 34 },
-    ]),
+    cam: (() => {
+      const { orbit, follow, prog, ease, clamp, lerp } = c;
+      const up = new THREE.Vector3(0, 1, 0);
+      const P = (p) => [p.x, p.y, p.z];
+      const topY = H + 0.004;
+      const dropP = (t) => [D0.x, lerp(0.95, topY, Math.pow(prog(t, 1.6, 6.0), 1.7)), D0.z];
+      const front = (t) => { const f = clamp((t - 6.0) / 0.046, 0, N - 1.001); const a = doms[Math.floor(f)].p, b = doms[Math.ceil(f)].p; return P(a.clone().lerp(b, f % 1)); };
+      const ballP = (t) => P(bpath.getPointAt(clamp(ballU(t, c))));
+      const marbleP = (t) => P(mpath.getPointAt(clamp(marbleU(t, c))));
+      const side = (d, k) => { const n = new THREE.Vector3().crossVectors(up, new THREE.Vector3(...d)).normalize(); return [n.x * k, n.z * k]; };
+      return c.camPath([
+        // A: a low glide back along the line, toward the first domino
+        { t: 0.0, pos: v(De, 0.16, 0.035, 0.2), at: v(Dm, 0, 0.04, 0), fov: 30, roll: 0.07, ap: 0.02 },
+        { t: 1.1, pos: v(Dm, 0.15, 0.04, 0.17), at: v(D0, 0, 0.06, 0), fov: 30, roll: 0.04, ap: 0.02 },
+        // B: a spiral round the falling drop, down with it
+        ...follow({ t0: 2.2, t1: 6.0, p: dropP, lead: 0, n: 10, fov: 30, ap: 0.03,
+          offset: (t, a) => { const k = prog(t, 2.2, 6.0), ang = 0.9 - 1.6 * k, r = 0.34 - 0.1 * k; return [D0.x + Math.sin(ang) * r, a[1] + 0.04 - 0.02 * k, D0.z + Math.cos(ang) * r]; } }),
+        // C: tracking beside the wave of falling dominoes
+        ...follow({ t0: 6.15, t1: 7.25, p: front, lead: 0.12, n: 5, fov: 31, ap: 0.018,
+          offset: (t, a, d) => { const [sx, sz] = side(d, -0.26); return [a[0] + sx - d[0] * 0.1, 0.09, a[2] + sz - d[2] * 0.1]; } }),
+        // D: chasing the chrome ball
+        ...follow({ t0: 7.5, t1: 9.9, p: ballP, lead: 0.25, n: 6, fov: 30, ap: 0.02,
+          offset: (t, a, d) => { const [sx, sz] = side(d, 0.09); return [a[0] - d[0] * 0.24 + sx, 0.07, a[2] - d[2] * 0.24 + sz]; } }),
+        // E: round the Newton's cradle
+        ...orbit({ t0: 10.1, t1: 11.8, at: [0, 0.08, 0.74], a0: 0.95, a1: -0.35, r0: 0.44, r1: 0.36, y0: 0.17, y1: 0.12, fov: 30, ap: 0.018, n: 5 }),
+        // F: chasing the marble, low, to the button
+        ...follow({ t0: 12.1, t1: 13.75, p: marbleP, lead: 0.2, n: 5, fov: 29, ap: 0.028,
+          offset: (t, a, d) => { const [sx, sz] = side(d, 0.07); return [a[0] - d[0] * 0.17 + sx, 0.045, a[2] - d[2] * 0.17 + sz]; } }),
+        { t: 14.0, pos: [0.07, 0.045, 0.27], at: [0, 0.03, 0.105], fov: 27, ap: 0.035 },
+        // G: up and back as it wakes
+        ...orbit({ t0: 14.35, t1: 16.4, at: [0, 0.15, 0], a0: 0.3, a1: 0.9, r0: 0.34, r1: 0.76, y0: 0.06, y1: 0.2, fov: 28, fov1: 32, ap: 0.014, n: 5 }),
+        // H: most of a turn round the product, rising to the nozzle
+        ...orbit({ t0: 16.6, t1: 19.0, at: [0, 0.17, 0], a0: 0.82, a1: -1.6, r0: 0.74, r1: 0.5, y0: 0.2, y1: 0.26, fov: 32, ap: 0.012, n: 6 }),
+        ...orbit({ t0: 19.2, t1: 21.45, at: [0, 0.24, 0], a0: -1.75, a1: -3.9, r0: 0.48, r1: 0.42, y0: 0.27, y1: 0.33, fov: 31, ap: 0.016, n: 6 }),
+        // I: the pull back for the name
+        ...orbit({ t0: 21.7, t1: 24.3, at: [0, 0.19, 0], a0: -4.3, a1: 0.355 - 2 * Math.PI, r0: 0.6, r1: 1.32, y0: 0.29, y1: 0.21, fov: 33, fov1: 34, ap: 0.008, n: 6 }),
+      ]);
+    })(),
     tmp: { m: new THREE.Matrix4(), q: new THREE.Quaternion(), s: new THREE.Vector3(1, 1, 1), p: new THREE.Vector3(), c: new THREE.Color(), up: new THREE.Vector3(0, 1, 0) },
     THREE, chromeRoll: new THREE.Quaternion(), marbleRoll: new THREE.Quaternion(),
   };
@@ -179,7 +200,7 @@ export function update(c, t, dt) {
 
   /* ball 1 */
   const bl = S.bpath.getLength();
-  const bu = t < 7.12 ? 0 : t < 10.1 ? ease.out(prog(t, 7.12, 10.1)) * 0.25 + prog(t, 7.12, 10.1) * 0.75 : 1;
+  const bu = ballU(t, c);
   const bp = S.bpath.getPointAt(Math.min(1, bu));
   const bpPrev = S.ball.position.clone();
   S.ball.position.copy(bp);
@@ -197,8 +218,7 @@ export function update(c, t, dt) {
   });
 
   /* the marble: launched at 10.1 + a quarter swing, into the button at 14.0 */
-  const ml = prog(t, 10.2, 14.0);
-  const mu = ml <= 0 ? 0 : 0.18 * ease.out(Math.min(1, ml / 0.2)) + 0.82 * clamp((ml - 0.06) / 0.94);
+  const mu = marbleU(t, c);
   const mp = S.mpath.getPointAt(clamp(mu));
   const mPrev = S.marble.position.clone(); S.marble.position.copy(mp);
   const mm = mp.clone().sub(mPrev); mm.y = 0;

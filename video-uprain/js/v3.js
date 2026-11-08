@@ -31,20 +31,20 @@ export async function setup(c) {
   S.e1 = c.words('Humidificador antigravedad', { top: '410px', fontSize: '52px', fontWeight: '400', letterSpacing: '-0.02em' });
   S.e2 = c.words('44,95 € · Envío 24-72 h desde España', { top: '500px', fontSize: '30px', fontWeight: '500', color: 'rgba(242,245,248,.85)' });
   S.e2.el.classList.add('mono');
+  const { orbit } = c;
   S.cam = c.camPath([
-    { t: 0, pos: [0.1, 0.2, 0.22], at: [0, 0.2, 0], fov: 30 },
-    { t: 2.6, pos: [0.14, 0.19, 0.3], at: [0, 0.19, 0], fov: 30 },
-    { t: 5.0, pos: [0.36, 0.17, 0.62], at: [0, 0.16, 0], fov: 32 },
-    { t: 8.8, pos: [0.2, 0.17, 0.42], at: [0, 0.16, 0], fov: 30 },
-    // bullet time round the frozen drops
-    { t: 9.4, pos: [0.13, 0.19, 0.2], at: [0, 0.18, 0], fov: 30 },
-    { t: 10.2, pos: [-0.2, 0.18, 0.08], at: [0, 0.18, 0], fov: 30 },
-    { t: 11.0, pos: [-0.12, 0.2, -0.18], at: [0, 0.18, 0], fov: 30 },
-    { t: 11.5, pos: [0.06, 0.16, -0.24], at: [0, 0.2, 0], fov: 30 },
-    { t: 12.5, pos: [0.22, 0.08, 0.3], at: [0, 0.22, 0], fov: 32 },
-    { t: 14.5, pos: [0.45, 0.24, 0.72], at: [0, 0.18, 0], fov: 32 },
-    { t: 17.0, pos: [0.3, 0.2, 1.05], at: [0, 0.2, 0], fov: 34 },
-    { t: 20.0, pos: [0.18, 0.21, 1.12], at: [0, 0.2, 0], fov: 34 },
+    // macro on the climbing drops, drifting round
+    ...orbit({ t0: 0, t1: 2.6, at: [0, 0.2, 0], a0: 0.5, a1: 0.05, r0: 0.22, r1: 0.26, y0: 0.18, y1: 0.2, fov: 30, ap: 0.035, n: 4 }),
+    // the water falls: pull back and swing to the other side
+    ...orbit({ t0: 2.8, t1: 5.0, at: [0, 0.17, 0], a0: -0.1, a1: -0.9, r0: 0.34, r1: 0.62, y0: 0.2, y1: 0.16, fov: 31, ap: 0.014, n: 4 }),
+    // the light slows: a slow push back in
+    ...orbit({ t0: 5.2, t1: 8.8, at: [0, 0.17, 0], a0: -0.85, a1: 0.25, r0: 0.62, r1: 0.4, y0: 0.15, y1: 0.18, fov: 32, ap: 0.014, n: 5 }),
+    // bullet time: almost a full turn round the frozen drops
+    ...orbit({ t0: 9.0, t1: 11.5, at: [0, 0.19, 0], a0: 0.3, a1: -4.6, r0: 0.21, r1: 0.23, y0: 0.2, y1: 0.18, fov: 30, ap: 0.03, n: 10 }),
+    // the drop: a fast crane down and out, then round
+    ...orbit({ t0: 11.7, t1: 14.6, at: [0, 0.2, 0], a0: -4.85, a1: -6.4, r0: 0.28, r1: 0.74, y0: 0.08, y1: 0.24, fov: 31, fov1: 32, ap: 0.012, n: 6 }),
+    // end card
+    ...orbit({ t0: 15.0, t1: 20.0, at: [0, 0.2, 0], a0: -6.55, a1: -6.15, r0: 0.86, r1: 1.12, y0: 0.22, y1: 0.21, fov: 33, fov1: 34, ap: 0.006, n: 5 }),
   ]);
 }
 

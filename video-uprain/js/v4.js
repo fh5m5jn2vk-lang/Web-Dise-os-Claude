@@ -35,15 +35,18 @@ export async function setup(c) {
   S.p2 = c.words('Uprain · Envío 24-72 h desde España', { top: '480px', fontSize: '30px', fontWeight: '500', color: 'rgba(255,226,196,.85)' });
   S.p2.el.classList.add('mono');
   S.bokeh = bokeh;
+  const { orbit } = c;
   S.cam = c.camPath([
-    { t: 0, pos: [0.02, 0.95, 0.12], at: [0, 0.1, 0], fov: 34 },
-    { t: 3, pos: [0.3, 0.55, 0.45], at: [0, 0.15, 0], fov: 32 },
-    { t: 7.5, pos: [0.5, 0.2, 0.7], at: [-0.1, 0.17, 0], fov: 32 },
-    { t: 11, pos: [0.0, 0.17, 0.92], at: [-0.11, 0.17, 0], fov: 32 },
-    { t: 13.6, pos: [-0.36, 0.18, 0.78], at: [-0.08, 0.17, 0], fov: 32 },
-    { t: 15, pos: [-0.4, 0.19, 0.86], at: [0, 0.18, 0], fov: 33 },
-    { t: 17, pos: [-0.22, 0.2, 1.08], at: [0, 0.19, 0], fov: 34 },
-    { t: 20, pos: [-0.08, 0.21, 1.14], at: [0, 0.19, 0], fov: 34 },
+    // a spiral down from straight above
+    ...orbit({ t0: 0, t1: 3.2, at: [0, 0.12, 0], a0: -0.6, a1: 1.2, r0: 0.05, r1: 0.5, y0: 1.0, y1: 0.45, fov: 34, fov1: 32, ap: 0.01, n: 6 }),
+    // round to the front, low
+    ...orbit({ t0: 3.4, t1: 7.4, at: [0, 0.16, 0], a0: 1.35, a1: -0.4, r0: 0.55, r1: 0.62, y0: 0.38, y1: 0.12, fov: 32, ap: 0.014, n: 6 }),
+    // a slow truck to the right, the product on the right, the chips on the left
+    { t: 7.8, pos: [0.38, 0.17, 0.8], at: [-0.1, 0.17, 0], fov: 32 },
+    { t: 10.8, pos: [0.06, 0.15, 0.92], at: [-0.11, 0.17, 0], fov: 32 },
+    { t: 13.6, pos: [-0.3, 0.19, 0.84], at: [-0.08, 0.17, 0], fov: 32 },
+    // a sweep round for the pack and the price
+    ...orbit({ t0: 14.0, t1: 20.0, at: [0, 0.19, 0], a0: -0.42, a1: 0.25, r0: 0.95, r1: 1.14, y0: 0.2, y1: 0.21, fov: 33, fov1: 34, ap: 0.006, n: 6 }),
   ]);
 }
 

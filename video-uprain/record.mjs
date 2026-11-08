@@ -12,7 +12,7 @@ const b = await pw.chromium.launch({ args: ['--use-angle=swiftshader', '--enable
 const p = await b.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: scale });
 p.setDefaultTimeout(300000);
 p.on('pageerror', (e) => console.log('[err]', e.message)); p.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') console.log('[page]', m.text().slice(0, 200)); });
-await p.goto(`http://127.0.0.1:${srv.address().port}/video-uprain/film.html?v=${v}&record`);
+await p.goto(`http://127.0.0.1:${srv.address().port}/video-uprain/film.html?v=${v}&record${args.q ? '&' + args.q : ''}`);
 await p.waitForFunction(() => window.__ready, null, { timeout: 120000 });
 const dur = await p.evaluate(() => window.__dur);
 fs.mkdirSync(out, { recursive: true });

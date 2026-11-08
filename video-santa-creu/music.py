@@ -1,6 +1,6 @@
 # A 24 s track built from scratch: warm pad chords, soft kick, shaker, door thump, whooshes on each cut.
 import numpy as np, wave
-SR = 44100; DUR = 24.0; N = int(SR * DUR)
+SR = 44100; DUR = 30.0; N = int(SR * DUR)
 t = np.arange(N) / SR
 out = np.zeros((N, 2))
 rng = np.random.default_rng(7)
@@ -48,7 +48,7 @@ def snap():
     return (rng.normal(0, 1, n) * np.exp(-tt * 25) + np.sin(2 * np.pi * 190 * tt) * np.exp(-tt * 30)) * .5
 k = kick(); sh = np.diff(shaker(), prepend=0) * 3; sn = snap()
 x = 3.2
-while x < 19.8:
+while x < 23.8:
     add(k, x, .55)
     if x >= 9.6: add(sh, x + beat / 2, .22, .4)
     bi = round((x - 3.2) / beat)
@@ -68,12 +68,12 @@ def whoosh(length, up=True):
     for i in range(n): acc += a[i] * (noise[i] - acc); y[i] = acc
     return y * np.sin(np.linspace(0, np.pi, n)) ** 1.5
 add(whoosh(2.2), 1.0, .5)
-for c in (3.2, 6.45, 9.6, 13.25, 16.8, 19.85):
+for c in (3.2, 6.45, 9.6, 13.25, 16.8, 20.45, 23.85):
     add(whoosh(.7), c - .45, .55, -.3); add(k, c, .8)
 # a bell-like shimmer on the end card
 for i, m in enumerate([76, 81, 85, 88]):
     n = int(3 * SR); tt = np.arange(n) / SR
-    add(np.sin(2 * np.pi * note(m) * tt) * np.exp(-tt * 1.6) * .25, 21.0 + i * .12, .5, (i - 1.5) * .3)
+    add(np.sin(2 * np.pi * note(m) * tt) * np.exp(-tt * 1.6) * .25, 25.2 + i * .12, .5, (i - 1.5) * .3)
 
 # simple reverb-ish tail: a few delayed taps
 wet = np.zeros_like(out)

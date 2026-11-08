@@ -9,7 +9,7 @@
 @font-face { font-family: "Bricolage"; src: url(fonts/bricolage-ext.woff2) format("woff2"); font-weight: 200 800; unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF; }
 @font-face { font-family: "Newsreader"; src: url(fonts/newsreader-italic.woff2) format("woff2"); font-style: italic; font-weight: 400; }
 @font-face { font-family: "Newsreader"; src: url(fonts/newsreader.woff2) format("woff2"); font-style: normal; font-weight: 400; }
-:root { --cream: #F3EDE2; --ink: #22170E; --olive: #5F6E22; --clay: #B5582B; --sand: #E4D8C3; }
+:root { --cream: #F3EDE2; --ink: #22170E; --olive: #5F6E22; --clay: #B5582B; --sand: #E4D8C3; --gold: #C9A24A; }
 * { box-sizing: border-box; }
 html, body { margin: 0; background: #000; }
 #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: var(--cream); color: var(--ink); font-family: "Bricolage", sans-serif; }
@@ -21,27 +21,29 @@ html, body { margin: 0; background: #000; }
 .ch { display: inline-block; will-change: transform, opacity; }
 .serif { font-family: "Newsreader", serif; font-style: italic; font-weight: 400; }
 .label { font-size: 30px; letter-spacing: .32em; text-transform: uppercase; font-weight: 600; }
+.arch { border-radius: 999px 999px 26px 26px; overflow: hidden; background: #2E1C10; }
 .grain { position: absolute; inset: 0; pointer-events: none; opacity: .07; mix-blend-mode: multiply; z-index: 50;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
-.vignette { position: absolute; inset: 0; pointer-events: none; z-index: 49; background: radial-gradient(120% 80% at 50% 45%, transparent 55%, rgba(20,12,6,.35)); }
+.vignette { position: absolute; inset: 0; pointer-events: none; z-index: 49; background: radial-gradient(120% 80% at 50% 45%, transparent 55%, rgba(20,12,6,.32)); }
 .cross { display: inline-block; width: .7em; height: .7em; position: relative; vertical-align: .02em; }
 .cross::before, .cross::after { content: ""; position: absolute; background: currentColor; border-radius: 2px; }
 .cross::before { left: 50%; top: 0; bottom: 0; width: .12em; transform: translateX(-50%); }
 .cross::after { top: 28%; left: 0; right: 0; height: .12em; }
+.stars { display: inline-flex; gap: 6px; vertical-align: middle; }
 </style>
 </head>
 <body>
 <div id="stage">
 
-  <!-- S1 · the door -->
+  <!-- S1 · the door opens on the house at sunset -->
   <section class="scene" id="s1" style="background: var(--cream)">
     <div id="s1-top" style="position: absolute; top: 150px; left: 0; right: 0; text-align: center; color: var(--olive)">
-      <div class="label"><span class="cross"></span>&nbsp; Casa rural &nbsp;<span class="cross"></span></div>
+      <div class="label"><span class="cross"></span>&nbsp; Casa rural · Elche &nbsp;<span class="cross"></span></div>
     </div>
     <div id="s1-arch" style="position: absolute; left: 50%; top: 50%; width: 760px; height: 1140px; transform: translate(-50%, -50%); border-radius: 380px 380px 0 0; overflow: hidden; background: #2E1C10; box-shadow: 0 60px 120px rgba(34,23,14,.25)">
-      <img class="ph" id="s1-ph" src="img/piscina-casa.jpg" alt="">
+      <img class="ph" id="s1-ph" src="img/portada.jpg" alt="" style="object-position: 46% 50%">
       <div id="s1-glow" class="fill" style="background: radial-gradient(60% 45% at 50% 40%, rgba(255,226,170,.45), rgba(20,12,6,.7))"></div>
-      <div id="s1-doors" class="fill" style="perspective: 1800px">
+      <div class="fill" style="perspective: 1800px">
         <div id="s1-l" style="position: absolute; left: 0; top: 0; width: 50%; height: 100%; transform-origin: left center; background:
           linear-gradient(90deg, rgba(0,0,0,.35), transparent 12%, transparent 88%, rgba(0,0,0,.4)),
           repeating-linear-gradient(90deg, #5A3820 0 46px, #4E301B 46px 50px), #4A2E1A; border-right: 3px solid #2B1A0D"></div>
@@ -49,125 +51,129 @@ html, body { margin: 0; background: #000; }
           linear-gradient(90deg, rgba(0,0,0,.4), transparent 12%, transparent 88%, rgba(0,0,0,.35)),
           repeating-linear-gradient(90deg, #5A3820 0 46px, #4E301B 46px 50px), #4A2E1A; border-left: 3px solid #2B1A0D"></div>
       </div>
+      <div id="s1-shade" class="fill" style="background: linear-gradient(180deg, transparent 50%, rgba(20,12,6,.6))"></div>
     </div>
-    <div id="s1-frame" style="position: absolute; left: 50%; top: 50%; width: 840px; height: 1200px; transform: translate(-50%, -50%); border-radius: 420px 420px 0 0; border: 10px solid var(--sand); pointer-events: none"></div>
-    <div id="s1-title" style="position: absolute; left: 0; right: 0; bottom: 210px; text-align: center; color: #fff; font-weight: 800; font-size: 210px; line-height: .84; letter-spacing: -.055em">
+    <div id="s1-frame" style="position: absolute; left: 50%; top: 50%; width: 840px; height: 1200px; transform: translate(-50%, -50%); border-radius: 420px 420px 0 0; border: 10px solid var(--sand)"></div>
+    <div id="s1-title" style="position: absolute; left: 0; right: 0; bottom: 230px; text-align: center; color: #fff; font-weight: 800; font-size: 210px; line-height: .84; letter-spacing: -.055em">
       <div class="mask" data-split>Santa</div><div class="mask" data-split>Creu</div>
     </div>
   </section>
 
   <!-- S2 · since 1800 -->
   <section class="scene" id="s2" style="background: #1d130b">
-    <img class="ph" id="s2-ph" src="img/casa.jpg" alt="" style="object-position: 50% 30%">
-    <div class="fill" style="background: linear-gradient(180deg, rgba(20,12,6,.15) 30%, rgba(20,12,6,.85) 78%)"></div>
-    <div style="position: absolute; left: 90px; right: 90px; bottom: 260px; color: #fff">
-      <div class="label" id="s2-kicker" style="color: #F2D9A6">Una hacienda</div>
-      <div id="s2-year" style="margin-top: 24px; display: flex; font-weight: 800; font-size: 280px; line-height: .8; letter-spacing: -.06em; height: 240px; overflow: hidden; align-items: flex-end">
-        <span class="serif" style="font-size: 120px; letter-spacing: 0; align-self: flex-end; margin-right: 24px; line-height: 1">desde</span>
+    <img class="ph" id="s2-ph" src="img/fachada.jpg" alt="" style="object-position: 50% 50%">
+    <div class="fill" style="background: linear-gradient(180deg, rgba(20,12,6,.1) 30%, rgba(20,12,6,.88) 76%)"></div>
+    <div style="position: absolute; left: 90px; right: 90px; bottom: 250px; color: #fff">
+      <div class="label" id="s2-kicker" style="color: #F2D9A6">Antigua Hacienda Santa Cruz</div>
+      <div id="s2-year" style="margin-top: 24px; display: flex; align-items: flex-end; font-weight: 800; font-size: 280px; line-height: .8; letter-spacing: -.06em; height: 240px; overflow: hidden">
+        <span class="serif" style="font-size: 120px; letter-spacing: 0; margin-right: 24px; line-height: 1">desde</span>
         <div class="digit" data-to="1"></div><div class="digit" data-to="8"></div><div class="digit" data-to="0"></div><div class="digit" data-to="0"></div>
       </div>
-      <div id="s2-line" style="margin-top: 56px; font-size: 64px; line-height: 1.08; font-weight: 500; letter-spacing: -.02em">
-        <div class="mask"><span>Entre Elche</span></div><div class="mask"><span>y Santa Pola.</span></div>
+      <div id="s2-line" style="margin-top: 56px; font-size: 62px; line-height: 1.08; font-weight: 500; letter-spacing: -.02em">
+        <div class="mask"><span>Historia de 1800,</span></div><div class="mask"><span>comodidades de hoy.</span></div>
       </div>
     </div>
   </section>
 
-  <!-- S3 · the pool -->
+  <!-- S3 · the pool, all yours -->
   <section class="scene" id="s3" style="background: #0c3f86">
-    <img class="ph" id="s3-ph" src="img/agua.jpg" alt="">
-    <div class="fill" style="background: linear-gradient(180deg, rgba(4,22,50,.5), rgba(4,22,50,.1) 40%, rgba(4,22,50,.55))"></div>
+    <img class="ph" id="s3-ph" src="img/casa-piscina.jpg" alt="" style="object-position: 50% 60%">
+    <div class="fill" style="background: linear-gradient(180deg, rgba(4,22,50,.86) 0%, rgba(4,22,50,.7) 30%, rgba(4,22,50,.1) 52%, rgba(4,22,50,.5))"></div>
     <div id="s3-rings" class="fill"></div>
-    <div style="position: absolute; left: 90px; right: 90px; top: 300px; color: #fff">
-      <div style="font-weight: 800; font-size: 190px; line-height: .86; letter-spacing: -.055em">
-        <div class="mask"><span id="s3-a">Tu piscina.</span></div>
-      </div>
-      <div class="serif" style="margin-top: 20px; font-size: 150px; line-height: 1">
-        <div class="mask"><span id="s3-b">Solo tuya.</span></div>
-      </div>
+    <div style="position: absolute; left: 90px; right: 90px; top: 260px; color: #fff">
+      <div style="font-weight: 800; font-size: 180px; line-height: .86; letter-spacing: -.055em"><div class="mask"><span id="s3-a">Tu piscina.</span></div></div>
+      <div class="serif" style="margin-top: 20px; font-size: 140px; line-height: 1"><div class="mask"><span id="s3-b">Solo tuya.</span></div></div>
+      <div id="s3-c" style="margin-top: 40px; font-size: 44px; font-weight: 500; max-width: 760px; line-height: 1.25">Alquilas la casa entera: no compartes nada con otro grupo.</div>
     </div>
-    <div id="s3-card" style="position: absolute; left: 90px; bottom: 230px; width: 900px; height: 600px; border-radius: 300px 300px 28px 28px; overflow: hidden; box-shadow: 0 50px 100px rgba(0,0,0,.35)">
-      <img class="ph" id="s3-cardph" src="img/piscina.jpg" alt="">
+    <div id="s3-card" class="arch" style="position: absolute; right: 90px; bottom: 210px; width: 520px; height: 760px; box-shadow: 0 50px 100px rgba(0,0,0,.4); border: 10px solid #fff">
+      <img class="ph" id="s3-cardph" src="img/piscina-sombrilla.jpg" alt="">
     </div>
   </section>
 
   <!-- S4 · numbers -->
   <section class="scene" id="s4" style="background: var(--cream)">
-    <div style="position: absolute; top: 170px; left: 90px; right: 90px">
-      <div class="label" style="color: var(--olive)" id="s4-k">La casa entera</div>
+    <div style="position: absolute; top: 160px; left: 90px; right: 90px">
+      <div class="label" style="color: var(--olive)" id="s4-k">Para familias y grupos</div>
       <div style="margin-top: 26px; font-weight: 800; font-size: 136px; line-height: .88; letter-spacing: -.05em">
         <div class="mask"><span id="s4-h1">Sitio para</span></div><div class="mask"><span id="s4-h2">todos.</span></div>
       </div>
     </div>
     <div id="s4-cols" style="position: absolute; left: 90px; right: 90px; bottom: 170px; height: 1120px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px">
-      <div class="col" style="position: relative; border-radius: 999px 999px 26px 26px; overflow: hidden; background: #2E1C10">
-        <img class="ph" src="img/terraza.jpg" alt="" style="object-position: 50% 50%">
-        <div class="fill" style="background: linear-gradient(180deg, transparent 45%, rgba(20,12,6,.85))"></div>
-        <div class="stat" style="position: absolute; left: 0; right: 0; bottom: 40px; text-align: center; color: #fff"><div class="num" data-to="9" style="font-weight: 800; font-size: 170px; line-height: .9; letter-spacing: -.05em">0</div><div style="font-size: 38px; font-weight: 500">dormitorios</div></div>
-      </div>
-      <div class="col" style="position: relative; border-radius: 999px 999px 26px 26px; overflow: hidden; background: #2E1C10">
-        <img class="ph" src="img/piscina.jpg" alt="">
-        <div class="fill" style="background: linear-gradient(180deg, transparent 45%, rgba(20,12,6,.85))"></div>
-        <div class="stat" style="position: absolute; left: 0; right: 0; bottom: 40px; text-align: center; color: #fff"><div class="num" data-to="16" style="font-weight: 800; font-size: 170px; line-height: .9; letter-spacing: -.05em">0</div><div style="font-size: 38px; font-weight: 500">plazas</div></div>
-      </div>
-      <div class="col" style="position: relative; border-radius: 999px 999px 26px 26px; overflow: hidden; background: #2E1C10">
-        <img class="ph" src="img/jardin.jpg" alt="">
-        <div class="fill" style="background: linear-gradient(180deg, transparent 45%, rgba(20,12,6,.85))"></div>
-        <div class="stat" style="position: absolute; left: 0; right: 0; bottom: 40px; text-align: center; color: #fff">
-          <div id="s4-stars" style="height: 153px; display: flex; justify-content: center; align-items: center; gap: 4px">
-            <svg class="star" viewBox="0 0 24 24" width="62" height="62"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21l1.6-7L2 9.2l7.1-.6z" fill="#F2C14E"/></svg>
-            <svg class="star" viewBox="0 0 24 24" width="62" height="62"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21l1.6-7L2 9.2l7.1-.6z" fill="#F2C14E"/></svg>
-            <svg class="star" viewBox="0 0 24 24" width="62" height="62"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21l1.6-7L2 9.2l7.1-.6z" fill="#F2C14E"/></svg>
-            <svg class="star" viewBox="0 0 24 24" width="62" height="62"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21l1.6-7L2 9.2l7.1-.6z" fill="#F2C14E"/></svg>
-          </div>
-          <div style="font-size: 38px; font-weight: 500">categoría</div></div>
-      </div>
+      <div class="col arch" style="position: relative"><img class="ph" src="img/suite.jpg" alt=""><div class="fill" style="background: linear-gradient(180deg, transparent 42%, rgba(20,12,6,.88))"></div>
+        <div class="stat" style="position: absolute; left: 0; right: 0; bottom: 40px; text-align: center; color: #fff"><div class="num" data-to="9" style="font-weight: 800; font-size: 160px; line-height: .9; letter-spacing: -.05em">0</div><div style="font-size: 36px; font-weight: 500">habitaciones</div></div></div>
+      <div class="col arch" style="position: relative"><img class="ph" src="img/bodega-mesa.jpg" alt=""><div class="fill" style="background: linear-gradient(180deg, transparent 42%, rgba(20,12,6,.88))"></div>
+        <div class="stat" style="position: absolute; left: 0; right: 0; bottom: 40px; text-align: center; color: #fff"><div class="num" data-to="16" style="font-weight: 800; font-size: 160px; line-height: .9; letter-spacing: -.05em">0</div><div style="font-size: 36px; font-weight: 500">personas</div></div></div>
+      <div class="col arch" style="position: relative"><img class="ph" src="img/piscina-jardin.jpg" alt=""><div class="fill" style="background: linear-gradient(180deg, transparent 42%, rgba(20,12,6,.88))"></div>
+        <div class="stat" style="position: absolute; left: 0; right: 0; bottom: 40px; text-align: center; color: #fff"><div style="white-space: nowrap"><span class="num" data-to="601" style="font-weight: 800; font-size: 120px; line-height: 1.2; letter-spacing: -.05em">0</span></div><div style="font-size: 36px; font-weight: 500">m² de casa</div></div></div>
     </div>
   </section>
 
-  <!-- S5 · what is there: a 3D ring of photographs -->
+  <!-- S5 · a 3D ring of what is there -->
   <section class="scene" id="s5" style="background: var(--ink); color: var(--cream)">
     <div style="position: absolute; top: 170px; left: 0; right: 0; text-align: center">
-      <div class="label" style="color: #C9B37E">Todo para vosotros</div>
+      <div class="label" style="color: #C9B37E">Todo dentro de la finca</div>
     </div>
-    <div id="s5-ring" style="position: absolute; left: 50%; top: 820px; width: 0; height: 0; perspective: 2000px">
+    <div style="position: absolute; left: 50%; top: 820px; width: 0; height: 0; perspective: 2000px">
       <div id="s5-spin" style="position: absolute; left: 0; top: 0; transform-style: preserve-3d"></div>
     </div>
     <div style="position: absolute; left: 0; right: 0; bottom: 330px; text-align: center; height: 240px; overflow: hidden">
-      <div id="s5-words" style="font-weight: 800; font-size: 200px; line-height: 240px; letter-spacing: -.055em"></div>
+      <div id="s5-words" style="font-weight: 800; font-size: 180px; line-height: 240px; letter-spacing: -.055em"></div>
     </div>
     <div id="s5-dots" style="position: absolute; left: 0; right: 0; bottom: 250px; display: flex; justify-content: center; gap: 16px"></div>
   </section>
 
-  <!-- S6 · palms, day into night -->
-  <section class="scene" id="s6" style="background: #0e1226">
-    <img class="ph" id="s6-ph" src="img/palmeras.jpg" alt="" style="object-position: 50% 30%">
-    <div id="s6-night" class="fill" style="background: linear-gradient(180deg, #0b1030 0%, rgba(20,24,60,.75) 55%, rgba(60,30,20,.6) 100%); mix-blend-mode: multiply; opacity: 0"></div>
-    <div id="s6-warm" class="fill" style="background: radial-gradient(70% 40% at 50% 85%, rgba(255,170,90,.45), transparent 70%); opacity: 0"></div>
-    <div id="s6-stars" class="fill"></div>
-    <div style="position: absolute; left: 90px; right: 90px; top: 1060px; color: #fff">
-      <div style="font-weight: 800; font-size: 150px; line-height: .9; letter-spacing: -.05em"><div class="mask"><span id="s6-a">Palmeras arriba.</span></div></div>
-      <div class="serif" style="margin-top: 22px; font-size: 130px; line-height: 1"><div class="mask"><span id="s6-b">Silencio abajo.</span></div></div>
-      <div id="s6-c" style="margin-top: 60px; font-size: 46px; line-height: 1.3; font-weight: 500; max-width: 820px">Barbacoa, cenador y bodega para alargar la noche.</div>
+  <!-- S6 · where: the sea five minutes away -->
+  <section class="scene" id="s6" style="background: #0b4f6c">
+    <img class="ph" id="s6-ph" src="img/tabarca.jpg" alt="" style="object-position: 40% 50%">
+    <div class="fill" style="background: linear-gradient(180deg, rgba(4,30,46,.55), rgba(4,30,46,.05) 35%, rgba(4,30,46,.15) 60%, rgba(4,30,46,.8))"></div>
+    <div style="position: absolute; left: 90px; right: 90px; top: 230px; color: #fff">
+      <div class="label" id="s6-k" style="color: #BFE6F2">Entre el campo y el mar</div>
+    </div>
+    <div style="position: absolute; left: 90px; right: 90px; bottom: 250px; color: #fff">
+      <div style="font-weight: 800; font-size: 132px; line-height: .9; letter-spacing: -.05em; white-space: nowrap"><div class="mask"><span id="s6-a">Playa a 5 min.</span></div></div>
+      <div class="serif" style="margin-top: 22px; font-size: 120px; line-height: 1"><div class="mask"><span id="s6-b">Elche a 8 km.</span></div></div>
+      <div id="s6-list" style="margin-top: 56px; display: grid; gap: 18px; font-size: 42px; font-weight: 500">
+        <div class="li">Aeropuerto de Alicante a 15 min</div>
+        <div class="li">Isla de Tabarca y el Palmeral de Elche</div>
+        <div class="li">Bus y supermercado a pocos metros</div>
+      </div>
     </div>
   </section>
 
-  <!-- S7 · end card -->
+  <!-- S7 · what guests say -->
   <section class="scene" id="s7" style="background: var(--cream)">
-    <div id="s7-arch" style="position: absolute; left: 50%; top: 210px; width: 1080px; height: 1920px; transform: translateX(-50%); overflow: hidden; background: #2E1C10">
-      <img class="ph" id="s7-ph" src="img/palmeras-sombrilla.jpg" alt="" style="object-position: 50% 45%">
-    </div>
-    <div id="s7-text" style="position: absolute; left: 0; right: 0; top: 1150px; text-align: center">
-      <div class="label" style="color: var(--olive)" id="s7-k"><span class="cross"></span>&nbsp; Casa rural &nbsp;<span class="cross"></span></div>
-      <div style="margin-top: 22px; font-weight: 800; font-size: 178px; line-height: .86; letter-spacing: -.055em">
-        <div class="mask" data-split>Santa Creu</div>
+    <div id="s7-p1" class="arch" style="position: absolute; left: 90px; top: 170px; width: 430px; height: 620px"><img class="ph" src="img/cenador.jpg" alt=""></div>
+    <div id="s7-p2" class="arch" style="position: absolute; right: 90px; top: 300px; width: 430px; height: 620px"><img class="ph" src="img/bodega.jpg" alt=""></div>
+    <div style="position: absolute; left: 90px; right: 90px; top: 1010px">
+      <div id="s7-q" class="serif" style="font-size: 260px; line-height: .5; color: var(--clay); height: 110px">“</div>
+      <div id="s7-quote" style="font-weight: 700; font-size: 76px; line-height: 1.06; letter-spacing: -.03em">
+        <div class="mask"><span>El sitio es precioso,</span></div>
+        <div class="mask"><span>acogedor y muy amplio.</span></div>
+        <div class="mask"><span>Sin duda, para volver.</span></div>
       </div>
-      <div class="serif" id="s7-place" style="margin-top: 26px; font-size: 64px; color: #6B5F52">Elche · Santa Pola</div>
-      <div id="s7-facts" style="margin-top: 34px; font-size: 34px; font-weight: 500; color: #4A3F33">Hacienda de 1800 · 9 dormitorios · 16 plazas</div>
-      <div id="s7-btn" style="margin: 58px auto 0; display: inline-flex; align-items: center; gap: 20px; height: 116px; padding: 0 60px; border-radius: 999px; background: var(--ink); color: #fff; font-size: 46px; font-weight: 600; position: relative">
-        <span id="s7-pulse" style="position: absolute; inset: 0; border-radius: 999px; border: 3px solid var(--olive)"></span>
+      <div id="s7-who" style="margin-top: 40px; font-size: 40px; color: #6B5F52">Juande · huésped</div>
+    </div>
+  </section>
+
+  <!-- S8 · end card -->
+  <section class="scene" id="s8" style="background: var(--cream)">
+    <div id="s8-arch" style="position: absolute; left: 50%; top: 0; width: 1080px; height: 1920px; transform: translateX(-50%); overflow: hidden; background: #2E1C10">
+      <img class="ph" id="s8-ph" src="img/portada.jpg" alt="" style="object-position: 46% 50%">
+    </div>
+    <div id="s8-text" style="position: absolute; left: 0; right: 0; top: 880px; text-align: center">
+      <div id="s8-k" style="display: inline-flex; align-items: center; gap: 16px; color: var(--olive)"><span class="label">Casa rural</span>
+        <span class="stars" id="s8-stars"><svg viewBox="0 0 24 24" width="34" height="34"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21l1.6-7L2 9.2l7.1-.6z" fill="#C9A24A"/></svg><svg viewBox="0 0 24 24" width="34" height="34"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21l1.6-7L2 9.2l7.1-.6z" fill="#C9A24A"/></svg><svg viewBox="0 0 24 24" width="34" height="34"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21l1.6-7L2 9.2l7.1-.6z" fill="#C9A24A"/></svg><svg viewBox="0 0 24 24" width="34" height="34"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21l1.6-7L2 9.2l7.1-.6z" fill="#C9A24A"/></svg></span></div>
+      <div style="margin-top: 22px; font-weight: 800; font-size: 178px; line-height: .86; letter-spacing: -.055em"><div class="mask" data-split>Santa Creu</div></div>
+      <div class="serif" id="s8-place" style="margin-top: 26px; font-size: 60px; color: #6B5F52">Entre Elche y Santa Pola</div>
+      <div id="s8-price" style="margin-top: 44px; font-size: 44px; font-weight: 500; color: #4A3F33">Casa entera desde <strong style="color: var(--ink); font-weight: 800">880 €</strong> la noche</div>
+      <div id="s8-coupon" style="margin: 30px auto 0; display: inline-flex; align-items: center; gap: 18px; padding: 16px 30px; border-radius: 18px; border: 3px dashed var(--clay); color: var(--clay); font-size: 38px; font-weight: 700; letter-spacing: .04em">SANTACREU15 <span style="font-weight: 500; letter-spacing: 0; color: #4A3F33">−15 % en tu reserva</span></div>
+      <div id="s8-btn" style="margin: 46px auto 0; display: inline-flex; align-items: center; gap: 20px; height: 112px; padding: 0 58px; border-radius: 999px; background: var(--ink); color: #fff; font-size: 44px; font-weight: 600; position: relative">
+        <span id="s8-pulse" style="position: absolute; inset: 0; border-radius: 999px; border: 3px solid var(--olive)"></span>
         Reserva tus fechas
         <svg width="40" height="40" viewBox="0 0 24 24"><path d="M5 12h13M12 5l7 7-7 7" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
+      <div id="s8-contact" style="margin-top: 40px; font-size: 40px; font-weight: 600; color: var(--ink)">casaruralsantacreu.com</div>
+      <div id="s8-phone" style="margin-top: 10px; font-size: 36px; color: #6B5F52">WhatsApp 661 531 053</div>
     </div>
   </section>
 
@@ -177,7 +183,7 @@ html, body { margin: 0; background: #000; }
 </div>
 
 <script>
-const DUR = 24;
+const DUR = 30;
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
@@ -188,193 +194,140 @@ const E = {
   outExpo: (k) => (k >= 1 ? 1 : 1 - Math.pow(2, -10 * k)),
   inOut: (k) => (k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2),
   inOutQuart: (k) => (k < .5 ? 8 * k ** 4 : 1 - Math.pow(-2 * k + 2, 4) / 2),
-  in: (k) => k * k * k,
   back: (k) => { const c1 = 1.5, c3 = c1 + 1; return 1 + c3 * Math.pow(k - 1, 3) + c1 * Math.pow(k - 1, 2); },
 };
 const tw = (t, a, b, from, to, ease = E.out) => lerp(from, to, ease(p(t, a, b)));
+const rise = (el, t, a, b) => { el.style.transform = `translateY(${(1 - E.outExpo(p(t, a, b))) * 105}%)`; };
 
-// split text into letters
-$$('[data-split]').forEach((el) => {
-  const txt = el.textContent; el.textContent = '';
-  for (const c of txt) { const s = document.createElement('span'); s.className = 'ch'; s.textContent = c === ' ' ? ' ' : c; el.appendChild(s); }
-});
-// rolling digits
+$$('[data-split]').forEach((el) => { const txt = el.textContent; el.textContent = ''; for (const c of txt) { const s = document.createElement('span'); s.className = 'ch'; s.textContent = c === ' ' ? ' ' : c; el.appendChild(s); } });
 $$('.digit').forEach((d) => {
   d.style.cssText = 'display:flex;flex-direction:column;';
-  for (let i = 0; i < 10; i++) { const s = document.createElement('span'); s.textContent = (i + 10 - 0) % 10; s.style.cssText = 'height:240px;line-height:240px;display:block;text-align:center'; d.appendChild(s); }
+  for (let i = 0; i < 10; i++) { const s = document.createElement('span'); s.textContent = i; s.style.cssText = 'height:240px;line-height:240px;display:block;text-align:center'; d.appendChild(s); }
   const col = document.createElement('div'); col.style.cssText = 'overflow:hidden;height:240px;width:.58em'; d.parentNode.insertBefore(col, d); col.appendChild(d);
 });
-// the 3D ring
-const ringPhotos = ['piscina', 'terraza', 'jardin', 'palmeras-sombrilla', 'fachada', 'jardin-piscina', 'sombrilla', 'piscina-casa'];
-const spin = $('#s5-spin');
-ringPhotos.forEach((n, i) => {
-  const c = document.createElement('div');
-  c.className = 'card';
-  c.style.cssText = `position:absolute;left:-210px;top:-300px;width:420px;height:600px;border-radius:210px 210px 22px 22px;overflow:hidden;backface-visibility:hidden;box-shadow:0 40px 80px rgba(0,0,0,.45);background:#3a2616`;
+const ringPhotos = ['piscina', 'bodega', 'barbacoa', 'cenador2', 'futbolin', 'olivos', 'pergola', 'dama'];
+ringPhotos.forEach((n) => {
+  const c = document.createElement('div'); c.className = 'card';
+  c.style.cssText = 'position:absolute;left:-210px;top:-300px;width:420px;height:600px;border-radius:210px 210px 22px 22px;overflow:hidden;backface-visibility:hidden;box-shadow:0 40px 80px rgba(0,0,0,.45);background:#3a2616';
   c.innerHTML = `<img src="img/${n}.jpg" style="width:100%;height:100%;object-fit:cover" alt="">`;
-  spin.appendChild(c);
+  $('#s5-spin').appendChild(c);
 });
-const words = ['Piscina', 'Barbacoa', 'Cenador', 'Bodega', 'Jardines', 'Palmeras'];
+const words = ['Piscina', 'Bodega', 'Barbacoa', 'Cenador', 'Futbolín', 'Jardín'];
 $('#s5-words').innerHTML = words.map((w) => `<div style="height:240px">${w}</div>`).join('');
 $('#s5-dots').innerHTML = words.map(() => '<i style="display:block;width:16px;height:16px;border-radius:50%;background:#F3EDE2;opacity:.25"></i>').join('');
-// rings on the water
-$('#s3-rings').innerHTML = [0, 1, 2, 3].map(() => '<i style="position:absolute;left:540px;top:1260px;width:10px;height:10px;border-radius:50%;border:4px solid rgba(255,255,255,.6);transform:translate(-50%,-50%)"></i>').join('');
-// stars in the night sky
-{
-  let a = 11; const rnd = () => (a = (a * 16807) % 2147483647) / 2147483647;
-  $('#s6-stars').innerHTML = Array.from({ length: 70 }, () => {
-    const s = 2 + rnd() * 5;
-    return `<i data-d="${rnd().toFixed(3)}" style="position:absolute;left:${(rnd() * 100).toFixed(2)}%;top:${(rnd() * 48).toFixed(2)}%;width:${s}px;height:${s}px;border-radius:50%;background:#fff;opacity:0;box-shadow:0 0 ${s * 2}px #fff"></i>`;
-  }).join('');
-}
+$('#s3-rings').innerHTML = [0, 1, 2, 3].map(() => '<i style="position:absolute;left:540px;top:1500px;width:10px;height:10px;border-radius:50%;border:4px solid rgba(255,255,255,.55);transform:translate(-50%,-50%)"></i>').join('');
 
-const scenes = [
-  ['#s1', 0, 3.4], ['#s2', 3.2, 6.6], ['#s3', 6.4, 9.8], ['#s4', 9.6, 13.4], ['#s5', 13.2, 17.0], ['#s6', 16.8, 20.0], ['#s7', 19.8, 24.1],
-];
+const scenes = [['#s1', 0, 3.4], ['#s2', 3.2, 6.6], ['#s3', 6.4, 9.8], ['#s4', 9.6, 13.4], ['#s5', 13.2, 17.0], ['#s6', 16.8, 20.6], ['#s7', 20.4, 24.0], ['#s8', 23.8, 30.1]];
 const S = (sel) => $(sel).style;
 
 function render(t) {
   for (const [sel, a, b] of scenes) S(sel).visibility = t >= a && t < b ? 'visible' : 'hidden';
 
-  // ---------- S1 · the door ----------
+  // S1 · door
   if (t < 3.4) {
-    S('#s1-top').opacity = tw(t, .1, .7, 0, 1);
+    S('#s1-top').opacity = tw(t, .1, .7, 0, 1) * (1 - p(t, 2.0, 2.3));
     S('#s1-top').transform = `translateY(${tw(t, .1, .9, 30, 0)}px)`;
     const open = E.inOutQuart(p(t, .75, 2.0));
     S('#s1-l').transform = `rotateY(${-108 * open}deg)`;
     S('#s1-r').transform = `rotateY(${108 * open}deg)`;
-    S('#s1-glow').opacity = 1 - .8 * p(t, 1.0, 2.2);
-    S('#s1-ph').transform = `scale(${tw(t, .6, 3.4, 1.35, 1.0, E.out)})`;
-    // the arch grows to fill the screen
+    S('#s1-glow').opacity = 1 - .85 * p(t, 1.0, 2.2);
+    S('#s1-ph').transform = `scale(${tw(t, .6, 3.4, 1.35, 1.0)})`;
     const g = E.inOutQuart(p(t, 2.0, 2.9));
-    const w = lerp(760, 1080, g), h = lerp(1140, 1920, g), r = lerp(380, 0, g);
-    Object.assign(S('#s1-arch'), { width: w + 'px', height: h + 'px', borderRadius: `${r}px ${r}px 0 0`, top: lerp(50, 50, g) + '%' });
+    Object.assign(S('#s1-arch'), { width: lerp(760, 1080, g) + 'px', height: lerp(1140, 1920, g) + 'px', borderRadius: `${lerp(380, 0, g)}px ${lerp(380, 0, g)}px 0 0` });
+    S('#s1-shade').opacity = p(t, 2.2, 2.8);
     S('#s1-frame').opacity = 1 - p(t, 1.9, 2.3);
     S('#s1-frame').transform = `translate(-50%,-50%) scale(${tw(t, 0, 2.3, .96, 1.08)})`;
-    S('#s1-top').visibility = t > 2.4 ? 'hidden' : 'visible';
-    $$('#s1-title .ch').forEach((c, i) => {
-      const k = E.outExpo(p(t, 2.35 + i * .045, 2.95 + i * .045));
-      c.style.transform = `translateY(${(1 - k) * 110}%) rotate(${(1 - k) * 8}deg)`;
-      c.style.opacity = k;
-    });
+    $$('#s1-title .ch').forEach((c, i) => { const k = E.outExpo(p(t, 2.35 + i * .045, 2.95 + i * .045)); c.style.transform = `translateY(${(1 - k) * 110}%) rotate(${(1 - k) * 8}deg)`; c.style.opacity = k; });
     S('#s1-title').opacity = 1 - p(t, 3.15, 3.4);
   }
-
-  // ---------- S2 · since 1800 ----------
-  if (t >= 3.2 && t < 6.6) {
-    const l = t - 3.2;
-    S('#s2-ph').transform = `scale(${lerp(1.18, 1.04, E.out(p(l, 0, 3.4)))}) translateX(${lerp(-30, 20, p(l, 0, 3.4))}px)`;
-    S('#s2-kicker').opacity = tw(l, .1, .5, 0, 1);
-    S('#s2-kicker').transform = `translateY(${tw(l, .1, .6, 24, 0)}px)`;
-    $$('#s2-year .digit').forEach((d, i) => {
-      const to = +d.dataset.to; const spins = 2 + i;
-      const k = E.outExpo(p(l, .15 + i * .08, 1.3 + i * .1));
-      const pos = (spins * 10 + to) * k;  // rolls through the digits, lands on its own
-      d.style.transform = `translateY(${-(pos % 10) * 240}px)`;
-      d.style.filter = `blur(${(1 - k) * 6}px)`;
-    });
-    $$('#s2-year .serif')[0].style.opacity = tw(l, .1, .6, 0, 1);
-    $$('#s2-line .mask > span').forEach((s, i) => { const k = E.outExpo(p(l, 1.1 + i * .12, 1.9 + i * .12)); s.style.transform = `translateY(${(1 - k) * 105}%)`; });
-  }
-
-  // ---------- transitions: a clay panel sweeps across ----------
+  // sweeps
   const sweep = (a) => { const k = p(t, a - .3, a + .3); return k <= 0 || k >= 1 ? null : (k < .5 ? lerp(110, 0, E.inOut(k * 2)) : lerp(0, -110, E.inOut((k - .5) * 2))); };
-  let sw = null;
-  for (const a of [6.5, 13.3, 19.9]) { const v = sweep(a); if (v !== null) sw = v; }
+  let sw = null; for (const a of [6.5, 13.3, 20.5, 23.9]) { const v = sweep(a); if (v !== null) sw = v; }
   S('#flash').transform = `translateX(${sw === null ? 110 : sw}%)`;
 
-  // ---------- S3 · the pool ----------
+  // S2 · 1800
+  if (t >= 3.2 && t < 6.6) {
+    const l = t - 3.2;
+    S('#s2-ph').transform = `scale(${lerp(1.22, 1.06, E.out(p(l, 0, 3.4)))}) translateX(${lerp(-30, 20, p(l, 0, 3.4))}px)`;
+    S('#s2-kicker').opacity = tw(l, .1, .5, 0, 1);
+    S('#s2-kicker').transform = `translateY(${tw(l, .1, .6, 24, 0)}px)`;
+    $$('#s2-year .digit').forEach((d, i) => { const to = +d.dataset.to, spins = 2 + i; const k = E.outExpo(p(l, .15 + i * .08, 1.3 + i * .1)); d.style.transform = `translateY(${-(((spins * 10 + to) * k) % 10) * 240}px)`; d.style.filter = `blur(${(1 - k) * 6}px)`; });
+    $$('#s2-year .serif')[0].style.opacity = tw(l, .1, .6, 0, 1);
+    $$('#s2-line .mask > span').forEach((s, i) => rise(s, l, 1.1 + i * .12, 1.9 + i * .12));
+  }
+  // S3 · pool
   if (t >= 6.4 && t < 9.8) {
     const l = t - 6.4;
-    S('#s3-ph').transform = `scale(${lerp(1.3, 1.08, E.out(p(l, 0, 3.4)))}) rotate(${lerp(-3, 0, E.out(p(l, 0, 3)))}deg)`;
-    $('#s3-a').style.transform = `translateY(${(1 - E.outExpo(p(l, .25, 1.0))) * 105}%)`;
-    $('#s3-b').style.transform = `translateY(${(1 - E.outExpo(p(l, .5, 1.25))) * 105}%)`;
-    const c = E.outExpo(p(l, .7, 1.7));
-    S('#s3-card').transform = `translateY(${(1 - c) * 700}px) rotate(${(1 - c) * 6}deg)`;
+    S('#s3-ph').transform = `scale(${lerp(1.28, 1.08, E.out(p(l, 0, 3.4)))})`;
+    rise($('#s3-a'), l, .25, 1.0); rise($('#s3-b'), l, .5, 1.25);
+    S('#s3-c').opacity = p(l, 1.0, 1.5); S('#s3-c').transform = `translateY(${tw(l, 1.0, 1.7, 30, 0)}px)`;
+    const c = E.outExpo(p(l, .8, 1.8));
+    S('#s3-card').transform = `translateY(${(1 - c) * 900}px) rotate(${(1 - c) * 8 + 3}deg)`;
     S('#s3-cardph').transform = `scale(${lerp(1.3, 1.05, c)})`;
-    $$('#s3-rings i').forEach((r, i) => {
-      const k = ((l * .55 + i * .25) % 1);
-      const s = 10 + k * 900;
-      r.style.width = s + 'px'; r.style.height = s * .32 + 'px'; r.style.opacity = (1 - k) * .7 * p(l, .1, .5);
-    });
-    S('#s3-rings').transform = 'translateY(-320px)';
+    $$('#s3-rings i').forEach((r, i) => { const k = (l * .55 + i * .25) % 1; const s = 10 + k * 900; r.style.width = s + 'px'; r.style.height = s * .32 + 'px'; r.style.opacity = (1 - k) * .6 * p(l, .1, .5); });
   }
-
-  // ---------- S4 · numbers ----------
+  // S4 · numbers
   if (t >= 9.6 && t < 13.4) {
     const l = t - 9.6;
     S('#s4-k').opacity = tw(l, .1, .5, 0, 1);
-    $('#s4-h1').style.transform = `translateY(${(1 - E.outExpo(p(l, .15, .9))) * 105}%)`;
-    $('#s4-h2').style.transform = `translateY(${(1 - E.outExpo(p(l, .28, 1.03))) * 105}%)`;
+    rise($('#s4-h1'), l, .15, .9); rise($('#s4-h2'), l, .28, 1.03);
     $$('#s4-cols .col').forEach((c, i) => {
       const k = E.outExpo(p(l, .35 + i * .14, 1.35 + i * .14));
       c.style.transform = `translateY(${(1 - k) * 1300}px)`;
-      const img = c.querySelector('img'); img.style.transform = `scale(${lerp(1.4, 1.08, k) + p(l, 1.4, 3.8) * .06}) translateY(${(1 - k) * -200}px)`;
-      const num = c.querySelector('.num');
-      if (num) { const n = Math.round(+num.dataset.to * E.out(p(l, .9 + i * .14, 1.9 + i * .14))); num.textContent = n; }
-      const st = c.querySelector('.stat'); st.style.opacity = p(l, .9 + i * .14, 1.3 + i * .14);
+      c.querySelector('img').style.transform = `scale(${lerp(1.4, 1.08, k) + p(l, 1.4, 3.8) * .06}) translateY(${(1 - k) * -200}px)`;
+      const num = c.querySelector('.num'); num.textContent = Math.round(+num.dataset.to * E.out(p(l, .9 + i * .14, 2.0 + i * .14)));
+      c.querySelector('.stat').style.opacity = p(l, .9 + i * .14, 1.3 + i * .14);
     });
-    $$('#s4-stars .star').forEach((s, i) => { const k = E.back(p(l, 1.3 + i * .12, 1.75 + i * .12)); s.style.transform = `scale(${k}) rotate(${(1 - clamp(k)) * -90}deg)`; s.style.opacity = clamp(k * 3); });
   }
-
-  // ---------- S5 · ring ----------
+  // S5 · ring
   if (t >= 13.2 && t < 17.0) {
-    const l = t - 13.2;
-    const N = ringPhotos.length, R = 640;
+    const l = t - 13.2, N = ringPhotos.length, R = 640;
     const intro = E.outExpo(p(l, 0, 1.2));
-    const rot = l * 34 + (1 - intro) * -90;
-    S('#s5-spin').transform = `translateZ(${-R}px) rotateX(-6deg) rotateY(${-rot}deg)`;
-    $$('#s5-spin .card').forEach((c, i) => {
-      c.style.transform = `rotateY(${i * 360 / N}deg) translateZ(${R * intro + 200 * (1 - intro)}px)`;
-      c.style.opacity = intro;
-    });
-    const per = 3.4 / words.length;
-    const wi = Math.min(words.length - 1, Math.floor(clamp(l - .3, 0, 3.39) / per));
-    const frac = (clamp(l - .3, 0, 3.39) % per) / per;
-    const step = wi + E.outExpo(clamp(frac / .35));  // snaps to the next word fast, then holds
-    S('#s5-words').transform = `translateY(${-(Math.min(step, words.length - 1)) * 240 + (l < .3 ? (1 - E.outExpo(p(l, 0, .3))) * 240 : 0)}px)`;
+    S('#s5-spin').transform = `translateZ(${-R}px) rotateX(-6deg) rotateY(${-(l * 34 + (1 - intro) * -90)}deg)`;
+    $$('#s5-spin .card').forEach((c, i) => { c.style.transform = `rotateY(${i * 360 / N}deg) translateZ(${R * intro + 200 * (1 - intro)}px)`; c.style.opacity = intro; });
+    const per = 3.4 / words.length, lt = clamp(l - .3, 0, 3.39);
+    const wi = Math.min(words.length - 1, Math.floor(lt / per)), frac = (lt % per) / per;
+    const step = Math.min(wi + E.outExpo(clamp(frac / .35)), words.length - 1);
+    S('#s5-words').transform = `translateY(${-step * 240 + (l < .3 ? (1 - E.outExpo(p(l, 0, .3))) * 240 : 0)}px)`;
     $$('#s5-dots i').forEach((d, i) => { d.style.opacity = i === wi ? 1 : .25; d.style.transform = `scale(${i === wi ? 1.3 : 1})`; });
   }
-
-  // ---------- S6 · palms into night ----------
-  if (t >= 16.8 && t < 20.0) {
+  // S6 · sea
+  if (t >= 16.8 && t < 20.6) {
     const l = t - 16.8;
-    S('#s6-ph').transform = `scale(${lerp(1.04, 1.2, p(l, 0, 3.2))}) translateY(${lerp(0, -40, p(l, 0, 3.2))}px)`;
-    const night = E.inOut(p(l, .9, 2.6));
-    S('#s6-night').opacity = night;
-    S('#s6-warm').opacity = night;
-    $$('#s6-stars i').forEach((s) => { const d = +s.dataset.d; s.style.opacity = p(l, 1.6 + d * .9, 2.0 + d * .9) * (.6 + .4 * Math.sin(l * 6 + d * 20)); });
-    $('#s6-a').style.transform = `translateY(${(1 - E.outExpo(p(l, .2, .95))) * 105}%)`;
-    $('#s6-b').style.transform = `translateY(${(1 - E.outExpo(p(l, .4, 1.15))) * 105}%)`;
-    S('#s6-c').opacity = p(l, 1.3, 1.8);
-    S('#s6-c').transform = `translateY(${tw(l, 1.3, 2.0, 30, 0)}px)`;
+    S('#s6-ph').transform = `scale(${lerp(1.35, 1.08, E.out(p(l, 0, 3.8)))}) rotate(${lerp(4, 0, E.out(p(l, 0, 3.8)))}deg)`;
+    S('#s6-k').opacity = p(l, .1, .5);
+    rise($('#s6-a'), l, .25, 1.0); rise($('#s6-b'), l, .45, 1.2);
+    $$('#s6-list .li').forEach((li, i) => { const k = E.outExpo(p(l, 1.2 + i * .15, 1.9 + i * .15)); li.style.opacity = k; li.style.transform = `translateX(${(1 - k) * -60}px)`; });
   }
-
-  // ---------- S7 · end card ----------
-  if (t >= 19.8) {
-    const l = t - 19.8;
+  // S7 · review
+  if (t >= 20.4 && t < 24.0) {
+    const l = t - 20.4;
+    const a = E.outExpo(p(l, .1, 1.1)), b = E.outExpo(p(l, .25, 1.25));
+    S('#s7-p1').transform = `translateY(${(1 - a) * -700}px) rotate(${-4 + (1 - a) * -8}deg)`;
+    S('#s7-p2').transform = `translateY(${(1 - b) * -800}px) rotate(${5 + (1 - b) * 8}deg)`;
+    $$('#s7-p1 img, #s7-p2 img').forEach((im) => { im.style.transform = `scale(${1.15 - p(l, 0, 3.6) * .1})`; });
+    S('#s7-q').opacity = p(l, .5, .9); S('#s7-q').transform = `scale(${lerp(.6, 1, E.back(p(l, .5, 1.0)))})`;
+    $$('#s7-quote .mask > span').forEach((s, i) => rise(s, l, .7 + i * .14, 1.5 + i * .14));
+    S('#s7-who').opacity = p(l, 1.6, 2.0);
+  }
+  // S8 · end card
+  if (t >= 23.8) {
+    const l = t - 23.8;
     const g = E.inOutQuart(p(l, .2, 1.3));
-    const w = lerp(1080, 620, g), h = lerp(1920, 860, g), r = lerp(0, 310, g);
-    Object.assign(S('#s7-arch'), { width: w + 'px', height: h + 'px', borderRadius: `${r}px ${r}px 24px 24px`, top: lerp(0, 210, g) + 'px' });
-    S('#s7-ph').transform = `scale(${lerp(1.25, 1.05, E.out(p(l, 0, 3)))})`;
-    S('#s7-k').opacity = p(l, 1.0, 1.4);
-    $$('#s7-text .ch').forEach((c, i) => { const k = E.outExpo(p(l, 1.05 + i * .04, 1.75 + i * .04)); c.style.transform = `translateY(${(1 - k) * 110}%)`; c.style.opacity = k; });
-    S('#s7-place').opacity = p(l, 1.6, 2.0);
-    S('#s7-place').transform = `translateY(${tw(l, 1.6, 2.2, 24, 0)}px)`;
-    S('#s7-facts').opacity = p(l, 1.85, 2.25);
-    const b = E.back(p(l, 2.1, 2.6));
-    S('#s7-btn').transform = `scale(${lerp(.85, 1, b)})`;
-    S('#s7-btn').opacity = clamp(b * 2);
-    const pk = ((l - 2.6) % 1.2) / 1.2;
-    S('#s7-pulse').transform = `scale(${l > 2.6 ? 1 + pk * .18 : 1})`;
-    S('#s7-pulse').opacity = l > 2.6 ? (1 - pk) * .8 : 0;
+    Object.assign(S('#s8-arch'), { width: lerp(1080, 760, g) + 'px', height: lerp(1920, 640, g) + 'px', borderRadius: `${lerp(0, 380, g)}px ${lerp(0, 380, g)}px 24px 24px`, top: lerp(0, 170, g) + 'px' });
+    S('#s8-ph').transform = `scale(${lerp(1.25, 1.05, E.out(p(l, 0, 3)))})`;
+    S('#s8-k').opacity = p(l, 1.0, 1.4);
+    $$('#s8-stars svg').forEach((s, i) => { const k = E.back(p(l, 1.1 + i * .08, 1.5 + i * .08)); s.style.transform = `scale(${k})`; });
+    $$('#s8-text .ch').forEach((c, i) => { const k = E.outExpo(p(l, 1.05 + i * .04, 1.75 + i * .04)); c.style.transform = `translateY(${(1 - k) * 110}%)`; c.style.opacity = k; });
+    for (const [id, a] of [['#s8-place', 1.6], ['#s8-price', 1.85], ['#s8-coupon', 2.1], ['#s8-contact', 2.7], ['#s8-phone', 2.85]]) { S(id).opacity = p(l, a, a + .4); S(id).transform = `translateY(${tw(l, a, a + .6, 24, 0)}px)`; }
+    const b = E.back(p(l, 2.35, 2.85));
+    S('#s8-btn').transform = `scale(${lerp(.85, 1, b)})`; S('#s8-btn').opacity = clamp(b * 2);
+    const pk = ((l - 2.9) % 1.2) / 1.2;
+    S('#s8-pulse').transform = `scale(${l > 2.9 ? 1 + pk * .18 : 1})`; S('#s8-pulse').opacity = l > 2.9 ? (1 - pk) * .8 : 0;
   }
 }
-window.__render = render;
-window.__dur = DUR;
+window.__render = render; window.__dur = DUR;
 window.__ready = Promise.all([document.fonts.ready, ...$$('img').map((i) => i.decode().catch(() => {}))]);
-
-// live playback when opened in a browser (not while recording)
 if (!new URLSearchParams(location.search).has('record')) {
   const fit = () => { const s = Math.min(innerWidth / 1080, innerHeight / 1920); $('#stage').style.transform = `scale(${s})`; $('#stage').style.transformOrigin = '0 0'; };
   fit(); addEventListener('resize', fit);

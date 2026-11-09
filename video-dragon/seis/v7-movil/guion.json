@@ -1,0 +1,55 @@
+{
+ "inicio": 0.35,
+ "final": 3.6,
+ "voz": {
+  "motor": "eleven",
+  "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+  "modelo": "eleven_multilingual_v2",
+  "estilo": "creador",
+  "velocidad": 1.08,
+  "estabilidad": 0.38,
+  "similitud": 0.8,
+  "estilo_ia": 0.4
+ },
+ "lineas": [
+  {
+   "id": "a1",
+   "texto": "Para el scroll y mira esta pantalla."
+  },
+  {
+   "id": "a2",
+   "texto": "Este es Long: un dragón articulado de ochenta y ocho centímetros, impreso en 3D.",
+   "pausa": 0.3
+  },
+  {
+   "id": "a3",
+   "texto": "Cada pieza gira. Lo enroscas en el brazo, lo cuelgas, lo pones en espiral.",
+   "pausa": 0.3
+  },
+  {
+   "id": "a4",
+   "texto": "Hay ocho colores, y uno, el luminoso, brilla en la oscuridad.",
+   "pausa": 0.3
+  },
+  {
+   "id": "a5",
+   "texto": "Mira. Apagas la luz...",
+   "pausa": 0.3
+  },
+  {
+   "id": "a6",
+   "texto": "y se queda brillando.",
+   "pausa": 0.9
+  },
+  {
+   "id": "a7",
+   "texto": "Veintiún noventa y cinco. Y si te llevas dos, treinta y dos noventa y cinco.",
+   "pausa": 0.45
+  },
+  {
+   "id": "a8",
+   "texto": "Envío gratis. Lo tienes en el link de mi perfil.",
+   "pausa": 0.3
+  }
+ ]
+}

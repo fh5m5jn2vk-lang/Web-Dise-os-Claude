@@ -4,3 +4,7 @@ mezcla-raw.wav
 musica/*.mp3
 musica/*.wav
 cola.log
+# the supplier's photos: used in the render only, not published in this repository
+v7-movil/img/
+v8-ensena/img/
+v9-cuarto/img/

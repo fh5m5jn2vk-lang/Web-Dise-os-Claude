@@ -1,0 +1,50 @@
+{
+ "inicio": 0.35,
+ "final": 3.4,
+ "voz": {
+  "motor": "eleven",
+  "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+  "modelo": "eleven_multilingual_v2",
+  "estilo": "creador",
+  "velocidad": 1.0,
+  "estabilidad": 0.38,
+  "similitud": 0.8,
+  "estilo_ia": 0.35
+ },
+ "lineas": [
+  {
+   "id": "b1",
+   "texto": "Te enseño cómo se mueve de verdad."
+  },
+  {
+   "id": "b2",
+   "texto": "Lo coges de la cabeza, y mira el cuerpo.",
+   "pausa": 0.35
+  },
+  {
+   "id": "b3",
+   "texto": "Cada pieza gira por separado. Sin tornillos, sin pegamento.",
+   "pausa": 0.6
+  },
+  {
+   "id": "b4",
+   "texto": "Te lo enroscas en el brazo, como una pulsera gigante.",
+   "pausa": 0.5
+  },
+  {
+   "id": "b5",
+   "texto": "Y este es el luminoso. Apago la luz...",
+   "pausa": 0.6
+  },
+  {
+   "id": "b6",
+   "texto": "Y brilla.",
+   "pausa": 1.0
+  },
+  {
+   "id": "b7",
+   "texto": "Ochenta y ocho centímetros, ocho colores. Link en mi perfil.",
+   "pausa": 0.8
+  }
+ ]
+}

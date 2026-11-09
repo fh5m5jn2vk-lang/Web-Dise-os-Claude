@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>LÓNG: tu cuarto</title>
+<style>
+  @font-face { font-family: Syne; src: url(../../fonts/syne.woff2) format("woff2"); font-weight: 400 800; }
+  @font-face { font-family: Manrope; src: url(../../fonts/manrope.woff2) format("woff2"); font-weight: 200 800; }
+  @font-face { font-family: Mono; src: url(../../fonts/geist-mono.woff2) format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: Han; src: url(../../fonts/han.woff2) format("woff2"); font-weight: 900; }
+  html, body { margin: 0; overflow: hidden; background: #000; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #000; color: #f4efe6; }
+  #gl { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+  /* the line, big and quiet, over the room */
+  #title { position: absolute; left: 50px; right: 50px; top: 290px; text-align: center; font: 700 112px/0.96 Syne, sans-serif; letter-spacing: -0.045em; text-shadow: 0 6px 40px rgba(0,0,0,.6); }
+  #title .ln { display: block; white-space: nowrap; }
+  #title .w { display: inline-block; white-space: nowrap; }
+  #title .c { display: inline-block; opacity: 0; }
+  #title em { font-style: normal; color: #ff3b4e; text-shadow: 0 0 40px rgba(255,59,78,.45), 0 6px 40px rgba(0,0,0,.6); }
+  #glowline { position: absolute; left: 0; right: 0; top: 300px; text-align: center; font: 700 104px/0.98 Syne; letter-spacing: -0.045em; color: #d9fff0; text-shadow: 0 0 30px rgba(63,255,170,.75), 0 0 80px rgba(63,255,170,.45); opacity: 0; }
+  #glowline small { display: block; margin-top: 26px; font: 500 30px Mono, monospace; letter-spacing: .16em; color: #7dffc4; text-transform: uppercase; }
+  /* the end card */
+  #endc { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; background: radial-gradient(60% 40% at 50% 50%, rgba(7,8,12,.35), rgba(7,8,12,.88)); }
+  #endc .in { text-align: center; }
+  #endc .seal { display: inline-grid; place-items: center; width: 190px; height: 190px; border: 9px solid #ff3b4e; border-radius: 30px; color: #ff3b4e; font: 900 120px/1 Han; box-shadow: 0 0 80px rgba(255,59,78,.35); }
+  #endc .name { margin-top: 40px; font: 800 120px/1 Syne; letter-spacing: .2em; padding-left: .2em; }
+  #endc .facts { margin-top: 30px; font: 500 32px Mono, monospace; letter-spacing: .14em; color: rgba(244,239,230,.75); text-transform: uppercase; }
+  #endc .url { margin-top: 70px; display: inline-block; padding: 26px 50px; border-radius: 999px; background: #ff3b4e; color: #fff; font: 700 48px Manrope; letter-spacing: -0.02em; box-shadow: 0 20px 60px -20px rgba(255,59,78,.8); }
+  #bars i { position: absolute; left: 0; right: 0; height: 0; background: #000; }
+</style>
+<script type="importmap">{"imports":{"three":"../../../dragon/vendor/three/three.module.min.js","three/addons/":"../../../dragon/vendor/three/addons/"}}</script>
+</head>
+<body>
+<div id="stage">
+  <canvas id="gl" width="1080" height="1920"></canvas>
+  <div id="title"><span class="ln" data-l="Lo que le"></span><span class="ln" data-l="hace falta"></span><span class="ln" data-l="a tu *cuarto*"></span></div>
+  <div id="glowline">y de noche,<br>brilla<small>color Luminoso</small></div>
+  <div id="endc"><div class="in"><div class="seal">龍</div><div class="name">LÓNG</div><div class="facts">dragón articulado · 88 cm · 8 colores</div><div class="url">thelongdragon.com</div></div></div>
+  <div id="bars"><i style="top:0"></i><i style="bottom:0"></i></div>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

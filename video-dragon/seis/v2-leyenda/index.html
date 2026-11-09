@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>LÓNG: leyenda</title>
+<style>
+  @font-face { font-family: Cormorant; src: url(../fonts/cormorant.woff2) format("woff2"); font-weight: 500 700; }
+  @font-face { font-family: CormorantI; src: url(../fonts/cormorant-italic.woff2) format("woff2"); font-weight: 500 700; font-style: italic; }
+  @font-face { font-family: Brush; src: url(../fonts/brush.woff2) format("woff2"); }
+  @font-face { font-family: Han; src: url(../fonts/han.woff2) format("woff2"); font-weight: 900; }
+  html, body { margin: 0; overflow: hidden; background: #1a0605; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #1a0605; }
+  #temple { position: absolute; inset: 0; background: radial-gradient(90% 60% at 50% 45%, #7a1712 0%, #4a0b08 55%, #1a0303 100%); }
+  #temple .pillar { position: absolute; top: 0; bottom: 0; width: 120px; background: linear-gradient(90deg, #4a0806, #a3201a 40%, #c23a2c 55%, #6b0f0b); box-shadow: 0 0 60px rgba(0,0,0,.6); }
+  #temple .beam { position: absolute; left: 0; right: 0; top: 0; height: 150px; background: linear-gradient(180deg, #2a0705, #6b120e); border-bottom: 10px solid #d4a24c; }
+  .lantern { position: absolute; width: 150px; height: 190px; border-radius: 48%; background: radial-gradient(circle at 50% 45%, #ffcf6a, #ff6a2a 40%, #c41e16 75%); box-shadow: 0 0 90px rgba(255,120,40,.55); }
+  .lantern::before, .lantern::after { content: ""; position: absolute; left: 35px; right: 35px; height: 18px; background: #d4a24c; border-radius: 4px; }
+  .lantern::before { top: -8px; } .lantern::after { bottom: -8px; }
+  #frame { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 540px 960px; }
+  #mount { position: absolute; inset: -60px -50px; background: #2b4a3f; border: 6px solid #d4a24c; box-shadow: 0 30px 80px rgba(0,0,0,.6); opacity: 0; }
+  #rodT, #rodB { position: absolute; left: -90px; right: -90px; height: 60px; border-radius: 30px; background: linear-gradient(180deg, #5a3417, #a8682e 45%, #4a2a10); opacity: 0; }
+  #rodT { top: -110px; } #rodB { bottom: -110px; }
+  #ink { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+  #cal { position: absolute; right: 70px; top: 300px; font: 400 300px/1 Brush, Han, serif; color: #15100c; writing-mode: vertical-rl; opacity: 0; }
+  #seal { position: absolute; right: 96px; top: 640px; width: 120px; height: 120px; border-radius: 12px; background: #b3241e; color: #f6e9d2; font: 900 46px/56px Han, serif; display: grid; place-items: center; text-align: center; opacity: 0; box-shadow: inset 0 0 0 6px #b3241e, inset 0 0 0 9px rgba(246,233,210,.7); }
+  #cap { position: absolute; left: 60px; right: 60px; top: 1420px; text-align: center; font: italic 700 80px/1.08 CormorantI, serif; color: #1a120d; letter-spacing: -0.01em; text-shadow: 0 0 18px rgba(246,238,220,.95), 0 0 36px rgba(246,238,220,.9), 0 0 60px rgba(246,238,220,.7); }
+  #cap span { display: inline-block; margin: 0 .12em; }
+  #banner { position: absolute; left: 110px; right: 110px; top: 190px; height: 0; overflow: hidden; background: #f3e7cd; box-shadow: 0 30px 80px rgba(0,0,0,.55); }
+  #bRodT, #bRodB { position: absolute; left: 70px; right: 70px; height: 54px; border-radius: 27px; background: linear-gradient(180deg, #5a3417, #b8742f 45%, #4a2a10); opacity: 0; }
+</style>
+<script type="importmap">{"imports":{"three":"../../../dragon/vendor/three/three.module.min.js"}}</script>
+</head>
+<body>
+<div id="stage">
+  <div id="temple"><div class="beam"></div><div class="pillar" style="left:40px"></div><div class="pillar" style="right:40px"></div><div class="lantern" id="lan1" style="left:180px;top:230px"></div><div class="lantern" id="lan2" style="right:180px;top:260px"></div></div>
+  <div id="frame"><div id="mount"></div><div id="rodT"></div><div id="rodB"></div><canvas id="ink" width="1080" height="1920"></canvas><div id="cal">龍</div><div id="seal">吉<br>祥</div></div>
+  <div id="bRodT"></div><div id="banner"></div><div id="bRodB"></div>
+  <div id="cap"></div>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

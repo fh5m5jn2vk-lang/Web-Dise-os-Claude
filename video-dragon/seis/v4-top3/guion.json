@@ -1,0 +1,11 @@
+{"inicio":0.6,"final":3.6,
+ "voz":{"motor":"kokoro","voz":"em_alex","estilo":"trailer","velocidad":0.95,"tono":0.87},
+ "lineas":[
+  {"id":"h","texto":"No compres ningún regalo sin ver esto."},
+  {"id":"r","pausa":0.45,"texto":"Tres razones."},
+  {"id":"n3","pausa":0.7,"texto":"Tres. Se mueve de verdad: cada pieza gira, como si estuviera vivo."},
+  {"id":"n2","pausa":0.8,"texto":"Dos. Brilla en la oscuridad."},
+  {"id":"n1","pausa":0.9,"texto":"Y uno. Cuesta menos que una cena: veintiún noventa y cinco."},
+  {"id":"c","pausa":0.6,"texto":"El regalo que nadie espera, y que todos quieren."},
+  {"id":"l","pausa":0.35,"texto":"Link en mi perfil."}
+ ]}

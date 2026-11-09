@@ -1,0 +1,11 @@
+{"inicio":1.4,"final":3.8,
+ "voz":{"motor":"kokoro","voz":"ef_dora","estilo":"susurro","velocidad":0.92},
+ "lineas":[
+  {"id":"a1","texto":"Shh... escucha."},
+  {"id":"a2","pausa":1.1,"texto":"Cada pieza hace clic cuando se mueve."},
+  {"id":"a3","pausa":1.0,"texto":"Por la noche lo dejo aquí, en la mesita."},
+  {"id":"a4","pausa":0.9,"texto":"Apago la luz..."},
+  {"id":"a5","pausa":1.0,"texto":"y se queda brillando."},
+  {"id":"a6","pausa":1.1,"texto":"Es lo más relajante que tengo."},
+  {"id":"a7","pausa":0.9,"texto":"Si quieres uno, está en el link de mi perfil."}
+ ]}

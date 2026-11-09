@@ -14,6 +14,10 @@ def band(x, lo, hi):
     return np.fft.irfft(X / (1 + (lo / np.maximum(f, 1)) ** 4) / (1 + (f / hi) ** 4), len(x))
 def env(n, a=0.002, d=0.2): t = tt(n); return np.minimum(1, t / a) * np.exp(-t / d)
 noise = lambda n: rng.normal(0, 1, n)
+def mixs(*sig):   # sum signals of different lengths
+    out = np.zeros(max(len(x) for x in sig))
+    for x in sig: out[:len(x)] += x
+    return out
 
 # ---------- the effects ----------
 def whoosh(d=0.35): n = int(d * SR); t = tt(n); return band(noise(n), 500, 7000) * np.sin(np.pi * t / d) ** 2 * 0.8
@@ -33,7 +37,8 @@ def shimmer(d=1.6):
 def notify():   # a two-note phone chime
     return np.concatenate([bell(88, 0.12), bell(95, 0.5)]) * 0.8
 def send(): t = tt(int(0.18 * SR)); f = 600 + 1400 * (t / 0.18) ** 2; return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.sin(np.pi * t / 0.18) * 0.5 + swish(0.18) * 0.3
-def receive(): return pop() * 0.7 + bell(91, 0.25) * 0.3
+def receive():
+    a, b = pop() * 0.7, bell(91, 0.25) * 0.3; out = np.zeros(max(len(a), len(b))); out[:len(a)] += a; out[:len(b)] += b; return out
 def typing(d=1.0):
     out = np.zeros(int(d * SR)); k = 0.0
     while k < d - 0.05: out[int(k * SR):int(k * SR) + int(0.03 * SR)] += mouse()[:int(0.03 * SR)] * (0.6 + 0.4 * rng.random()); k += 0.06 + 0.07 * rng.random()
@@ -65,18 +70,18 @@ def ink():   # a drop, then the bloom of ink in water
     return drop * 0.6 + bloom
 def paper(d=0.6): n = int(d * SR); t = tt(n); return band(noise(n), 1500, 9000) * (0.4 + 0.6 * np.abs(np.sin(t * 40))) * np.sin(np.pi * t / d) * 0.5
 def tear(d=0.8): n = int(d * SR); t = tt(n); x = band(noise(n), 800, 8000); return x * (0.5 + 0.5 * (rng.random(n) > 0.7)) * np.sin(np.pi * t / d) * 0.7
-def lightswitch(): return click() * 1.2 + thump(0.3)
+def lightswitch(): return mixs(click() * 1.2, thump(0.3))
 def riser(d=1.5): n = int(d * SR); t = tt(n); return (band(noise(n), 1500, 12000) * (t / d) ** 2 + 0.4 * np.sin(2 * np.pi * np.cumsum(200 * 2 ** (3 * t / d)) / SR) * (t / d) ** 2) * 0.7
-def impact(): return boom() * 0.8 + slap() * 0.5
+def impact(): return mixs(boom() * 0.8, slap() * 0.5)
 def tick(): n = int(0.03 * SR); t = tt(n); return np.sin(2 * np.pi * 2600 * t) * np.exp(-t * 300)
-def cash(): return np.concatenate([bell(96, 0.08), bell(100, 0.7)]) + click() * 0.5
+def cash(): return mixs(np.concatenate([bell(96, 0.08), bell(100, 0.7)]), click() * 0.5)
 def segclick():  # the dragon's printed joints rubbing: tiny plastic clicks
     out = np.zeros(int(0.25 * SR))
     for k in range(3): s = int((0.02 + k * 0.06 + rng.random() * 0.02) * SR); c = band(noise(300), 2500, 11000) * env(300, 0.0002, 0.002); out[s:s + 300] += c * (0.6 + 0.4 * rng.random())
     return out
-def sweep(): return whoosh(0.6) * 0.6 + shimmer(1.0) * 0.4
+def sweep(): return mixs(whoosh(0.6) * 0.6, shimmer(1.0) * 0.4)
 def heartbeat(): return np.concatenate([thump(0.7), np.zeros(int(0.12 * SR)), thump(0.5)])
-FX = {k: v for k, v in globals().items() if callable(v) and k not in ('tt', 'hz', 'band', 'env', 'noise')}
+FX = {k: v for k, v in globals().items() if callable(v) and k not in ('tt', 'hz', 'band', 'env', 'noise', 'mixs')}
 
 def rain(d):
     n = int(d * SR); x = band(noise(n), 400, 9000) * 0.18

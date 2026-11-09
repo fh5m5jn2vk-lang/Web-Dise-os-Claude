@@ -1,0 +1,11 @@
+{"inicio":0.9,"final":3.4,
+ "voz":{"motor":"kokoro","voz":"em_alex","estilo":"narrador","velocidad":0.98,"tono":0.92},
+ "lineas":[
+  {"id":"l1","texto":"Cuenta una leyenda china que el dragón trae suerte a la casa que lo acoge."},
+  {"id":"l2","pausa":0.45,"texto":"Durante siglos, solo vivió en pinturas y templos."},
+  {"id":"l3","pausa":0.45,"texto":"Hasta que alguien lo sacó del papel."},
+  {"id":"l4","pausa":0.6,"texto":"Ochenta y ocho centímetros, articulado pieza a pieza."},
+  {"id":"l5","pausa":0.35,"texto":"Se mueve como en los cuadros, y brilla en la oscuridad."},
+  {"id":"l6","pausa":0.5,"texto":"Este año, regala una leyenda."},
+  {"id":"l7","pausa":0.35,"texto":"La tienes en el link de mi perfil.","voz":{"velocidad":1.05}}
+ ]}

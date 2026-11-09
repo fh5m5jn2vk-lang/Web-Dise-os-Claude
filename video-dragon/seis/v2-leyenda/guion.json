@@ -1,11 +1,111 @@
-{"inicio":0.9,"final":3.4,
- "voz":{"motor":"kokoro","voz":"em_alex","estilo":"narrador","velocidad":0.98,"tono":0.92},
- "lineas":[
-  {"id":"l1","texto":"Cuenta una leyenda china que el dragón trae suerte a la casa que lo acoge."},
-  {"id":"l2","pausa":0.45,"texto":"Durante siglos, solo vivió en pinturas y templos."},
-  {"id":"l3","pausa":0.45,"texto":"Hasta que alguien lo sacó del papel."},
-  {"id":"l4","pausa":0.6,"texto":"Ochenta y ocho centímetros, articulado pieza a pieza."},
-  {"id":"l5","pausa":0.35,"texto":"Se mueve como en los cuadros, y brilla en la oscuridad."},
-  {"id":"l6","pausa":0.5,"texto":"Este año, regala una leyenda."},
-  {"id":"l7","pausa":0.35,"texto":"La tienes en el link de mi perfil.","voz":{"velocidad":1.05}}
- ]}
+{
+ "voz": {},
+ "lineas": [
+  {
+   "id": "l1",
+   "texto": "Cuenta una leyenda china que el dragón trae suerte a la casa que lo acoge.",
+   "en": 0.9,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "narrador",
+    "velocidad": 0.95,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
+  },
+  {
+   "id": "l2",
+   "texto": "Durante siglos, solo vivió en pinturas y templos.",
+   "en": 5.434,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "narrador",
+    "velocidad": 0.95,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
+  },
+  {
+   "id": "l3",
+   "texto": "Hasta que alguien lo sacó del papel.",
+   "en": 8.932,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "narrador",
+    "velocidad": 0.95,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
+  },
+  {
+   "id": "l4",
+   "texto": "Ochenta y ocho centímetros, articulado pieza a pieza.",
+   "en": 11.636,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "narrador",
+    "velocidad": 0.95,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
+  },
+  {
+   "id": "l5",
+   "texto": "Se mueve como en los cuadros, y brilla en la oscuridad.",
+   "en": 15.454,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "narrador",
+    "velocidad": 0.95,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
+  },
+  {
+   "id": "l6",
+   "texto": "Este año, regala una leyenda.",
+   "en": 18.884,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "narrador",
+    "velocidad": 0.95,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
+  },
+  {
+   "id": "l7",
+   "texto": "La tienes en el link de mi perfil.",
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "narrador",
+    "velocidad": 0.95,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   },
+   "en": 21.351
+  }
+ ],
+ "duracion": 26.831
+}

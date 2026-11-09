@@ -182,7 +182,7 @@ for li, L in enumerate(G['lineas']):
     if v.get('estilo') == 'susurro': a = whisperize(a, sr)
     y = chain(a, sr, v)
     nxt = G['lineas'][li + 1] if li + 1 < len(G['lineas']) else None
-    if v.get('motor') == 'archivo' and nxt and 'en' in nxt: y = fit(y, max(0.3, nxt['en'] - t - 0.06))
+    if v.get('motor') in ('archivo', 'eleven') and nxt and 'en' in nxt: y = fit(y, max(0.3, nxt['en'] - t - 0.06))
     words = [[w, round(t + a0, 3), round(t + b0, 3)] for w, a0, b0 in time_words(y, L['texto'])]
     lines.append({'id': L.get('id', li), 'texto': L['texto'], 't0': round(t, 3), 't1': round(t + len(y) / OUT_SR, 3), 'words': words, 'quien': L.get('quien')})
     track.append(y); t += len(y) / OUT_SR

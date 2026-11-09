@@ -1,11 +1,111 @@
-{"inicio":0.6,"final":3.6,
- "voz":{"motor":"kokoro","voz":"em_alex","estilo":"trailer","velocidad":0.95,"tono":0.87},
- "lineas":[
-  {"id":"h","texto":"No compres ningún regalo sin ver esto."},
-  {"id":"r","pausa":0.45,"texto":"Tres razones."},
-  {"id":"n3","pausa":0.7,"texto":"Tres. Se mueve de verdad: cada pieza gira, como si estuviera vivo."},
-  {"id":"n2","pausa":0.8,"texto":"Dos. Brilla en la oscuridad."},
-  {"id":"n1","pausa":0.9,"texto":"Y uno. Cuesta menos que una cena: veintiún noventa y cinco."},
-  {"id":"c","pausa":0.6,"texto":"El regalo que nadie espera, y que todos quieren."},
-  {"id":"l","pausa":0.35,"texto":"Link en mi perfil."}
- ]}
+{
+ "voz": {},
+ "lineas": [
+  {
+   "id": "h",
+   "texto": "No compres ningún regalo sin ver esto.",
+   "en": 0.6,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "trailer",
+    "velocidad": 0.95,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
+  },
+  {
+   "id": "r",
+   "texto": "Tres razones.",
+   "en": 3.623,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "trailer",
+    "velocidad": 0.95,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
+  },
+  {
+   "id": "n3",
+   "texto": "Tres. Se mueve de verdad: cada pieza gira, como si estuviera vivo.",
+   "en": 5.489,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "trailer",
+    "velocidad": 0.95,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
+  },
+  {
+   "id": "n2",
+   "texto": "Dos. Brilla en la oscuridad.",
+   "en": 10.188,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "trailer",
+    "velocidad": 0.95,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
+  },
+  {
+   "id": "n1",
+   "texto": "Y uno. Cuesta menos que una cena: veintiún noventa y cinco.",
+   "en": 12.894,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "trailer",
+    "velocidad": 0.95,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
+  },
+  {
+   "id": "c",
+   "texto": "El regalo que nadie espera, y que todos quieren.",
+   "en": 17.061,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "trailer",
+    "velocidad": 0.95,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
+  },
+  {
+   "id": "l",
+   "texto": "Link en mi perfil.",
+   "en": 20.221,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "trailer",
+    "velocidad": 0.95,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
+  }
+ ],
+ "duracion": 25.13
+}

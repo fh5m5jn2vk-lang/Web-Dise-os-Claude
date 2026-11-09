@@ -1,12 +1,5 @@
 {
- "inicio": 1.1,
- "final": 3.6,
- "voz": {
-  "motor": "kokoro",
-  "voz": "em_alex",
-  "estilo": "creador",
-  "velocidad": 1.15
- },
+ "voz": {},
  "lineas": [
   {
    "id": "m1",
@@ -14,111 +7,146 @@
    "tipo": "nota",
    "texto": "Tíos, el amigo invisible es mañana y no tengo nada. ¡Socorro!",
    "voz": {
-    "voz": "em_alex",
-    "velocidad": 1.18,
-    "estilo": "nota"
-   }
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "nota",
+    "velocidad": 1.08,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   },
+   "en": 1.1
   },
   {
    "id": "l1",
    "quien": "Lucía",
    "tipo": "texto",
-   "pausa": 0.75,
    "texto": "Como regales calcetines otra vez, te echo del grupo.",
    "voz": {
+    "motor": "kokoro",
     "voz": "ef_dora",
+    "estilo": "creador",
     "velocidad": 1.12
-   }
+   },
+   "en": 4.954
   },
   {
    "id": "m2",
    "quien": "Marcos",
    "tipo": "texto",
-   "pausa": 0.7,
    "texto": "Límite, veinticinco euros. ¡Ideas, ya!",
    "voz": {
-    "voz": "em_alex",
-    "velocidad": 1.18
-   }
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "creador",
+    "velocidad": 1.08,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   },
+   "en": 8.436
   },
   {
    "id": "d1",
    "quien": "Dani",
    "tipo": "nota",
-   "pausa": 0.8,
    "texto": "Mirad lo que me pillé la semana pasada. Fliparéis.",
    "voz": {
+    "motor": "kokoro",
     "voz": "em_santa",
-    "velocidad": 1.1,
-    "estilo": "nota"
-   }
+    "estilo": "nota",
+    "velocidad": 1.1
+   },
+   "en": 11.317
   },
   {
    "id": "l2",
    "quien": "Lucía",
    "tipo": "texto",
-   "pausa": 7.3,
    "texto": "¿¿Qué es eso?? Lo quiero.",
    "voz": {
+    "motor": "kokoro",
     "voz": "ef_dora",
+    "estilo": "creador",
     "velocidad": 1.12
-   }
+   },
+   "en": 21.397
   },
   {
    "id": "d2",
    "quien": "Dani",
    "tipo": "nota",
-   "pausa": 0.6,
    "texto": "Un dragón articulado de casi noventa centímetros. Y brilla en la oscuridad.",
    "voz": {
+    "motor": "kokoro",
     "voz": "em_santa",
-    "velocidad": 1.1,
-    "estilo": "nota"
-   }
+    "estilo": "nota",
+    "velocidad": 1.1
+   },
+   "en": 23.225
   },
   {
    "id": "m3",
    "quien": "Marcos",
    "tipo": "texto",
-   "pausa": 1.4,
    "texto": "¿Y cuánto cuesta?",
    "voz": {
-    "voz": "em_alex",
-    "velocidad": 1.18
-   }
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "creador",
+    "velocidad": 1.08,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   },
+   "en": 28.865
   },
   {
    "id": "d3",
    "quien": "Dani",
    "tipo": "texto",
-   "pausa": 0.6,
    "texto": "Veintiún noventa y cinco.",
    "voz": {
+    "motor": "kokoro",
     "voz": "em_santa",
+    "estilo": "creador",
     "velocidad": 1.1
-   }
+   },
+   "en": 30.513
   },
   {
    "id": "m4",
    "quien": "Marcos",
    "tipo": "texto",
-   "pausa": 0.5,
    "texto": "PEDIDO. Me acabas de salvar la vida.",
    "voz": {
-    "voz": "em_alex",
-    "velocidad": 1.18
-   }
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "creador",
+    "velocidad": 1.08,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   },
+   "en": 32.669
   },
   {
    "id": "l3",
    "quien": "Lucía",
    "tipo": "texto",
-   "pausa": 0.6,
    "texto": "Pásame el link, que yo quiero dos.",
    "voz": {
+    "motor": "kokoro",
     "voz": "ef_dora",
+    "estilo": "creador",
     "velocidad": 1.12
-   }
+   },
+   "en": 35.126
   }
- ]
+ ],
+ "duracion": 40.495
 }

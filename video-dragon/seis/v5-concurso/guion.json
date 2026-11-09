@@ -1,83 +1,186 @@
 {
- "inicio": 0.25,
- "final": 3.4,
- "voz": {
-  "motor": "kokoro",
-  "voz": "em_santa",
-  "estilo": "tele",
-  "velocidad": 1.12
- },
+ "voz": {},
  "lineas": [
   {
    "id": "l1",
-   "texto": "¡Si aciertas el precio, te lo llevas!"
+   "texto": "¡Si aciertas el precio, te lo llevas!",
+   "en": 0.25,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "tele",
+    "velocidad": 1.1,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
   },
   {
    "id": "l2",
-   "pausa": 0.35,
-   "texto": "Atentos: dragón articulado, ochenta y ocho centímetros... ¡y brilla en la oscuridad!"
+   "texto": "Atentos: dragón articulado, ochenta y ocho centímetros... ¡y brilla en la oscuridad!",
+   "en": 2.639,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "tele",
+    "velocidad": 1.1,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
   },
   {
    "id": "l3",
-   "pausa": 0.3,
-   "texto": "¿Cuánto creéis que cuesta?"
+   "texto": "¿Cuánto creéis que cuesta?",
+   "en": 7.439,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "tele",
+    "velocidad": 1.1,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
   },
   {
    "id": "oa",
-   "pausa": 0.25,
-   "texto": "¿La A?"
+   "texto": "¿La A?",
+   "en": 9.252,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "tele",
+    "velocidad": 1.1,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
   },
   {
    "id": "ob",
-   "pausa": 0.35,
-   "texto": "¿La B?"
+   "texto": "¿La B?",
+   "en": 10.15,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "tele",
+    "velocidad": 1.1,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
   },
   {
    "id": "oc",
-   "pausa": 0.35,
-   "texto": "¿O la C?"
+   "texto": "¿O la C?",
+   "en": 11.0,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "tele",
+    "velocidad": 1.1,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
   },
   {
    "id": "c3",
-   "pausa": 0.3,
    "texto": "¡Tres!",
    "voz": {
-    "velocidad": 0.95
-   }
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "tele",
+    "velocidad": 1.1,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   },
+   "en": 11.986
   },
   {
    "id": "c2",
-   "pausa": 0.55,
    "texto": "¡Dos!",
    "voz": {
-    "velocidad": 0.95
-   }
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "tele",
+    "velocidad": 1.1,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   },
+   "en": 13.149
   },
   {
    "id": "c1",
-   "pausa": 0.55,
    "texto": "¡Uno!",
    "voz": {
-    "velocidad": 0.95
-   }
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "tele",
+    "velocidad": 1.1,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   },
+   "en": 14.273
   },
   {
    "id": "l6",
-   "pausa": 0.35,
    "texto": "¡Veintiún noventa y cinco!",
    "voz": {
-    "velocidad": 1.0
-   }
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "tele",
+    "velocidad": 1.1,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   },
+   "en": 15.182
   },
   {
    "id": "l7",
-   "pausa": 0.9,
-   "texto": "Y si te llevas dos, ¡treinta y dos noventa y cinco!"
+   "texto": "Y si te llevas dos, ¡treinta y dos noventa y cinco!",
+   "en": 17.891,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "tele",
+    "velocidad": 1.1,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
   },
   {
    "id": "l8",
-   "pausa": 0.3,
-   "texto": "Comenta qué precio habías dicho, ¡y corre al link de mi perfil!"
+   "texto": "Comenta qué precio habías dicho, ¡y corre al link de mi perfil!",
+   "en": 21.104,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "tele",
+    "velocidad": 1.1,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
   }
- ]
+ ],
+ "duracion": 27.697
 }

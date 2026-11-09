@@ -1,11 +1,111 @@
-{"inicio":1.4,"final":3.8,
- "voz":{"motor":"kokoro","voz":"ef_dora","estilo":"susurro","velocidad":0.92},
- "lineas":[
-  {"id":"a1","texto":"Shh... escucha."},
-  {"id":"a2","pausa":1.1,"texto":"Cada pieza hace clic cuando se mueve."},
-  {"id":"a3","pausa":1.0,"texto":"Por la noche lo dejo aquí, en la mesita."},
-  {"id":"a4","pausa":0.9,"texto":"Apago la luz..."},
-  {"id":"a5","pausa":1.0,"texto":"y se queda brillando."},
-  {"id":"a6","pausa":1.1,"texto":"Es lo más relajante que tengo."},
-  {"id":"a7","pausa":0.9,"texto":"Si quieres uno, está en el link de mi perfil."}
- ]}
+{
+ "voz": {},
+ "lineas": [
+  {
+   "id": "a1",
+   "texto": "Shh... escucha.",
+   "en": 1.4,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "susurro",
+    "velocidad": 0.9,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.15
+   }
+  },
+  {
+   "id": "a2",
+   "texto": "Cada pieza hace clic cuando se mueve.",
+   "en": 4.159,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "susurro",
+    "velocidad": 0.9,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.15
+   }
+  },
+  {
+   "id": "a3",
+   "texto": "Por la noche lo dejo aquí, en la mesita.",
+   "en": 7.42,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "susurro",
+    "velocidad": 0.9,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.15
+   }
+  },
+  {
+   "id": "a4",
+   "texto": "Apago la luz...",
+   "en": 10.64,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "susurro",
+    "velocidad": 0.9,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.15
+   }
+  },
+  {
+   "id": "a5",
+   "texto": "y se queda brillando.",
+   "en": 12.695,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "susurro",
+    "velocidad": 0.9,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.15
+   }
+  },
+  {
+   "id": "a6",
+   "texto": "Es lo más relajante que tengo.",
+   "en": 15.118,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "susurro",
+    "velocidad": 0.9,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.15
+   }
+  },
+  {
+   "id": "a7",
+   "texto": "Si quieres uno, está en el link de mi perfil.",
+   "en": 17.847,
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "susurro",
+    "velocidad": 0.9,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.15
+   }
+  }
+ ],
+ "duracion": 24.193
+}

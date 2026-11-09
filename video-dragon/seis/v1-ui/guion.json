@@ -1,47 +1,132 @@
 {
- "duracion": 15.6104,
- "voz": {
-  "motor": "kokoro",
-  "voz": "em_alex",
-  "estilo": "creador",
-  "velocidad": 1.32
- },
+ "duracion": 15.61,
+ "voz": {},
  "lineas": [
   {
    "en": 0.1,
-   "texto": "¿Buscas un regalo que no acabe en un cajón?"
+   "texto": "¿Buscas un regalo que no acabe en un cajón?",
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "creador",
+    "velocidad": 1.15,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
   },
   {
-   "en": 1.951,
-   "texto": "Te presento a Long, un dragón articulado."
+   "en": 2.035,
+   "texto": "Te presento a Long, un dragón articulado.",
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "creador",
+    "velocidad": 1.15,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
   },
   {
    "en": 3.903,
-   "texto": "Cada pieza se mueve."
+   "texto": "Cada pieza se mueve.",
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "creador",
+    "velocidad": 1.15,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
   },
   {
    "en": 5.854,
-   "texto": "Y mide ochenta y ocho centímetros."
+   "texto": "Y mide ochenta y ocho centímetros.",
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "creador",
+    "velocidad": 1.15,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
   },
   {
    "en": 7.805,
-   "texto": "Apagas la luz... y brilla."
+   "texto": "Apagas la luz... y brilla.",
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "creador",
+    "velocidad": 1.15,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
   },
   {
    "en": 9.269,
-   "texto": "Cuatro colores."
+   "texto": "Cuatro colores.",
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "creador",
+    "velocidad": 1.15,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
   },
   {
    "en": 10.732,
-   "texto": "Más largo que tu gato."
+   "texto": "Más largo que tu gato.",
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "creador",
+    "velocidad": 1.15,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
   },
   {
-   "en": 11.708,
-   "texto": "¿El regalo del año?"
+   "en": 11.914,
+   "texto": "¿El regalo del año?",
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "creador",
+    "velocidad": 1.15,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
   },
   {
    "en": 13.659,
-   "texto": "Resuelto. Veintiún noventa y cinco."
+   "texto": "Resuelto. Veintiún noventa y cinco.",
+   "voz": {
+    "motor": "eleven",
+    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "modelo": "eleven_multilingual_v2",
+    "estilo": "creador",
+    "velocidad": 1.15,
+    "estabilidad": 0.38,
+    "similitud": 0.8,
+    "estilo_ia": 0.4
+   }
   }
  ]
 }

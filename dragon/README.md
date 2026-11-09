@@ -15,7 +15,7 @@ Web de producto para el dragón articulado impreso en 3D de AliExpress ([88 cm, 
 
 ## Pendiente antes de publicar
 - **Tus datos:** rellena `js/datos.js` y ejecuta `python3 tools/legal.py`.
-- **Shopify:** importa `shopify/producto.csv` y pon la tienda y los IDs en `js/datos.js` (o vuelve a conectar el conector y lo hago yo).
+- **Shopify:** el producto ya está creado y conectado. Falta elegir un plan, quitar la contraseña de la tienda y pegar las políticas (ver `SHOPIFY.md`).
 - **Derechos de las imágenes, plazos y seguridad del producto:** ver `LEGAL.md`.
 - **Marca LÓNG:** compruébala en la OEPM y la EUIPO y compra el dominio.
 - **Fotos o vídeos reales:** añade algunos del producto cuando tengas la muestra.

@@ -108,7 +108,8 @@ def shopify_policy(name, body, d):
         v = d.get(key, '')
         text = html.escape(v) if v else f'[{LABELS.get(key, key)}]'
         return f'<a href="mailto:{html.escape(v)}">{text}</a>' if kind == 'a' and v else text
-    web = d.get('web') or '[tu dominio]'
+    # until the shop has its own domain, the web's pages are linked where it is published today
+    web = d.get('web') or 'raw.githack.com/fh5m5jn2vk-lang/Web-Dise-os-Claude/claude/intelligent-noether-tofv64/dragon'
     body = re.sub(r'<h1>.*?</h1>\s*', '', body, count=1)
     body = re.sub(r'<p><button.*?</p>\s*', '', body)
     body = re.sub(r'<script.*?</script>\s*', '', body)

@@ -28,13 +28,13 @@ window.LONG = {
 
   // ---- Shopify: el dominio de la tienda y un ID de variante por color y cantidad ----
   shopify: {
-    tienda: '',       // p. ej. «long-dragon.myshopify.com»
-    producto: 'dragon-articulado-long', // el «handle» del producto: si faltan los IDs, el botón abre su ficha
+    tienda: 't5hfva-w3.myshopify.com',
+    producto: 'long-dragon-articulado-88-cm', // el «handle» del producto: si faltan los IDs, el botón abre su ficha
     variantes: {
-      arcoiris: { uno: '', dos: '' },
-      galaxia: { uno: '', dos: '' },
-      plata: { uno: '', dos: '' },
-      fuego: { uno: '', dos: '' },
+      arcoiris: { uno: '57684870267204', dos: '57684870299972' },
+      galaxia: { uno: '57684870332740', dos: '57684870365508' },
+      plata: { uno: '57684870398276', dos: '57684870431044' },
+      fuego: { uno: '57684870463812', dos: '57684870496580' },
     },
   },
 };

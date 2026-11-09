@@ -74,6 +74,8 @@
     });
   }
   function panel() {
+    // in the Shopify store, Shopify's own banner holds the choice for its cookies: open its preferences
+    if (!usadas.length && window.privacyBanner && typeof window.privacyBanner.showPreferences === 'function') { window.privacyBanner.showPreferences(); return; }
     const filas = usadas.length
       ? usadas.map((k) => `<label class="ck__cat"><span><b>${CATS[k].nombre}</b><small>${CATS[k].texto} ${PIXELES.filter((p) => p.categoria === k).map((p) => p.nombre).join(', ')}.</small></span><input type="checkbox" name="${k}" ${actual?.[k] ? 'checked' : ''}></label>`).join('')
       : `<p>Ahora mismo esta web no usa cookies de analítica ni de publicidad: no hay nada que aceptar ni rechazar.</p>`;

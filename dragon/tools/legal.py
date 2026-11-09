@@ -108,8 +108,6 @@ def shopify_policy(name, body, d):
         v = d.get(key, '')
         text = html.escape(v) if v else f'[{LABELS.get(key, key)}]'
         return f'<a href="mailto:{html.escape(v)}">{text}</a>' if kind == 'a' and v else text
-    # until the shop has its own domain, the web's pages are linked where it is published today
-    web = d.get('web') or 'raw.githack.com/fh5m5jn2vk-lang/Web-Dise-os-Claude/claude/intelligent-noether-tofv64/dragon'
     body = re.sub(r'<h1>.*?</h1>\s*', '', body, count=1)
     body = re.sub(r'<p><button.*?</p>\s*', '', body)
     body = re.sub(r'<script.*?</script>\s*', '', body)
@@ -122,7 +120,7 @@ def shopify_policy(name, body, d):
         target, anchor = m.group(1), m.group(2) or ''
         if target in SHOPIFY:
             return f'href="{SHOPIFY[target][1]}{anchor}"'
-        return f'href="https://{web}/legal/{target}.html{anchor}"'
+        return f'href="/pages/{target}{anchor}"'  # the store has every legal page under /pages/ (tools/tema.py)
     body = re.sub(r'href="([\w-]+)\.html(#[\w-]+)?"', link, body)
     return body.strip() + '\n'
 

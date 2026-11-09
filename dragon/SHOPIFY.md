@@ -6,8 +6,11 @@
 - **La web:** `js/datos.js` tiene la tienda y el ID de cada variante. «Comprar el dragón» lleva directo al pago con el color y la cantidad elegidos, y añade al pedido las dos aceptaciones con su versión, fecha y hora.
 - **Envíos:** gratis para la España peninsular y Baleares, con entrega en 7 a 12 días laborables. Canarias, Ceuta y Melilla quedan fuera, como dicen las condiciones.
 - **Impuestos:** los precios llevan el IVA incluido.
+- **La web dentro de Shopify:** el tema «LÓNG · web del dragón» es la misma web convertida en tema de Shopify (`tools/tema.py` lo genera en `shopify/tema/` y `shopify/long-tema.zip`). Está subido a tu tienda, sin publicar. Con él, tu tienda de Shopify es la web del dragón: la portada en 3D, el carrito y el pago en el mismo dominio.
+- **Páginas legales en la tienda:** `/pages/aviso-legal`, `/pages/condiciones`, `/pages/envios`, `/pages/devoluciones`, `/pages/privacidad`, `/pages/cookies`, `/pages/seguridad` y `/pages/desistimiento` (el botón «Desistir del contrato aquí»).
 
 ## Lo que falta, y solo puedes hacerlo tú en Shopify
+0. **Publicar el tema:** Tienda online > Temas > «LÓNG · web del dragón» > «⋯» > Publicar. Antes puedes verlo con «Vista previa». Si cambias la web, ejecuta `python3 tools/tema.py` y vuelve a subirlo (o pídemelo).
 1. **Elegir un plan y quitar la contraseña de la tienda.** Mientras la tienda esté en prueba y con contraseña, el botón de compra lleva a la página de contraseña.
 2. **Pegar las políticas.** El conector no tiene permiso para escribirlas. En Configuración > Políticas, pega cada texto en su sitio (copia el texto de la página de la web, sin el menú ni el pie):
 

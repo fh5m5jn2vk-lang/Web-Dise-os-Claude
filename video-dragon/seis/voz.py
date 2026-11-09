@@ -2,12 +2,16 @@
 #   kokoro (default): Kokoro-82M (Apache 2.0) through kokoro-onnx, natural whole-sentence prosody; Spanish voices
 #     em_alex, em_santa (male), ef_dora (female). Not a copy of anyone's voice.
 #   piper: davefx, sharvard M/F (medium quality), kept for comparison.
+#   eleven: ElevenLabs (paid, needs an API key; the session's proxy adds it to requests to api.elevenlabs.io). Uses a
+#     stock voice from the ElevenLabs library by its voice id ("voz_id"), never a clone of a real person's voice.
+#     Lines are cached by text and settings in the scratchpad, so re-running a film spends no credits.
 # Each line is synthesised whole, goes through a light style chain (creador, narrador, tele, trailer, nota, susurro:
 # a real whisper made by driving the voice's spectral envelope with breath noise), and its words are timed by
 # faster-whisper on the finished audio, aligned to the script's words (so captions and lips land on the syllable).
 #   python3 voz.py <film dir>  ->  <film>/voz.wav, <film>/tiempos.json
 # guion.json: { "inicio": 0.3, "duracion"?: s, "final"?: s, "voz": {defaults}, "lineas": [ { "texto", "voz": {...}, "pausa" | "en", "id", "quien" } ] }
-#   voz keys: motor (kokoro|piper), voz (em_alex|ef_dora|em_santa) or modelo/hablante for piper, estilo, velocidad, tono (pitch ratio)
+#   voz keys: motor (kokoro|piper|eleven), voz (em_alex|ef_dora|em_santa) or modelo/hablante for piper, estilo, velocidad, tono (pitch ratio)
+#   eleven keys: voz_id, modelo (eleven_multilingual_v2), estabilidad, similitud, estilo_ia, velocidad (0.7-1.2)
 import sys, os, json, re, wave, subprocess, tempfile, difflib, unicodedata, numpy as np
 
 FILM = sys.argv[1]
@@ -44,8 +48,24 @@ STYLES = {
     'susurro':  'highpass=f=120,equalizer=f=220:t=q:w=1:g=3,equalizer=f=6000:t=q:w=1.5:g=-2,acompressor=threshold=-24dB:ratio=2.5:attack=12:release=160:makeup=4',
 }
 
+def eleven(text, v):
+    import hashlib, base64, requests
+    body = {'text': text, 'model_id': v.get('modelo', 'eleven_multilingual_v2'),
+            'voice_settings': {'stability': v.get('estabilidad', 0.38), 'similarity_boost': v.get('similitud', 0.8),
+                               'style': v.get('estilo_ia', 0.4), 'use_speaker_boost': True, 'speed': v.get('velocidad', 1.05)}}
+    key = hashlib.sha1(json.dumps([v['voz_id'], body], sort_keys=True).encode()).hexdigest()[:16]
+    os.makedirs(f'{SCR}/eleven', exist_ok=True); mp3 = f'{SCR}/eleven/{key}.mp3'
+    if not os.path.exists(mp3):
+        r = requests.post(f"https://api.elevenlabs.io/v1/text-to-speech/{v['voz_id']}?output_format=mp3_44100_128",
+                          json=body, headers={'xi-api-key': os.environ.get('ELEVENLABS_API_KEY', 'proxy')}, timeout=120)
+        r.raise_for_status(); open(mp3, 'wb').write(r.content)
+    pcm = subprocess.run(['ffmpeg', '-v', 'error', '-i', mp3, '-f', 's16le', '-ac', '1', '-ar', str(OUT_SR), '-'], capture_output=True, check=True).stdout
+    return np.frombuffer(pcm, np.int16).astype(np.float32) / 32768, OUT_SR
+
 def synth(text, v):
-    if v.get('motor', 'kokoro') == 'kokoro':
+    if v.get('motor', 'kokoro') == 'eleven':
+        a, sr = eleven(text, v)
+    elif v.get('motor', 'kokoro') == 'kokoro':
         a, sr = kokoro().create(text, voice=v.get('voz', 'em_alex'), speed=v.get('velocidad', 1.1), lang='es')
         a = np.asarray(a, np.float32)
     else:

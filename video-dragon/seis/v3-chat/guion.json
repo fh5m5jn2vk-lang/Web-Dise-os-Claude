@@ -8,7 +8,7 @@
    "texto": "Tíos, el amigo invisible es mañana y no tengo nada. ¡Socorro!",
    "voz": {
     "motor": "eleven",
-    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "voz_id": "I3uSkYe8hRVn08SnKXJn",
     "modelo": "eleven_multilingual_v2",
     "estilo": "nota",
     "velocidad": 1.08,
@@ -38,7 +38,7 @@
    "texto": "Límite, veinticinco euros. ¡Ideas, ya!",
    "voz": {
     "motor": "eleven",
-    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "voz_id": "I3uSkYe8hRVn08SnKXJn",
     "modelo": "eleven_multilingual_v2",
     "estilo": "creador",
     "velocidad": 1.08,
@@ -94,7 +94,7 @@
    "texto": "¿Y cuánto cuesta?",
    "voz": {
     "motor": "eleven",
-    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "voz_id": "I3uSkYe8hRVn08SnKXJn",
     "modelo": "eleven_multilingual_v2",
     "estilo": "creador",
     "velocidad": 1.08,
@@ -124,7 +124,7 @@
    "texto": "PEDIDO. Me acabas de salvar la vida.",
    "voz": {
     "motor": "eleven",
-    "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+    "voz_id": "I3uSkYe8hRVn08SnKXJn",
     "modelo": "eleven_multilingual_v2",
     "estilo": "creador",
     "velocidad": 1.08,

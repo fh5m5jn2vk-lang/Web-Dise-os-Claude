@@ -64,8 +64,16 @@ def assets():
         # the Hong Kong photo sits next to the scripts in the theme's assets
         s = re.sub(r"'img/(hongkong(?:-1600)?\.jpg)'", r"new URL('./\1', import.meta.url).href", s)
         write(f'assets/{f}', s)
-    for f in ['datos.js', 'cookies.js']:
-        copy(f'js/{f}', f)
+    copy('js/cookies.js', 'cookies.js')
+    copy('js/datos.js', 'datos.js')
+    # the owner's details live in shopify/datos-privados.json (not in the public repository): they go into a separate
+    # datos.js, shopify/datos-tienda.js (also kept out of the repository), which is uploaded to the store's theme by itself
+    d = (ROOT / 'js' / 'datos.js').read_text(encoding='utf-8')
+    priv = ROOT / 'shopify' / 'datos-privados.json'
+    if priv.exists():
+        for k, v in json.loads(priv.read_text(encoding='utf-8')).items():
+            d = re.sub(rf"^(\s*{k}: )''", lambda m: m.group(1) + json.dumps(v, ensure_ascii=False).replace('"', "'"), d, count=1, flags=re.M)
+        (ROOT / 'shopify' / 'datos-tienda.js').write_text(d, encoding='utf-8')
     copy('legal/desistimiento.js', 'desistimiento.js')
     css = (ROOT / 'legal' / 'legal.css').read_text(encoding='utf-8').replace('url(../fonts/', 'url(')
     write('assets/legal.css', css)

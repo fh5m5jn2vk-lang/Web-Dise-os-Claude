@@ -8,7 +8,7 @@ window.LONG = {
   email: '',          // correo de contacto, pedidos y devoluciones
   telefono: '',       // opcional: si lo dejas vacío, no se muestra
   registro: '',       // solo sociedades: «Registro Mercantil de …, tomo …, folio …, hoja …». Autónomo: déjalo vacío
-  web: '',            // tu dominio, p. ej. «longdragon.es» (sin https://)
+  web: 'thelongdragon.com', // tu dominio, p. ej. «longdragon.es» (sin https://)
 
   // ---- envíos y devoluciones (confírmalos con tu proveedor) ----
   zonasEnvio: 'la España peninsular y Baleares',

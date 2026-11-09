@@ -25,3 +25,34 @@ python3 seis/voz.py seis/<vídeo>        # voz.wav y tiempos.json (Kokoro + tiem
 - **Voces:** Kokoro-82M (Apache 2.0) con kokoro-onnx; el modelo se descarga de las *releases* de `thewh1teagle/kokoro-onnx`. No imitan a ninguna persona real.
 - **Fotos:** las dos fotos del producto que me pasaste (`../img/`); son del proveedor de AliExpress.
 - **Madera:** escaneo de Poly Haven (CC0).
+
+# Segunda tanda: retención primero
+
+En el vídeo de la leyenda, la gente aguantaba unos 5 segundos: el gancho funcionaba, pero lo de después iba despacio. Estos vídeos aplican lo contrario:
+
+- **El primer segundo abre una pregunta y el final la contesta.** Ejemplos: «¡Espera a que apague la luz!», tres datos bloqueados que se abren uno a uno, «desliza si te lo pillarías», «¿no sabes qué regalar?». Cada uno termina cumpliendo lo prometido: el brillo, el número 1, el match o la caja abierta.
+- **Sin tiempo muerto.** La voz empieza a los 0,05 s. Las pausas dentro de cada frase se recortan a 0,1 s, como haría un editor con cortes de salto, y entre frases quedan unos 0,05 s.
+- **Algo cambia cada 1-2 segundos:** un corte, una pegatina, una cuenta atrás o un cambio de color.
+- **Subtítulos grandes, palabra a palabra**, con la palabra que se dice marcada, para quien lo ve sin sonido.
+- **Cortos: de 12 a 16 s.** El cierre dura unos 2 s, para que el vídeo entre en bucle.
+- **Voz con emoción.** Se usa ElevenLabs `eleven_v3` con tu voz VelionF y una etiqueta por frase (`[excited]`, `[whispers]`, `[amazed]`). La etiqueta solo va a la voz, nunca a los subtítulos.
+- **Nada inventado.** No hay reseñas, cifras de ventas ni escasez falsas. La urgencia del regalo es real: la entrega tarda de 7 a 12 días laborables.
+
+| # | Vídeo | Contexto | Formato | Música |
+|---|---|---|---|---|
+| 7 | `v7-movil` | El presentador explica la pantalla del móvil y las cosas salen de ella | 3D + 2D | sí (744) |
+| 8 | `v8-ensena` | El presentador lo sostiene: cuelga y se balancea con física, se lo enrosca como pulsera y el Luminoso le ilumina la cara | 3D | **no** (la pones tú) |
+| 9 | `v9-cuarto` | «Lo que le hace falta a tu cuarto»: plano épico de noche | 3D | **sin sonido** |
+| 10 | `v10-luz` | Dormitorio: «¡Espera a que apague la luz!», 3-2-1 y brilla | 3D | 443 |
+| 11 | `v11-tres` | Estudio oscuro: «3 cosas que no sabías», bloqueadas hasta que se dicen | 3D | 124 |
+| 12 | `v12-desliza` | App de tarjetas propia: «¡Desliza si te lo pillarías!» con las fotos reales | **2D** | 369 |
+| 13 | `v13-regalo` | Regalo de Navidad: la caja se abre y el dragón sube en espiral | 3D | 849 |
+| 14 | `v14-comic` | Cómic: «Mi cuarto era un aburrimiento… ¡hasta que llegó él!» | **2D** | 706 |
+| 15 | `v15-gamer` | Setup gamer: el dragón cambia de color con las luces RGB | 3D | 744 |
+
+- Cada vídeo con música sale también en `out/long-<vídeo>-sin-musica.mp4`, por si prefieres un sonido de TikTok.
+- `kit/` es la base común de los vídeos 10 a 15:
+  - `kit.js`: escena 3D con 4 decorados (estudio, cuarto, regalo y setup gamer) y poses del dragón;
+  - `capas.js`: subtítulos, gancho, pegatinas, barra de progreso, cierre y efectos de sonido.
+
+  Cada vídeo solo escribe su plan.

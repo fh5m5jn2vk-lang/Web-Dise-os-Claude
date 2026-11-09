@@ -16,7 +16,7 @@ await p.goto(`http://127.0.0.1:${srv.address().port}/video-dragon/${args.page ||
 await p.waitForFunction(() => window.__ready, null, { timeout: 120000 });
 const dur = await p.evaluate(() => window.__dur);
 const cues = await p.evaluate(() => window.__cues || null);
-if (cues) fs.writeFileSync(path.join(here, 'audio', `cues-${args.page || 'film'}.json`), JSON.stringify(cues, null, 1));
+if (cues) fs.writeFileSync((args.page || '').includes('/') ? path.join(here, path.dirname(args.page), 'cues.json') : path.join(here, 'audio', `cues-${args.page || 'film'}.json`), JSON.stringify(cues, null, 1));
 fs.mkdirSync(out, { recursive: true });
 const from = +(args.from || 0), to = +(args.to || dur);
 const all = Array.from({ length: Math.round(dur * fps) }, (_, i) => i / fps);

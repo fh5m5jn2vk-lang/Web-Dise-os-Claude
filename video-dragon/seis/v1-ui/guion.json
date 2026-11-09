@@ -1,0 +1,48 @@
+{
+ "duracion": 15.6104,
+ "voz": {
+  "modelo": "davefx",
+  "estilo": "creador",
+  "velocidad": 0.74,
+  "tono": 1.07,
+  "pausas": 0.7
+ },
+ "lineas": [
+  {
+   "en": 0.1,
+   "texto": "¿Buscas un regalo que no acabe en un cajón?"
+  },
+  {
+   "en": 1.951,
+   "texto": "Te presento a Long, un dragón articulado."
+  },
+  {
+   "en": 3.903,
+   "texto": "Cada pieza se mueve."
+  },
+  {
+   "en": 5.854,
+   "texto": "Y mide ochenta y ocho centímetros."
+  },
+  {
+   "en": 7.805,
+   "texto": "Apagas la luz... y brilla."
+  },
+  {
+   "en": 9.269,
+   "texto": "Cuatro colores."
+  },
+  {
+   "en": 10.732,
+   "texto": "Más largo que tu gato."
+  },
+  {
+   "en": 11.708,
+   "texto": "¿El regalo de este año?"
+  },
+  {
+   "en": 13.659,
+   "texto": "Resuelto. Veintiún noventa y cinco."
+  }
+ ]
+}

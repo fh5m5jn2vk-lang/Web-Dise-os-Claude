@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>LÓNG: chat</title>
+<style>
+  @font-face { font-family: Inter; src: url(../fonts/inter.woff2) format("woff2"); font-weight: 200 900; }
+  @font-face { font-family: Han; src: url(../fonts/han.woff2) format("woff2"); font-weight: 900; }
+  html, body { margin: 0; overflow: hidden; background: #0b0e14; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #0b0e14; font-family: Inter, "Noto Color Emoji", sans-serif; color: #eef1f6; }
+  #app { position: absolute; inset: 0; transform-origin: 540px 960px; }
+  #wall { position: absolute; left: 0; right: 0; top: 232px; bottom: 236px; background: #0e121a; overflow: hidden; }
+  #wall svg { position: absolute; inset: 0; opacity: .07; }
+  #chat { position: absolute; left: 0; right: 0; top: 0; }
+  .msg { position: absolute; left: 0; right: 0; opacity: 0; }
+  .bub { position: absolute; border-radius: 34px; padding: 22px 30px 26px; font: 500 40px/1.28 Inter, "Noto Color Emoji"; letter-spacing: -0.02em; max-width: 720px; box-sizing: border-box; }
+  .them .bub { left: 118px; background: #1f2430; border-bottom-left-radius: 10px; }
+  .me .bub { right: 36px; background: #5b47f5; border-bottom-right-radius: 10px; }
+  .who { font: 700 28px Inter; margin-bottom: 6px; letter-spacing: -0.01em; }
+  .ava { position: absolute; left: 30px; width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; font: 700 32px Inter; color: #fff; }
+  .meta { font: 500 24px Inter; color: rgba(255,255,255,.55); margin-top: 8px; text-align: right; }
+  .w { transition: none; }
+  .voice { display: flex; align-items: center; gap: 22px; width: 600px; }
+  .voice .pb { width: 76px; height: 76px; border-radius: 50%; background: rgba(255,255,255,.18); display: grid; place-items: center; flex: none; }
+  .voice .wf { display: flex; align-items: center; gap: 5px; height: 70px; flex: 1; }
+  .voice .wf i { display: block; width: 6px; border-radius: 3px; background: rgba(255,255,255,.35); }
+  .tr { font: 500 34px/1.3 Inter, "Noto Color Emoji"; margin-top: 14px; color: rgba(255,255,255,.92); letter-spacing: -0.02em; }
+  .vid { width: 560px; height: 720px; border-radius: 26px; overflow: hidden; position: relative; background: #000; margin: -8px -16px -6px; }
+  .vid canvas { width: 100%; height: 100%; display: block; }
+  .vid .dur { position: absolute; left: 18px; bottom: 16px; font: 600 26px Inter; background: rgba(0,0,0,.5); border-radius: 12px; padding: 4px 12px; }
+  .react { position: absolute; bottom: -34px; background: #2a3040; border: 4px solid #0e121a; border-radius: 30px; padding: 4px 14px; font: 36px "Noto Color Emoji"; }
+  .typing { position: absolute; left: 118px; background: #1f2430; border-radius: 34px; border-bottom-left-radius: 10px; width: 150px; height: 90px; display: flex; align-items: center; justify-content: center; gap: 12px; opacity: 0; }
+  .typing i { width: 16px; height: 16px; border-radius: 50%; background: #9aa3b5; display: block; }
+  .card { width: 640px; margin: -8px -16px -6px; border-radius: 26px; overflow: hidden; background: #262c3a; }
+  .card img { width: 100%; height: 420px; object-fit: cover; display: block; }
+  /* the hook: notifications on the lock screen */
+  #lock { position: absolute; inset: 0; background: radial-gradient(120% 80% at 50% 20%, #2a2257, #0b0e14 70%); }
+  #lock .clock { position: absolute; top: 260px; left: 0; right: 0; text-align: center; font: 200 220px/1 Inter; letter-spacing: -0.04em; }
+  #lock .date { position: absolute; top: 230px; left: 0; right: 0; text-align: center; font: 500 40px Inter; color: rgba(255,255,255,.8); }
+  .note { position: absolute; left: 40px; right: 40px; height: 168px; border-radius: 40px; background: rgba(40,44,60,.82); backdrop-filter: blur(20px); display: flex; align-items: center; gap: 26px; padding: 0 32px; box-sizing: border-box; opacity: 0; }
+  .note .ic { width: 92px; height: 92px; border-radius: 24px; background: #5b47f5; display: grid; place-items: center; font: 50px "Noto Color Emoji"; flex: none; }
+  .note b { display: block; font: 700 36px Inter; letter-spacing: -0.02em; }
+  .note span { font: 500 36px Inter, "Noto Color Emoji"; color: rgba(255,255,255,.85); }
+  .note em { position: absolute; right: 34px; top: 30px; font: 500 26px Inter; font-style: normal; color: rgba(255,255,255,.55); }
+  /* the end sheet */
+  #sheet { position: absolute; left: 0; right: 0; bottom: 0; height: 1260px; background: #f5f3ef; color: #111; border-radius: 56px 56px 0 0; transform: translateY(1300px); box-shadow: 0 -40px 80px rgba(0,0,0,.4); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="app">
+    <div style="position:absolute;left:0;right:0;top:0;height:96px;display:flex;align-items:center;justify-content:space-between;padding:0 64px;font:600 36px Inter"><span>23:47</span><span style="display:flex;gap:16px;align-items:center"><svg width="44" height="30" viewBox="0 0 22 15"><path d="M1 13h3v2H1zM6 10h3v5H6zM11 6h3v9h-3zM16 2h3v13h-3z" fill="#fff"/></svg><svg width="54" height="28" viewBox="0 0 27 14"><rect x=".5" y=".5" width="23" height="13" rx="3.5" fill="none" stroke="#fff" opacity=".5"/><rect x="2.5" y="2.5" width="14" height="9" rx="2" fill="#fff"/><rect x="24.5" y="4.5" width="2" height="5" rx="1" fill="#fff" opacity=".5"/></svg></span></div>
+    <div style="position:absolute;left:0;right:0;top:96px;height:136px;display:flex;align-items:center;gap:24px;padding:0 30px;border-bottom:2px solid #1a1f2a;background:#0b0e14">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8ab4ff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+      <div style="width:92px;height:92px;border-radius:50%;background:linear-gradient(135deg,#ff6a8a,#ffb84d);display:grid;place-items:center;font:52px 'Noto Color Emoji'">🎁</div>
+      <div><div style="font:700 40px Inter;letter-spacing:-0.02em">Amigo invisible 🎁</div><div id="status" style="font:500 30px Inter;color:#8b93a5;margin-top:4px">Lucía, Dani, tú</div></div>
+    </div>
+    <div id="wall"><svg width="1080" height="1500"><defs><pattern id="p" width="180" height="180" patternUnits="userSpaceOnUse"><path d="M30 40h30v26H30zM45 40v26M30 50h30M45 40c-6-10-16-6-10 0m10 0c6-10 16-6 10 0" fill="none" stroke="#fff" stroke-width="3"/><circle cx="130" cy="120" r="10" fill="none" stroke="#fff" stroke-width="3"/><path d="M120 40l6 12 12 2-9 8 2 12-11-6-11 6 2-12-9-8 12-2z" fill="none" stroke="#fff" stroke-width="3"/></pattern></defs><rect width="1080" height="1500" fill="url(#p)"/></svg><div id="chat"></div></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;height:236px;background:#0b0e14;border-top:2px solid #1a1f2a">
+      <div style="position:absolute;left:30px;right:150px;top:34px;height:96px;border-radius:48px;background:#1a1f2a;display:flex;align-items:center;padding:0 36px;font:500 38px Inter, 'Noto Color Emoji';color:#7c8496" id="input">Mensaje</div>
+      <div id="sendb" style="position:absolute;right:30px;top:34px;width:96px;height:96px;border-radius:50%;background:#5b47f5;display:grid;place-items:center"><svg width="44" height="44" viewBox="0 0 24 24" fill="#fff"><path id="sendicon" d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zm-7 9a7 7 0 0 0 14 0h-2a5 5 0 0 1-10 0zm6 8h2v2h-2z"/></svg></div>
+      <div style="position:absolute;left:50%;bottom:20px;width:300px;height:10px;margin-left:-150px;border-radius:5px;background:#fff;opacity:.85"></div>
+    </div>
+  </div>
+  <div id="lock"><div class="date">lunes, 9 de diciembre</div><div class="clock">23:47</div></div>
+  <div id="sheet"></div>
+</div>
+<script type="importmap">{"imports":{"three":"../../../dragon/vendor/three/three.module.min.js","three/addons/":"../../../dragon/vendor/three/addons/"}}</script>
+<script type="module" src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>LÓNG: ASMR</title>
+<style>
+  @font-face { font-family: Caveat; src: url(../fonts/caveat.woff2) format("woff2"); font-weight: 500 700; }
+  @font-face { font-family: Inter; src: url(../fonts/inter.woff2) format("woff2"); font-weight: 200 900; }
+  @font-face { font-family: Han; src: url(../fonts/han.woff2) format("woff2"); font-weight: 900; }
+  html, body { margin: 0; overflow: hidden; background: #000; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #000; color: #fff; }
+  #gl { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+  #cap { position: absolute; left: 80px; right: 80px; top: 1470px; text-align: center; font: 600 76px/1.1 Caveat, cursive; color: rgba(255,250,240,.95); text-shadow: 0 2px 20px rgba(0,0,0,.85), 0 0 40px rgba(0,0,0,.6); }
+  #card { position: absolute; left: 140px; right: 140px; top: 210px; padding: 34px; border-radius: 48px; background: rgba(14,14,20,.62); backdrop-filter: blur(26px) saturate(1.2); border: 1px solid rgba(255,255,255,.14); opacity: 0; box-shadow: 0 40px 80px rgba(0,0,0,.5); }
+</style>
+<script type="importmap">{"imports":{"three":"../../../dragon/vendor/three/three.module.min.js","three/addons/":"../../../dragon/vendor/three/addons/"}}</script>
+</head>
+<body>
+<div id="stage"><canvas id="gl" width="1080" height="1920"></canvas><div id="card"></div><div id="cap"></div></div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

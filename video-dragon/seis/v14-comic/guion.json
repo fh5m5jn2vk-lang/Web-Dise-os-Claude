@@ -1,0 +1,64 @@
+{
+ "inicio": 0.05,
+ "final": 2.1,
+ "voz": {
+  "motor": "eleven",
+  "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+  "modelo": "eleven_v3",
+  "estabilidad": 0.5,
+  "similitud": 0.8,
+  "estilo": "creador",
+  "etiqueta": "[excited]",
+  "recorte": 0.09,
+  "tempo": 1.08
+ },
+ "lineas": [
+  {
+   "id": "l1",
+   "texto": "Mi cuarto era un aburrimiento...",
+   "voz": {
+    "etiqueta": "[sighs]"
+   }
+  },
+  {
+   "id": "l2",
+   "texto": "¡hasta que llegó él!",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l3",
+   "texto": "Un dragón de ochenta y ocho centímetros que se mueve entero.",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l4",
+   "texto": "Hay ocho colores... y de noche...",
+   "voz": {
+    "etiqueta": "[whispers]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l5",
+   "texto": "¡brilla!",
+   "voz": {
+    "etiqueta": "[amazed]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l6",
+   "texto": "Link en mi perfil.",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  }
+ ]
+}

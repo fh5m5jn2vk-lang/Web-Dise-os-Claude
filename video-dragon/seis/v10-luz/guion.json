@@ -1,0 +1,72 @@
+{
+ "inicio": 0.05,
+ "final": 2.1,
+ "voz": {
+  "motor": "eleven",
+  "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+  "modelo": "eleven_v3",
+  "estabilidad": 0.5,
+  "similitud": 0.8,
+  "estilo": "creador",
+  "etiqueta": "[excited]",
+  "recorte": 0.09,
+  "tempo": 1.08
+ },
+ "lineas": [
+  {
+   "id": "l1",
+   "texto": "¡Espera a que apague la luz!",
+   "voz": {
+    "etiqueta": "[excited]"
+   }
+  },
+  {
+   "id": "l2",
+   "texto": "Este dragón mide ochenta y ocho centímetros",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l3",
+   "texto": "y se mueve pieza a pieza.",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l4",
+   "texto": "Pero tiene un secreto...",
+   "voz": {
+    "etiqueta": "[whispers]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l5",
+   "texto": "Tres, dos, uno...",
+   "voz": {
+    "etiqueta": "[whispers]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l6",
+   "texto": "¡Mira cómo brilla!",
+   "voz": {
+    "etiqueta": "[amazed]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l7",
+   "texto": "Es el color luminoso. ¡Link en mi perfil!",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  }
+ ]
+}

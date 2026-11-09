@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>LÓNG: desliza</title>
+<link rel="stylesheet" href="../kit/kit.css">
+<style>
+  #stage { background: radial-gradient(90% 60% at 50% 40%, #241228 0%, #110a16 55%, #07070b 100%); }
+  #bgdots { position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,.06) 1.6px, transparent 1.8px); background-size: 36px 36px; }
+  #night { position: absolute; inset: 0; background: radial-gradient(70% 50% at 50% 50%, #062016 0%, #020604 70%); opacity: 0; }
+  #cap { top: 255px; }
+  #hook { top: 250px; font-size: 118px; }
+  /* the stack */
+  .card { position: absolute; left: 110px; top: 525px; width: 860px; height: 1000px; border-radius: 46px; overflow: hidden; background: #1c1c22 center/cover no-repeat; box-shadow: 0 50px 90px -30px rgba(0,0,0,.85), 0 0 0 2px rgba(255,255,255,.08) inset; transform-origin: 50% 110%; opacity: 0; }
+  .card .info { position: absolute; left: 0; right: 0; bottom: 0; padding: 170px 46px 46px; background: linear-gradient(transparent, rgba(0,0,0,.88)); }
+  .card .info h2 { margin: 0; font: 800 84px/1 Inter; letter-spacing: -0.045em; color: #fff; }
+  .card .info p { margin: 12px 0 0; font: 600 34px Inter; letter-spacing: -0.02em; color: rgba(255,255,255,.82); }
+  .card .info p b { color: #ffd43b; }
+  .card .yes { position: absolute; left: 46px; top: 70px; padding: 8px 30px 2px; border: 9px solid #3fffb0; color: #3fffb0; border-radius: 18px; font: 400 130px/1 Anton; letter-spacing: .02em; transform: rotate(-16deg) scale(1.6); opacity: 0; background: rgba(0,0,0,.25); }
+  .card .n { position: absolute; right: 34px; top: 34px; background: rgba(0,0,0,.55); color: #fff; font: 600 32px Mono, monospace; padding: 10px 20px; border-radius: 999px; }
+  .card.mini { width: 418px; height: 500px; border-radius: 30px; }
+  .card.mini .info { padding: 90px 26px 24px; } .card.mini .info h2 { font-size: 46px; } .card.mini .info p { display: none; }
+  .card.mini .yes { left: 24px; top: 30px; font-size: 70px; border-width: 6px; padding: 4px 16px 0; }
+  .card.mini .n { display: none; }
+  .card .back { position: absolute; inset: 0; background: #020604 center/cover no-repeat; opacity: 0; }
+  .card .back .info h2 { color: #d9fff0; text-shadow: 0 0 30px rgba(63,255,170,.7); }
+  /* the buttons under the stack */
+  #btns { position: absolute; left: 0; right: 0; top: 1585px; display: flex; justify-content: center; gap: 70px; opacity: 0; }
+  #btns i { width: 150px; height: 150px; border-radius: 50%; display: grid; place-items: center; font: 800 78px/1 Inter; font-style: normal; box-shadow: 0 20px 40px -16px rgba(0,0,0,.8); }
+  #btns .no { background: #1d1d24; color: #8b8b98; border: 3px solid #34343e; }
+  #btns .si { background: #ff3b4e; color: #fff; }
+  /* the progress: eight dots, one per colour */
+  #dots8 { position: absolute; left: 0; right: 0; top: 470px; display: flex; justify-content: center; gap: 14px; opacity: 0; }
+  #dots8 i { width: 90px; height: 10px; border-radius: 5px; background: rgba(255,255,255,.18); }
+  #dots8 i.on { background: #3fffb0; box-shadow: 0 0 16px rgba(63,255,176,.6); }
+  /* the match */
+  #match { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; }
+  #match .in { text-align: center; }
+  #match h1 { margin: 0; font: 400 190px/0.9 Anton; letter-spacing: .01em; background: linear-gradient(90deg, #ff3b4e, #ffd43b, #3fffb0); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 10px 40px rgba(255,59,78,.4)); }
+  #match .pics { display: flex; justify-content: center; margin: 50px 0 40px; }
+  #match .pics i { width: 330px; height: 330px; border-radius: 50%; background: center/cover no-repeat; border: 10px solid #fff; box-shadow: 0 30px 60px -20px rgba(0,0,0,.8); }
+  #match .pics i + i { margin-left: -60px; }
+  #match p { margin: 0; font: 700 44px Inter; letter-spacing: -0.03em; color: rgba(255,255,255,.85); }
+  .heart { position: absolute; left: 0; top: 0; font: 900 80px/1 Inter; color: #ff3b4e; opacity: 0; }
+  #hand { position: absolute; left: 0; top: 0; width: 110px; height: 110px; border-radius: 50%; background: rgba(255,255,255,.75); box-shadow: 0 0 0 8px rgba(255,255,255,.3); opacity: 0; }
+</style>
+<script type="importmap">{"imports":{"three":"../../../dragon/vendor/three/three.module.min.js","three/addons/":"../../../dragon/vendor/three/addons/"}}</script>
+</head>
+<body>
+<div id="stage">
+  <div id="bgdots"></div><div id="night"></div>
+  <div id="deck"></div>
+  <div id="btns"><i class="no">✕</i><i class="si">♥</i></div>
+  <div id="dots8"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div id="match"><div class="in"><h1>¡ES UN<br>MATCH!</h1><div class="pics"><i style="background-image:url(img/grupo-cabezas.jpg)"></i><i style="background-image:url(img/brillo.jpg)"></i></div><p>88 cm · 8 colores · envío gratis</p></div></div>
+  <div id="hand"></div>
+  <div id="items"></div>
+  <div id="bar"><i></i></div>
+  <div id="hook"></div>
+  <div id="cap"></div>
+  <div id="endc"><div class="in"><div class="seal">龍</div><div class="name">LÓNG</div><div class="facts">dragón articulado · 88 cm · 8 colores</div><div class="url">thelongdragon.com</div></div></div>
+  <div id="flash"></div>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

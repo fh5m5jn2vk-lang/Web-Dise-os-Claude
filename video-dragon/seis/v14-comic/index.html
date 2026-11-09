@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>LÓNG: el cómic</title>
+<link rel="stylesheet" href="../kit/kit.css">
+<style>
+  @font-face { font-family: Bungee; src: url(../fonts/bungee.woff2) format("woff2"); }
+  @font-face { font-family: Marker; src: url(../../fonts/marker.woff2) format("woff2"); }
+  #stage { background: #f2ead8; }
+  #page { position: absolute; left: 0; top: 0; width: 2200px; height: 4200px; transform-origin: 0 0; background: #f2ead8; background-image: radial-gradient(rgba(0,0,0,.07) 2px, transparent 2.4px); background-size: 22px 22px; }
+  .pn { position: absolute; border: 14px solid #111; border-radius: 6px; overflow: hidden; background: #fff; box-shadow: 14px 16px 0 rgba(0,0,0,.18); }
+  .pn .ht { position: absolute; inset: 0; background-image: radial-gradient(rgba(0,0,0,.28) 32%, transparent 34%); background-size: 11px 11px; mix-blend-mode: multiply; opacity: .5; pointer-events: none; }
+  .pn img.ph { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .rays { position: absolute; inset: -40%; background: repeating-conic-gradient(from 0deg at 50% 50%, #ffd43b 0deg 7deg, #ff6a3d 7deg 14deg); }
+  .rays.g { background: repeating-conic-gradient(from 0deg at 50% 50%, #0b3a26 0deg 7deg, #06150f 7deg 14deg); }
+  .box { position: absolute; left: 30px; top: 30px; max-width: 86%; background: #ffd43b; border: 7px solid #111; padding: 16px 24px; font: 400 58px/1.08 Marker, sans-serif; color: #111; box-shadow: 8px 8px 0 #111; text-transform: uppercase; }
+  .box .w { opacity: 0; display: inline-block; }
+  .box.dark { background: #111; color: #fff; border-color: #fff; box-shadow: 8px 8px 0 rgba(255,255,255,.3); }
+  .sfx { position: absolute; font: 400 150px/0.9 Bungee, sans-serif; color: #ffd43b; -webkit-text-stroke: 8px #111; paint-order: stroke fill; text-shadow: 10px 10px 0 #111; white-space: nowrap; opacity: 0; transform-origin: 50% 50%; }
+  .sfx.red { color: #ff3b4e; } .sfx.green { color: #7dffc4; text-shadow: 10px 10px 0 #111, 0 0 60px rgba(63,255,170,.8); } .sfx.grey { color: #d9d9d9; font-size: 110px; }
+  .burst { position: absolute; width: 420px; height: 420px; background: #ffd43b; border: 0; clip-path: polygon(50% 0%, 61% 30%, 95% 20%, 72% 47%, 100% 70%, 66% 70%, 62% 100%, 47% 76%, 22% 96%, 28% 66%, 0% 58%, 27% 43%, 6% 14%, 39% 28%); display: grid; place-items: center; font: 400 92px/0.9 Bungee; color: #111; text-align: center; opacity: 0; }
+  .room { position: absolute; inset: 0; background: linear-gradient(#a7a7a7 0 62%, #8f8f8f 62% 100%); filter: grayscale(1); }
+  .room i { position: absolute; display: block; background: #c9c9c9; border: 8px solid #555; }
+  .mini { position: absolute; width: 222px; height: 222px; border: 8px solid #111; background: center/cover no-repeat; opacity: 0; box-shadow: 6px 6px 0 #111; }
+  .night { position: absolute; inset: 0; background: radial-gradient(60% 50% at 70% 25%, #24306a 0%, #0b0f26 60%, #05060f 100%); }
+  .moon { position: absolute; right: 120px; top: 120px; width: 150px; height: 150px; border-radius: 50%; background: #fff6c8; box-shadow: 0 0 80px #fff6c8; }
+  #final { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; background: rgba(242,234,216,.92); }
+  #final .bub { position: relative; background: #fff; border: 10px solid #111; border-radius: 60px; padding: 50px 60px; font: 400 92px/1 Bungee; color: #111; text-align: center; box-shadow: 14px 14px 0 #111; }
+  #final .bub::after { content: ""; position: absolute; left: 140px; bottom: -70px; border: 36px solid transparent; border-top: 60px solid #111; }
+  #final .bub em { font-style: normal; color: #ff3b4e; }
+  #cap { display: none; }
+</style>
+<script type="importmap">{"imports":{"three":"../../../dragon/vendor/three/three.module.min.js","three/addons/":"../../../dragon/vendor/three/addons/"}}</script>
+</head>
+<body>
+<div id="stage">
+  <div id="page">
+    <!-- 1: the dull room -->
+    <div class="pn" id="p1" style="left:60px;top:60px;width:1000px;height:1500px">
+      <div class="room"><i style="left:80px;top:180px;width:360px;height:300px"></i><i style="left:520px;top:120px;width:120px;height:120px;border-radius:50%"></i><i style="left:60px;bottom:120px;width:620px;height:300px;border-radius:30px 30px 0 0"></i><i style="left:120px;bottom:360px;width:200px;height:100px;border-radius:50px"></i><i style="right:90px;bottom:120px;width:200px;height:520px"></i></div>
+      <div class="ht"></div>
+      <div class="sfx grey" id="zzz" style="left:600px;top:420px">ZZZ…</div>
+      <div class="box" id="b1"></div>
+    </div>
+    <!-- 2: BAM -->
+    <div class="pn" id="p2" style="left:1140px;top:60px;width:1000px;height:1500px">
+      <div class="rays" id="rays2"></div>
+      <img class="ph" id="ph2" src="img/grupo-cabezas.jpg" style="inset:auto;left:120px;top:330px;width:760px;height:760px;border:14px solid #111;border-radius:50%;box-shadow:12px 12px 0 #111">
+      <div class="ht"></div>
+      <div class="sfx red" id="bam" style="left:180px;top:1110px">¡BAM!</div>
+      <div class="box" id="b2"></div>
+    </div>
+    <!-- 3: 88 cm -->
+    <div class="pn" id="p3" style="left:60px;top:1660px;width:1000px;height:1300px">
+      <img class="ph" src="img/metalizado.jpg">
+      <div class="ht"></div>
+      <div class="burst" id="cm" style="right:20px;bottom:40px">88<br>CM</div>
+      <div class="box" id="b3"></div>
+    </div>
+    <!-- 4: it moves -->
+    <div class="pn" id="p4" style="left:1140px;top:1660px;width:1000px;height:1300px">
+      <img class="ph" src="img/naranja-pastel-mano.jpg">
+      <div class="ht"></div>
+      <div class="sfx" id="clic" style="left:40px;top:760px">¡CLIC!</div>
+      <div class="sfx red" id="clac" style="left:480px;top:960px">¡CLAC!</div>
+      <div class="box" id="b4"></div>
+    </div>
+    <!-- 5: eight colours -->
+    <div class="pn" id="p5" style="left:60px;top:3060px;width:1000px;height:1080px;background:#ff3b4e">
+      <div class="rays" style="opacity:.35"></div>
+      <div id="minis"></div>
+      <div class="box" id="b5"></div>
+    </div>
+    <!-- 6: night, then it glows -->
+    <div class="pn" id="p6" style="left:1140px;top:3060px;width:1000px;height:1080px">
+      <div class="night"></div><div class="moon"></div>
+      <div class="rays g" id="rays6" style="opacity:0"></div>
+      <img class="ph" id="ph6" src="img/brillo.jpg" style="opacity:0">
+      <div class="ht"></div>
+      <div class="sfx green" id="brilla" style="left:150px;top:760px">¡BRILLA!</div>
+      <div class="box dark" id="b6"></div>
+    </div>
+  </div>
+  <div id="final"><div class="bub">LINK EN<br>MI <em>PERFIL</em></div></div>
+  <div id="items"></div>
+  <div id="bar"><i></i></div>
+  <div id="hook"></div>
+  <div id="cap"></div>
+  <div id="endc"><div class="in"><div class="seal">龍</div><div class="name">LÓNG</div><div class="facts">dragón articulado · 88 cm · 8 colores</div><div class="url">thelongdragon.com</div></div></div>
+  <div id="flash"></div>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

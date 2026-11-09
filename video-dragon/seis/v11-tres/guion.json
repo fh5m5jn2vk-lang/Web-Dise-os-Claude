@@ -1,0 +1,64 @@
+{
+ "inicio": 0.05,
+ "final": 2.1,
+ "voz": {
+  "motor": "eleven",
+  "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+  "modelo": "eleven_v3",
+  "estabilidad": 0.5,
+  "similitud": 0.8,
+  "estilo": "creador",
+  "etiqueta": "[excited]",
+  "recorte": 0.09,
+  "tempo": 1.08
+ },
+ "lineas": [
+  {
+   "id": "l1",
+   "texto": "Tres cosas que no sabías de este dragón. ¡La última es una pasada!",
+   "voz": {
+    "etiqueta": "[excited]"
+   }
+  },
+  {
+   "id": "l2",
+   "texto": "Tres: se mueve entero, pieza a pieza.",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l3",
+   "texto": "Dos: mide ochenta y ocho centímetros. ¡Casi un metro!",
+   "voz": {
+    "etiqueta": "[amazed]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l4",
+   "texto": "Y uno...",
+   "voz": {
+    "etiqueta": "[whispers]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l5",
+   "texto": "¡brilla en la oscuridad!",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l6",
+   "texto": "Link en mi perfil.",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  }
+ ]
+}

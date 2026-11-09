@@ -3,22 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>LÓNG: dragón de cristal articulado impreso en 3D</title>
-<meta name="description" content="Dragón articulado de 88 cm impreso en 3D, con escamas de cristal que giran y brillan en la oscuridad. Cuatro colores, envío desde España, 21,95 €.">
+<title>LÓNG: dragón articulado impreso en 3D</title>
+<meta name="description" content="Dragón articulado de 88 cm impreso en 3D, con escamas que giran y brillan en la oscuridad. Cuatro colores, envío gratis, 21,95 € IVA incluido.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="LÓNG: dragón de cristal articulado">
+<meta property="og:title" content="LÓNG: dragón articulado impreso en 3D">
 <meta property="og:description" content="88 cm de escamas que giran y brillan en la oscuridad. 21,95 €.">
 <meta property="og:image" content="share.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#07080c">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Manrope:wght@400;500;600&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet">
+<meta name="long-legal" content="legal/">
+<link rel="preload" href="fonts/han.woff2" as="font" type="font/woff2" crossorigin>
+<!-- everything is served from this site: no request to Google Fonts or any CDN, so no visitor data leaves for third parties -->
 <!-- older iPhones (before iOS 16.4) do not read import maps: this small shim does it for them -->
-<script async src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js"></script>
+<script async src="vendor/es-module-shims/es-module-shims.js"></script>
 <script type="importmap">{"imports":{"three":"./vendor/three/three.module.min.js","three/addons/":"./vendor/three/addons/"}}</script>
 <style>
+@font-face { font-family: "Syne"; src: url(fonts/syne.woff2) format("woff2"); font-weight: 400 800; font-display: swap; }
+@font-face { font-family: "Manrope"; src: url(fonts/manrope.woff2) format("woff2"); font-weight: 200 800; font-display: swap; }
+@font-face { font-family: "Noto Serif TC"; src: url(fonts/han.woff2) format("woff2"); font-weight: 200 900; font-display: block; }
 :root {
   --ink: #f4efe6; --muted: #a39e96; --bg: #07080c; --line: rgba(244,239,230,.14);
   --red: #ff3b4e; --jade: #3fffc0; --gold: #e8c27a;
@@ -137,6 +140,15 @@ h1 em, h2 em { font-style: normal; color: var(--red); text-shadow: 0 0 40px rgba
 .pack input:checked + span { border-color: var(--red); box-shadow: inset 0 0 0 1px var(--red); }
 .pack input:focus-visible + span { outline: 2px solid var(--jade); outline-offset: 3px; }
 .note { font-size: 14px; color: var(--muted); }
+.checks { display: grid; gap: 10px; border: 0; padding: 0; margin: 2px 0 0; }
+.checks legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.check { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; line-height: 1.45; color: rgba(244,239,230,.88); cursor: pointer; }
+.check input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--red); cursor: pointer; }
+.check a { color: var(--gold); text-underline-offset: 3px; }
+.buy-error { margin: 0; padding: 10px 14px; border-radius: 10px; background: rgba(255,59,78,.16); color: #ffc2c8; font-size: 14px; }
+.info { font-size: 12px; line-height: 1.5; color: var(--muted); margin: 0; }
+.info a { color: var(--muted); }
+.falta { color: var(--gold); }
 .faq { display: grid; gap: 0; margin-top: 30px; }
 .faq details { border-top: 1px solid var(--line); padding: 18px 0; }
 .faq details:last-child { border-bottom: 1px solid var(--line); }
@@ -150,6 +162,10 @@ footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-t
 .foot__big .stamp { font: 900 .55em/1 var(--han); color: var(--red); border: 3px solid var(--red); padding: .06em .1em; border-radius: 8px; transform: rotate(-5deg); }
 .foot__row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 14px; color: var(--muted); }
 .foot__row a { color: var(--muted); }
+.foot__legal ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 14px; }
+.foot__legal a, .foot__legal button { color: var(--muted); background: none; border: 0; padding: 0; font: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.foot__legal a:hover, .foot__legal button:hover { color: var(--ink); }
+.foot__legal .desistir { color: var(--ink); font-weight: 600; }
 
 /* text reveals, driven by main.js */
 .rv { opacity: 0; transform: translateY(40px); }
@@ -210,7 +226,7 @@ footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-t
       <p class="eyebrow rv">Impreso en 3D, pieza a pieza</p>
       <h1 id="hero-h" class="rv">Dragón <em>articulado</em> de 88 cm</h1>
       <p class="lead rv">88 cm de escamas articuladas que giran, se doblan y brillan en la oscuridad. Mueve el ratón: el dragón persigue la perla, como en las leyendas.</p>
-      <div class="row rv"><a class="btn btn--red" href="#comprar">Comprar el dragón</a><a class="btn btn--ghost" href="#mueve">Ver cómo se mueve</a><span class="price" data-assumed>21,95 €</span></div>
+      <div class="row rv"><a class="btn btn--red" href="#comprar">Comprar el dragón</a><a class="btn btn--ghost" href="#mueve">Ver cómo se mueve</a><span class="price">21,95 €</span></div>
     </div>
     <div class="hint" aria-hidden="true"><span class="dot"></span>La perla sigue a tu cursor</div>
   </section>
@@ -260,18 +276,25 @@ footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-t
 
   <section class="sec" id="comprar" data-pose="s" data-side="0.32" aria-labelledby="comprar-h">
     <div class="panel">
-      <p class="eyebrow rv">Envío desde España</p>
+      <p class="eyebrow rv">Envío gratis · IVA incluido</p>
       <h2 id="comprar-h" class="rv">Llévate el <em>dragón</em></h2>
-      <!-- Shopify: js/tienda.js sends the form to the store's cart once SHOPIFY.store and the variant ids are filled in -->
-      <form class="buy rv" id="buy" action="mailto:pedidos@long.example" method="post" enctype="text/plain">
+      <!-- Shopify: js/main.js sends the form to the store's checkout once LONG.shopify (js/datos.js) is filled in, and writes the two acceptances into the order -->
+      <form class="buy rv" id="buy" action="legal/condiciones.html" method="get">
         <input type="hidden" name="color" id="buy-color" value="arcoiris">
         <fieldset class="packs">
           <legend>Cantidad</legend>
-          <label class="pack"><input type="radio" name="pack" value="uno" checked><span>1 dragón <b data-assumed>21,95 €</b></span></label>
-          <label class="pack"><input type="radio" name="pack" value="dos"><span>2 dragones, para regalar <b data-assumed>32,95 €</b></span></label>
+          <label class="pack"><input type="radio" name="pack" value="uno" checked><span>1 dragón <b>21,95 €</b></span></label>
+          <label class="pack"><input type="radio" name="pack" value="dos"><span>2 dragones, para regalar <b>32,95 €</b></span></label>
         </fieldset>
+        <fieldset class="checks">
+          <legend>Antes de comprar</legend>
+          <label class="check"><input type="checkbox" name="condiciones" value="si" required><span>He leído y acepto las <a href="legal/condiciones.html" target="_blank">condiciones de venta</a>.</span></label>
+          <label class="check"><input type="checkbox" name="privacidad" value="si" required><span>He leído la <a href="legal/privacidad.html" target="_blank">política de privacidad</a>.</span></label>
+        </fieldset>
+        <p class="buy-error" id="buy-error" role="alert" hidden></p>
         <button class="btn btn--red" type="submit">Comprar el dragón</button>
-        <p class="note">Color elegido: <strong id="buy-color-label">Arcoíris</strong>. Envío gratis a la península en <span data-assumed>24-72 h</span>, 14 días de devolución.</p>
+        <p class="note">Color elegido: <strong id="buy-color-label">Arcoíris</strong>. Precios con IVA incluido. Envío gratis a <span data-dato="zonasEnvio">la España peninsular y Baleares</span>, entrega en <span data-dato="plazoEntrega">7 a 12 días laborables</span>. <a href="legal/devoluciones.html">14 días para desistir</a> y 3 años de garantía.</p>
+        <p class="info">Responsable de tus datos: <span data-dato="titular" class="falta">[titular]</span>. Los usamos solo para tu pedido y los compartimos con Shopify, el proveedor que lo envía (puede estar fuera de la UE) y el transportista. Tienes derecho a acceder a ellos, corregirlos y borrarlos, entre otros. Más en la <a href="legal/privacidad.html">política de privacidad</a>.</p>
       </form>
     </div>
   </section>
@@ -280,10 +303,10 @@ footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-t
     <div class="panel panel--right">
       <h2 id="faq-h" class="rv">Preguntas</h2>
       <div class="faq rv">
-        <details><summary>¿Es un juguete para niños?</summary><p>Es una figura decorativa y antiestrés. Tiene piezas pequeñas, así que no es para menores de 3 años.</p></details>
+        <details><summary>¿Es un juguete para niños?</summary><p>No: es una figura decorativa. Tiene piezas pequeñas, así que mantenlo lejos de menores de 3 años. Más en <a href="legal/seguridad.html">seguridad del producto</a>.</p></details>
         <details><summary>¿De qué está hecho?</summary><p>De plástico <span data-assumed>PLA</span> impreso en 3D, con pigmento fotoluminiscente para brillar de noche.</p></details>
-        <details><summary>¿Cuánto tarda en llegar?</summary><p>Sale en <span data-assumed>24-72 horas</span> laborables a la península.</p></details>
-        <details><summary>¿Y si no me gusta?</summary><p>Tienes 14 días para devolverlo desde que lo recibes.</p></details>
+        <details><summary>¿Cuánto tarda en llegar?</summary><p>Lo recibes en <span data-dato="plazoEntrega">7 a 12 días laborables</span>, con envío gratis y número de seguimiento. Más en <a href="legal/envios.html">envíos</a>.</p></details>
+        <details><summary>¿Y si no me gusta?</summary><p>Tienes 14 días desde que lo recibes para desistir sin dar explicaciones: usa <a href="legal/desistimiento.html">«Desistir del contrato aquí»</a>. Y si falla, 3 años de garantía. Más en <a href="legal/devoluciones.html">devoluciones y garantía</a>.</p></details>
       </div>
     </div>
   </section>
@@ -291,9 +314,24 @@ footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-t
 
 <footer>
   <div class="foot__big"><span class="stamp" aria-hidden="true">龍</span>LÓNG</div>
-  <div class="foot__row"><span>&copy; 2026 LÓNG · Dragones articulados impresos en 3D</span><span><a href="mailto:hola@long.example">Contacto</a></span></div>
+  <nav class="foot__legal" aria-label="Información legal">
+    <ul>
+      <li><a href="legal/aviso-legal.html">Aviso legal</a></li>
+      <li><a href="legal/condiciones.html">Condiciones de venta</a></li>
+      <li><a href="legal/envios.html">Envíos</a></li>
+      <li><a href="legal/devoluciones.html">Devoluciones y garantía</a></li>
+      <li><a href="legal/privacidad.html">Privacidad</a></li>
+      <li><a href="legal/cookies.html">Cookies</a></li>
+      <li><a href="legal/seguridad.html">Seguridad del producto</a></li>
+      <li><button type="button" data-cookies>Configurar cookies</button></li>
+      <li><a class="desistir" href="legal/desistimiento.html">Desistir del contrato aquí</a></li>
+    </ul>
+  </nav>
+  <div class="foot__row"><span>&copy; 2026 LÓNG · Dragones articulados impresos en 3D</span><span><a data-mail href="legal/aviso-legal.html">Contacto</a></span></div>
 </footer>
 
+<script src="js/datos.js"></script>
+<script src="js/cookies.js"></script>
 <script src="vendor/gsap/gsap.min.js"></script>
 <script src="vendor/gsap/ScrollTrigger.min.js"></script>
 <script type="module" src="js/main.js"></script>

@@ -1,0 +1,3 @@
+Syne (syne.woff2), Manrope (manrope.woff2) y Noto Serif TC (han.woff2, solo los caracteres 九 夜 港 長 香 龍)
+se usan bajo la SIL Open Font License 1.1: https://openfontlicense.org
+Se sirven desde la propia web para no enviar datos de los visitantes a Google Fonts.

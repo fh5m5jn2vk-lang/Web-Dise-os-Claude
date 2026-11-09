@@ -1,4 +1,4 @@
-# LÓNG: web del dragón de cristal articulado
+# LÓNG: web del dragón articulado
 
 Web de producto para el dragón articulado impreso en 3D de AliExpress ([88 cm, brilla en la oscuridad](https://es.aliexpress.com/item/3256809994598459.html)), con Hong Kong de noche en 3D de fondo. HTML, CSS y JS sin compilar: ábrela con un servidor local (`npx http-server .`).
 
@@ -9,13 +9,15 @@ Web de producto para el dragón articulado impreso en 3D de AliExpress ([88 cm, 
 - **Scroll (GSAP ScrollTrigger, `js/main.js`):** en cada sección el dragón cambia de pose (estirado con regla de 88 cm, en espiral, en S) y gira siguiendo el ratón.
 - **Brilla en la oscuridad:** al llegar a esa sección, o con el botón, Hong Kong se apaga y el dragón brilla en verde.
 - **Colores:** Arcoíris, Galaxia, Plata y Fuego, como el filamento seda de los dragones del proveedor, recolorean el dragón en vivo.
-- **Compra:** como en Uprain, rellena `SHOPIFY.store` y los IDs de variante (color × cantidad) en `js/main.js` y el botón lleva al checkout de Shopify. Sin eso, usa un `mailto:` de ejemplo.
+- **Compra:** el formulario pide dos casillas separadas (condiciones de venta y privacidad) y lleva al pago de Shopify con el color y la cantidad elegidos. La aceptación, con su versión, fecha y hora, queda guardada en el pedido. La tienda y los IDs de variante van en `js/datos.js`; los pasos están en `SHOPIFY.md`.
+- **Legal:** aviso legal, condiciones de venta, envíos, devoluciones y garantía, privacidad, cookies, seguridad del producto y el botón «Desistir del contrato aquí», en `legal/`. Se generan desde `legal/_src/` con `python3 tools/legal.py`, que también escribe las políticas para Shopify en `shopify/politicas/`. Tus datos (titular, NIF, domicilio, correo…) se escriben una sola vez en `js/datos.js`. Qué está hecho y qué te falta: `LEGAL.md`.
+- **Sin terceros:** las fuentes (`fonts/`) y es-module-shims (`vendor/`) se sirven desde la propia web. La web no usa cookies; `js/cookies.js` muestra el aviso solo si algún día añades un píxel.
 
 ## Pendiente antes de publicar
-- **Derechos de la foto:** confirma que la foto de Hong Kong se puede usar comercialmente (si es de un banco de imágenes, revisa su licencia).
-- **Precios supuestos:** 21,95 € y 32,95 € (marcados con `data-assumed`). El proveedor cuesta unos 5-15 € según la oferta.
-- **Material y plazos:** confírmalos con la ficha del proveedor. Los colores ofrecidos deben coincidir con las variantes que tenga.
-- **Marca LÓNG:** compruébala en la OEPM y la EUIPO y compra el dominio. El correo `@long.example` es de ejemplo.
+- **Tus datos:** rellena `js/datos.js` y ejecuta `python3 tools/legal.py`.
+- **Shopify:** importa `shopify/producto.csv` y pon la tienda y los IDs en `js/datos.js` (o vuelve a conectar el conector y lo hago yo).
+- **Derechos de las imágenes, plazos y seguridad del producto:** ver `LEGAL.md`.
+- **Marca LÓNG:** compruébala en la OEPM y la EUIPO y compra el dominio.
 - **Fotos o vídeos reales:** añade algunos del producto cuando tengas la muestra.
 
 `tools/shoot.cjs` hace capturas de cada sección: `node tools/shoot.cjs capturas 1440 900`.

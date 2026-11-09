@@ -107,13 +107,39 @@ document.querySelectorAll('#sw input').forEach((i) => i.addEventListener('change
   document.getElementById('buy-color-label').textContent = names[i.value];
 }));
 
-/* ---------- Shopify: fill in the store and the variant ids (one per colour and pack) ---------- */
-const SHOPIFY = { store: '', variants: { arcoiris: { uno: '', dos: '' }, galaxia: { uno: '', dos: '' }, plata: { uno: '', dos: '' }, fuego: { uno: '', dos: '' } } };
-document.getElementById('buy').addEventListener('submit', (e) => {
-  const d = new FormData(e.target);
-  const id = SHOPIFY.store && SHOPIFY.variants[d.get('color')]?.[d.get('pack')];
-  if (!id) return; // not set up yet: the mailto stand-in runs
-  e.preventDefault(); location.href = `https://${SHOPIFY.store}/cart/${id}:1`;
+/* ---------- buying: two separate acceptances, then Shopify's checkout ---------- */
+// The store and the variant ids live in js/datos.js (LONG.shopify). Each acceptance travels with the order as a cart
+// attribute (it shows under «Detalles adicionales» in the Shopify order): what was accepted, which version, when and how.
+const buy = document.getElementById('buy'), buyError = document.getElementById('buy-error');
+buy.noValidate = true; // our own messages replace the browser's (the required attributes stay for pages without JS)
+buy.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const missing = ['condiciones', 'privacidad'].filter((n) => !buy.elements[n].checked);
+  if (missing.length) {
+    buyError.textContent = missing.length === 2 ? 'Marca las dos casillas para continuar.'
+      : missing[0] === 'condiciones' ? 'Acepta las condiciones de venta para continuar.' : 'Marca que has leído la política de privacidad para continuar.';
+    buyError.hidden = false; buy.elements[missing[0]].focus(); return;
+  }
+  buyError.hidden = true;
+  const L = window.LONG || {}, S = L.shopify || {};
+  const d = new FormData(buy), color = d.get('color'), pack = d.get('pack');
+  const now = new Date().toISOString(), version = `versión ${L.version} del ${L.fechaISO}`;
+  const attrs = {
+    'Condiciones de venta aceptadas': `${version} · ${now}`,
+    'Política de privacidad leída': `${version} · ${now}`,
+    'Cómo se aceptó': 'dos casillas separadas, sin marcar por defecto, en la web de LÓNG',
+  };
+  const id = S.tienda && S.variantes?.[color]?.[pack];
+  if (id) {
+    const q = Object.entries(attrs).map(([k, v]) => `attributes[${encodeURIComponent(k)}]=${encodeURIComponent(v)}`).join('&');
+    location.href = `https://${S.tienda}/cart/${id}:1?${q}`;
+  } else if (S.tienda) {
+    // the variant ids are not filled in yet: open the product page, where the colour and the pack are chosen again
+    location.href = `https://${S.tienda}/products/${S.producto}`;
+  } else {
+    buyError.textContent = 'La tienda aún no está conectada. Vuelve pronto.';
+    buyError.hidden = false;
+  }
 });
 
 /* ---------- pause the 3D while the tab is hidden ---------- */

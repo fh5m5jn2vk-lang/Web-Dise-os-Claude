@@ -131,6 +131,65 @@ export async function stage({ set = 'estudio', bloom = 0.35 } = {}) {
     L.lights = (k) => { key.intensity = 70 * k; warm.intensity = 18 * k; fill.intensity = 0.4 * k; sc.environmentIntensity = 0.25 * Math.max(0.06, k); bokeh.children.forEach((s) => { s.material.opacity = (0.35 + 0.4 * ((s.userData.ph * 7) % 1)) * lerp(0.35, 1, k); }); };
   }
 
+  if (set === 'gamer') {
+    sc.background = new THREE.Color('#050508');
+    const deskM = new THREE.MeshPhysicalMaterial({ color: '#121318', roughness: 0.55, clearcoat: 0.4, clearcoatRoughness: 0.4 });
+    const desk = mk(sc, new THREE.BoxGeometry(14, 0.25, 6.5), deskM, [0, -0.125, -0.6], true); desk.castShadow = false;
+    const mat = mk(sc, new THREE.BoxGeometry(9.4, 0.03, 3.6), new THREE.MeshStandardMaterial({ color: '#0b0c10', roughness: 0.95 }), [0.4, 0.015, 0.35], true); mat.castShadow = false;
+    const matEdge = mk(sc, new THREE.BoxGeometry(9.5, 0.035, 3.7), new THREE.MeshBasicMaterial({ color: '#ff3b4e' }), [0.4, 0.01, 0.35]);
+    const wallM = new THREE.MeshStandardMaterial({ color: '#16161c', roughness: 0.9 });
+    const wall = mk(sc, new THREE.PlaneGeometry(40, 16), wallM, [0, 4, -3.9]); wall.receiveShadow = true;
+    // the monitor: a synthwave screen of our own
+    const scr = document.createElement('canvas'); scr.width = 512; scr.height = 300; const g = scr.getContext('2d');
+    const paintScreen = (t) => {
+      const gr = g.createLinearGradient(0, 0, 0, 300); gr.addColorStop(0, '#1a0638'); gr.addColorStop(0.55, '#5a1470'); gr.addColorStop(0.56, '#0a0614'); gr.addColorStop(1, '#14082a'); g.fillStyle = gr; g.fillRect(0, 0, 512, 300);
+      const sun = g.createLinearGradient(0, 60, 0, 165); sun.addColorStop(0, '#ffd43b'); sun.addColorStop(1, '#ff3b8e'); g.fillStyle = sun; g.beginPath(); g.arc(256, 165, 78, Math.PI, 0); g.fill();
+      g.fillStyle = '#1a0638'; for (let i = 0; i < 6; i++) g.fillRect(170, 112 + i * 9, 172, 2 + i * 0.6);
+      g.strokeStyle = 'rgba(255,80,200,.75)'; g.lineWidth = 1.5;
+      for (let i = -12; i <= 12; i++) { g.beginPath(); g.moveTo(256 + i * 12, 168); g.lineTo(256 + i * 70, 300); g.stroke(); }
+      for (let k = 0; k < 9; k++) { const y = 168 + Math.pow(((k + (t * 1.2) % 1) / 9), 2) * 132; g.beginPath(); g.moveTo(0, y); g.lineTo(512, y); g.stroke(); }
+      g.fillStyle = 'rgba(255,255,255,.85)'; g.font = '700 22px Inter, sans-serif'; g.fillText('LÓNG 龍', 22, 36);
+    };
+    paintScreen(0); const scrTex = new THREE.CanvasTexture(scr); scrTex.colorSpace = THREE.SRGBColorSpace;
+    const mon = new THREE.Group(); mon.position.set(-0.6, 0, -2.3); sc.add(mon);
+    const black = new THREE.MeshPhysicalMaterial({ color: '#0a0a0d', roughness: 0.4, metalness: 0.3 });
+    mk(mon, new THREE.BoxGeometry(5.0, 2.95, 0.18), black, [0, 2.35, 0], true);
+    const screen = mk(mon, new THREE.PlaneGeometry(4.8, 2.75), new THREE.MeshBasicMaterial({ map: scrTex, toneMapped: false }), [0, 2.35, 0.095]);
+    mk(mon, new THREE.BoxGeometry(0.35, 1.1, 0.2), black, [0, 0.6, -0.15], true); mk(mon, new THREE.BoxGeometry(1.8, 0.06, 1.0), black, [0, 0.03, -0.1], true);
+    const monL = new THREE.PointLight('#a24bff', 6, 9, 2); monL.position.set(-0.6, 2.3, -1.4); sc.add(monL);
+    // the keyboard: a key per instance, coloured
+    const kb = new THREE.Group(); kb.position.set(-1.0, 0.03, 0.45); sc.add(kb);
+    mk(kb, new THREE.BoxGeometry(3.3, 0.16, 1.15), black, [0, 0.08, 0], true);
+    const KX = 15, KZ = 5, keys = new THREE.InstancedMesh(new THREE.BoxGeometry(0.18, 0.09, 0.18), new THREE.MeshBasicMaterial({ color: '#ffffff', toneMapped: false }), KX * KZ);
+    const m4 = new THREE.Matrix4(); for (let i = 0; i < KX; i++) for (let j = 0; j < KZ; j++) { m4.makeTranslation(-1.47 + i * 0.21, 0.2, -0.42 + j * 0.21); keys.setMatrixAt(i * KZ + j, m4); keys.setColorAt(i * KZ + j, new THREE.Color('#ff3b4e')); }
+    kb.add(keys);
+    const mouse = mk(sc, new THREE.CapsuleGeometry(0.22, 0.32, 6, 16), black, [-3.3, 0.13, 0.55], true); mouse.rotation.x = Math.PI / 2; mouse.scale.set(1, 1, 0.55);
+    const mouseLed = mk(sc, new THREE.BoxGeometry(0.05, 0.02, 0.3), new THREE.MeshBasicMaterial({ color: '#ff3b4e', toneMapped: false }), [-3.3, 0.255, 0.5]);
+    // the LED strip on the wall, and the light it throws
+    const strip = mk(sc, new THREE.BoxGeometry(12, 0.07, 0.05), new THREE.MeshBasicMaterial({ color: '#ff3b4e', toneMapped: false }), [0, 4.6, -3.85]);
+    const strip2 = mk(sc, new THREE.BoxGeometry(12, 0.05, 0.05), new THREE.MeshBasicMaterial({ color: '#ff3b4e', toneMapped: false }), [0, -0.02, 2.62]);
+    const wallL = new THREE.PointLight('#ff3b4e', 30, 14, 1.6); wallL.position.set(1.5, 3.8, -3.2); sc.add(wallL);
+    const wallL2 = new THREE.PointLight('#ff3b4e', 18, 12, 1.6); wallL2.position.set(-3.5, 3.2, -3.2); sc.add(wallL2);
+    const key = new THREE.SpotLight('#dfe6ff', 35, 30, 0.6, 0.6, 1.6); key.position.set(3, 7, 5); key.target.position.set(1.4, 0.3, 0.2); key.castShadow = true; key.shadow.mapSize.set(1024, 1024); key.shadow.radius = 6; key.shadow.bias = -0.0005; sc.add(key, key.target);
+    const fill = new THREE.HemisphereLight('#8090ff', '#100810', 0.25); sc.add(fill);
+    const tmpC = new THREE.Color(), tmpH = { h: 0, s: 0, l: 0 };
+    L.screen = { paint: (t) => { paintScreen(t); scrTex.needsUpdate = true; } };
+    // rgb(t, colour or null for the rainbow wave, brightness)
+    L.rgb = (t, col, k = 1) => {
+      for (let i = 0; i < KX; i++) for (let j = 0; j < KZ; j++) {
+        if (col) { tmpC.set(col); tmpC.getHSL(tmpH); tmpC.setHSL(tmpH.h, tmpH.s, clamp(tmpH.l * (0.85 + 0.25 * Math.sin(t * 6 + i * 0.5 + j)), 0, 0.9)); }
+        else tmpC.setHSL(((i / KX) * 0.8 - t * 0.35 + 10) % 1, 1, 0.55);
+        tmpC.multiplyScalar(k); keys.setColorAt(i * KZ + j, tmpC);
+      }
+      keys.instanceColor.needsUpdate = true;
+      const c = col ? tmpC.set(col) : tmpC.setHSL(((-t * 0.35) % 1 + 1) % 1, 1, 0.55);
+      [strip.material, strip2.material, mouseLed.material, matEdge.material].forEach((m) => m.color.copy(c).multiplyScalar(k));
+      wallL.color.copy(c); wallL2.color.copy(c); wallL.intensity = 30 * k; wallL2.intensity = 18 * k;
+    };
+    L.lights = (k) => { key.intensity = 35 * k; fill.intensity = 0.25 * k; monL.intensity = 6 * Math.max(0.15, k); screen.material.color.setScalar(Math.max(0.12, k)); sc.environmentIntensity = 0.2 * Math.max(0.05, k); };
+    sc.environmentIntensity = 0.2;
+  }
+
   // the dragon
   const dragon = createDragon(sc, { hq: true }); dragon.group.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
   const spine = Array.from({ length: SEG + 1 }, () => V()), dense = Array.from({ length: 700 }, () => V());

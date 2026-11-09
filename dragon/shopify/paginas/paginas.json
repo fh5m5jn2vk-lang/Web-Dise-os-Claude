@@ -1,0 +1,42 @@
+{
+ "aviso-legal": {
+  "title": "Aviso legal",
+  "description": "Quién está detrás de LÓNG, condiciones de uso de la web y propiedad intelectual.",
+  "template": ""
+ },
+ "condiciones": {
+  "title": "Condiciones de venta",
+  "description": "Cómo se compra en LÓNG: producto, precio, pago, entrega, desistimiento y garantía.",
+  "template": ""
+ },
+ "envios": {
+  "title": "Envíos",
+  "description": "Dónde enviamos, cuánto cuesta, cuánto tarda y qué hacer si hay un problema con el paquete.",
+  "template": ""
+ },
+ "devoluciones": {
+  "title": "Devoluciones y garantía",
+  "description": "Derecho de desistimiento de 14 días, cómo devolver el dragón, reembolsos y garantía legal de 3 años.",
+  "template": ""
+ },
+ "privacidad": {
+  "title": "Política de privacidad",
+  "description": "Qué datos tratamos en LÓNG, para qué, con quién los compartimos y cómo ejercer tus derechos.",
+  "template": ""
+ },
+ "cookies": {
+  "title": "Política de cookies",
+  "description": "Qué cookies y almacenamiento usa la web de LÓNG y cómo cambiar tu elección.",
+  "template": ""
+ },
+ "seguridad": {
+  "title": "Seguridad del producto",
+  "description": "Fabricante, responsable en la UE, advertencias y cómo usar con seguridad el dragón articulado LÓNG.",
+  "template": ""
+ },
+ "desistimiento": {
+  "title": "Desistir del contrato aquí",
+  "description": "Desiste de tu compra en LÓNG en un minuto, dentro de los 14 días siguientes a recibirla.",
+  "template": "desistimiento"
+ }
+}

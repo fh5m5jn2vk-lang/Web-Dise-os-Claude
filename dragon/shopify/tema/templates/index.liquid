@@ -1,0 +1,340 @@
+{% layout none %}<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LÓNG: dragón articulado impreso en 3D</title>
+<meta name="description" content="Dragón articulado de 88 cm impreso en 3D, con escamas que giran y brillan en la oscuridad. Cuatro colores, envío gratis, 21,95 € IVA incluido.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="LÓNG: dragón articulado impreso en 3D">
+<meta property="og:description" content="88 cm de escamas que giran y brillan en la oscuridad. 21,95 €.">
+<meta property="og:image" content="https:{{ 'share.jpg' | asset_url }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#07080c">
+<link rel="icon" href="{{ 'favicon.svg' | asset_url }}" type="image/svg+xml">
+<link rel="canonical" href="{{ canonical_url }}">
+<meta name="long-legal" content="/pages/">
+<meta name="long-cookies" content="/pages/cookies">
+<link rel="preload" href="{{ 'han.woff2' | asset_url }}" as="font" type="font/woff2" crossorigin>
+<!-- everything is served from this site: no request to Google Fonts or any CDN, so no visitor data leaves for third parties -->
+<style>
+@font-face { font-family: "Syne"; src: url({{ 'syne.woff2' | asset_url }}) format("woff2"); font-weight: 400 800; font-display: swap; }
+@font-face { font-family: "Manrope"; src: url({{ 'manrope.woff2' | asset_url }}) format("woff2"); font-weight: 200 800; font-display: swap; }
+@font-face { font-family: "Noto Serif TC"; src: url({{ 'han.woff2' | asset_url }}) format("woff2"); font-weight: 200 900; font-display: block; }
+:root {
+  --ink: #f4efe6; --muted: #a39e96; --bg: #07080c; --line: rgba(244,239,230,.14);
+  --red: #ff3b4e; --jade: #3fffc0; --gold: #e8c27a;
+  --display: "Syne", "Helvetica Neue", Arial, sans-serif;
+  --text: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  --han: "Noto Serif TC", "Songti TC", "SimSun", serif;
+  --gut: clamp(20px, 5vw, 80px);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.6 var(--text); -webkit-font-smoothing: antialiased; }
+body.is-locked { overflow: hidden; }
+a { color: inherit; }
+::selection { background: var(--red); color: #fff; }
+
+/* the 3D city, fixed behind everything */
+#gl { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; z-index: 0; }
+.veil { position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(4,5,8,.7) 100%), linear-gradient(180deg, rgba(4,5,8,.55) 0%, transparent 20%, transparent 70%, rgba(4,5,8,.8) 100%); }
+.grain { position: fixed; inset: -50%; z-index: 2; pointer-events: none; opacity: .06; mix-blend-mode: overlay; animation: grain 1.2s steps(6) infinite; }
+@keyframes grain { 0% { transform: translate(0,0) } 33% { transform: translate(-3%,2%) } 66% { transform: translate(2%,-3%) } 100% { transform: translate(0,0) } }
+
+/* intro */
+#intro { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; color: var(--ink); }
+#intro .half { position: absolute; left: 0; right: 0; height: 50.5%; background: #050609; }
+#intro .half--top { top: 0; } #intro .half--bot { bottom: 0; }
+#intro .seal { position: relative; display: grid; place-items: center; gap: 22px; text-align: center; }
+#intro svg { width: min(46vw, 260px); height: auto; overflow: visible; }
+#intro .han { font: 900 220px/1 var(--han); fill: none; stroke: var(--gold); stroke-width: 1.6; stroke-dasharray: 2600; stroke-dashoffset: 2600; filter: drop-shadow(0 0 14px rgba(232,194,122,.45)); }
+#intro .han--fill { fill: url(#inkG); stroke: none; stroke-dasharray: none; filter: drop-shadow(0 0 30px rgba(255,59,78,.6)); }
+#intro svg { opacity: 0; }
+.fonts-ready #intro svg { opacity: 1; transition: opacity .4s; }
+#intro .brand { font: 700 15px/1 var(--display); letter-spacing: .42em; padding-left: .42em; }
+#intro .count { font: 500 13px/1 var(--text); letter-spacing: .2em; color: var(--muted); font-variant-numeric: tabular-nums; }
+#intro .bar { width: 160px; height: 1px; background: var(--line); overflow: hidden; }
+#intro .bar i { display: block; height: 100%; width: 0; background: var(--red); }
+#intro .brand .ch { display: inline-block; }
+#intro .swipe { position: absolute; left: 50%; bottom: max(40px, env(safe-area-inset-bottom)); transform: translateX(-50%); display: grid; justify-items: center; gap: 12px; padding: 10px 18px; border: 0; background: none; color: var(--muted); font: 500 12px/1 var(--text); letter-spacing: .28em; text-transform: uppercase; white-space: nowrap; cursor: pointer; }
+#intro .swipe:hover { color: var(--ink); }
+#intro .swipe__line { position: relative; width: 1px; height: 46px; background: rgba(244,239,230,.18); overflow: hidden; }
+#intro .swipe__line::after { content: ""; position: absolute; left: 0; top: -40%; width: 1px; height: 40%; background: var(--gold); animation: swipeLine 1.6s cubic-bezier(.6,0,.2,1) infinite; }
+@keyframes swipeLine { to { top: 100%; } }
+
+/* chrome */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; padding: 22px var(--gut); }
+.logo { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; font: 800 18px/1 var(--display); letter-spacing: .22em; }
+.logo .stamp { display: inline-grid; place-items: center; width: 34px; height: 34px; border: 1.5px solid var(--red); color: var(--red); font: 900 18px/1 var(--han); border-radius: 4px; transform: rotate(-4deg); }
+.nav__links { display: flex; gap: 30px; font: 500 14px/1 var(--text); }
+.nav__links a { text-decoration: none; color: var(--muted); transition: color .2s; }
+.nav__links a:hover { color: var(--ink); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 26px; border-radius: 999px; border: 0; font: 600 15px/1 var(--text); text-decoration: none; cursor: pointer; transition: transform .2s cubic-bezier(.2,.8,.2,1), background-color .2s, box-shadow .3s; }
+.btn--red { background: var(--red); color: #fff; box-shadow: 0 0 0 0 rgba(255,59,78,.5); }
+.btn--red:hover { transform: translateY(-2px); box-shadow: 0 10px 40px -8px rgba(255,59,78,.7); }
+.btn--red:active { transform: translateY(0) scale(.98); }
+.btn--ghost { background: rgba(244,239,230,.06); color: var(--ink); border: 1px solid var(--line); backdrop-filter: blur(10px); }
+.btn--ghost:hover { background: rgba(244,239,230,.12); transform: translateY(-2px); }
+.btn:focus-visible, a:focus-visible, button:focus-visible { outline: 2px solid var(--jade); outline-offset: 3px; }
+.side-han { position: fixed; right: calc(var(--gut) * .45); top: 50%; transform: translateY(-50%); z-index: 3; writing-mode: vertical-rl; font: 600 15px/1 var(--han); letter-spacing: .6em; color: rgba(244,239,230,.32); pointer-events: none; }
+.progress { position: fixed; left: calc(var(--gut) * .45); top: 50%; transform: translateY(-50%); z-index: 3; width: 1px; height: 140px; background: var(--line); }
+.progress i { position: absolute; left: 0; top: 0; width: 1px; height: 0; background: var(--red); }
+
+/* sections */
+main { position: relative; z-index: 5; }
+.sec { position: relative; min-height: 100vh; display: grid; align-items: center; padding: 120px var(--gut); }
+.sec--tall { min-height: 160vh; align-items: start; }
+.sec--tall .panel { position: sticky; top: 22vh; }
+.panel { max-width: 560px; padding: 40px 44px; border-radius: 26px; background: linear-gradient(160deg, rgba(10,12,24,.62), rgba(6,7,14,.42)); border: 1px solid rgba(255,255,255,.09); backdrop-filter: blur(16px) saturate(1.25); -webkit-backdrop-filter: blur(16px) saturate(1.25); box-shadow: 0 30px 80px -30px rgba(0,0,0,.6); }
+#hero .panel { background: linear-gradient(160deg, rgba(10,12,24,.5), rgba(6,7,14,.28)); }
+.panel--right { justify-self: end; text-align: left; margin-right: 3vw; }
+.eyebrow { display: inline-flex; align-items: center; gap: 12px; font: 600 12px/1 var(--text); letter-spacing: .26em; text-transform: uppercase; color: var(--gold); margin: 0 0 22px; }
+.eyebrow::before { content: ""; width: 28px; height: 1px; background: currentColor; }
+h1, h2 { font-family: var(--display); font-weight: 700; letter-spacing: -.04em; line-height: .98; margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(46px, 6.6vw, 104px); }
+h2 { font-size: clamp(36px, 4.4vw, 68px); }
+h1 em, h2 em { font-style: normal; color: var(--red); text-shadow: 0 0 40px rgba(255,59,78,.45); }
+.lead { font-size: clamp(17px, 1.35vw, 20px); color: rgba(244,239,230,.82); max-width: 44ch; margin: 26px 0 34px; }
+.row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.price { font: 700 15px/1 var(--display); letter-spacing: .04em; color: var(--muted); margin-left: 6px; }
+.hint { position: absolute; left: var(--gut); bottom: 36px; display: flex; align-items: center; gap: 12px; font: 500 13px/1.4 var(--text); color: var(--muted); }
+.hint .dot { width: 10px; height: 10px; border-radius: 50%; background: #ffb36b; box-shadow: 0 0 18px 4px rgba(255,179,107,.6); animation: pulse 2.2s ease-in-out infinite; }
+@keyframes pulse { 50% { transform: scale(1.4); opacity: .7 } }
+.big-han--hero { -webkit-text-stroke: 1.5px rgba(232,194,122,.2); right: 4vw; opacity: 0; }
+.big-han { position: absolute; right: -2vw; top: 50%; transform: translateY(-50%); font: 900 min(60vh, 46vw)/1 var(--han); color: transparent; -webkit-text-stroke: 1px rgba(255,59,78,.16); pointer-events: none; user-select: none; z-index: -1; }
+
+/* the ruler in section two */
+.ruler { margin-top: 40px; display: grid; gap: 10px; width: min(520px, 100%); }
+.ruler__bar { position: relative; height: 18px; border-left: 1px solid var(--gold); border-right: 1px solid var(--gold); }
+.ruler__bar::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--gold); transform-origin: left; transform: scaleX(var(--k, 0)); }
+.ruler__ticks { display: flex; justify-content: space-between; font: 600 12px/1 var(--text); color: var(--gold); letter-spacing: .1em; }
+.stat { display: flex; gap: 40px; margin-top: 34px; }
+.stat b { display: block; font: 800 46px/1 var(--display); letter-spacing: -.03em; }
+.stat span { font-size: 13px; color: var(--muted); }
+
+/* glow switch */
+.switch { margin-top: 10px; }
+.switch[aria-pressed="true"] { background: var(--jade); color: #04120c; box-shadow: 0 0 40px -6px rgba(63,255,192,.8); }
+
+/* colours */
+.swatches { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; border: 0; padding: 0; }
+.swatches legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.sw { position: relative; }
+.sw input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.sw span { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 20px 0 8px; border-radius: 999px; border: 1px solid var(--line); background: rgba(7,8,12,.45); backdrop-filter: blur(10px); font: 600 15px/1 var(--text); transition: border-color .2s, transform .2s; }
+.sw span i { width: 32px; height: 32px; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1px rgba(255,255,255,.2), 0 0 18px -2px var(--c0); }
+.sw input:checked + span { border-color: var(--ink); }
+.sw input:focus-visible + span { outline: 2px solid var(--jade); outline-offset: 3px; }
+.sw:hover span { transform: translateY(-2px); }
+
+/* buy */
+.buy { display: grid; gap: 14px; margin-top: 30px; }
+.packs { display: grid; gap: 10px; border: 0; padding: 0; margin: 0; }
+.packs legend { font: 600 12px/1 var(--text); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.pack { position: relative; }
+.pack input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.pack span { display: flex; justify-content: space-between; align-items: center; min-height: 60px; padding: 0 22px; border: 1px solid var(--line); border-radius: 14px; background: rgba(7,8,12,.5); backdrop-filter: blur(12px); transition: border-color .2s; }
+.pack b { font: 700 18px/1 var(--display); white-space: nowrap; }
+.pack input:checked + span { border-color: var(--red); box-shadow: inset 0 0 0 1px var(--red); }
+.pack input:focus-visible + span { outline: 2px solid var(--jade); outline-offset: 3px; }
+.note { font-size: 14px; color: var(--muted); }
+.checks { display: grid; gap: 10px; border: 0; padding: 0; margin: 2px 0 0; }
+.checks legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.check { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; line-height: 1.45; color: rgba(244,239,230,.88); cursor: pointer; }
+.check input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--red); cursor: pointer; }
+.check a { color: var(--gold); text-underline-offset: 3px; }
+.buy-error { margin: 0; padding: 10px 14px; border-radius: 10px; background: rgba(255,59,78,.16); color: #ffc2c8; font-size: 14px; }
+.info { font-size: 12px; line-height: 1.5; color: var(--muted); margin: 0; }
+.info a { color: var(--muted); }
+.falta { color: var(--gold); }
+.faq { display: grid; gap: 0; margin-top: 30px; }
+.faq details { border-top: 1px solid var(--line); padding: 18px 0; }
+.faq details:last-child { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; font: 600 18px/1.3 var(--display); list-style: none; display: flex; justify-content: space-between; gap: 20px; }
+.faq summary::after { content: "+"; color: var(--red); font-size: 22px; transition: transform .25s; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq p { margin: 12px 0 0; color: rgba(244,239,230,.78); }
+
+footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-top: 1px solid var(--line); background: linear-gradient(180deg, transparent, rgba(4,5,8,.9) 40%); display: grid; gap: 30px; }
+.foot__big { font: 800 clamp(64px, 14vw, 220px)/.85 var(--display); letter-spacing: -.05em; display: flex; align-items: center; gap: .15em; }
+.foot__big .stamp { font: 900 .55em/1 var(--han); color: var(--red); border: 3px solid var(--red); padding: .06em .1em; border-radius: 8px; transform: rotate(-5deg); }
+.foot__row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 14px; color: var(--muted); }
+.foot__row a { color: var(--muted); }
+.foot__legal ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 14px; }
+.foot__legal a, .foot__legal button { color: var(--muted); background: none; border: 0; padding: 0; font: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.foot__legal a:hover, .foot__legal button:hover { color: var(--ink); }
+.foot__legal .desistir { color: var(--ink); font-weight: 600; }
+
+/* text reveals, driven by main.js */
+.rv { opacity: 0; transform: translateY(40px); }
+.no-js .rv, .reduce .rv { opacity: 1; transform: none; }
+
+@media (max-width: 860px) {
+  .nav__links { display: none; }
+  .sec { padding: 110px var(--gut) 90px; align-items: end; }
+  .sec--tall { min-height: 100vh; align-items: end; }
+  .sec--tall .panel { top: auto; position: relative; }
+  .panel, .panel--right { justify-self: start; max-width: none; }
+  .side-han, .progress { display: none; }
+  .hint { display: none; }
+  .stat { gap: 26px; }
+  .big-han { opacity: .6; }
+  .panel { padding: 26px 22px; border-radius: 20px; }
+}
+@media (prefers-reduced-motion: reduce) { .grain, .hint .dot { animation: none; } }
+</style>
+{{ content_for_header }}
+</head>
+<body class="is-locked">
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="veil"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div id="intro" role="status" aria-label="Cargando">
+  <div class="half half--top"></div><div class="half half--bot"></div>
+  <div class="seal">
+    <svg viewBox="0 0 240 240" aria-hidden="true">
+      <defs>
+        <linearGradient id="inkG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6a4a"/><stop offset="1" stop-color="#d4142f"/></linearGradient>
+        <clipPath id="ink"><rect id="inkRect" x="-20" y="240" width="280" height="260"/></clipPath>
+      </defs>
+      <text class="han han--fill" x="120" y="198" text-anchor="middle" clip-path="url(#ink)">龍</text>
+      <text class="han" x="120" y="198" text-anchor="middle">龍</text>
+    </svg>
+    <div class="brand">LÓNG</div>
+    <div class="bar"><i></i></div>
+    <div class="count">000</div>
+  </div>
+  <button class="swipe" type="button" hidden><span class="swipe__line" aria-hidden="true"></span>Desliza para entrar</button>
+</div>
+
+<header class="nav">
+  <a class="logo" href="#top" aria-label="LÓNG, inicio"><span class="stamp" aria-hidden="true">龍</span>LÓNG</a>
+  <nav class="nav__links" aria-label="Principal">
+    <a href="#largo">Medidas</a><a href="#mueve">Articulaciones</a><a href="#brilla">Brillo</a><a href="#colores">Colores</a><a href="#faq">Preguntas</a>
+  </nav>
+  <a class="btn btn--red" href="#comprar">Comprar el dragón</a>
+</header>
+<div class="side-han" aria-hidden="true">九龍 · 香港 · 夜</div>
+<div class="progress" aria-hidden="true"><i></i></div>
+
+<main id="top">
+  <section class="sec" id="hero" data-pose="free" aria-labelledby="hero-h">
+    <div class="big-han big-han--hero" aria-hidden="true">龍</div>
+    <div class="panel">
+      <p class="eyebrow rv">Impreso en 3D, pieza a pieza</p>
+      <h1 id="hero-h" class="rv">Dragón <em>articulado</em> de 88 cm</h1>
+      <p class="lead rv">88 cm de escamas articuladas que giran, se doblan y brillan en la oscuridad. Mueve el ratón: el dragón persigue la perla, como en las leyendas.</p>
+      <div class="row rv"><a class="btn btn--red" href="#comprar">Comprar el dragón</a><a class="btn btn--ghost" href="#mueve">Ver cómo se mueve</a><span class="price">21,95 €</span></div>
+    </div>
+    <div class="hint" aria-hidden="true"><span class="dot"></span>La perla sigue a tu cursor</div>
+  </section>
+
+  <section class="sec" id="largo" data-pose="line" data-side="0" aria-labelledby="largo-h">
+    <div class="big-han" aria-hidden="true">長</div>
+    <div class="panel">
+      <p class="eyebrow rv">De los cuernos a la cola</p>
+      <h2 id="largo-h" class="rv">88 centímetros de <em>dragón</em></h2>
+      <p class="lead rv">Ocupa media estantería extendido y cabe en la palma enroscado. Las escamas en punta cambian de color con la luz.</p>
+      <div class="ruler rv" aria-hidden="true"><div class="ruler__bar"></div><div class="ruler__ticks"><span>0</span><span>22</span><span>44</span><span>66</span><span>88 cm</span></div></div>
+    </div>
+  </section>
+
+  <section class="sec sec--tall" id="mueve" data-pose="coil" data-side="0.3" aria-labelledby="mueve-h">
+    <div class="panel">
+      <p class="eyebrow rv">Sin tornillos ni pegamento</p>
+      <h2 id="mueve-h" class="rv">Cada <em>articulación</em> gira</h2>
+      <p class="lead rv">Las piezas salen de la impresora ya unidas entre sí. Enróscalo en tu muñeca, cuélgalo de una lámpara o déjalo en espiral sobre la mesa.</p>
+      <div class="stat rv"><div><b>1</b><span>pieza continua</span></div><div><b>0</b><span>tornillos</span></div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="brilla" data-pose="s" data-side="-0.3" aria-labelledby="brilla-h">
+    <div class="panel panel--right">
+      <p class="eyebrow rv">Cuando se apaga la ciudad</p>
+      <h2 id="brilla-h" class="rv">Brilla en la <em>oscuridad</em></h2>
+      <p class="lead rv">El material carga la luz del día y la devuelve de noche en un verde suave. Pruébalo: apaga Hong Kong.</p>
+      <button class="btn btn--ghost switch rv" type="button" id="apagar" aria-pressed="false">Apagar la ciudad</button>
+    </div>
+  </section>
+
+  <section class="sec" id="colores" data-pose="s" data-side="0.3" aria-labelledby="colores-h">
+    <div class="panel">
+      <p class="eyebrow rv">Filamento seda de dos tonos</p>
+      <h2 id="colores-h" class="rv">Elige el <em>color</em> de tu dragón</h2>
+      <p class="lead rv">El filamento cambia de tono a lo largo del cuerpo y brilla como metal. Mueve el ratón para girarlo.</p>
+      <fieldset class="swatches rv" id="sw">
+        <legend>Color del dragón</legend>
+        <label class="sw"><input type="radio" name="color" value="arcoiris" checked><span><i style="--c:linear-gradient(135deg,#ffd23f,#9be15d,#38c6d9,#5b7cff,#b45cff,#ff6fa8);--c0:#5b7cff"></i>Arcoíris</span></label>
+        <label class="sw"><input type="radio" name="color" value="galaxia"><span><i style="--c:linear-gradient(135deg,#7b45f0,#a37cff,#d8c25a,#7aa63a,#3e5ee0);--c0:#a37cff"></i>Galaxia</span></label>
+        <label class="sw"><input type="radio" name="color" value="plata"><span><i style="--c:linear-gradient(135deg,#f4f6f9,#a3aab4,#e9ecf1);--c0:#e9ecf1"></i>Plata</span></label>
+        <label class="sw"><input type="radio" name="color" value="fuego"><span><i style="--c:linear-gradient(135deg,#ffcf4a,#ff6a1f,#e8222f);--c0:#ff6a1f"></i>Fuego</span></label>
+      </fieldset>
+    </div>
+  </section>
+
+  <section class="sec" id="comprar" data-pose="s" data-side="0.32" aria-labelledby="comprar-h">
+    <div class="panel">
+      <p class="eyebrow rv">Envío gratis · IVA incluido</p>
+      <h2 id="comprar-h" class="rv">Llévate el <em>dragón</em></h2>
+      <!-- Shopify: js/main.js sends the form to the store's checkout once LONG.shopify (js/datos.js) is filled in, and writes the two acceptances into the order -->
+      <form class="buy rv" id="buy" action="/pages/condiciones" method="get">
+        <input type="hidden" name="color" id="buy-color" value="arcoiris">
+        <fieldset class="packs">
+          <legend>Cantidad</legend>
+          <label class="pack"><input type="radio" name="pack" value="uno" checked><span>1 dragón <b>21,95 €</b></span></label>
+          <label class="pack"><input type="radio" name="pack" value="dos"><span>2 dragones, para regalar <b>32,95 €</b></span></label>
+        </fieldset>
+        <fieldset class="checks">
+          <legend>Antes de comprar</legend>
+          <label class="check"><input type="checkbox" name="condiciones" value="si" required><span>He leído y acepto las <a href="/pages/condiciones" target="_blank">condiciones de venta</a>.</span></label>
+          <label class="check"><input type="checkbox" name="privacidad" value="si" required><span>He leído la <a href="/pages/privacidad" target="_blank">política de privacidad</a>.</span></label>
+        </fieldset>
+        <p class="buy-error" id="buy-error" role="alert" hidden></p>
+        <button class="btn btn--red" type="submit">Comprar el dragón</button>
+        <p class="note">Color elegido: <strong id="buy-color-label">Arcoíris</strong>. Precios con IVA incluido. Envío gratis a <span data-dato="zonasEnvio">la España peninsular y Baleares</span>, entrega en <span data-dato="plazoEntrega">7 a 12 días laborables</span>. <a href="/pages/devoluciones">14 días para desistir</a> y 3 años de garantía.</p>
+        <p class="info">Responsable de tus datos: <span data-dato="titular" class="falta">[titular]</span>. Los usamos solo para tu pedido y los compartimos con Shopify, el proveedor que lo envía (puede estar fuera de la UE) y el transportista. Tienes derecho a acceder a ellos, corregirlos y borrarlos, entre otros. Más en la <a href="/pages/privacidad">política de privacidad</a>.</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="sec" id="faq" data-pose="s" data-side="-0.32" aria-labelledby="faq-h">
+    <div class="panel panel--right">
+      <h2 id="faq-h" class="rv">Preguntas</h2>
+      <div class="faq rv">
+        <details><summary>¿Es un juguete para niños?</summary><p>No: es una figura decorativa. Tiene piezas pequeñas, así que mantenlo lejos de menores de 3 años. Más en <a href="/pages/seguridad">seguridad del producto</a>.</p></details>
+        <details><summary>¿De qué está hecho?</summary><p>De plástico <span data-assumed>PLA</span> impreso en 3D, con pigmento fotoluminiscente para brillar de noche.</p></details>
+        <details><summary>¿Cuánto tarda en llegar?</summary><p>Lo recibes en <span data-dato="plazoEntrega">7 a 12 días laborables</span>, con envío gratis y número de seguimiento. Más en <a href="/pages/envios">envíos</a>.</p></details>
+        <details><summary>¿Y si no me gusta?</summary><p>Tienes 14 días desde que lo recibes para desistir sin dar explicaciones: usa <a href="/pages/desistimiento">«Desistir del contrato aquí»</a>. Y si falla, 3 años de garantía. Más en <a href="/pages/devoluciones">devoluciones y garantía</a>.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot__big"><span class="stamp" aria-hidden="true">龍</span>LÓNG</div>
+  <nav class="foot__legal" aria-label="Información legal">
+    <ul>
+      <li><a href="/pages/aviso-legal">Aviso legal</a></li>
+      <li><a href="/pages/condiciones">Condiciones de venta</a></li>
+      <li><a href="/pages/envios">Envíos</a></li>
+      <li><a href="/pages/devoluciones">Devoluciones y garantía</a></li>
+      <li><a href="/pages/privacidad">Privacidad</a></li>
+      <li><a href="/pages/cookies">Cookies</a></li>
+      <li><a href="/pages/seguridad">Seguridad del producto</a></li>
+      <li><button type="button" data-cookies>Configurar cookies</button></li>
+      <li><a class="desistir" href="/pages/desistimiento">Desistir del contrato aquí</a></li>
+    </ul>
+  </nav>
+  <div class="foot__row"><span>&copy; 2026 LÓNG · Dragones articulados impresos en 3D</span><span><a data-mail href="/pages/aviso-legal">Contacto</a></span></div>
+</footer>
+
+<script src="{{ 'datos.js' | asset_url }}"></script>
+<script>LONG.shopify.tienda = location.host; // the store itself: the checkout opens on this same domain</script>
+<script src="{{ 'cookies.js' | asset_url }}"></script>
+<script src="{{ 'gsap.min.js' | asset_url }}"></script>
+<script src="{{ 'ScrollTrigger.min.js' | asset_url }}"></script>
+<script type="module" src="{{ 'main.js' | asset_url }}"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<h1>Desistir del contrato aquí</h1>
+<p class="lede">Tienes 14 días naturales desde que recibes tu pedido para desistir sin dar explicaciones. Rellena estos datos y pulsa «Confirmar desistimiento».</p>
+
+<form class="form" id="desistir" novalidate>
+  <label class="campo"><span>Nombre y apellidos</span><input name="nombre" autocomplete="name" required></label>
+  <label class="campo"><span>Correo electrónico <small>para enviarte el acuse de recibo</small></span><input name="email" type="email" autocomplete="email" required></label>
+  <label class="campo"><span>Número de pedido <small>está en el correo de confirmación, p. ej. #1001</small></span><input name="pedido" required></label>
+  <fieldset class="campo">
+    <legend>¿De qué desistes?</legend>
+    <label class="op"><input type="radio" name="alcance" value="todo el pedido" checked> De todo el pedido</label>
+    <label class="op"><input type="radio" name="alcance" value="uno de los dos dragones"> Solo de uno de los dos dragones</label>
+  </fieldset>
+  <label class="check"><input type="checkbox" name="privacidad" required> <span>He leído la <a href="/pages/privacidad" target="_blank">política de privacidad</a>.</span></label>
+  <p class="info">Responsable: <span data-dato="titular" class="falta">[nombre y apellidos o razón social]</span>. Usamos estos datos solo para tramitar tu desistimiento y tu reembolso, por obligación legal. Puedes ejercer tus derechos en <a data-mail href="#"><span data-dato="email" class="falta">[correo electrónico]</span></a>.</p>
+  <p class="error" id="desistir-error" role="alert" hidden></p>
+  <button class="btn-pri" type="submit">Confirmar desistimiento</button>
+</form>
+
+<section class="hecho" id="desistir-hecho" hidden tabindex="-1">
+  <h2>Ya casi está: envía el correo</h2>
+  <p>Se ha abierto tu aplicación de correo con el desistimiento escrito y dirigido a <a data-mail href="#"><span data-dato="email" class="falta">[correo electrónico]</span></a>. Pulsa «Enviar». Tu desistimiento vale desde el momento en que lo envías, y te confirmaremos la recepción por correo.</p>
+  <p>Si no se ha abierto, copia este texto y envíalo a <a data-mail href="#"><span data-dato="email" class="falta">[correo electrónico]</span></a>:</p>
+  <pre id="desistir-texto"></pre>
+  <p class="row"><button class="btn-sec" type="button" id="desistir-copiar">Copiar el texto</button><button class="btn-sec" type="button" id="desistir-guardar">Guardar justificante</button></p>
+  <p>Después, devuélvenos el producto como explica <a href="/pages/devoluciones">devoluciones y garantía</a>.</p>
+</section>

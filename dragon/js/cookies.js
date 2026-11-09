@@ -62,7 +62,7 @@
     const b = caja.querySelector('button'); if (b) b.focus({ preventScroll: true });
     return caja;
   }
-  const politica = (document.querySelector('meta[name="long-legal"]')?.content || 'legal/') + 'cookies.html';
+  const politica = document.querySelector('meta[name="long-cookies"]')?.content || (document.querySelector('meta[name="long-legal"]')?.content || 'legal/') + 'cookies.html';
 
   function aviso() {
     const c = montar(`<h2 id="ck-t">¿Aceptas las cookies?</h2>

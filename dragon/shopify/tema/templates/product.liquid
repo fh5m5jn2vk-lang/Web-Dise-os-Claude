@@ -1,0 +1,5 @@
+<h1>{{ product.title }}</h1>
+{% if product.featured_image %}<p><img src="{{ product.featured_image | image_url: width: 1400 }}" alt="{{ product.featured_image.alt | escape }}" width="700" style="width:100%;height:auto;border-radius:16px"></p>{% endif %}
+<p class="lede">{{ product.price_min | money }}{% if product.price_varies %} – {{ product.price_max | money }}{% endif %} · IVA incluido · envío gratis</p>
+<p><a class="btn-pri" href="{{ routes.root_url }}#comprar">Elegir color y comprar</a></p>
+{{ product.description }}

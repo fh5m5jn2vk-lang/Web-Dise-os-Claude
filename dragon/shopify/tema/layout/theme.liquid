@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#07080c">
+<meta name="long-legal" content="/pages/">
+<meta name="long-cookies" content="/pages/cookies">
+<link rel="icon" href="{{ 'favicon.svg' | asset_url }}" type="image/svg+xml">
+{{ 'legal.css' | asset_url | stylesheet_tag }}
+<title>{{ page_title }}{% unless page_title contains 'LÓNG' %} · LÓNG{% endunless %}</title>
+{% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
+<link rel="canonical" href="{{ canonical_url }}">
+{{ content_for_header }}
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="{{ routes.root_url }}" aria-label="LÓNG, volver a la tienda"><span class="stamp" aria-hidden="true">龍</span>LÓNG</a>
+  <a class="back" href="{{ routes.root_url }}">← Volver a la tienda</a>
+</header>
+<main class="doc">
+{{ content_for_layout }}
+</main>
+<footer class="pie">
+  <nav aria-label="Información legal">
+    <ul>
+      <li><a href="/pages/aviso-legal">Aviso legal</a></li>
+      <li><a href="/pages/condiciones">Condiciones de venta</a></li>
+      <li><a href="/pages/envios">Envíos</a></li>
+      <li><a href="/pages/devoluciones">Devoluciones y garantía</a></li>
+      <li><a href="/pages/privacidad">Privacidad</a></li>
+      <li><a href="/pages/cookies">Cookies</a></li>
+      <li><a href="/pages/seguridad">Seguridad del producto</a></li>
+      <li><button type="button" data-cookies>Configurar cookies</button></li>
+      <li><a class="desistir" href="/pages/desistimiento">Desistir del contrato aquí</a></li>
+    </ul>
+  </nav>
+  <small>&copy; {{ 'now' | date: '%Y' }} LÓNG · Dragones articulados impresos en 3D</small>
+</footer>
+<script src="{{ 'datos.js' | asset_url }}"></script>
+<script src="{{ 'cookies.js' | asset_url }}"></script>
+</body>
+</html>

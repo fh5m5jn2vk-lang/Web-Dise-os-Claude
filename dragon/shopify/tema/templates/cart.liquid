@@ -1,0 +1,25 @@
+<h1>Tu carrito</h1>
+{% if cart.item_count == 0 %}
+<p>Tu carrito está vacío.</p>
+<p><a class="btn-pri" href="{{ routes.root_url }}#comprar">Ver el dragón</a></p>
+{% else %}
+<form class="form" id="carrito" action="{{ routes.cart_url }}" method="post">
+  <ul>
+  {% for item in cart.items %}<li>{{ item.quantity }} × {{ item.product.title }} ({{ item.variant.title }}): {{ item.final_line_price | money }} · <a href="{{ item.url_to_remove }}">Quitar</a></li>
+  {% endfor %}</ul>
+  <p><strong>Total: {{ cart.total_price | money }}</strong> · IVA incluido · envío gratis</p>
+  <label class="check"><input type="checkbox" name="c1" required> <span>He leído y acepto las <a href="/pages/condiciones" target="_blank">condiciones de venta</a>.</span></label>
+  <label class="check"><input type="checkbox" name="c2" required> <span>He leído la <a href="/pages/privacidad" target="_blank">política de privacidad</a>.</span></label>
+  <input type="hidden" name="attributes[Condiciones de venta aceptadas]" id="a1">
+  <input type="hidden" name="attributes[Política de privacidad leída]" id="a2">
+  <input type="hidden" name="attributes[Cómo se aceptó]" value="dos casillas separadas, sin marcar por defecto, en el carrito de la tienda">
+  <button class="btn-pri" type="submit" name="checkout">Finalizar compra</button>
+</form>
+<script>
+  // the two acceptances, with the version of the texts and the time, go into the order
+  document.getElementById('carrito').addEventListener('submit', () => {
+    const L = window.LONG || {}, v = `versión ${L.version} del ${L.fechaISO} · ${new Date().toISOString()}`;
+    document.getElementById('a1').value = v; document.getElementById('a2').value = v;
+  });
+</script>
+{% endif %}

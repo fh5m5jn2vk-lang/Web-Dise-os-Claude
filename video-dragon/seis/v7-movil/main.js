@@ -9,7 +9,7 @@ import { createDragon, SEG, SPACING } from '../../../dragon/js/dragon.js';
 const G = await (await fetch('tiempos.json')).json();
 const MOUTH = await (await fetch('boca.json')).json();
 const L = G.lines, W = 1080, H = 1920;
-const END = L[L.length - 1].t1 + 0.15, DUR = Math.max(G.dur, END + 3.4);
+const END = L[L.length - 1].t1 + 0.15, DUR = Math.max(G.dur, END + 2.3);
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const lerp = (a, b, t) => a + (b - a) * t;
 const prog = (t, a, b) => clamp((t - a) / (b - a));

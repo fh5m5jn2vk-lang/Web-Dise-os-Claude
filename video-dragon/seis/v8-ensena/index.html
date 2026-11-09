@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>LÓNG: en mis manos</title>
+<style>
+  @font-face { font-family: Inter; src: url(../../fonts/inter-tight.woff2) format("woff2"); font-weight: 600 800; }
+  @font-face { font-family: Serif; src: url(../../fonts/instrument-italic.woff2) format("woff2"); font-style: italic; }
+  @font-face { font-family: Anton; src: url(../../fonts/anton.woff2) format("woff2"); }
+  @font-face { font-family: Mono; src: url(../../fonts/geist-mono.woff2) format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: Han; src: url(../../fonts/han.woff2) format("woff2"); font-weight: 900; }
+  @font-face { font-family: Syne; src: url(../../fonts/syne.woff2) format("woff2"); font-weight: 400 800; }
+  @font-face { font-family: Manrope; src: url(../../fonts/manrope.woff2) format("woff2"); font-weight: 200 800; }
+  html, body { margin: 0; background: #e9e7e3; overflow: hidden; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: Inter, sans-serif; color: #141414; background: #ebe8e3; }
+  /* the studio: a warm paper wall, a soft pool of light, the dot grid, the big seal watermark */
+  #wall { position: absolute; inset: -60px; background: radial-gradient(70% 45% at 46% 40%, #f7f5f1 0%, #ece9e4 55%, #dcd7d0 100%); }
+  #dots { position: absolute; inset: -60px; background-image: radial-gradient(rgba(0,0,0,.085) 1.6px, transparent 1.8px); background-size: 34px 34px; mask-image: radial-gradient(85% 65% at 50% 42%, #000 25%, transparent 88%); -webkit-mask-image: radial-gradient(85% 65% at 50% 42%, #000 25%, transparent 88%); }
+  #seal { position: absolute; right: -150px; top: 1080px; font: 900 900px/1 Han; color: transparent; -webkit-text-stroke: 3px rgba(224,48,47,.08); transform: rotate(-6deg); }
+  #grain { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; opacity: .05; mix-blend-mode: multiply; }
+  #dim { position: absolute; inset: 0; background: radial-gradient(60% 40% at 30% 45%, #0d1512 0%, #050608 70%); opacity: 0; }
+  #world { position: absolute; inset: 0; transform-origin: 40% 45%; }
+  .it { position: absolute; left: 0; top: 0; opacity: 0; will-change: transform, opacity, filter; transform-origin: 50% 50%; }
+  /* the caption: big, centred, word by word as he says it, the word being said on a yellow marker */
+  #cap { position: absolute; left: 40px; right: 40px; top: 300px; text-align: center; font: 800 84px/1.12 Inter, sans-serif; letter-spacing: -0.045em; }
+  #cap .w { display: inline-block; margin: 0 .1em; padding: 0 .1em; border-radius: 14px; color: #141414; opacity: 0; }
+  #cap .w.k { font: italic 400 98px/1 Serif, serif; letter-spacing: -0.02em; color: #e0302f; }
+  #cap .w.cur { background: #ffd43b; }
+  #cap.dark .w { color: #f4f2ee; text-shadow: 0 4px 30px rgba(0,0,0,.7); }
+  #cap.dark .w.k { color: #7dffc4; text-shadow: 0 0 30px rgba(63,255,170,.6); }
+  #cap.dark .w.cur { background: rgba(63,255,170,.22); }
+  /* the 88 cm rule beside the hanging dragon */
+  #rule { position: absolute; left: 0; top: 0; width: 6px; background: #e0302f; border-radius: 3px; opacity: 0; transform-origin: 50% 0; }
+  #rule::before, #rule::after { content: ""; position: absolute; left: -16px; width: 38px; height: 6px; background: #e0302f; border-radius: 3px; }
+  #rule::before { top: 0; } #rule::after { bottom: 0; }
+  #rule b { position: absolute; right: 34px; top: 50%; transform: translateY(-50%); font: 400 100px/0.9 Anton; color: #e0302f; white-space: nowrap; text-align: right; }
+  #rule b small { display: block; font: 500 26px Mono, monospace; color: #8b8781; letter-spacing: .02em; margin-top: 6px; }
+  .sws8 { display: flex; gap: 14px; background: #fff; padding: 18px 24px; border-radius: 999px; box-shadow: 0 22px 40px -20px rgba(0,0,0,.4); }
+  .sws8 i { width: 58px; height: 58px; border-radius: 50%; box-shadow: inset 0 0 0 2px rgba(0,0,0,.1); opacity: 0; }
+  /* what pops up: polaroids, cards, stickers, stamps */
+  .pol { background: #fff; padding: 16px 16px 58px; box-shadow: 0 22px 40px -18px rgba(0,0,0,.35); border-radius: 6px; }
+  .pol img { display: block; width: 300px; height: 300px; object-fit: cover; border-radius: 2px; }
+  .pol span { position: absolute; left: 0; right: 0; bottom: 12px; text-align: center; font: italic 400 38px Serif, serif; color: #333; }
+  .pin { position: absolute; top: -10px; left: 50%; width: 26px; height: 26px; margin-left: -13px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #ff8a80, #c62828 60%); box-shadow: 0 6px 10px rgba(0,0,0,.3); }
+  .stamp { font: 400 104px/0.98 Anton, sans-serif; color: #e0302f; border: 9px solid #e0302f; border-radius: 18px; padding: 8px 26px 4px; letter-spacing: .01em; background: rgba(255,255,255,.35); mix-blend-mode: multiply; white-space: nowrap; }
+  .sticker { background: #ffd43b; color: #141414; font: 800 46px/1.05 Inter; letter-spacing: -0.04em; padding: 26px 30px; border-radius: 10px; box-shadow: 0 18px 30px -14px rgba(0,0,0,.4); text-align: center; }
+  .card { background: #fff; border-radius: 24px; padding: 26px 30px; box-shadow: 0 26px 50px -24px rgba(0,0,0,.35); }
+  .card .ttl { font: 500 24px Mono; color: #8b8781; margin-bottom: 14px; }
+  .chk { display: flex; align-items: center; gap: 16px; font: 400 44px/1.25 Anton; letter-spacing: .01em; opacity: .25; }
+  .chk.on { opacity: 1; }
+  .chk b { width: 34px; height: 34px; border: 4px solid #141414; border-radius: 6px; display: grid; place-items: center; font: 900 26px Inter; color: #fff; box-sizing: border-box; }
+  .chk.on b { background: #e0302f; border-color: #e0302f; }
+  .big { font: 400 250px/0.86 Anton; letter-spacing: -0.01em; white-space: nowrap; }
+  .big em { font-style: normal; color: #e0302f; }
+  .chip { background: #141414; color: #fff; font: 700 36px Inter; letter-spacing: -0.03em; padding: 16px 26px; border-radius: 999px; display: flex; align-items: center; gap: 14px; white-space: nowrap; }
+  .grid8 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 420px; }
+  .grid8 div { background: #fff; border-radius: 16px; padding: 10px 12px; box-shadow: 0 14px 26px -18px rgba(0,0,0,.35); font: 800 22px Inter; letter-spacing: -0.03em; display: flex; align-items: center; gap: 10px; opacity: 0; transform: translateY(14px); }
+  .grid8 div i { width: 40px; height: 40px; border-radius: 50%; flex: none; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
+  .grid8 div.lum { outline: 4px solid #3fffc0; box-shadow: 0 0 40px rgba(63,255,192,.55); }
+  .price { background: #fff; border-radius: 28px; padding: 28px 36px; box-shadow: 0 30px 60px -26px rgba(0,0,0,.4); text-align: center; }
+  .price b { display: block; font: 400 150px/0.9 Anton; color: #e0302f; letter-spacing: .005em; }
+  .price span { font: 700 34px Inter; letter-spacing: -0.03em; color: #333; }
+  .price span em { font-style: normal; background: #ffd43b; padding: 0 8px; border-radius: 6px; }
+  .btn { background: #141414; color: #fff; font: 800 42px Inter; letter-spacing: -0.04em; padding: 26px 44px; border-radius: 999px; box-shadow: 0 20px 40px -18px rgba(0,0,0,.5); white-space: nowrap; }
+  .bubble { background: #fff; border-radius: 30px 30px 30px 6px; padding: 22px 30px; font: 700 40px Inter; letter-spacing: -0.04em; box-shadow: 0 20px 40px -20px rgba(0,0,0,.35); }
+  .glowtag { background: #0d1512; color: #d9fff0; font: 800 46px/1.05 Inter; letter-spacing: -0.04em; padding: 26px 30px; border-radius: 12px; text-align: center; box-shadow: 0 0 60px rgba(63,255,170,.45), 0 0 0 2px rgba(63,255,192,.35) inset; }
+  .glowtag small { display: block; margin-top: 8px; font: 500 26px Mono; color: #7dffc4; letter-spacing: 0; }
+  .finger { width: 90px; height: 90px; }
+  #gl2 { position: absolute; inset: 0; width: 1080px; height: 1920px; pointer-events: none; }
+  #items { position: absolute; inset: 0; }
+  #flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
+</style>
+<script type="importmap">{"imports":{"three":"../../../dragon/vendor/three/three.module.min.js","three/addons/":"../../../dragon/vendor/three/addons/"}}</script>
+</head>
+<body>
+<div id="stage">
+  <div id="world">
+    <div id="wall"></div><div id="dots"></div><div id="seal">龍</div>
+    <div id="dim"></div>
+  </div>
+  <canvas id="grain" width="540" height="960"></canvas>
+  <canvas id="gl2" width="1080" height="1920"></canvas>
+  <div id="items"></div>
+  <div id="rule"><b>88 CM<small>de la cabeza<br>a la cola</small></b></div>
+  <div id="cap"></div>
+  <div id="flash"></div>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

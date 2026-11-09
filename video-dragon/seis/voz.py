@@ -15,7 +15,11 @@
 # guion.json: { "inicio": 0.3, "duracion"?: s, "final"?: s, "voz": {defaults}, "lineas": [ { "texto", "voz": {...}, "pausa" | "en", "id", "quien" } ] }
 #   voz keys: motor (kokoro|piper|eleven), voz (em_alex|ef_dora|em_santa) or modelo/hablante for piper, estilo, velocidad, tono (pitch ratio)
 #   archivo keys: archivo (path to the recording, relative to the film dir); lines from one recording share it
-#   eleven keys: voz_id, modelo (eleven_multilingual_v2), estabilidad, similitud, estilo_ia, velocidad (0.7-1.2)
+#   eleven keys: voz_id, modelo (eleven_multilingual_v2 | eleven_v3), estabilidad, similitud, estilo_ia, velocidad (0.7-1.2)
+#     eleven_v3 is the expressive model: "etiqueta" (e.g. "[excited]") goes before the line, only to the voice, never
+#     into the captions; v3 takes stability 0, 0.5 or 1 and no speed, so use "tempo" for pace.
+#   any engine: "recorte" (s): every silence inside a line longer than this is cut down to it, as an editor's jump cuts
+#     would (no dead air); "tempo": speed the finished line up (pitch kept), e.g. 1.06
 import sys, os, json, re, wave, subprocess, tempfile, difflib, unicodedata, numpy as np
 
 FILM = sys.argv[1]
@@ -54,9 +58,14 @@ STYLES = {
 
 def eleven(text, v):
     import hashlib, base64, requests
-    body = {'text': text, 'model_id': v.get('modelo', 'eleven_multilingual_v2'),
-            'voice_settings': {'stability': v.get('estabilidad', 0.38), 'similarity_boost': v.get('similitud', 0.8),
-                               'style': v.get('estilo_ia', 0.4), 'use_speaker_boost': True, 'speed': v.get('velocidad', 1.05)}}
+    model = v.get('modelo', 'eleven_multilingual_v2')
+    if model == 'eleven_v3':
+        body = {'text': (v.get('etiqueta', '') + ' ' + text).strip(), 'model_id': model,
+                'voice_settings': {'stability': v.get('estabilidad', 0.5), 'similarity_boost': v.get('similitud', 0.8), 'use_speaker_boost': True}}
+    else:
+        body = {'text': text, 'model_id': model,
+                'voice_settings': {'stability': v.get('estabilidad', 0.38), 'similarity_boost': v.get('similitud', 0.8),
+                                   'style': v.get('estilo_ia', 0.4), 'use_speaker_boost': True, 'speed': v.get('velocidad', 1.05)}}
     key = hashlib.sha1(json.dumps([v['voz_id'], body], sort_keys=True).encode()).hexdigest()[:16]
     os.makedirs(f'{SCR}/eleven', exist_ok=True); mp3 = f'{SCR}/eleven/{key}.mp3'
     if not os.path.exists(mp3):
@@ -96,6 +105,37 @@ def fit(y, slot):
     # speed a line up (pitch kept) so it ends before the next fixed start
     k = min(1.3, len(y) / OUT_SR / slot)
     if k <= 1.0: return y
+    with tempfile.TemporaryDirectory() as d:
+        src, dst = os.path.join(d, 'a.wav'), os.path.join(d, 'b.wav')
+        with wave.open(src, 'wb') as f: f.setnchannels(1); f.setsampwidth(2); f.setframerate(OUT_SR); f.writeframes((np.clip(y, -1, 1) * 32767).astype(np.int16).tobytes())
+        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', src, '-af', f'rubberband=tempo={k:.4f}', dst], check=True)
+        with wave.open(dst) as f: return np.frombuffer(f.readframes(f.getnframes()), np.int16).astype(np.float32) / 32768
+
+def tighten(y, maxgap):
+    # cut every silence inside the line down to maxgap seconds (kept half on each side, 6 ms crossfades)
+    hop = int(0.01 * OUT_SR); n = len(y) // hop
+    if n < 3: return y
+    rms = np.array([np.sqrt(np.mean(y[i * hop:(i + 1) * hop] ** 2)) for i in range(n)])
+    quiet = 20 * np.log10(rms + 1e-7) < 20 * np.log10(rms.max() + 1e-7) - 34
+    keep = int(maxgap / 0.01); out = []; i = 0; last = 0; fade = int(0.006 * OUT_SR)
+    while i < n:
+        if quiet[i]:
+            j = i
+            while j < n and quiet[j]: j += 1
+            if i > 0 and j < n and j - i > keep:          # an inner pause, longer than allowed
+                a = (i + keep // 2) * hop; b = (j - (keep - keep // 2)) * hop
+                seg = y[last:a].copy()
+                if out and len(seg) > fade: seg[:fade] *= np.linspace(0, 1, fade)
+                if len(seg) > fade: seg[-fade:] *= np.linspace(1, 0, fade)
+                out.append(seg); last = b
+            i = j
+        else: i += 1
+    seg = y[last:].copy()
+    if out and len(seg) > fade: seg[:fade] *= np.linspace(0, 1, fade)
+    out.append(seg)
+    return np.concatenate(out)
+
+def stretch(y, k):
     with tempfile.TemporaryDirectory() as d:
         src, dst = os.path.join(d, 'a.wav'), os.path.join(d, 'b.wav')
         with wave.open(src, 'wb') as f: f.setnchannels(1); f.setsampwidth(2); f.setframerate(OUT_SR); f.writeframes((np.clip(y, -1, 1) * 32767).astype(np.int16).tobytes())
@@ -181,6 +221,8 @@ for li, L in enumerate(G['lineas']):
     a, sr = synth(L['texto'], v)
     if v.get('estilo') == 'susurro': a = whisperize(a, sr)
     y = chain(a, sr, v)
+    if v.get('recorte'): y = tighten(y, v['recorte'])
+    if v.get('tempo') and abs(v['tempo'] - 1) > 1e-3: y = stretch(y, v['tempo'])
     nxt = G['lineas'][li + 1] if li + 1 < len(G['lineas']) else None
     if v.get('motor') in ('archivo', 'eleven') and nxt and 'en' in nxt: y = fit(y, max(0.3, nxt['en'] - t - 0.06))
     elif v.get('motor') in ('archivo', 'eleven') and not nxt and 'duracion' in G: y = fit(y, max(0.3, G['duracion'] - t - 0.05))  # the last line ends inside the film

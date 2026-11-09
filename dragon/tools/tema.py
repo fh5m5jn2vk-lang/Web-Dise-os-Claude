@@ -19,6 +19,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 # the owner's details are not in this public repository: they live in the store, in the shop metafield long.datos
 # (JSON: titular, nif, domicilio, email, web...), and the theme hands them to datos.js before it runs
 TIENDA = "{% if shop.metafields.long.datos %}<script>window.LONG_TIENDA = {{ shop.metafields.long.datos.value | json }};</script>{% endif %}"
+PRODUCTO = "<script>window.LONG_PRODUCTO = {{ all_products['long-dragon-articulado-88-cm'] | json }};</script>"
 OUT = ROOT / 'shopify' / 'tema'
 spec = importlib.util.spec_from_file_location('legal', ROOT / 'tools' / 'legal.py')
 legal = importlib.util.module_from_spec(spec); spec.loader.exec_module(legal)
@@ -104,7 +105,7 @@ def index():
         rep(f'url(fonts/{f}.woff2)', f'url({au(f + ".woff2")})')
     s = re.sub(r'legal/([\w-]+)\.html', r'/pages/\1', s)
     rep('<script src="js/datos.js"></script>',
-        f'{TIENDA}\n<script src="{au("datos.js")}"></script>\n<script>LONG.shopify.tienda = location.host; // the store itself: the checkout opens on this same domain</script>')
+        f'{TIENDA}\n{PRODUCTO}\n<script src="{au("datos.js")}"></script>\n<script>LONG.shopify.tienda = location.host; // the store itself: the checkout opens on this same domain</script>')
     rep('<script src="js/cookies.js"></script>', f'<script src="{au("cookies.js")}"></script>')
     rep('<script src="vendor/gsap/gsap.min.js"></script>', f'<script src="{au("gsap.min.js")}"></script>')
     rep('<script src="vendor/gsap/ScrollTrigger.min.js"></script>', f'<script src="{au("ScrollTrigger.min.js")}"></script>')

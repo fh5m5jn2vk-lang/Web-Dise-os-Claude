@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>LÓNG: dragón articulado impreso en 3D</title>
-<meta name="description" content="Dragón articulado de 88 cm impreso en 3D, con escamas que giran y brillan en la oscuridad. Cuatro colores, envío gratis, 21,95 € IVA incluido.">
+<meta name="description" content="Dragón articulado de 88 cm impreso en 3D, con escamas que giran. Ocho colores, uno de ellos brilla en la oscuridad. Envío gratis, 21,95 € IVA incluido.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="LÓNG: dragón articulado impreso en 3D">
-<meta property="og:description" content="88 cm de escamas que giran y brillan en la oscuridad. 21,95 €.">
+<meta property="og:description" content="88 cm de escamas que giran, en ocho colores. El Luminoso brilla en la oscuridad. 21,95 €.">
 <meta property="og:image" content="https:{{ 'share.jpg' | asset_url }}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#07080c">
@@ -225,7 +225,7 @@ footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-t
     <div class="panel">
       <p class="eyebrow rv">Impreso en 3D, pieza a pieza</p>
       <h1 id="hero-h" class="rv">Dragón <em>articulado</em> de 88 cm</h1>
-      <p class="lead rv">88 cm de escamas articuladas que giran, se doblan y brillan en la oscuridad. Mueve el ratón: el dragón persigue la perla, como en las leyendas.</p>
+      <p class="lead rv">88 cm de escamas articuladas que giran y se doblan, en ocho colores, y uno de ellos brilla en la oscuridad. Mueve el ratón: el dragón persigue la perla, como en las leyendas.</p>
       <div class="row rv"><a class="btn btn--red" href="#comprar">Comprar el dragón</a><a class="btn btn--ghost" href="#mueve">Ver cómo se mueve</a><span class="price">21,95 €</span></div>
     </div>
     <div class="hint" aria-hidden="true"><span class="dot"></span>La perla sigue a tu cursor</div>
@@ -252,24 +252,28 @@ footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-t
 
   <section class="sec" id="brilla" data-pose="s" data-side="-0.3" aria-labelledby="brilla-h">
     <div class="panel panel--right">
-      <p class="eyebrow rv">Cuando se apaga la ciudad</p>
+      <p class="eyebrow rv">Color Luminoso</p>
       <h2 id="brilla-h" class="rv">Brilla en la <em>oscuridad</em></h2>
-      <p class="lead rv">El material carga la luz del día y la devuelve de noche en un verde suave. Pruébalo: apaga Hong Kong.</p>
-      <button class="btn btn--ghost switch rv" type="button" id="apagar" aria-pressed="false">Apagar la ciudad</button>
+      <p class="lead rv">El dragón de color Luminoso carga la luz del día y la devuelve de noche en un verde suave. Pruébalo: apaga Hong Kong. Los otros siete colores tienen acabado metalizado y no brillan.</p>
+      <div class="row rv"><button class="btn btn--ghost switch" type="button" id="apagar" aria-pressed="false">Apagar la ciudad</button><button class="btn btn--ghost" type="button" id="elegir-luminoso">Quiero el Luminoso</button></div>
     </div>
   </section>
 
   <section class="sec" id="colores" data-pose="s" data-side="0.3" aria-labelledby="colores-h">
     <div class="panel">
-      <p class="eyebrow rv">Filamento seda de dos tonos</p>
+      <p class="eyebrow rv">Ocho colores</p>
       <h2 id="colores-h" class="rv">Elige el <em>color</em> de tu dragón</h2>
-      <p class="lead rv">El filamento cambia de tono a lo largo del cuerpo y brilla como metal. Mueve el ratón para girarlo.</p>
+      <p class="lead rv">Siete acabados metalizados que cambian de tono con la luz, y el Luminoso, que brilla de noche. Mueve el ratón para girarlo.</p>
       <fieldset class="swatches rv" id="sw">
         <legend>Color del dragón</legend>
-        <label class="sw"><input type="radio" name="color" value="arcoiris" checked><span><i style="--c:linear-gradient(135deg,#ffd23f,#9be15d,#38c6d9,#5b7cff,#b45cff,#ff6fa8);--c0:#5b7cff"></i>Arcoíris</span></label>
-        <label class="sw"><input type="radio" name="color" value="galaxia"><span><i style="--c:linear-gradient(135deg,#7b45f0,#a37cff,#d8c25a,#7aa63a,#3e5ee0);--c0:#a37cff"></i>Galaxia</span></label>
+        <label class="sw"><input type="radio" name="color" value="metal" checked><span><i style="--c:linear-gradient(135deg,#7b3fe4,#4f6ee8,#c9b54a,#5aa64a);--c0:#7b8ff0"></i>Metalizado multicolor</span></label>
+        <label class="sw"><input type="radio" name="color" value="orojo"><span><i style="--c:linear-gradient(135deg,#ffcf3a,#ff8a1f,#e8322f);--c0:#ff6a1f"></i>Oro y rojo</span></label>
+        <label class="sw"><input type="radio" name="color" value="azulmorado"><span><i style="--c:linear-gradient(135deg,#8a3ff0,#4a4ff0,#2f3fd0);--c0:#6a4ff0"></i>Azul y morado</span></label>
+        <label class="sw"><input type="radio" name="color" value="azulverde"><span><i style="--c:linear-gradient(135deg,#3aa84a,#2d8f7a,#2f6fd0);--c0:#2d9a8a"></i>Azul y verde</span></label>
+        <label class="sw"><input type="radio" name="color" value="oro"><span><i style="--c:linear-gradient(135deg,#ffe27a,#f5c021,#e0a800);--c0:#f5c021"></i>Oro</span></label>
         <label class="sw"><input type="radio" name="color" value="plata"><span><i style="--c:linear-gradient(135deg,#f4f6f9,#a3aab4,#e9ecf1);--c0:#e9ecf1"></i>Plata</span></label>
-        <label class="sw"><input type="radio" name="color" value="fuego"><span><i style="--c:linear-gradient(135deg,#ffcf4a,#ff6a1f,#e8222f);--c0:#ff6a1f"></i>Fuego</span></label>
+        <label class="sw"><input type="radio" name="color" value="pastel"><span><i style="--c:linear-gradient(135deg,#fff3a6,#ffd1e8,#c9f0ff);--c0:#ffd1e8"></i>Pastel variado</span></label>
+        <label class="sw"><input type="radio" name="color" value="luminoso"><span><i style="--c:linear-gradient(135deg,#f4f7ee,#dfe9d5);--c0:#7dffb0"></i>Luminoso</span></label>
       </fieldset>
     </div>
   </section>
@@ -280,7 +284,7 @@ footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-t
       <h2 id="comprar-h" class="rv">Llévate el <em>dragón</em></h2>
       <!-- Shopify: js/main.js sends the form to the store's checkout once LONG.shopify (js/datos.js) is filled in, and writes the two acceptances into the order -->
       <form class="buy rv" id="buy" action="/pages/condiciones" method="get">
-        <input type="hidden" name="color" id="buy-color" value="arcoiris">
+        <input type="hidden" name="color" id="buy-color" value="metal">
         <fieldset class="packs">
           <legend>Cantidad</legend>
           <label class="pack"><input type="radio" name="pack" value="uno" checked><span>1 dragón <b>21,95 €</b></span></label>
@@ -293,7 +297,7 @@ footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-t
         </fieldset>
         <p class="buy-error" id="buy-error" role="alert" hidden></p>
         <button class="btn btn--red" type="submit">Comprar el dragón</button>
-        <p class="note">Color elegido: <strong id="buy-color-label">Arcoíris</strong>. Precios con IVA incluido. Envío gratis a <span data-dato="zonasEnvio">la España peninsular y Baleares</span>, entrega en <span data-dato="plazoEntrega">7 a 12 días laborables</span>. <a href="/pages/devoluciones">14 días para desistir</a> y 3 años de garantía.</p>
+        <p class="note">Color elegido: <strong id="buy-color-label">Metalizado multicolor</strong>. Precios con IVA incluido. Envío gratis a <span data-dato="zonasEnvio">la España peninsular y Baleares</span>, entrega en <span data-dato="plazoEntrega">7 a 12 días laborables</span>. <a href="/pages/devoluciones">14 días para desistir</a> y 3 años de garantía.</p>
         <p class="info">Responsable de tus datos: <span data-dato="titular" class="falta">[titular]</span>. Los usamos solo para tu pedido y los compartimos con Shopify, el proveedor que lo envía (puede estar fuera de la UE) y el transportista. Tienes derecho a acceder a ellos, corregirlos y borrarlos, entre otros. Más en la <a href="/pages/privacidad">política de privacidad</a>.</p>
       </form>
     </div>
@@ -303,8 +307,9 @@ footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-t
     <div class="panel panel--right">
       <h2 id="faq-h" class="rv">Preguntas</h2>
       <div class="faq rv">
-        <details><summary>¿Es un juguete para niños?</summary><p>No: es una figura decorativa. Tiene piezas pequeñas, así que mantenlo lejos de menores de 3 años. Más en <a href="/pages/seguridad">seguridad del producto</a>.</p></details>
-        <details><summary>¿De qué está hecho?</summary><p>De plástico <span data-assumed>PLA</span> impreso en 3D, con pigmento fotoluminiscente para brillar de noche.</p></details>
+        <details><summary>¿Es un juguete para niños?</summary><p>Es una figura decorativa recomendada a partir de 14 años, no un juguete para niños pequeños. Tiene piezas pequeñas, así que mantenlo lejos de menores de 3 años. Más en <a href="/pages/seguridad">seguridad del producto</a>.</p></details>
+        <details><summary>¿De qué está hecho?</summary><p>De plástico impreso en 3D, con acabado pulido. El color Luminoso lleva además un pigmento que brilla en la oscuridad.</p></details>
+        <details><summary>¿Brillan todos los colores?</summary><p>No, solo el Luminoso: se carga con la luz y brilla en verde de noche. Los otros siete tienen acabado metalizado, que cambia de tono con la luz, pero no brillan.</p></details>
         <details><summary>¿Cuánto tarda en llegar?</summary><p>Lo recibes en <span data-dato="plazoEntrega">7 a 12 días laborables</span>, con envío gratis y número de seguimiento. Más en <a href="/pages/envios">envíos</a>.</p></details>
         <details><summary>¿Y si no me gusta?</summary><p>Tienes 14 días desde que lo recibes para desistir sin dar explicaciones: usa <a href="/pages/desistimiento">«Desistir del contrato aquí»</a>. Y si falla, 3 años de garantía. Más en <a href="/pages/devoluciones">devoluciones y garantía</a>.</p></details>
       </div>
@@ -331,6 +336,7 @@ footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-t
 </footer>
 
 {% if shop.metafields.long.datos %}<script>window.LONG_TIENDA = {{ shop.metafields.long.datos.value | json }};</script>{% endif %}
+<script>window.LONG_PRODUCTO = {{ all_products['long-dragon-articulado-88-cm'] | json }};</script>
 <script src="{{ 'datos.js' | asset_url }}"></script>
 <script>LONG.shopify.tienda = location.host; // the store itself: the checkout opens on this same domain</script>
 <script src="{{ 'cookies.js' | asset_url }}"></script>

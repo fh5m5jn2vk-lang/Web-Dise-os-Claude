@@ -241,7 +241,7 @@ export function createScene(canvas) {
   const target = new THREE.Vector3();
 
   function setColor(id) { S.color = id; D.setColor(id); }
-  setColor('arcoiris');
+  setColor('metal');
 
   function frame() {
     const w = canvas.clientWidth, h = canvas.clientHeight;

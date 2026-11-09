@@ -14,6 +14,14 @@ export const PALETTE = {
   galaxia: { stops: ['#7b45f0', '#a37cff', '#d8c25a', '#7aa63a', '#3e5ee0'], horn: '#9f7bff', whisker: '#e7d9a0' },
   plata: { stops: ['#e9ecf1', '#b7bdc6', '#f4f6f9', '#a3aab4'], horn: '#f4f6f9', whisker: '#ffffff' },
   fuego: { stops: ['#ffb12e', '#ff6a1f', '#e8222f', '#ff8a2e', '#ffcf4a'], horn: '#ffd27a', whisker: '#ffe08a' },
+  // the eight colours on sale
+  metal: { stops: ['#7b3fe4', '#4f6ee8', '#c9b54a', '#5aa64a', '#3b8f9e', '#7b3fe4'], horn: '#a98bff', whisker: '#e8d48a' },
+  orojo: { stops: ['#ffcc3a', '#ff9a24', '#f0522c', '#d81e2a', '#e8322f'], horn: '#ffd27a', whisker: '#ffb347' },
+  azulmorado: { stops: ['#8a3ff0', '#6a3ff0', '#4a4ff0', '#2f3fd0', '#3a2fd8'], horn: '#9a6bff', whisker: '#a7b8ff' },
+  azulverde: { stops: ['#3aa84a', '#2d9a6a', '#2f7fc8', '#2f6fd0', '#3a9f55'], horn: '#4fb36a', whisker: '#4f8fe0' },
+  oro: { stops: ['#ffd84a', '#f5c021', '#ffe27a', '#e8b010'], horn: '#ffe9a0', whisker: '#ffe08a' },
+  pastel: { stops: ['#fff3a6', '#ffd1e8', '#c9f0ff', '#e6d6ff', '#fff3a6'], horn: '#bff0ff', whisker: '#bff0ff' },
+  luminoso: { stops: ['#eef3e6', '#f4f7ee', '#e6eedd'], horn: '#f7f9f2', whisker: '#ffffff' },
 };
 
 const radiusAt = (u) => {
@@ -226,7 +234,7 @@ export function createDragon(scene, opts = {}) {
     body.instanceColor.needsUpdate = true;
     headMat.color.set(p.stops[0]); hornMat.color.set(p.horn); whiskerMat.color.set(p.whisker);
   }
-  setColor('arcoiris');
+  setColor('metal');
 
   function update(spine, time, glow) {
     curve.points.forEach((p, i) => p.copy(spine[i]));

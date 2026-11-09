@@ -94,18 +94,28 @@ ScrollTrigger.create({ start: 0, end: 'max', onUpdate: (s) => { if (scene) scene
 // the city goes dark by itself while the glow section is on screen, and the switch does it too
 const sw = document.getElementById('apagar');
 let manual = false;
-function setDark(on) { sw.setAttribute('aria-pressed', String(on)); sw.textContent = on ? 'Encender la ciudad' : 'Apagar la ciudad'; if (scene) scene.setGlow(on ? 1 : 0); }
+// only the Luminoso colour glows: while the city is dark the dragon wears it, then goes back to the chosen colour
+function setDark(on) {
+  sw.setAttribute('aria-pressed', String(on)); sw.textContent = on ? 'Encender la ciudad' : 'Apagar la ciudad';
+  if (scene) { scene.setColor(on ? 'luminoso' : document.getElementById('buy-color').value); scene.setGlow(on ? 1 : 0); }
+}
 sw.addEventListener('click', () => { manual = true; setDark(sw.getAttribute('aria-pressed') !== 'true'); });
 ScrollTrigger.create({ trigger: '#brilla', start: 'top 45%', end: 'bottom 55%', onEnter: () => !manual && setDark(true), onEnterBack: () => !manual && setDark(true), onLeave: () => setDark(false), onLeaveBack: () => setDark(false) });
 
 /* ---------- colours ---------- */
-const names = { arcoiris: 'Arcoíris', galaxia: 'Galaxia', plata: 'Plata', fuego: 'Fuego' };
-document.querySelectorAll('#sw input').forEach((i) => i.addEventListener('change', () => {
-  if (!i.checked) return;
-  if (scene) scene.setColor(i.value);
-  document.getElementById('buy-color').value = i.value;
-  document.getElementById('buy-color-label').textContent = names[i.value];
-}));
+// the keys of the swatches, and the colour names of the Shopify product's variants
+const names = { metal: 'Metalizado multicolor', orojo: 'Oro y rojo', azulmorado: 'Azul y morado', azulverde: 'Azul y verde', oro: 'Oro', plata: 'Plata', pastel: 'Pastel variado', luminoso: 'Luminoso' };
+function pickColor(key) {
+  if (scene && sw.getAttribute('aria-pressed') !== 'true') scene.setColor(key);
+  document.getElementById('buy-color').value = key;
+  document.getElementById('buy-color-label').textContent = names[key];
+}
+document.querySelectorAll('#sw input').forEach((i) => i.addEventListener('change', () => { if (i.checked) pickColor(i.value); }));
+// «Quiero el Luminoso»: choose it and go to the buy panel
+document.getElementById('elegir-luminoso').addEventListener('click', () => {
+  const r = document.querySelector('#sw input[value="luminoso"]'); r.checked = true; pickColor('luminoso');
+  document.getElementById('comprar').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+});
 
 /* ---------- buying: two separate acceptances, then Shopify's checkout ---------- */
 // The store and the variant ids live in js/datos.js (LONG.shopify). Each acceptance travels with the order as a cart
@@ -129,7 +139,10 @@ buy.addEventListener('submit', (e) => {
     'Política de privacidad leída': `${version} · ${now}`,
     'Cómo se aceptó': 'dos casillas separadas, sin marcar por defecto, en la web de LÓNG',
   };
-  const id = S.tienda && S.variantes?.[color]?.[pack];
+  // in the Shopify store the theme hands over the live product (LONG_PRODUCTO): its variants are found by colour and pack
+  const P = window.LONG_PRODUCTO, cantidad = pack === 'dos' ? '2 dragones' : '1 dragón';
+  const live = P && P.variants && P.variants.find((v) => v.option1 === names[color] && v.option2 === cantidad);
+  const id = S.tienda && (live ? live.id : S.variantes?.[color]?.[pack]);
   if (id) {
     const q = Object.entries(attrs).map(([k, v]) => `attributes[${encodeURIComponent(k)}]=${encodeURIComponent(v)}`).join('&');
     location.href = `https://${S.tienda}/cart/${id}:1?${q}`;

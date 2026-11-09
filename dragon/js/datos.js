@@ -13,7 +13,7 @@ window.LONG = {
   // ---- envíos y devoluciones (confírmalos con tu proveedor) ----
   zonasEnvio: 'la España peninsular y Baleares',
   plazoEntrega: '7 a 12 días laborables',
-  origenEnvio: '',    // desde dónde sale el paquete, p. ej. «nuestro taller de producción en China» o «un almacén en España»
+  origenEnvio: 'China', // desde dónde sale el paquete, p. ej. «nuestro taller de producción en China» o «un almacén en España»
   direccionDevoluciones: '', // dónde te devuelven el producto; si lo dejas vacío, se usa tu domicilio
 
   // ---- seguridad del producto (Reglamento UE 2023/988): pídeselos al proveedor ----
@@ -31,10 +31,14 @@ window.LONG = {
     tienda: 't5hfva-w3.myshopify.com',
     producto: 'long-dragon-articulado-88-cm', // el «handle» del producto: si faltan los IDs, el botón abre su ficha
     variantes: {
-      arcoiris: { uno: '57684870267204', dos: '57684870299972' },
-      galaxia: { uno: '57684870332740', dos: '57684870365508' },
+      metal: { uno: '57686468690244', dos: '57686468723012' },
+      orojo: { uno: '57686468755780', dos: '57686468788548' },
+      azulmorado: { uno: '57686468821316', dos: '57686468854084' },
+      azulverde: { uno: '57686468886852', dos: '57686468919620' },
+      oro: { uno: '57686468952388', dos: '57686468985156' },
       plata: { uno: '57684870398276', dos: '57684870431044' },
-      fuego: { uno: '57684870463812', dos: '57684870496580' },
+      pastel: { uno: '57686469017924', dos: '57686469050692' },
+      luminoso: { uno: '57686469083460', dos: '57686469116228' },
     },
   },
 };

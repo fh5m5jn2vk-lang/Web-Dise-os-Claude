@@ -16,6 +16,9 @@ import shutil
 import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
+# the owner's details are not in this public repository: they live in the store, in the shop metafield long.datos
+# (JSON: titular, nif, domicilio, email, web...), and the theme hands them to datos.js before it runs
+TIENDA = "{% if shop.metafields.long.datos %}<script>window.LONG_TIENDA = {{ shop.metafields.long.datos.value | json }};</script>{% endif %}"
 OUT = ROOT / 'shopify' / 'tema'
 spec = importlib.util.spec_from_file_location('legal', ROOT / 'tools' / 'legal.py')
 legal = importlib.util.module_from_spec(spec); spec.loader.exec_module(legal)
@@ -66,14 +69,6 @@ def assets():
         write(f'assets/{f}', s)
     copy('js/cookies.js', 'cookies.js')
     copy('js/datos.js', 'datos.js')
-    # the owner's details live in shopify/datos-privados.json (not in the public repository): they go into a separate
-    # datos.js, shopify/datos-tienda.js (also kept out of the repository), which is uploaded to the store's theme by itself
-    d = (ROOT / 'js' / 'datos.js').read_text(encoding='utf-8')
-    priv = ROOT / 'shopify' / 'datos-privados.json'
-    if priv.exists():
-        for k, v in json.loads(priv.read_text(encoding='utf-8')).items():
-            d = re.sub(rf"^(\s*{k}: )''", lambda m: m.group(1) + json.dumps(v, ensure_ascii=False).replace('"', "'"), d, count=1, flags=re.M)
-        (ROOT / 'shopify' / 'datos-tienda.js').write_text(d, encoding='utf-8')
     copy('legal/desistimiento.js', 'desistimiento.js')
     css = (ROOT / 'legal' / 'legal.css').read_text(encoding='utf-8').replace('url(../fonts/', 'url(')
     write('assets/legal.css', css)
@@ -109,7 +104,7 @@ def index():
         rep(f'url(fonts/{f}.woff2)', f'url({au(f + ".woff2")})')
     s = re.sub(r'legal/([\w-]+)\.html', r'/pages/\1', s)
     rep('<script src="js/datos.js"></script>',
-        f'<script src="{au("datos.js")}"></script>\n<script>LONG.shopify.tienda = location.host; // the store itself: the checkout opens on this same domain</script>')
+        f'{TIENDA}\n<script src="{au("datos.js")}"></script>\n<script>LONG.shopify.tienda = location.host; // the store itself: the checkout opens on this same domain</script>')
     rep('<script src="js/cookies.js"></script>', f'<script src="{au("cookies.js")}"></script>')
     rep('<script src="vendor/gsap/gsap.min.js"></script>', f'<script src="{au("gsap.min.js")}"></script>')
     rep('<script src="vendor/gsap/ScrollTrigger.min.js"></script>', f'<script src="{au("ScrollTrigger.min.js")}"></script>')
@@ -148,6 +143,7 @@ def layouts():
 {footer_nav()}
   <small>&copy; {{{{ 'now' | date: '%Y' }}}} LÓNG · Dragones articulados impresos en 3D</small>
 </footer>
+{TIENDA}
 <script src="{{{{ 'datos.js' | asset_url }}}}"></script>
 <script src="{{{{ 'cookies.js' | asset_url }}}}"></script>
 </body>

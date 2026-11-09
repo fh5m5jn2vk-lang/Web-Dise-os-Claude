@@ -2,7 +2,7 @@
 
 ## Ya está hecho
 - **Tienda:** `thelongdragon.com` (dominio principal; la dirección de Shopify es `t5hfva-w3.myshopify.com`), en periodo de prueba.
-- **Tus datos:** el titular, el NIF y el correo están solo en la copia de `datos.js` del tema de la tienda, no en este repositorio, que es público. `tools/tema.py` los toma de `shopify/datos-privados.json`, que no se sube a GitHub.
+- **Tus datos:** el titular, el NIF, el domicilio y el correo no están en este repositorio, que es público. Están guardados en la propia tienda, en el campo `long.datos` de la tienda (un metacampo en JSON), y el tema se los pasa a la web. Para cambiarlos no hace falta tocar ni volver a publicar el tema.
 - **Producto:** «LÓNG · Dragón articulado 88 cm», activo y publicado en la tienda online. Su handle es `long-dragon-articulado-88-cm`. Tiene 8 variantes: Arcoíris, Galaxia, Plata y Fuego, cada una con 1 dragón (21,95 €) o 2 dragones (32,95 €), y coste de 10,50 € por dragón. No controla inventario, como corresponde a un dropshipping.
 - **La web:** `js/datos.js` tiene la tienda y el ID de cada variante. «Comprar el dragón» lleva directo al pago con el color y la cantidad elegidos, y añade al pedido las dos aceptaciones con su versión, fecha y hora.
 - **Envíos:** gratis para la España peninsular y Baleares, con entrega en 7 a 12 días laborables. Canarias, Ceuta y Melilla quedan fuera, como dicen las condiciones.

@@ -43,6 +43,8 @@ window.LONG = {
 // data-si="telefono" oculta el bloque entero cuando ese dato está vacío; a[data-mail] se convierte en enlace de correo.
 (function () {
   const D = window.LONG;
+  // in the Shopify store, the theme hands over the shop's details (metafield long.datos) before this script
+  if (window.LONG_TIENDA) Object.assign(D, window.LONG_TIENDA);
   if (!D.direccionDevoluciones) D.direccionDevoluciones = D.domicilio;
   function rellenar() {
     document.querySelectorAll('[data-dato]').forEach((el) => {

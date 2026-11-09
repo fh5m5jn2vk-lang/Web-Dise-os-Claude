@@ -330,6 +330,7 @@ footer { position: relative; z-index: 5; padding: 80px var(--gut) 50px; border-t
   <div class="foot__row"><span>&copy; 2026 LÓNG · Dragones articulados impresos en 3D</span><span><a data-mail href="/pages/aviso-legal">Contacto</a></span></div>
 </footer>
 
+{% if shop.metafields.long.datos %}<script>window.LONG_TIENDA = {{ shop.metafields.long.datos.value | json }};</script>{% endif %}
 <script src="{{ 'datos.js' | asset_url }}"></script>
 <script>LONG.shopify.tienda = location.host; // the store itself: the checkout opens on this same domain</script>
 <script src="{{ 'cookies.js' | asset_url }}"></script>

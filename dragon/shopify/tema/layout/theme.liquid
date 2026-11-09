@@ -37,6 +37,7 @@
   </nav>
   <small>&copy; {{ 'now' | date: '%Y' }} LÓNG · Dragones articulados impresos en 3D</small>
 </footer>
+{% if shop.metafields.long.datos %}<script>window.LONG_TIENDA = {{ shop.metafields.long.datos.value | json }};</script>{% endif %}
 <script src="{{ 'datos.js' | asset_url }}"></script>
 <script src="{{ 'cookies.js' | asset_url }}"></script>
 </body>

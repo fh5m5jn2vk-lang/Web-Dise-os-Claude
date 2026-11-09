@@ -5,12 +5,16 @@
 #   eleven: ElevenLabs (paid, needs an API key; the session's proxy adds it to requests to api.elevenlabs.io). Uses a
 #     stock voice from the ElevenLabs library by its voice id ("voz_id"), never a clone of a real person's voice.
 #     Lines are cached by text and settings in the scratchpad, so re-running a film spends no credits.
+#   archivo: one recording of the whole script, made elsewhere (e.g. in the ElevenLabs app with the user's own voice).
+#     Whisper finds each line in it; the line is cut out and placed on the film's timeline like a synthesised one.
+#     Lines with a fixed start ("en") that run past the next line's start are sped up to fit (at most 1.3x).
 # Each line is synthesised whole, goes through a light style chain (creador, narrador, tele, trailer, nota, susurro:
 # a real whisper made by driving the voice's spectral envelope with breath noise), and its words are timed by
 # faster-whisper on the finished audio, aligned to the script's words (so captions and lips land on the syllable).
 #   python3 voz.py <film dir>  ->  <film>/voz.wav, <film>/tiempos.json
 # guion.json: { "inicio": 0.3, "duracion"?: s, "final"?: s, "voz": {defaults}, "lineas": [ { "texto", "voz": {...}, "pausa" | "en", "id", "quien" } ] }
 #   voz keys: motor (kokoro|piper|eleven), voz (em_alex|ef_dora|em_santa) or modelo/hablante for piper, estilo, velocidad, tono (pitch ratio)
+#   archivo keys: archivo (path to the recording, relative to the film dir); lines from one recording share it
 #   eleven keys: voz_id, modelo (eleven_multilingual_v2), estabilidad, similitud, estilo_ia, velocidad (0.7-1.2)
 import sys, os, json, re, wave, subprocess, tempfile, difflib, unicodedata, numpy as np
 
@@ -62,8 +66,46 @@ def eleven(text, v):
     pcm = subprocess.run(['ffmpeg', '-v', 'error', '-i', mp3, '-f', 's16le', '-ac', '1', '-ar', str(OUT_SR), '-'], capture_output=True, check=True).stdout
     return np.frombuffer(pcm, np.int16).astype(np.float32) / 32768, OUT_SR
 
+_rec = {}
+def recording(path):
+    # the whole recording, its words timed by whisper once
+    if path not in _rec:
+        pcm = subprocess.run(['ffmpeg', '-v', 'error', '-i', path, '-f', 's16le', '-ac', '1', '-ar', str(OUT_SR), '-'], capture_output=True, check=True).stdout
+        y = np.frombuffer(pcm, np.int16).astype(np.float32) / 32768
+        idx = (np.arange(int(len(y) * 16000 / OUT_SR)) * OUT_SR / 16000).astype(int)
+        segs, _ = whisper_model().transcribe(y[idx], language='es', word_timestamps=True, beam_size=5)
+        _rec[path] = (y, [(w.word.strip(), w.start, w.end) for sg in segs for w in sg.words], [])
+    return _rec[path]
+
+def from_recording(text, v):
+    # find this line's words in the recording, after the lines already taken from it, and cut them out
+    path = os.path.join(FILM, v['archivo']); y, ww, used = recording(path)
+    start = used[-1] if used else 0
+    sw = [norm(w) for w in text.split()]; cand = [norm(w[0]) for w in ww[start:]]
+    sm = difflib.SequenceMatcher(a=sw, b=cand, autojunk=False)
+    blocks = [b for b in sm.get_matching_blocks() if b.size]
+    if not blocks: raise SystemExit(f'no encuentro en la grabación: {text}')
+    i0, i1 = start + blocks[0].b, start + blocks[-1].b + blocks[-1].size - 1
+    used.append(i1 + 1)
+    prev_end = ww[i0 - 1][2] if i0 > 0 else 0.0
+    next_start = ww[i1 + 1][1] if i1 + 1 < len(ww) else len(y) / OUT_SR
+    t0 = max(prev_end, ww[i0][1] - 0.12); t1 = min(next_start, ww[i1][2] + 0.25)
+    return y[int(t0 * OUT_SR):int(t1 * OUT_SR)].copy(), OUT_SR
+
+def fit(y, slot):
+    # speed a line up (pitch kept) so it ends before the next fixed start
+    k = min(1.3, len(y) / OUT_SR / slot)
+    if k <= 1.0: return y
+    with tempfile.TemporaryDirectory() as d:
+        src, dst = os.path.join(d, 'a.wav'), os.path.join(d, 'b.wav')
+        with wave.open(src, 'wb') as f: f.setnchannels(1); f.setsampwidth(2); f.setframerate(OUT_SR); f.writeframes((np.clip(y, -1, 1) * 32767).astype(np.int16).tobytes())
+        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', src, '-af', f'rubberband=tempo={k:.4f}', dst], check=True)
+        with wave.open(dst) as f: return np.frombuffer(f.readframes(f.getnframes()), np.int16).astype(np.float32) / 32768
+
 def synth(text, v):
-    if v.get('motor', 'kokoro') == 'eleven':
+    if v.get('motor', 'kokoro') == 'archivo':
+        a, sr = from_recording(text, v)
+    elif v.get('motor', 'kokoro') == 'eleven':
         a, sr = eleven(text, v)
     elif v.get('motor', 'kokoro') == 'kokoro':
         a, sr = kokoro().create(text, voice=v.get('voz', 'em_alex'), speed=v.get('velocidad', 1.1), lang='es')
@@ -139,6 +181,8 @@ for li, L in enumerate(G['lineas']):
     a, sr = synth(L['texto'], v)
     if v.get('estilo') == 'susurro': a = whisperize(a, sr)
     y = chain(a, sr, v)
+    nxt = G['lineas'][li + 1] if li + 1 < len(G['lineas']) else None
+    if v.get('motor') == 'archivo' and nxt and 'en' in nxt: y = fit(y, max(0.3, nxt['en'] - t - 0.06))
     words = [[w, round(t + a0, 3), round(t + b0, 3)] for w, a0, b0 in time_words(y, L['texto'])]
     lines.append({'id': L.get('id', li), 'texto': L['texto'], 't0': round(t, 3), 't1': round(t + len(y) / OUT_SR, 3), 'words': words, 'quien': L.get('quien')})
     track.append(y); t += len(y) / OUT_SR

@@ -1,12 +1,12 @@
 {
  "dur": 15.610439459769651,
  "musica": {
-  "archivo": "744.mp3",
-  "desde": 16.35,
-  "gain": 0.5,
-  "duck": 0.4,
+  "archivo": "124-123bpm.wav",
+  "desde": 31.37,
+  "gain": 0.55,
+  "duck": 0.45,
   "fadein": 0.02,
-  "fadeout": 0.6
+  "fadeout": 0.5
  },
  "voz": {
   "gain": 1

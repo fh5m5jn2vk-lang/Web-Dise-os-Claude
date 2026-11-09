@@ -117,6 +117,13 @@ if M:
     for ev in M.get('silencios', []):   # musical drops: the music dips out for a moment
         a, b = int(ev[0] * SR), int(ev[1] * SR); g = np.ones(N); g[a:b] = ev[2] if len(ev) > 2 else 0.1; g = np.convolve(g, np.ones(int(0.05 * SR)) / int(0.05 * SR), 'same'); duck *= g
     mix += mu * (fade * duck * M.get('gain', 0.5))[:, None]
+# extra music placed on the timeline (an edit's drop, a sting): {archivo, desde (in the track), en, hasta (on the timeline), gain, fadein, fadeout}
+for X in C.get('musicas', []):
+    d = X['hasta'] - X['en']
+    raw = subprocess.run(['ffmpeg', '-v', 'error', '-ss', str(X.get('desde', 0)), '-i', os.path.join(HERE, 'musica', X['archivo']), '-t', str(d), '-ac', '2', '-ar', str(SR), '-f', 's16le', '-'], capture_output=True).stdout
+    seg = np.frombuffer(raw, np.int16).reshape(-1, 2).astype(np.float32) / 32768; tt2 = tt(len(seg))
+    seg = seg * (np.minimum(1, tt2 / X.get('fadein', 0.05)) * np.minimum(1, (len(seg) / SR - tt2) / X.get('fadeout', 0.4)) * X.get('gain', 0.6))[:, None]
+    i = int(X['en'] * SR); j = min(N, i + len(seg)); mix[i:j] += seg[: j - i]
 mix += voice[:, None]
 t = tt(N); mix *= (np.minimum(1, t / 0.005) * np.minimum(1, (DUR - t) / 0.3))[:, None]
 mix = np.tanh(mix / (np.max(np.abs(mix)) + 1e-9) * 1.25) / np.tanh(1.25) * 0.92

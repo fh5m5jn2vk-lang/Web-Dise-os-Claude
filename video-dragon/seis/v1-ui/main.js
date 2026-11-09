@@ -261,7 +261,7 @@ function seek(t) {
 /* ---------- start ---------- */
 await Promise.all([...document.images].map((im) => im.decode().catch(() => {})));
 for (const f of ['600 40px Geist', '500 30px GeistMono', '900 40px Han']) await document.fonts.load(f, 'Aá龍');
-const cues = { dur: DUR, musica: { archivo: '744.mp3', desde: 16.35 + 0.4878 * 0, gain: 0.5, duck: 0.4, fadein: 0.02, fadeout: 0.6 }, voz: { gain: 1 }, sfx: [] };
+const cues = { dur: DUR, musica: { archivo: '124-123bpm.wav', desde: 31.37, gain: 0.55, duck: 0.45, fadein: 0.02, fadeout: 0.5 }, voz: { gain: 1 }, sfx: [] };
 PRESS.forEach(([a, b]) => { cues.sfx.push({ t: a, tipo: 'mouse', g: 0.35 }); if (b - a > 0.3) cues.sfx.push({ t: b, tipo: 'mouse', g: 0.25 }); });
 SEQ.slice(1).forEach(([t0]) => cues.sfx.push({ t: t0, tipo: 'swish', g: 0.07, pan: 0.2 }));
 for (let i = 1; i <= QUERY.length; i++) cues.sfx.push({ t: T(24.5) + ((T(26.2) - T(24.5)) * i) / QUERY.length - 0.01, tipo: 'key', g: 0.22 });

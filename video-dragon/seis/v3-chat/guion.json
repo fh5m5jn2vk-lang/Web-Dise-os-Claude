@@ -1,14 +1,124 @@
-{"inicio":1.1,"final":3.6,
- "voz":{"modelo":"davefx","estilo":"creador","velocidad":0.76,"tono":1.05,"pausas":0.8},
- "lineas":[
-  {"id":"m1","quien":"Marcos","tipo":"nota","texto":"Tíos, el amigo invisible es mañana y no tengo nada. ¡Socorro!","voz":{"estilo":"nota","tono":1.06,"velocidad":0.74}},
-  {"id":"l1","quien":"Lucía","tipo":"texto","pausa":0.75,"texto":"Como regales calcetines otra vez, te echo del grupo.","voz":{"modelo":"sharvard","hablante":"F","tono":1.03,"velocidad":0.8}},
-  {"id":"m2","quien":"Marcos","tipo":"texto","pausa":0.7,"texto":"Límite, veinticinco euros. ¡Ideas, ya!","voz":{"tono":1.06,"velocidad":0.74}},
-  {"id":"d1","quien":"Dani","tipo":"nota","pausa":0.8,"texto":"Mirad lo que me pillé la semana pasada. Fliparéis.","voz":{"modelo":"sharvard","hablante":"M","estilo":"nota","tono":0.98,"velocidad":0.78}},
-  {"id":"l2","quien":"Lucía","tipo":"texto","pausa":2.0,"texto":"¿¿Qué es eso?? Lo quiero.","voz":{"modelo":"sharvard","hablante":"F","tono":1.05,"velocidad":0.78}},
-  {"id":"d2","quien":"Dani","tipo":"nota","pausa":0.6,"texto":"Un dragón articulado de casi noventa centímetros. Y brilla en la oscuridad.","voz":{"modelo":"sharvard","hablante":"M","estilo":"nota","tono":0.98,"velocidad":0.78}},
-  {"id":"m3","quien":"Marcos","tipo":"texto","pausa":1.4,"texto":"¿Y cuánto cuesta?","voz":{"tono":1.06,"velocidad":0.74}},
-  {"id":"d3","quien":"Dani","tipo":"texto","pausa":0.6,"texto":"Veintiún noventa y cinco.","voz":{"modelo":"sharvard","hablante":"M","tono":0.98,"velocidad":0.8}},
-  {"id":"m4","quien":"Marcos","tipo":"texto","pausa":0.5,"texto":"PEDIDO. Me acabas de salvar la vida.","voz":{"tono":1.07,"velocidad":0.72}},
-  {"id":"l3","quien":"Lucía","tipo":"texto","pausa":0.6,"texto":"Pásame el link, que yo quiero dos.","voz":{"modelo":"sharvard","hablante":"F","tono":1.04,"velocidad":0.78}}
- ]}
+{
+ "inicio": 1.1,
+ "final": 3.6,
+ "voz": {
+  "motor": "kokoro",
+  "voz": "em_alex",
+  "estilo": "creador",
+  "velocidad": 1.15
+ },
+ "lineas": [
+  {
+   "id": "m1",
+   "quien": "Marcos",
+   "tipo": "nota",
+   "texto": "Tíos, el amigo invisible es mañana y no tengo nada. ¡Socorro!",
+   "voz": {
+    "voz": "em_alex",
+    "velocidad": 1.18,
+    "estilo": "nota"
+   }
+  },
+  {
+   "id": "l1",
+   "quien": "Lucía",
+   "tipo": "texto",
+   "pausa": 0.75,
+   "texto": "Como regales calcetines otra vez, te echo del grupo.",
+   "voz": {
+    "voz": "ef_dora",
+    "velocidad": 1.12
+   }
+  },
+  {
+   "id": "m2",
+   "quien": "Marcos",
+   "tipo": "texto",
+   "pausa": 0.7,
+   "texto": "Límite, veinticinco euros. ¡Ideas, ya!",
+   "voz": {
+    "voz": "em_alex",
+    "velocidad": 1.18
+   }
+  },
+  {
+   "id": "d1",
+   "quien": "Dani",
+   "tipo": "nota",
+   "pausa": 0.8,
+   "texto": "Mirad lo que me pillé la semana pasada. Fliparéis.",
+   "voz": {
+    "voz": "em_santa",
+    "velocidad": 1.1,
+    "estilo": "nota"
+   }
+  },
+  {
+   "id": "l2",
+   "quien": "Lucía",
+   "tipo": "texto",
+   "pausa": 7.3,
+   "texto": "¿¿Qué es eso?? Lo quiero.",
+   "voz": {
+    "voz": "ef_dora",
+    "velocidad": 1.12
+   }
+  },
+  {
+   "id": "d2",
+   "quien": "Dani",
+   "tipo": "nota",
+   "pausa": 0.6,
+   "texto": "Un dragón articulado de casi noventa centímetros. Y brilla en la oscuridad.",
+   "voz": {
+    "voz": "em_santa",
+    "velocidad": 1.1,
+    "estilo": "nota"
+   }
+  },
+  {
+   "id": "m3",
+   "quien": "Marcos",
+   "tipo": "texto",
+   "pausa": 1.4,
+   "texto": "¿Y cuánto cuesta?",
+   "voz": {
+    "voz": "em_alex",
+    "velocidad": 1.18
+   }
+  },
+  {
+   "id": "d3",
+   "quien": "Dani",
+   "tipo": "texto",
+   "pausa": 0.6,
+   "texto": "Veintiún noventa y cinco.",
+   "voz": {
+    "voz": "em_santa",
+    "velocidad": 1.1
+   }
+  },
+  {
+   "id": "m4",
+   "quien": "Marcos",
+   "tipo": "texto",
+   "pausa": 0.5,
+   "texto": "PEDIDO. Me acabas de salvar la vida.",
+   "voz": {
+    "voz": "em_alex",
+    "velocidad": 1.18
+   }
+  },
+  {
+   "id": "l3",
+   "quien": "Lucía",
+   "tipo": "texto",
+   "pausa": 0.6,
+   "texto": "Pásame el link, que yo quiero dos.",
+   "voz": {
+    "voz": "ef_dora",
+    "velocidad": 1.12
+   }
+  }
+ ]
+}

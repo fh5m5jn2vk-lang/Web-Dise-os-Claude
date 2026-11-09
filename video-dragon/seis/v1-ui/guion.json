@@ -1,11 +1,10 @@
 {
  "duracion": 15.6104,
  "voz": {
-  "modelo": "davefx",
+  "motor": "kokoro",
+  "voz": "em_alex",
   "estilo": "creador",
-  "velocidad": 0.74,
-  "tono": 1.07,
-  "pausas": 0.7
+  "velocidad": 1.32
  },
  "lineas": [
   {
@@ -38,7 +37,7 @@
   },
   {
    "en": 11.708,
-   "texto": "¿El regalo de este año?"
+   "texto": "¿El regalo del año?"
   },
   {
    "en": 13.659,

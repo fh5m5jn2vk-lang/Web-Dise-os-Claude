@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>LÓNG: concurso</title>
+<style>
+  @font-face { font-family: Bungee; src: url(../fonts/bungee.woff2) format("woff2"); }
+  @font-face { font-family: Poppins; src: url(../fonts/poppins.woff2) format("woff2"); font-weight: 800; }
+  @font-face { font-family: Inter; src: url(../fonts/inter.woff2) format("woff2"); font-weight: 200 900; }
+  @font-face { font-family: Han; src: url(../fonts/han.woff2) format("woff2"); font-weight: 900; }
+  html, body { margin: 0; overflow: hidden; background: #0d0020; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #0d0020; font-family: Inter, sans-serif; color: #fff; }
+  #set { position: absolute; inset: 0; transform-origin: 540px 1000px; }
+  #led { position: absolute; left: 0; top: 0; width: 1080px; height: 1160px; }
+  #floor { position: absolute; left: 0; right: 0; top: 1120px; bottom: 0; background: linear-gradient(180deg, #2a0b55 0%, #12002a 60%, #07000f 100%); }
+  .beam { position: absolute; top: -80px; width: 260px; height: 1500px; transform-origin: 50% 0; mix-blend-mode: screen; filter: blur(18px); opacity: .55; }
+  #title { position: absolute; left: 0; right: 0; top: 150px; text-align: center; font: 400 112px/1 Bungee; letter-spacing: .01em; color: #ffe066; text-shadow: 0 6px 0 #c2410c, 0 10px 0 #7c1d00, 0 0 40px rgba(255,200,60,.6); }
+  #bulbs { position: absolute; left: 70px; right: 70px; top: 112px; height: 200px; border-radius: 40px; border: 6px solid #ffb703; box-shadow: 0 0 40px rgba(255,183,3,.4) inset, 0 0 30px rgba(255,183,3,.4); }
+  .bulb { position: absolute; width: 18px; height: 18px; border-radius: 50%; margin: -9px; background: #fff3b0; box-shadow: 0 0 14px #ffd166; }
+  #prod { position: absolute; left: 90px; top: 330px; width: 900px; height: 760px; }
+  #pedestal { position: absolute; left: 290px; top: 960px; width: 500px; height: 210px; }
+  .pod { position: absolute; top: 1185px; width: 300px; height: 250px; border-radius: 30px; background: linear-gradient(180deg, #2b1360, #160535); border: 6px solid; text-align: center; box-sizing: border-box; opacity: 0; }
+  .pod .lt { position: absolute; left: 50%; top: -48px; width: 92px; height: 92px; margin-left: -46px; border-radius: 50%; font: 400 56px/92px Bungee; color: #12002a; }
+  .pod .pr { margin-top: 82px; font: 400 66px Bungee; letter-spacing: .01em; }
+  .pod .x { position: absolute; inset: 0; display: grid; place-items: center; font: 400 220px/1 Bungee; color: #ff2d55; text-shadow: 0 0 30px rgba(255,45,85,.8); opacity: 0; }
+  #sub { position: absolute; left: 50px; right: 50px; top: 1475px; text-align: center; font: 800 58px/1.15 Poppins, sans-serif; color: #ffe94d; -webkit-text-stroke: 12px #12002a; paint-order: stroke fill; letter-spacing: -0.01em; }
+  #count { position: absolute; left: 340px; top: 520px; width: 400px; height: 400px; opacity: 0; }
+  #correct { position: absolute; left: 0; right: 0; top: 380px; text-align: center; font: 400 150px/1 Bungee; color: #3bff8a; text-shadow: 0 8px 0 #0a6b33, 0 0 50px rgba(59,255,138,.7); opacity: 0; }
+  #bonus { position: absolute; right: 40px; top: 600px; width: 520px; padding: 30px; border-radius: 34px; background: #ff2d75; box-shadow: 0 0 60px rgba(255,45,117,.6); text-align: center; opacity: 0; }
+  #confetti { position: absolute; inset: 0; pointer-events: none; }
+  #crowd { position: absolute; left: 0; right: 0; bottom: 0; height: 300px; }
+  #dim { position: absolute; inset: 0; background: #000; opacity: 0; }
+  #banner { position: absolute; left: 40px; right: 40px; top: 890px; height: 560px; border-radius: 44px; background: linear-gradient(180deg, #2b0f63, #13042f); border: 8px solid #ffb703; box-shadow: 0 0 60px rgba(255,183,3,.45); opacity: 0; overflow: hidden; }
+</style>
+<script type="importmap">{"imports":{"three":"../../../dragon/vendor/three/three.module.min.js","three/addons/":"../../../dragon/vendor/three/addons/"}}</script>
+</head>
+<body>
+<div id="stage">
+  <div id="set">
+    <canvas id="led" width="540" height="580"></canvas>
+    <div id="floor"></div>
+    <div id="beams"></div>
+    <svg id="pedestal" viewBox="0 0 500 210"><defs><linearGradient id="pg" x1="0" x2="1"><stop offset="0" stop-color="#3a1a7a"/><stop offset=".5" stop-color="#7a4ff0"/><stop offset="1" stop-color="#2a0f5e"/></linearGradient></defs><path d="M20 60 L20 170 A230 40 0 0 0 480 170 L480 60 Z" fill="url(#pg)"/><ellipse cx="250" cy="60" rx="230" ry="40" fill="#b9a4ff"/><ellipse cx="250" cy="60" rx="200" ry="32" fill="#e7deff"/><ellipse class="ring" cx="250" cy="170" rx="230" ry="40" fill="none" stroke="#ffe066" stroke-width="5"/></svg>
+    <canvas id="prod" width="900" height="760"></canvas>
+    <div id="bulbs"></div><div id="title">¿CUÁNTO CUESTA?</div>
+    <div class="pod" style="left:40px;border-color:#ff4fa3"><div class="lt" style="background:#ff4fa3">A</div><div class="pr">79,99€</div><div class="x">✕</div></div>
+    <div class="pod" style="left:390px;border-color:#3bd5ff"><div class="lt" style="background:#3bd5ff">B</div><div class="pr">49,99€</div><div class="x">✕</div></div>
+    <div class="pod" style="left:740px;border-color:#ffe066"><div class="lt" style="background:#ffe066">C</div><div class="pr">21,95€</div><div class="x">✕</div></div>
+    <svg id="count" viewBox="0 0 400 400"><circle cx="200" cy="200" r="170" fill="rgba(18,0,42,.75)" stroke="rgba(255,255,255,.15)" stroke-width="22"/><circle id="ring" cx="200" cy="200" r="170" fill="none" stroke="#ffe066" stroke-width="22" stroke-linecap="round" pathLength="1" stroke-dasharray="1" transform="rotate(-90 200 200)"/><text id="num" x="200" y="262" text-anchor="middle" font-family="Bungee" font-size="190" fill="#fff">3</text></svg>
+    <div id="correct">¡CORRECTO!</div>
+    <div id="bonus"><div style="font:400 40px Bungee;color:#fff">¡OFERTA DOBLE!</div><div style="font:400 92px/1.05 Bungee;color:#fff;margin-top:8px">2 × 32,95€</div></div>
+    <canvas id="crowd" width="1080" height="300"></canvas>
+  </div>
+  <div id="dim"></div>
+  <div id="banner"></div>
+  <canvas id="confetti" width="1080" height="1920"></canvas>
+  <div id="sub"></div>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

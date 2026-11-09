@@ -6,6 +6,7 @@
 <title>LÓNG: chat</title>
 <style>
   @font-face { font-family: Inter; src: url(../fonts/inter.woff2) format("woff2"); font-weight: 200 900; }
+  @font-face { font-family: Anton; src: url(../fonts/anton.woff2) format("woff2"); }
   @font-face { font-family: Han; src: url(../fonts/han.woff2) format("woff2"); font-weight: 900; }
   html, body { margin: 0; overflow: hidden; background: #0b0e14; }
   #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #0b0e14; font-family: Inter, "Noto Color Emoji", sans-serif; color: #eef1f6; }
@@ -14,7 +15,7 @@
   #wall svg { position: absolute; inset: 0; opacity: .07; }
   #chat { position: absolute; left: 0; right: 0; top: 0; }
   .msg { position: absolute; left: 0; right: 0; opacity: 0; }
-  .bub { position: absolute; border-radius: 34px; padding: 22px 30px 26px; font: 500 40px/1.28 Inter, "Noto Color Emoji"; letter-spacing: -0.02em; max-width: 720px; box-sizing: border-box; }
+  .bub { position: absolute; border-radius: 34px; padding: 22px 30px 26px; font: 500 46px/1.26 Inter, "Noto Color Emoji"; letter-spacing: -0.02em; max-width: 760px; box-sizing: border-box; }
   .them .bub { left: 118px; background: #1f2430; border-bottom-left-radius: 10px; }
   .me .bub { right: 36px; background: #5b47f5; border-bottom-right-radius: 10px; }
   .who { font: 700 28px Inter; margin-bottom: 6px; letter-spacing: -0.01em; }
@@ -25,7 +26,7 @@
   .voice .pb { width: 76px; height: 76px; border-radius: 50%; background: rgba(255,255,255,.18); display: grid; place-items: center; flex: none; }
   .voice .wf { display: flex; align-items: center; gap: 5px; height: 70px; flex: 1; }
   .voice .wf i { display: block; width: 6px; border-radius: 3px; background: rgba(255,255,255,.35); }
-  .tr { font: 500 34px/1.3 Inter, "Noto Color Emoji"; margin-top: 14px; color: rgba(255,255,255,.92); letter-spacing: -0.02em; }
+  .tr { font: 500 38px/1.3 Inter, "Noto Color Emoji"; margin-top: 14px; color: rgba(255,255,255,.92); letter-spacing: -0.02em; }
   .vid { width: 560px; height: 720px; border-radius: 26px; overflow: hidden; position: relative; background: #000; margin: -8px -16px -6px; }
   .vid canvas { width: 100%; height: 100%; display: block; }
   .vid .dur { position: absolute; left: 18px; bottom: 16px; font: 600 26px Inter; background: rgba(0,0,0,.5); border-radius: 12px; padding: 4px 12px; }
@@ -64,6 +65,9 @@
     </div>
   </div>
   <div id="lock"><div class="date">lunes, 9 de diciembre</div><div class="clock">23:47</div></div>
+  <canvas id="edit" width="1080" height="1920" style="position:absolute;left:0;top:0;width:1080px;height:1920px;opacity:0;transform-origin:0 0"></canvas>
+  <div id="etext" style="position:absolute;left:0;right:0;top:0;bottom:0;pointer-events:none;opacity:0"></div>
+  <div id="flash" style="position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none"></div>
   <div id="sheet"></div>
 </div>
 <script type="importmap">{"imports":{"three":"../../../dragon/vendor/three/three.module.min.js","three/addons/":"../../../dragon/vendor/three/addons/"}}</script>

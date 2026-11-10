@@ -1,0 +1,20 @@
+/* LÓNG · stories (1080×1920 stills): the words stay between 250 and 1560 px, clear of TikTok's bars */
+.top { position: absolute; left: 0; right: 0; top: 250px; text-align: center; }
+.lock { display: inline-flex; align-items: center; gap: 22px; }
+.lock .s { display: inline-grid; place-items: center; width: 82px; height: 82px; border: 6px solid #ff3b4e; border-radius: 20px; color: #ff3b4e; font: 900 50px/1 Han; text-shadow: 0 0 20px rgba(255,59,78,.7); box-shadow: 0 0 40px rgba(255,59,78,.35); }
+.lock .n { font: 800 70px/1 Syne; letter-spacing: .2em; padding-left: .2em; color: #fff; }
+.h1 { margin-top: 36px; font: 400 150px/0.9 Anton, sans-serif; text-transform: uppercase; color: #fff; text-shadow: 0 8px 50px rgba(0,0,0,.7); }
+.h1 em { font-style: normal; color: #ff3b4e; }
+.h1.g em { color: #7dffc4; text-shadow: 0 0 40px rgba(63,255,170,.8), 0 0 90px rgba(63,255,170,.45); }
+.sub { margin-top: 22px; font: 500 30px Mono, monospace; letter-spacing: .16em; text-transform: uppercase; color: rgba(244,239,230,.8); }
+.bottom { position: absolute; left: 0; right: 0; top: 1240px; text-align: center; }
+.price { display: inline-block; background: #fff; color: #141414; border-radius: 30px; padding: 22px 46px 26px; box-shadow: 0 30px 70px -24px rgba(0,0,0,.8); }
+.price b { display: block; font: 400 128px/0.95 Anton; color: #ff3b4e; }
+.price span { font: 700 36px Inter; letter-spacing: -0.03em; }
+.price span em { font-style: normal; background: #ffd43b; padding: 0 10px; border-radius: 8px; }
+.row { margin-top: 26px; display: flex; justify-content: center; gap: 16px; }
+.pill { display: inline-block; padding: 18px 34px; border-radius: 999px; font: 800 38px Inter; letter-spacing: -0.03em; white-space: nowrap; }
+.pill.red { background: #ff3b4e; color: #fff; box-shadow: 0 18px 50px -16px rgba(255,59,78,.9); }
+.pill.dark { background: rgba(10,11,16,.82); color: #fff; border: 2px solid rgba(255,255,255,.16); }
+.pill.dark b { color: #ffd43b; }
+.pill.green { background: rgba(6,18,13,.85); color: #d9fff0; border: 2px solid rgba(63,255,192,.5); box-shadow: 0 0 50px rgba(63,255,170,.4); }

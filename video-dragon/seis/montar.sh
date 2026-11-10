@@ -3,11 +3,16 @@
 #   fps: output frame rate (default 30). subframes > 1 renders fps*subframes and blends them (motion blur).
 #   A film with no voice and no sound cues is encoded silent (no audio track), for the owner to add the sound.
 #   A film with music also gets out/long-<film>-sin-musica.mp4: the same picture, voice and effects only.
+#   ./montar.sh <film> 30 1 <seconds>: resume an interrupted render from that time (the earlier frames are kept).
 set -e
 cd "$(dirname "$0")/.."
-F=seis/$1; FPS=${2:-30}; SUB=${3:-1}; R=$((FPS * SUB))
-rm -rf "$F/frames" "$F/cues.json"
-node record.mjs --page "$F/index" --fps $R --out "$F/frames" > "$F/render.log" 2>&1
+F=seis/$1; FPS=${2:-30}; SUB=${3:-1}; R=$((FPS * SUB)); DESDE=${4:-}
+if [ -z "$DESDE" ]; then
+  rm -rf "$F/frames" "$F/cues.json"
+  node record.mjs --page "$F/index" --fps $R --out "$F/frames" > "$F/render.log" 2>&1
+else   # resume after an interruption: keep the frames before DESDE (pick a cut, or a film with no physics)
+  node record.mjs --page "$F/index" --fps $R --from "$DESDE" --jump 1 --out "$F/frames" > "$F/render.log" 2>&1
+fi
 NAME=$(basename "$F")
 if [ "$SUB" -gt 1 ]; then VF="tmix=frames=$SUB,select='not(mod(n\,$SUB))',setpts=N/($FPS*TB)"; else VF="null"; fi
 if [ -f "$F/voz.wav" ] || [ -f "$F/cues.json" ]; then

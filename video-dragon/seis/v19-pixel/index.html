@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>LÓNG: objeto legendario</title>
+<link rel="stylesheet" href="../kit/kit.css">
+<style>
+  @font-face { font-family: Pix; src: url(../fonts/press-start-2p.woff2) format("woff2"); }
+  #stage { background: #0d0b1a; }
+  #px { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; image-rendering: pixelated; }
+  #cap { display: none; }
+  #real { position: absolute; inset: 0; background: #0d0b1a; opacity: 0; }
+  #real .fr { position: absolute; left: 66px; top: 330px; width: 948px; height: 948px; background: #fff; box-shadow: 0 0 0 12px #0d0b1a, 0 0 0 24px #ffd43b, 0 0 0 36px #0d0b1a; }
+  #real img { position: absolute; left: 12px; top: 12px; width: 924px; height: 924px; object-fit: cover; }
+  #real .lab { position: absolute; left: 0; right: 0; top: 1370px; text-align: center; font: 400 64px/1.4 Pix; color: #fff; text-shadow: 6px 6px 0 #ff3b4e; }
+  #real .lab em { font-style: normal; color: #ffd43b; }
+  #real .lab .ac { position: relative; }
+  #real .lab .ac::after { content: ''; position: absolute; left: 32px; top: -24px; width: 16px; height: 8px; background: #fff; box-shadow: -8px 8px 0 #fff, 6px 6px 0 #ff3b4e, -2px 14px 0 #ff3b4e; } /* a full-height Í: the font squeezes it to lowercase height */
+  #real .btnr { position: absolute; left: 50%; top: 1590px; transform: translateX(-50%); background: #ff3b4e; color: #fff; font: 400 38px/1 Pix; padding: 26px 34px; white-space: nowrap; box-shadow: 0 0 0 6px #fff, 10px 10px 0 6px #000; }
+</style>
+<script type="importmap">{"imports":{"three":"../../../dragon/vendor/three/three.module.min.js","three/addons/":"../../../dragon/vendor/three/addons/"}}</script>
+</head>
+<body>
+<div id="stage">
+  <canvas id="px" width="180" height="320"></canvas>
+  <div id="items"></div>
+  <div id="real"><div class="fr"><img src="img/real.jpg"></div><div class="lab">AS<span class="ac">I</span> ES EL<br><em>DE VERDAD</em></div><div class="btnr">LINK EN MI PERFIL</div></div>
+  <div id="bar"><i></i></div>
+  <div id="hook"></div>
+  <div id="cap"></div>
+  <div id="endc"></div>
+  <div id="flash"></div>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

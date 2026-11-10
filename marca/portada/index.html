@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>LÓNG: portada de Facebook</title>
+<style>
+  @font-face { font-family: Syne; src: url(../../video-dragon/fonts/syne.woff2) format("woff2"); font-weight: 400 800; }
+  @font-face { font-family: Manrope; src: url(../../video-dragon/fonts/manrope.woff2) format("woff2"); font-weight: 200 800; }
+  @font-face { font-family: Mono; src: url(../../video-dragon/fonts/geist-mono.woff2) format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: Han; src: url(../../video-dragon/fonts/han.woff2) format("woff2"); font-weight: 900; }
+  html, body { margin: 0; background: #07080c; }
+  #stage { position: relative; width: 1640px; height: 924px; overflow: hidden; background: #07080c; color: #f4efe6; }
+  #gl { position: absolute; inset: 0; width: 1640px; height: 924px; }
+  /* the brand, left, inside the band a computer shows (it crops 150 px top and bottom) */
+  #brand { position: absolute; left: 112px; top: 196px; width: 700px; }
+  .lock { display: flex; align-items: center; gap: 30px; }
+  .seal { flex: none; display: inline-grid; place-items: center; width: 112px; height: 112px; border: 7px solid #ff3b4e; border-radius: 26px; color: #ff3b4e; font: 900 70px/1 Han; text-shadow: 0 0 28px rgba(255,59,78,.75), 0 0 70px rgba(255,59,78,.45); box-shadow: 0 0 60px rgba(255,59,78,.35), inset 0 0 30px rgba(255,59,78,.18); }
+  .name { font: 800 104px/0.9 Syne; letter-spacing: .2em; color: #fff; text-shadow: 0 10px 50px rgba(0,0,0,.7); white-space: nowrap; }
+  .tag { margin-top: 30px; font: 600 38px/1.15 Manrope; letter-spacing: -0.02em; color: rgba(244,239,230,.92); }
+  .tag em { font-style: normal; color: #ff3b4e; }
+  .facts { margin-top: 20px; font: 500 22px Mono, monospace; letter-spacing: .16em; text-transform: uppercase; color: rgba(244,239,230,.62); white-space: nowrap; }
+  .facts b { color: #7dffc4; font-weight: 500; text-shadow: 0 0 18px rgba(63,255,170,.6); }
+  .url { margin-top: 26px; display: inline-block; padding: 14px 30px; border-radius: 999px; background: #ff3b4e; color: #fff; font: 700 30px Manrope; letter-spacing: -0.02em; box-shadow: 0 16px 50px -14px rgba(255,59,78,.85); }
+  #grain { position: absolute; inset: 0; width: 1640px; height: 924px; opacity: .06; mix-blend-mode: overlay; pointer-events: none; }
+</style>
+<script type="importmap">{"imports":{"three":"../../dragon/vendor/three/three.module.min.js","three/addons/":"../../dragon/vendor/three/addons/"}}</script>
+</head>
+<body>
+<div id="stage">
+  <canvas id="gl"></canvas>
+  <div id="brand">
+    <div class="lock"><div class="seal">龍</div><div class="name">LÓNG</div></div>
+    <div class="tag">Dragones articulados<br><em>impresos en 3D</em></div>
+    <div class="facts">88 cm · 8 colores · uno <b>brilla de noche</b></div>
+    <div class="url">thelongdragon.com</div>
+  </div>
+  <canvas id="grain" width="820" height="462"></canvas>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

@@ -397,7 +397,7 @@ const shake = (t, t0, len, amp, hz) => (t < t0 || t > t0 + len ? 0 : amp * Math.
 function targetP(t, o) {
   if (t < B[1]) { const r = E.out(prog(t, 0.15, 0.85)); o.set(lerp(-1.0, -1.65, r), lerp(-4.4, -1.05, r), lerp(1.2, 2.1, r)); }
   else if (t < B[3]) { o.set(-1.55 + Math.sin(t * 1.3) * 0.08, -0.75, 2.45); o.x += shake(t, w(1, 6) - 0.05, 0.9, 0.4, 2.6); }
-  else o.set(-1.8, -1.25, 2.0);
+  else o.set(-1.1 + Math.sin(t * 1.3) * 0.06, -0.6, 3.0);   // «¿a que lo quieres?»: the Oro y rojo held up beside his face
 }
 // the free hand (his left, on the right of the picture): [from, x, y, z, hand shape]
 const GESTR = [
@@ -428,12 +428,13 @@ function presenter(t) {
   const g = gestAtR(t), since = t - g[0];
   // he looks at the dragon when he shows it, and back at us
   const showing = t > w(1, 0) - 0.1 && t < w(1, 6);
-  head.rotation.x = sp('hx', Math.sin(t * 0.9) * 0.03 - kw * 0.08 + onset * 1.2 + (showing ? 0.1 : 0), dt, 140, 14);
+  const laugh = t > B[3] && t < w(3, 0) ? Math.sin(Math.PI * (t - B[3]) / (w(3, 0) - B[3])) : 0, ha = Math.abs(Math.sin((t - B[3]) * Math.PI * 5));
+  head.rotation.x = sp('hx', Math.sin(t * 0.9) * 0.03 - kw * 0.08 + onset * 1.2 + (showing ? 0.1 : 0) - laugh * (0.14 + ha * 0.05), dt, 140, 14);
   head.rotation.y = sp('hy', 0.3 + Math.sin(t * 0.6) * 0.05 + (showing ? -0.45 : 0), dt, 90, 14);
   head.rotation.z = sp('hz', Math.sin(t * 0.8 + 1) * 0.04 + (t > END ? 0.08 : 0), dt, 90, 14);
   body.rotation.z = sp('bz', Math.sin(t * 0.7) * 0.015 + kw * 0.02, dt, 60, 11);
   body.rotation.x = sp('bx', kw * 0.04 + (g[4] === 'point' && g[3] > 3 ? 0.06 : 0), dt, 60, 11);
-  body.position.y = sp('by', Math.sin(t * 1.6) * 0.04 + kw * 0.1, dt, 120, 12);
+  body.position.y = sp('by', Math.sin(t * 1.6) * 0.04 + kw * 0.1 + laugh * ha * 0.07, dt, 120, 12);
   torso.scale.y = 1 + Math.sin(t * 1.6) * 0.012;
   // the hands
   targetP(t, tP); spV('tp', tP, dt, 140, 15);
@@ -479,7 +480,7 @@ const SHOTS = [   // [from, camera x, y, z, look x, y, z, push]
   [0, -0.2, -1.55, 19, -0.45, -2.05, 0.5, 1.4],
   [B[1], -0.6, -1.35, 15.5, -0.95, -1.75, 1.0, 1.0],
   [B[2], -0.15, -1.6, 17, -0.55, -2.0, 0.8, 1.0],
-  [B[3], 0.25, -1.75, 15, 0.05, -2.05, 0.5, 0.8],
+  [B[3], 0.05, -1.6, 16.5, -0.25, -1.95, 0.6, 0.8],
 ];
 function camShot(t) {
   let s = SHOTS[0]; for (const x of SHOTS) if (t >= x[0]) s = x;
@@ -499,6 +500,7 @@ const CHUNKS = [];
 L.forEach((l) => { let cur = []; l.words.forEach((wd, i) => { cur.push(wd); if (KEYS.has(clean(wd[0]).toLowerCase())) KEYTIMES.push(wd[1]); if (/[.,!?]$/.test(wd[0]) || cur.length >= 4 || i === l.words.length - 1) { CHUNKS.push(cur); cur = []; } }); });
 const capEl = document.getElementById('cap'); let shownCh = null;
 function captions(t) {
+  if (t >= tReal + 0.1) { capEl.style.opacity = 0; return; }
   let ch = null; for (const c of CHUNKS) if (t >= c[0][1] - 0.04) ch = c;
   if (!ch || t > END) { capEl.style.opacity = 1 - prog(t, END, END + 0.2); if (!ch) return; }
   else capEl.style.opacity = 1;
@@ -554,7 +556,7 @@ const gctx = document.getElementById('grain').getContext('2d'), gimg = gctx.crea
 function grain(t) { return; let s = Math.floor(t * 24) * 9301 + 49297; for (let i = 0; i < gimg.data.length; i += 4) { s = (s * 233280 + 49297) % 233280; const v = (s / 233280) * 255; gimg.data[i] = gimg.data[i + 1] = gimg.data[i + 2] = v; gimg.data[i + 3] = 255; } gctx.putImageData(gimg, 0, 0); }
 
 /* ---------- one frame ---------- */
-function render(t) { presenter(t); captions(t); animItems(t); grain(t); }
+function render(t) { if (t < tReal + 0.25) presenter(t); captions(t); animItems(t); grain(t); }
 
 await Promise.all([...document.images].map((im) => im.decode().catch(() => {})));
 for (const f of ['800 60px Inter', 'italic 400 60px Serif', '400 60px Anton', '500 30px Mono', '900 60px Han']) await document.fonts.load(f, 'Aá0龍');

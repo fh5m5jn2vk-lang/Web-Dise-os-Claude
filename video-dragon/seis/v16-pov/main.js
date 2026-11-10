@@ -532,6 +532,7 @@ const CHUNKS = [];
 L.forEach((l) => { let cur = []; l.words.forEach((wd, i) => { cur.push(wd); if (KEYS.has(clean(wd[0]).toLowerCase())) KEYTIMES.push(wd[1]); if (/[.,!?]$/.test(wd[0]) || cur.length >= 4 || i === l.words.length - 1) { CHUNKS.push(cur); cur = []; } }); });
 const capEl = document.getElementById('cap'); let shownCh = null;
 function captions(t) {
+  if (t >= tReal + 0.1) { capEl.style.opacity = 0; return; }   // the real photo's label says it
   let ch = null; for (const c of CHUNKS) if (t >= c[0][1] - 0.04) ch = c;
   if (!ch || t > END) { capEl.style.opacity = 1 - prog(t, END, END + 0.2); if (!ch) return; }
   else capEl.style.opacity = 1;
@@ -580,7 +581,7 @@ const gctx = document.getElementById('grain').getContext('2d'), gimg = gctx.crea
 function grain(t) { return; let s = Math.floor(t * 24) * 9301 + 49297; for (let i = 0; i < gimg.data.length; i += 4) { s = (s * 233280 + 49297) % 233280; const v = (s / 233280) * 255; gimg.data[i] = gimg.data[i + 1] = gimg.data[i + 2] = v; gimg.data[i + 3] = 255; } gctx.putImageData(gimg, 0, 0); }
 
 /* ---------- one frame ---------- */
-function render(t) { presenter(t); captions(t); animItems(t); grain(t); }
+function render(t) { if (t < tReal + 0.25) presenter(t); captions(t); animItems(t); grain(t); }
 
 await Promise.all([...document.images].map((im) => im.decode().catch(() => {})));
 for (const f of ['800 60px Inter', 'italic 400 60px Serif', '400 60px Anton', '500 30px Mono', '900 60px Han']) await document.fonts.load(f, 'Aá0龍');

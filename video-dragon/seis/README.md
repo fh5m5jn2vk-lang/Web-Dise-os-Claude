@@ -56,3 +56,33 @@ En el vídeo de la leyenda, la gente aguantaba unos 5 segundos: el gancho funcio
   - `capas.js`: subtítulos, gancho, pegatinas, barra de progreso, cierre y efectos de sonido.
 
   Cada vídeo solo escribe su plan.
+
+# Tercera tanda: el formato del presentador
+
+El vídeo que mejor ha funcionado es el 8: una persona enseña el dragón, solo con voz y sin música, para que tú le pongas el sonido de TikTok. Estos seis siguen ese formato:
+- un personaje habla a cámara y enseña el dragón;
+- voz y efectos, **sin música**;
+- cada uno con un estilo de animación y un contexto distintos;
+- terminan con **una foto real del dragón** («Así es el de verdad. Link en mi perfil.»), con un color distinto en cada vídeo.
+
+Técnicas de retención que comparten:
+- el dragón sale en el primer segundo;
+- la primera frase deja una pregunta abierta y el final la responde con la foto real;
+- algo cambia cada 1-2 segundos (un corte, una pegatina, un dato que se desbloquea);
+- una reacción con emoción (risa, susurro) para que no suene leído;
+- subtítulos palabra a palabra para quien lo ve sin sonido;
+- entre 11 y 14 segundos.
+
+| # | Vídeo | Gancho | Estilo |
+|---|---|---|---|
+| 16 | `v16-pov` | «¡Me ha llegado esto y mira lo que hace!»: en primera persona, tus manos lo sacan de la caja, te lo pones de pulsera y apagas la lámpara | 3D en primera persona |
+| 17 | `v17-llamada` | «¡Tío, cógelo!»: un amigo te videollama para enseñártelo, pasa por los 8 colores y se queda con el oro y rojo | 3D, interfaz de videollamada |
+| 18 | `v18-madre` | «Mi madre: "otro trasto no". Yo:»: en la cocina se lo enseña a su madre y al final se lo queda ella | 2D, dibujos animados planos |
+| 19 | `v19-pixel` | «Llevaba años buscando este objeto legendario…»: RPG de mazmorra, «¡objeto legendario!», estadísticas y LEVEL UP | 2D, pixel art |
+| 20 | `v20-papel` | «¿Sabes qué es lo que más me preguntan?»: stop-motion de papel recortado sobre una plancha de corte | 2D, papel a 12 fps |
+| 21 | `v21-pizarra` | «Te explico este dragón en diez segundos»: cuenta atrás dibujada en una pizarra y cuatro datos escritos a mano | 2D, rotulador |
+
+Notas:
+- Los vídeos 2D usan el dragón 3D convertido en *sprites* (`kit/sprites.mjs` → `sprites/`, sin guardar en el repositorio) y el muñeco SVG `kit/titere.js`, que tiene brazos con cinemática inversa y tres estilos: vector, papel y trazo.
+- La fuente pixel es Press Start 2P (OFL). Encoge las mayúsculas con tilde a la altura de una minúscula, así que en v19 la tilde de «DRAGÓN» y «ASÍ» se dibuja aparte.
+- `montar.sh <vídeo> 30 1 <segundo>` vuelve a renderizar solo desde ese segundo y conserva los fotogramas anteriores. Conviene empezar en un corte de plano, porque la física se reinicia ahí.

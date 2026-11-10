@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>LÓNG: mi madre</title>
+<link rel="stylesheet" href="../kit/kit.css">
+<style>
+  @font-face { font-family: Bungee; src: url(../fonts/bungee.woff2) format("woff2"); }
+  #stage { background: #ffd9b8; }
+  #scene { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+  #cap { top: 250px; }
+  #cap .w { -webkit-text-stroke: 0; text-shadow: 0 5px 0 #1d1a2b, 0 -2px 0 #1d1a2b, 3px 0 0 #1d1a2b, -3px 0 0 #1d1a2b, 0 10px 30px rgba(0,0,0,.35); }
+  .sfx { font: 400 120px/0.9 Bungee, sans-serif; color: #ffd43b; -webkit-text-stroke: 7px #1d1a2b; paint-order: stroke fill; text-shadow: 8px 8px 0 #1d1a2b; white-space: nowrap; }
+  .bub { position: relative; background: #fff; border: 7px solid #1d1a2b; border-radius: 44px; padding: 24px 34px; font: 400 64px/1 Bungee; color: #ff3b4e; white-space: nowrap; box-shadow: 8px 8px 0 #1d1a2b; }
+  .bub::after { content: ""; position: absolute; left: 90px; bottom: -52px; border: 26px solid transparent; border-top: 40px solid #1d1a2b; }
+  .ruler { width: 760px; height: 70px; background: repeating-linear-gradient(90deg, #1d1a2b 0 4px, transparent 4px 38px), #ffd43b; border: 6px solid #1d1a2b; border-radius: 10px; box-shadow: 6px 6px 0 #1d1a2b; display: grid; place-items: center; font: 400 54px/1 Bungee; color: #1d1a2b; }
+  #real { position: absolute; inset: 0; background: #1d1a2b; opacity: 0; }
+  #real img { position: absolute; left: 70px; top: 300px; width: 940px; height: 940px; object-fit: cover; border-radius: 34px; border: 8px solid #fff; box-shadow: 14px 14px 0 #ff3b4e; }
+  #real .lab { position: absolute; left: 0; right: 0; top: 1300px; text-align: center; font: 400 110px/0.95 Bungee; color: #fff; }
+  #real .lab em { font-style: normal; color: #ffd43b; }
+  #real .btnr { position: absolute; left: 50%; top: 1560px; transform: translateX(-50%); background: #ff3b4e; color: #fff; font: 800 46px Inter; letter-spacing: -0.04em; padding: 24px 46px; border-radius: 999px; white-space: nowrap; border: 5px solid #fff; }
+</style>
+<script type="importmap">{"imports":{"three":"../../../dragon/vendor/three/three.module.min.js","three/addons/":"../../../dragon/vendor/three/addons/"}}</script>
+</head>
+<body>
+<div id="stage">
+  <svg id="scene" viewBox="0 0 1080 1920"></svg>
+  <div id="items"></div>
+  <div id="real"><img src="img/real.jpg"><div class="lab">ASÍ ES EL<br><em>DE VERDAD</em></div><div class="btnr">link en mi perfil</div></div>
+  <div id="bar"><i></i></div>
+  <div id="hook"></div>
+  <div id="cap"></div>
+  <div id="endc"></div>
+  <div id="flash"></div>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

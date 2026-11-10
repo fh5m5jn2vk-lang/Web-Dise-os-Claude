@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>LÓNG: la pizarra</title>
+<link rel="stylesheet" href="../kit/kit.css">
+<style>
+  @font-face { font-family: Caveat; src: url(../fonts/caveat.woff2) format("woff2"); font-weight: 400 700; }
+  @font-face { font-family: Marker; src: url(../../fonts/marker.woff2) format("woff2"); }
+  #stage { background: #fbfbf8; }
+  #scene { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+  #cap { top: 1430px; }
+  #cap .w { color: #1d1a2b; text-shadow: none; -webkit-text-stroke: 0; font-family: Caveat, cursive; font-weight: 700; font-size: 96px; }
+  #cap .w.k { color: #ff3b4e; }
+  #cap .w.cur { background: #ffd43b; color: #1d1a2b; }
+  #cap.glow .w { color: #d9fff0; } #cap.glow .w.k { color: #7dffc4; } #cap.glow .w.cur { background: rgba(63,255,176,.3); }
+</style>
+<script type="importmap">{"imports":{"three":"../../../dragon/vendor/three/three.module.min.js","three/addons/":"../../../dragon/vendor/three/addons/"}}</script>
+</head>
+<body>
+<div id="stage">
+  <svg id="scene" viewBox="0 0 1080 1920"></svg>
+  <div id="items"></div>
+  <div id="bar"><i></i></div>
+  <div id="hook"></div>
+  <div id="cap"></div>
+  <div id="endc"></div>
+  <div id="flash"></div>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+{
+ "dur": 12.632,
+ "lines": [
+  {
+   "id": "l1",
+   "texto": "Llevaba años buscando este objeto legendario…",
+   "t0": 0.05,
+   "t1": 2.483,
+   "words": [
+    [
+     "Llevaba",
+     0.05,
+     0.45
+    ],
+    [
+     "años",
+     0.45,
+     0.69
+    ],
+    [
+     "buscando",
+     0.69,
+     1.05
+    ],
+    [
+     "este",
+     1.05,
+     1.37
+    ],
+    [
+     "objeto",
+     1.37,
+     1.77
+    ],
+    [
+     "legendario…",
+     1.77,
+     2.45
+    ]
+   ],
+   "quien": null
+  },
+  {
+   "id": "l2",
+   "texto": "¡Dragón articulado de ochenta y ocho centímetros!",
+   "t0": 2.533,
+   "t1": 5.095,
+   "words": [
+    [
+     "¡Dragón",
+     2.533,
+     2.933
+    ],
+    [
+     "articulado",
+     2.933,
+     3.533
+    ],
+    [
+     "de",
+     3.533,
+     3.673
+    ],
+    [
+     "ochenta",
+     3.673,
+     3.982
+    ],
+    [
+     "y",
+     3.982,
+     4.06
+    ],
+    [
+     "ocho",
+     4.06,
+     4.253
+    ],
+    [
+     "centímetros!",
+     4.253,
+     4.933
+    ]
+   ],
+   "quien": null
+  },
+  {
+   "id": "l3",
+   "texto": "Habilidad: se mueve pieza a pieza.",
+   "t0": 5.145,
+   "t1": 7.245,
+   "words": [
+    [
+     "Habilidad:",
+     5.145,
+     5.845
+    ],
+    [
+     "se",
+     5.845,
+     5.965
+    ],
+    [
+     "mueve",
+     5.965,
+     6.305
+    ],
+    [
+     "pieza",
+     6.305,
+     6.725
+    ],
+    [
+     "a",
+     6.725,
+     6.825
+    ],
+    [
+     "pieza.",
+     6.825,
+     7.145
+    ]
+   ],
+   "quien": null
+  },
+  {
+   "id": "l4",
+   "texto": "Habilidad secreta…",
+   "t0": 7.295,
+   "t1": 8.489,
+   "words": [
+    [
+     "Habilidad",
+     7.295,
+     7.795
+    ],
+    [
+     "secreta…",
+     7.795,
+     8.375
+    ]
+   ],
+   "quien": null
+  },
+  {
+   "id": "l5",
+   "texto": "¡brilla en la oscuridad!",
+   "t0": 8.539,
+   "t1": 9.836,
+   "words": [
+    [
+     "¡brilla",
+     8.539,
+     8.979
+    ],
+    [
+     "en",
+     8.979,
+     9.119
+    ],
+    [
+     "la",
+     9.119,
+     9.199
+    ],
+    [
+     "oscuridad!",
+     9.199,
+     9.639
+    ]
+   ],
+   "quien": null
+  },
+  {
+   "id": "l6",
+   "texto": "Así es el de verdad. Link en mi perfil.",
+   "t0": 9.886,
+   "t1": 12.032,
+   "words": [
+    [
+     "Así",
+     9.886,
+     10.106
+    ],
+    [
+     "es",
+     10.106,
+     10.346
+    ],
+    [
+     "el",
+     10.346,
+     10.486
+    ],
+    [
+     "de",
+     10.486,
+     10.566
+    ],
+    [
+     "verdad.",
+     10.566,
+     10.826
+    ],
+    [
+     "Link",
+     11.146,
+     11.366
+    ],
+    [
+     "en",
+     11.366,
+     11.526
+    ],
+    [
+     "mi",
+     11.526,
+     11.606
+    ],
+    [
+     "perfil.",
+     11.606,
+     12.006
+    ]
+   ],
+   "quien": null
+  }
+ ]
+}

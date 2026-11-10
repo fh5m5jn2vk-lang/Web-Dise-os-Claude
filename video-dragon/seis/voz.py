@@ -19,7 +19,7 @@
 #     eleven_v3 is the expressive model: "etiqueta" (e.g. "[excited]") goes before the line, only to the voice, never
 #     into the captions; v3 takes stability 0, 0.5 or 1 and no speed, so use "tempo" for pace.
 #   any engine: "recorte" (s): every silence inside a line longer than this is cut down to it, as an editor's jump cuts
-#     would (no dead air); "tempo": speed the finished line up (pitch kept), e.g. 1.06
+#     would (no dead air), and anything after the last word (a breath, a murmur) goes too; "tempo": speed the finished line up (pitch kept), e.g. 1.06
 import sys, os, json, re, wave, subprocess, tempfile, difflib, unicodedata, numpy as np
 
 FILM = sys.argv[1]
@@ -226,7 +226,10 @@ for li, L in enumerate(G['lineas']):
     nxt = G['lineas'][li + 1] if li + 1 < len(G['lineas']) else None
     if v.get('motor') in ('archivo', 'eleven') and nxt and 'en' in nxt: y = fit(y, max(0.3, nxt['en'] - t - 0.06))
     elif v.get('motor') in ('archivo', 'eleven') and not nxt and 'duracion' in G: y = fit(y, max(0.3, G['duracion'] - t - 0.05))  # the last line ends inside the film
-    words = [[w, round(t + a0, 3), round(t + b0, 3)] for w, a0, b0 in time_words(y, L['texto'])]
+    tw = time_words(y, L['texto'])
+    if v.get('recorte') and tw and len(y) / OUT_SR - tw[-1][2] > 0.3:   # breath or murmur after the last word: dead air, cut it
+        n = int((tw[-1][2] + 0.15) * OUT_SR); y = y[:n].copy(); fd = int(0.04 * OUT_SR); y[-fd:] *= np.linspace(1, 0, fd)
+    words = [[w, round(t + a0, 3), round(t + b0, 3)] for w, a0, b0 in tw]
     lines.append({'id': L.get('id', li), 'texto': L['texto'], 't0': round(t, 3), 't1': round(t + len(y) / OUT_SR, 3), 'words': words, 'quien': L.get('quien')})
     track.append(y); t += len(y) / OUT_SR
 fin = G.get('duracion', t + G.get('final', 0.8)); track.append(np.zeros(max(0, int((fin - t) * OUT_SR)), np.float32)); t = max(t, fin)

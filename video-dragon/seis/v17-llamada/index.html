@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>LÓNG: la videollamada</title>
+<style>
+  @font-face { font-family: Inter; src: url(../../fonts/inter-tight.woff2) format("woff2"); font-weight: 600 800; }
+  @font-face { font-family: Serif; src: url(../../fonts/instrument-italic.woff2) format("woff2"); font-style: italic; }
+  @font-face { font-family: Anton; src: url(../../fonts/anton.woff2) format("woff2"); }
+  @font-face { font-family: Mono; src: url(../../fonts/geist-mono.woff2) format("woff2"); font-weight: 100 900; }
+  @font-face { font-family: Han; src: url(../../fonts/han.woff2) format("woff2"); font-weight: 900; }
+  @font-face { font-family: Syne; src: url(../../fonts/syne.woff2) format("woff2"); font-weight: 400 800; }
+  @font-face { font-family: Manrope; src: url(../../fonts/manrope.woff2) format("woff2"); font-weight: 200 800; }
+  html, body { margin: 0; background: #e9e7e3; overflow: hidden; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: Inter, sans-serif; color: #141414; background: #ebe8e3; }
+  /* the studio: a warm paper wall, a soft pool of light, the dot grid, the big seal watermark */
+  #wall { position: absolute; inset: -60px; background: radial-gradient(70% 45% at 46% 40%, #f7f5f1 0%, #ece9e4 55%, #dcd7d0 100%); }
+  #dots { position: absolute; inset: -60px; background-image: radial-gradient(rgba(0,0,0,.085) 1.6px, transparent 1.8px); background-size: 34px 34px; mask-image: radial-gradient(85% 65% at 50% 42%, #000 25%, transparent 88%); -webkit-mask-image: radial-gradient(85% 65% at 50% 42%, #000 25%, transparent 88%); }
+  #seal { position: absolute; right: -150px; top: 1080px; font: 900 900px/1 Han; color: transparent; -webkit-text-stroke: 3px rgba(224,48,47,.08); transform: rotate(-6deg); }
+  #grain { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; opacity: .05; mix-blend-mode: multiply; }
+  #dim { position: absolute; inset: 0; background: radial-gradient(60% 40% at 30% 45%, #0d1512 0%, #050608 70%); opacity: 0; }
+  #world { position: absolute; inset: 0; transform-origin: 40% 45%; }
+  .it { position: absolute; left: 0; top: 0; opacity: 0; will-change: transform, opacity, filter; transform-origin: 50% 50%; }
+  /* the caption: big, centred, word by word as he says it, the word being said on a yellow marker */
+  #cap { position: absolute; left: 40px; right: 40px; top: 1240px; text-align: center; font: 800 84px/1.12 Inter, sans-serif; letter-spacing: -0.045em; }
+  #cap .w { display: inline-block; margin: 0 .1em; padding: 0 .1em; border-radius: 14px; color: #141414; opacity: 0; }
+  #cap .w.k { font: italic 400 98px/1 Serif, serif; letter-spacing: -0.02em; color: #e0302f; }
+  #cap .w.cur { background: #ffd43b; }
+  #cap.dark .w { color: #f4f2ee; text-shadow: 0 4px 30px rgba(0,0,0,.7); }
+  #cap.dark .w.k { color: #7dffc4; text-shadow: 0 0 30px rgba(63,255,170,.6); }
+  #cap.dark .w.cur { background: rgba(63,255,170,.22); }
+  /* the 88 cm rule beside the hanging dragon */
+  #rule { position: absolute; left: 0; top: 0; width: 6px; background: #e0302f; border-radius: 3px; opacity: 0; transform-origin: 50% 0; }
+  #rule::before, #rule::after { content: ""; position: absolute; left: -16px; width: 38px; height: 6px; background: #e0302f; border-radius: 3px; }
+  #rule::before { top: 0; } #rule::after { bottom: 0; }
+  #rule b { position: absolute; right: 34px; top: 50%; transform: translateY(-50%); font: 400 100px/0.9 Anton; color: #e0302f; white-space: nowrap; text-align: right; }
+  #rule b small { display: block; font: 500 26px Mono, monospace; color: #8b8781; letter-spacing: .02em; margin-top: 6px; }
+  .badge { background: #ff3b4e; color: #fff; font: 400 110px/1 Anton; padding: 14px 34px 8px; border-radius: 20px; box-shadow: 0 24px 60px -20px rgba(255,59,78,.8); }
+  .sws8 { display: flex; gap: 14px; background: #fff; padding: 18px 24px; border-radius: 999px; box-shadow: 0 22px 40px -20px rgba(0,0,0,.4); }
+  .sws8 i { width: 58px; height: 58px; border-radius: 50%; box-shadow: inset 0 0 0 2px rgba(0,0,0,.1); opacity: 0; }
+  /* what pops up: polaroids, cards, stickers, stamps */
+  .pol { background: #fff; padding: 16px 16px 58px; box-shadow: 0 22px 40px -18px rgba(0,0,0,.35); border-radius: 6px; }
+  .pol img { display: block; width: 300px; height: 300px; object-fit: cover; border-radius: 2px; }
+  .pol span { position: absolute; left: 0; right: 0; bottom: 12px; text-align: center; font: italic 400 38px Serif, serif; color: #333; }
+  .pin { position: absolute; top: -10px; left: 50%; width: 26px; height: 26px; margin-left: -13px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #ff8a80, #c62828 60%); box-shadow: 0 6px 10px rgba(0,0,0,.3); }
+  .stamp { font: 400 104px/0.98 Anton, sans-serif; color: #e0302f; border: 9px solid #e0302f; border-radius: 18px; padding: 8px 26px 4px; letter-spacing: .01em; background: rgba(255,255,255,.35); mix-blend-mode: multiply; white-space: nowrap; }
+  .sticker { background: #ffd43b; color: #141414; font: 800 46px/1.05 Inter; letter-spacing: -0.04em; padding: 26px 30px; border-radius: 10px; box-shadow: 0 18px 30px -14px rgba(0,0,0,.4); text-align: center; }
+  .card { background: #fff; border-radius: 24px; padding: 26px 30px; box-shadow: 0 26px 50px -24px rgba(0,0,0,.35); }
+  .card .ttl { font: 500 24px Mono; color: #8b8781; margin-bottom: 14px; }
+  .chk { display: flex; align-items: center; gap: 16px; font: 400 44px/1.25 Anton; letter-spacing: .01em; opacity: .25; }
+  .chk.on { opacity: 1; }
+  .chk b { width: 34px; height: 34px; border: 4px solid #141414; border-radius: 6px; display: grid; place-items: center; font: 900 26px Inter; color: #fff; box-sizing: border-box; }
+  .chk.on b { background: #e0302f; border-color: #e0302f; }
+  .big { font: 400 250px/0.86 Anton; letter-spacing: -0.01em; white-space: nowrap; }
+  .big em { font-style: normal; color: #e0302f; }
+  .chip { background: #141414; color: #fff; font: 700 36px Inter; letter-spacing: -0.03em; padding: 16px 26px; border-radius: 999px; display: flex; align-items: center; gap: 14px; white-space: nowrap; }
+  .grid8 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 420px; }
+  .grid8 div { background: #fff; border-radius: 16px; padding: 10px 12px; box-shadow: 0 14px 26px -18px rgba(0,0,0,.35); font: 800 22px Inter; letter-spacing: -0.03em; display: flex; align-items: center; gap: 10px; opacity: 0; transform: translateY(14px); }
+  .grid8 div i { width: 40px; height: 40px; border-radius: 50%; flex: none; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
+  .grid8 div.lum { outline: 4px solid #3fffc0; box-shadow: 0 0 40px rgba(63,255,192,.55); }
+  .price { background: #fff; border-radius: 28px; padding: 28px 36px; box-shadow: 0 30px 60px -26px rgba(0,0,0,.4); text-align: center; }
+  .price b { display: block; font: 400 150px/0.9 Anton; color: #e0302f; letter-spacing: .005em; }
+  .price span { font: 700 34px Inter; letter-spacing: -0.03em; color: #333; }
+  .price span em { font-style: normal; background: #ffd43b; padding: 0 8px; border-radius: 6px; }
+  .btn { background: #141414; color: #fff; font: 800 42px Inter; letter-spacing: -0.04em; padding: 26px 44px; border-radius: 999px; box-shadow: 0 20px 40px -18px rgba(0,0,0,.5); white-space: nowrap; }
+  .bubble { background: #fff; border-radius: 30px 30px 30px 6px; padding: 22px 30px; font: 700 40px Inter; letter-spacing: -0.04em; box-shadow: 0 20px 40px -20px rgba(0,0,0,.35); }
+  .glowtag { background: #0d1512; color: #d9fff0; font: 800 46px/1.05 Inter; letter-spacing: -0.04em; padding: 26px 30px; border-radius: 12px; text-align: center; box-shadow: 0 0 60px rgba(63,255,170,.45), 0 0 0 2px rgba(63,255,192,.35) inset; }
+  .glowtag small { display: block; margin-top: 8px; font: 500 26px Mono; color: #7dffc4; letter-spacing: 0; }
+  .finger { width: 90px; height: 90px; }
+  #gl2 { position: absolute; inset: 0; width: 1080px; height: 1920px; pointer-events: none; }
+  /* his room at night: a purple LED strip, soft lights out of focus */
+  #room { position: absolute; inset: -60px; background: radial-gradient(70% 45% at 50% 38%, #3a2252 0%, #1b1026 45%, #0b0710 100%); }
+  #led { position: absolute; left: -40px; right: -40px; top: 150px; height: 14px; background: linear-gradient(90deg, #ff3bd4, #8a4dff, #3b6bff); filter: blur(3px); box-shadow: 0 0 60px 20px rgba(160,80,255,.5); }
+  #bok { position: absolute; inset: 0; background: radial-gradient(circle at 12% 30%, rgba(255,120,200,.35) 0 40px, transparent 42px), radial-gradient(circle at 88% 24%, rgba(120,140,255,.3) 0 55px, transparent 57px), radial-gradient(circle at 80% 62%, rgba(255,170,90,.22) 0 36px, transparent 38px), radial-gradient(circle at 18% 70%, rgba(150,90,255,.25) 0 48px, transparent 50px); filter: blur(10px); }
+  #cap .w { color: #fff; text-shadow: 0 4px 0 rgba(0,0,0,.35), 0 8px 40px rgba(0,0,0,.6); }
+  #cap .w.k { color: #ffd43b; font-family: Inter, sans-serif; font-style: normal; font-weight: 800; font-size: 84px; }
+  #cap .w.cur { background: #ff3b4e; color: #fff; text-shadow: none; }
+  #cap .w.k.cur { background: #ffd43b; color: #141414; }
+  /* the call, our own design */
+  #call { position: absolute; inset: 0; pointer-events: none; opacity: 0; }
+  #bar { position: absolute; left: 50px; top: 240px; display: flex; align-items: center; gap: 18px; padding: 14px 26px 14px 14px; border-radius: 999px; background: rgba(0,0,0,.45); backdrop-filter: blur(8px); color: #fff; font: 700 34px Inter; }
+  #bar .av { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #3fffb0, #3b6bff); display: grid; place-items: center; font: 800 32px Inter; }
+  #bar span { display: block; font: 500 24px Mono, monospace; color: rgba(255,255,255,.75); }
+  #pip { position: absolute; right: 50px; top: 240px; width: 230px; height: 320px; border-radius: 28px; overflow: hidden; background: linear-gradient(160deg, #2b3a52, #121821); border: 3px solid rgba(255,255,255,.25); box-shadow: 0 20px 50px -20px rgba(0,0,0,.8); }
+  #pip .face { position: absolute; left: 50%; top: 46%; width: 120px; height: 140px; margin: -70px 0 0 -60px; border-radius: 50% 50% 46% 46%; background: #c98c62; }
+  #pip .face i { position: absolute; top: 52px; width: 16px; height: 22px; border-radius: 50%; background: #1b1310; }
+  #pip .face i:first-child { left: 30px; } #pip .face i:nth-child(2) { right: 30px; }
+  #pip .face u { position: absolute; left: 44px; top: 92px; width: 32px; height: 26px; border-radius: 0 0 20px 20px; background: #5a1f1a; }
+  #react { position: absolute; left: 8px; right: 8px; bottom: 14px; text-align: center; font: 400 40px/1 Anton; color: #fff; background: #ff3b4e; border-radius: 12px; padding: 8px 4px 6px; opacity: 0; }
+  #cbtns { position: absolute; left: 0; right: 0; top: 1600px; display: flex; justify-content: center; gap: 60px; }
+  #cbtns i { width: 120px; height: 120px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.18); color: #fff; font: 700 50px Inter; font-style: normal; backdrop-filter: blur(6px); }
+  #cbtns i.end { background: #ff3b4e; }
+  /* the real one */
+  #real { position: absolute; inset: 0; background: #0b0710; opacity: 0; }
+  #real img { position: absolute; left: 60px; top: 330px; width: 960px; height: 960px; object-fit: cover; border-radius: 34px; box-shadow: 0 40px 90px -30px rgba(0,0,0,.9); }
+  #real .lab { position: absolute; left: 0; right: 0; top: 1330px; text-align: center; font: 400 112px/0.95 Anton; color: #fff; }
+  #real .lab em { font-style: normal; color: #ffd43b; }
+  #real .btnr { position: absolute; left: 50%; top: 1580px; transform: translateX(-50%); background: #ff3b4e; color: #fff; font: 800 46px Inter; letter-spacing: -0.04em; padding: 24px 46px; border-radius: 999px; white-space: nowrap; }
+  #items { position: absolute; inset: 0; }
+  #flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
+</style>
+<script type="importmap">{"imports":{"three":"../../../dragon/vendor/three/three.module.min.js","three/addons/":"../../../dragon/vendor/three/addons/"}}</script>
+</head>
+<body>
+<div id="stage">
+  <div id="world">
+    <div id="room"></div><div id="led"></div><div id="bok"></div>
+    <div id="dim"></div>
+  </div>
+  <canvas id="grain" width="540" height="960"></canvas>
+  <canvas id="gl2" width="1080" height="1920"></canvas>
+  <div id="items"></div>
+  <div id="call">
+    <div id="bar"><div class="av">D</div><div><b>Dani</b><span id="timer">00:03</span></div></div>
+    <div id="pip"><div class="face"><i></i><i></i><u></u></div><div id="react"></div></div>
+    <div id="cbtns"><i><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></i><i class="end"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M4 14c4-4 12-4 16 0l-2 3-3-1v-3c-2-.6-4-.6-6 0v3l-3 1z" fill="#fff"/></svg></i><i><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h3l2-3h8l2 3h3v11H3z"/><circle cx="12" cy="13" r="3.5"/></svg></i></div>
+  </div>
+  <div id="real"><img src="img/oro-rojo.jpg"><div class="lab">ASÍ ES EL<br><em>DE VERDAD</em></div><div class="btnr">link en mi perfil</div></div>
+  <div id="cap"></div>
+  <div id="flash"></div>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

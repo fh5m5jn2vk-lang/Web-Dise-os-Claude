@@ -1,0 +1,64 @@
+{
+ "inicio": 0.05,
+ "final": 0.6,
+ "voz": {
+  "motor": "eleven",
+  "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+  "modelo": "eleven_v3",
+  "estabilidad": 0.5,
+  "similitud": 0.8,
+  "estilo": "creador",
+  "etiqueta": "[excited]",
+  "recorte": 0.09,
+  "tempo": 1.08
+ },
+ "lineas": [
+  {
+   "id": "l1",
+   "texto": "Mi madre: «otro trasto no». Yo:",
+   "voz": {
+    "etiqueta": "[sighs]"
+   }
+  },
+  {
+   "id": "l2",
+   "texto": "le enseño que se mueve pieza a pieza…",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l3",
+   "texto": "que mide ochenta y ocho centímetros…",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l4",
+   "texto": "y que de noche brilla.",
+   "voz": {
+    "etiqueta": "[whispers]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l5",
+   "texto": "Ahora me lo ha quitado ella.",
+   "voz": {
+    "etiqueta": "[laughs]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l6",
+   "texto": "Así es el de verdad. Link en mi perfil.",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  }
+ ]
+}

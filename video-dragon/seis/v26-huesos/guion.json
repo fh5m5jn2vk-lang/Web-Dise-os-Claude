@@ -1,0 +1,49 @@
+{
+ "inicio": 0.05,
+ "final": 0.6,
+ "voz": {
+  "motor": "eleven",
+  "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+  "modelo": "eleven_v3",
+  "estabilidad": 0.5,
+  "similitud": 0.8,
+  "estilo": "creador",
+  "etiqueta": "[excited]",
+  "recorte": 0.09,
+  "tempo": 1.08
+ },
+ "lineas": [
+  {
+   "id": "l1",
+   "texto": "A un hombre enfermo le recetaron huesos de dragón.",
+   "voz": {
+    "etiqueta": "[curious]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l2",
+   "texto": "Cuenta la historia que, al mirarlos, vio letras grabadas.",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l3",
+   "texto": "Eran huesos de hace más de tres mil años… con la escritura china más antigua.",
+   "voz": {
+    "etiqueta": "[amazed]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l4",
+   "texto": "Hoy, los dragones se imprimen en 3D. Así es el de verdad. Link en mi perfil.",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  }
+ ]
+}

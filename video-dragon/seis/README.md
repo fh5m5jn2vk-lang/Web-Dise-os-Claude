@@ -114,5 +114,5 @@ Cómo está hecho (`kit/`):
 - Fuentes manuscritas (OFL o Apache): Permanent Marker, Caveat, Caveat Brush, Schoolbell, Indie Flower, Reenie Beanie y Kalam.
 - GSAP 3.15 (licencia estándar gratuita) en `../vendor/gsap/`; opentype.js 2.0 (MIT) en `../vendor/opentype/`.
 - Canva:
-  - su eliminador de fondos necesita Canva Pro, así que las fotos se recortan con `trazar.py`;
-  - los vídeos terminados se suben a una carpeta de tu cuenta de Canva para que puedas editarlos allí.
+  - su eliminador de fondos no está disponible en la cuenta, así que el dibujo de la foto real se hace con `trazar.py`, sin recortarla;
+  - su conector no acepta subir vídeos (MP4 ni MOV), así que en tus Subidos de Canva hay una portada por vídeo (su mejor fotograma), para usarla de portada o en diseños.

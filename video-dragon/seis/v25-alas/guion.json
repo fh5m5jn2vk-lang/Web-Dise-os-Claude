@@ -1,0 +1,57 @@
+{
+ "inicio": 0.05,
+ "final": 0.6,
+ "voz": {
+  "motor": "eleven",
+  "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+  "modelo": "eleven_v3",
+  "estabilidad": 0.5,
+  "similitud": 0.8,
+  "estilo": "creador",
+  "etiqueta": "[excited]",
+  "recorte": 0.09,
+  "tempo": 1.08
+ },
+ "lineas": [
+  {
+   "id": "l1",
+   "texto": "¿Por qué los dragones chinos no tienen alas?",
+   "voz": {
+    "etiqueta": "[curious]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l2",
+   "texto": "Según la leyenda, vuelan gracias a un bulto en la cabeza: el chimu. Sin él, no pueden subir al cielo.",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l3",
+   "texto": "Y no escupen fuego: traen la lluvia.",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l4",
+   "texto": "Este tampoco escupe fuego… pero brilla en la oscuridad.",
+   "voz": {
+    "etiqueta": "[whispers]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l5",
+   "texto": "Así es el de verdad. Link en mi perfil.",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  }
+ ]
+}

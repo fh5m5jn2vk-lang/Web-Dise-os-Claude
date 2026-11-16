@@ -1,0 +1,57 @@
+{
+ "inicio": 0.05,
+ "final": 0.6,
+ "voz": {
+  "motor": "eleven",
+  "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+  "modelo": "eleven_v3",
+  "estabilidad": 0.5,
+  "similitud": 0.8,
+  "estilo": "creador",
+  "etiqueta": "[excited]",
+  "recorte": 0.09,
+  "tempo": 1.08
+ },
+ "lineas": [
+  {
+   "id": "l1",
+   "texto": "Este dibujo podía costarte la vida.",
+   "voz": {
+    "etiqueta": "[serious]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l2",
+   "texto": "En la China de los Ming, el dragón dorado de cinco garras era solo del emperador.",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l3",
+   "texto": "Los nobles, cuatro garras. El pueblo, tres.",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l4",
+   "texto": "Y si un objeto salía del palacio… ¡le quitaban una garra al dragón!",
+   "voz": {
+    "etiqueta": "[amazed]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l5",
+   "texto": "Así es el de verdad. Link en mi perfil.",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  }
+ ]
+}

@@ -2,7 +2,8 @@
 # sound effects placed from the picture's cues. Everything synthesised here, no samples.
 #   python3 mezcla.py <film dir>  ->  <film>/mezcla.wav
 # cues.json (written by the recorder from the page's window.__cues):
-#   { dur, musica: {archivo, desde, gain, duck, fadein, fadeout}, voz: {gain}, sfx: [{t, tipo, g, pan}], ambiente: [{tipo, desde, hasta, g}] }
+#   { dur, musica: {archivo, desde, gain, duck, fadein, fadeout}, voz: {gain}, sfx: [{t, tipo, g, pan}], ambiente: [{tipo, desde, hasta, g}],
+#     trazos: [{t0, t1, tool, g}] }
 import sys, os, json, wave, subprocess, numpy as np
 FILM = sys.argv[1]; HERE = os.path.dirname(os.path.abspath(__file__))
 SR = 44100; rng = np.random.default_rng(9)
@@ -89,6 +90,29 @@ def rain(d):
     return x
 def room(d): n = int(d * SR); return band(noise(n), 60, 600) * 0.05
 def crowd(d): n = int(d * SR); return band(noise(n), 200, 2500) * 0.06 * (1 + 0.3 * np.sin(tt(n) * 2))
+# drawing: the tool on the board for each gesture, {t0, t1, tool, g}: a marker's felt squeak, gritty chalk, graphite,
+# a ballpoint's roll, a brush's soft swish; louder while the stroke is fast, a tap where the tip lands
+def trazo(d, tool):
+    n = max(1, int(d * SR)); t = tt(n); x = noise(n)
+    wob = 0.65 + 0.35 * np.sin(2 * np.pi * (5 + 4 * rng.random()) * t + rng.random() * 6) ** 2
+    if tool == 'rotu':
+        y = band(x, 1600, 7000) * wob * 0.9
+        f = 2300 + 500 * rng.random() + 180 * np.sin(2 * np.pi * 6 * t); sq = np.sin(2 * np.pi * np.cumsum(f) / SR) * (np.abs(np.sin(2 * np.pi * 2.3 * t + rng.random() * 3)) > 0.82) * 0.08
+        y = y + sq; tap = 0.5
+    elif tool == 'tiza':
+        y = band(x, 700, 6500) * wob * 0.9
+        for _ in range(int(d * 90)): s0 = int(rng.random() * max(1, n - 200)); y[s0:s0 + 200] += band(noise(200), 1500, 9000) * env(200, 0.0002, 0.0015) * rng.random() * 1.6
+        tap = 0.9
+    elif tool == 'lapiz':
+        y = band(x, 2600, 12000) * wob * (0.7 + 0.6 * (rng.random(n) > 0.6)) * 0.8; tap = 0.25
+    elif tool == 'boli':
+        y = band(x, 2000, 9000) * wob * 0.55 + band(noise(n), 300, 1200) * 0.15 * wob; tap = 0.2
+    else:   # pincel
+        y = band(x, 250, 2600) * (0.5 + 0.5 * np.sin(np.pi * t / max(d, 1e-3))) * 0.7; tap = 0.0
+    e = np.minimum(1, t / 0.012) * np.minimum(1, (d - t) / 0.03)
+    y = y * e
+    if tap > 0: k = min(n, int(0.04 * SR)); y[:k] += tap * (band(noise(k), 800, 6000) * np.exp(-tt(k) * 140) + 0.4 * np.sin(2 * np.pi * 180 * tt(k)) * np.exp(-tt(k) * 60))
+    return y
 AMB = {'lluvia': rain, 'sala': room, 'publico': crowd, 'viento': lambda d: band(noise(int(d * SR)), 80, 900) * 0.12 * (1 + 0.5 * np.sin(tt(int(d * SR)) * 0.7))}
 
 mix = np.zeros((N, 2))
@@ -99,6 +123,7 @@ def add(sig, start, g=1.0, pan=0.0):
     s = sig[: j - i] * g; mix[i:j, 0] += s * np.sqrt((1 - pan) / 2) * 1.41; mix[i:j, 1] += s * np.sqrt((1 + pan) / 2) * 1.41
 
 for e in C.get('sfx', []): add(FX[e['tipo']](), e['t'], e.get('g', 0.3), e.get('pan', 0))
+for e in C.get('trazos', []): add(trazo(e['t1'] - e['t0'] + 0.02, e.get('tool', 'rotu')), e['t0'], e.get('g', 0.24), e.get('pan', 0.15))
 for a in C.get('ambiente', []):
     seg = AMB[a['tipo']](a.get('hasta', DUR) - a.get('desde', 0)); f = np.minimum(1, tt(len(seg)) / 0.8) * np.minimum(1, (len(seg) / SR - tt(len(seg))) / 0.8)
     add(seg * f, a.get('desde', 0), a.get('g', 1))

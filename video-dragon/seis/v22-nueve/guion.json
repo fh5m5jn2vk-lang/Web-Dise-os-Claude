@@ -1,0 +1,57 @@
+{
+ "inicio": 0.05,
+ "final": 0.6,
+ "voz": {
+  "motor": "eleven",
+  "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+  "modelo": "eleven_v3",
+  "estabilidad": 0.5,
+  "similitud": 0.8,
+  "estilo": "creador",
+  "etiqueta": "[excited]",
+  "recorte": 0.09,
+  "tempo": 1.08
+ },
+ "lineas": [
+  {
+   "id": "l1",
+   "texto": "¡El dragón chino es un Frankenstein!",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l2",
+   "texto": "Está hecho de nueve animales:",
+   "voz": {
+    "etiqueta": "[curious]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l3",
+   "texto": "cuernos de ciervo, cabeza de camello, ojos de demonio, cuello de serpiente, vientre de almeja, escamas de carpa, garras de águila, patas de tigre… y orejas de vaca.",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l4",
+   "texto": "Lo escribió un sabio chino hace casi dos mil años.",
+   "voz": {
+    "etiqueta": "[amazed]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l5",
+   "texto": "Así es el de verdad. Link en mi perfil.",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  }
+ ]
+}

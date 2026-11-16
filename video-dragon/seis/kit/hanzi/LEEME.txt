@@ -1,0 +1,2 @@
+Datos de trazos de 龍 (9f8d) y 骨 (9aa8): hanzi-writer-data 2.0, derivados de Make Me a Hanzi
+(https://github.com/skishore/makemeahanzi), con la Arphic Public License.

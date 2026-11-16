@@ -1,0 +1,65 @@
+{
+ "inicio": 0.05,
+ "final": 0.6,
+ "voz": {
+  "motor": "eleven",
+  "voz_id": "GXq4Jv31YgA7lk5pj1Cs",
+  "modelo": "eleven_v3",
+  "estabilidad": 0.5,
+  "similitud": 0.8,
+  "estilo": "creador",
+  "etiqueta": "[excited]",
+  "recorte": 0.09,
+  "tempo": 1.08
+ },
+ "lineas": [
+  {
+   "id": "l1",
+   "texto": "Esta palabra china tiene sesenta y cuatro trazos. ¿Adivinas qué significa?",
+   "voz": {
+    "etiqueta": "[curious]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l2",
+   "texto": "Un dragón son dieciséis trazos. Dos dragones, treinta y dos. Tres, cuarenta y ocho: dragones volando.",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l3",
+   "texto": "Y cuatro dragones significaba…",
+   "voz": {
+    "etiqueta": "[mischievously]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l4",
+   "texto": "¡hablador!",
+   "voz": {
+    "etiqueta": "[laughs]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l5",
+   "texto": "Nuestra marca, Lóng, significa dragón.",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  },
+  {
+   "id": "l6",
+   "texto": "Así es el de verdad. Link en mi perfil.",
+   "voz": {
+    "etiqueta": "[excited]"
+   },
+   "pausa": 0.05
+  }
+ ]
+}

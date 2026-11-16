@@ -86,3 +86,33 @@ Notas:
 - Los vídeos 2D usan el dragón 3D convertido en *sprites* (`kit/sprites.mjs` → `sprites/`, sin guardar en el repositorio) y el muñeco SVG `kit/titere.js`, que tiene brazos con cinemática inversa y tres estilos: vector, papel y trazo.
 - La fuente pixel es Press Start 2P (OFL). Encoge las mayúsculas con tilde a la altura de una minúscula, así que en v19 la tilde de «DRAGÓN» y «ASÍ» se dibuja aparte.
 - `montar.sh <vídeo> 30 1 <segundo>` vuelve a renderizar solo desde ese segundo y conserva los fotogramas anteriores. Conviene empezar en un corte de plano, porque la física se reinicia ahí.
+
+# Cuarta tanda: datos curiosos dibujados a mano
+
+Cinco datos curiosos verificados sobre dragones. En cada vídeo, una mano los dibuja en 2D mientras la voz los cuenta, sin música, como los vídeos de pizarra (*whiteboard*). Wiseman (2012) midió en este formato un 15 % más de recuerdo que con una persona hablando a cámara. Cada vídeo usa una superficie y una herramienta distintas. Todos terminan dibujando el dragón real, trazado a partir de la foto, y ese boceto se convierte en la foto.
+
+| # | Vídeo | Dato | Superficie y herramienta | Fuente |
+|---|---|---|---|---|
+| 22 | `v22-nueve` | El dragón chino está hecho de 9 animales | Pizarra blanca, rotulador | Wang Fu (dinastía Han), en Visser, *The Dragon in China and Japan* (1913) |
+| 23 | `v23-trazos` | El carácter de cuatro dragones tiene 64 trazos y significaba «hablador» | Papel de arroz, pincel | Victor Mair, *Language Log* (4-12-2023) |
+| 24 | `v24-garras` | Con los Ming, el dragón dorado de 5 garras era solo del emperador; los objetos que salían del palacio perdían una garra | Pizarra de tiza | Wikipedia, «Chinese dragon» |
+| 25 | `v25-alas` | No tienen alas: vuelan por el *chimu*, un bulto en la cabeza; no escupen fuego, traen la lluvia | Cuaderno de cuadros, boli azul | Wikipedia, «Chinese dragon» (*Youyang zazu*, dinastía Tang) |
+| 26 | `v26-huesos` | Unos «huesos de dragón» de botica llevaban la escritura china más antigua (1899) | Papel de boceto, lápiz | World History Encyclopedia, «Oracle Bones» (lo cuenta como historia; los detalles no son seguros) |
+
+Cómo está hecho (`kit/`):
+- `dibujo.js` es el motor de dibujo:
+  - una pizarra mucho más grande que el encuadre, con una cámara que se desplaza por ella;
+  - cada trazo se dibuja con **GSAP DrawSVGPlugin** en una sola línea de tiempo pausada, que el grabador avanza fotograma a fotograma;
+  - la mano sigue la punta del trazo, se levanta entre trazos y sale de cuadro cuando no dibuja;
+  - el texto se escribe repasando el contorno de cada letra (opentype.js) y rellenándolo después;
+  - el coloreado es un garabato recortado a la forma;
+  - los caracteres chinos se pintan trazo a trazo con los datos de *Make Me a Hanzi* (licencia Arphic);
+  - la foto real se dibuja a partir de sus bordes.
+- `mano.js`: la mano y sus cinco herramientas (rotulador, tiza, boli, lápiz y pincel). `garabatos.js`: el dragón de perfil (garras a elegir y *chimu*), una garra con su pata, un dragón occidental, nubes, lluvia, un hueso, una corona y flechas.
+- `papel.py`: genera las cinco superficies como texturas que se repiten sin cortes. `trazar.py`: convierte una foto en líneas dibujables (Canny, adelgazado y orden de vecino más cercano).
+- `mezcla.py` sintetiza el sonido de cada herramienta, trazo a trazo: el chirrido del rotulador, la tiza, el lápiz, el boli y el pincel.
+- Fuentes manuscritas (OFL o Apache): Permanent Marker, Caveat, Caveat Brush, Schoolbell, Indie Flower, Reenie Beanie y Kalam.
+- GSAP 3.15 (licencia estándar gratuita) en `../vendor/gsap/`; opentype.js 2.0 (MIT) en `../vendor/opentype/`.
+- Canva:
+  - su eliminador de fondos necesita Canva Pro, así que las fotos se recortan con `trazar.py`;
+  - los vídeos terminados se suben a una carpeta de tu cuenta de Canva para que puedas editarlos allí.

@@ -1,0 +1,11 @@
+{
+ "titulo": "En Venus un día dura más que un año",
+ "tecnica": "Pizarra de tiza: el sistema solar dibujado a mano",
+ "lineas": [
+  { "etiqueta": "[excited]", "texto": "¡En Venus, un día dura más que un año!" },
+  { "etiqueta": "[curious]", "texto": "Tarda {243|doscientos cuarenta y tres} días en girar sobre sí misma…" },
+  { "etiqueta": "", "texto": "y solo {225|doscientos veinticinco} en dar la vuelta al Sol." },
+  { "etiqueta": "[amazed]", "texto": "Y encima gira al revés: allí, el Sol sale por el oeste." },
+  { "etiqueta": "[laughs]", "texto": "Cumplirías años antes de ver un día entero." }
+ ]
+}

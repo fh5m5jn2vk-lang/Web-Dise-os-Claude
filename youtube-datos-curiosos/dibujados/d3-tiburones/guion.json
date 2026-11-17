@@ -1,0 +1,11 @@
+{
+ "titulo": "Los tiburones son más antiguos que los árboles",
+ "tecnica": "Dibujos animados planos (vectoriales)",
+ "lineas": [
+  { "etiqueta": "[excited]", "texto": "¡Los tiburones son más antiguos que los árboles!" },
+  { "etiqueta": "[curious]", "texto": "Los primeros tiburones nadaban hace unos {450|cuatrocientos cincuenta} millones de años." },
+  { "etiqueta": "", "texto": "Los primeros árboles aparecieron hace unos {390|trescientos noventa}." },
+  { "etiqueta": "[amazed]", "texto": "Y han sobrevivido a las cinco grandes extinciones… también a la de los dinosaurios." },
+  { "etiqueta": "[laughs]", "texto": "Cuando nació el primer bosque, ellos ya eran veteranos." }
+ ]
+}

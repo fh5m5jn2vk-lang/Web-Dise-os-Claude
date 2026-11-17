@@ -1,0 +1,26 @@
+/* the drawing films: the board fills the frame, the hand and the camera are in the SVG; captions sit low,
+   in a bold rounded face, the word being said under a highlighter stroke (or a chalk underline on the blackboard) */
+@font-face { font-family: Poppins; src: url(../fonts/poppins.woff2) format("woff2"); font-weight: 600 900; }
+#stage.dib { background: #f6f6f2; }
+#stage.dib #board { position: absolute; left: 0; top: 0; }
+#stage.dib #cap { top: 1430px; left: 50px; right: 50px; font: 800 76px/1.14 Poppins, Inter, sans-serif; letter-spacing: -0.035em; }
+#stage.dib #cap .w { color: #17171a; padding: 0 .13em; border-radius: 4px; text-shadow: 0 0 22px rgba(255,255,255,.95), 0 0 8px rgba(255,255,255,.95); -webkit-text-stroke: 0; }
+#stage.dib #cap .w.k { color: #d42b2b; }
+#stage.dib #cap .w.cur { color: #17171a; text-shadow: none; background: linear-gradient(transparent 16%, rgba(255,221,51,.95) 16%, rgba(255,221,51,.95) 90%, transparent 90%); }
+#stage.dib #cap .w.k.cur { color: #b51e1e; }
+#stage.dib-tiza #cap .w { color: #fbfaf3; text-shadow: 0 3px 0 rgba(0,0,0,.4), 0 0 24px rgba(0,0,0,.55); }
+#stage.dib-tiza #cap .w.k { color: #ffd84d; }
+#stage.dib-tiza #cap .w.cur { color: #fff; text-shadow: 0 3px 0 rgba(0,0,0,.4); background: linear-gradient(transparent 82%, rgba(255,216,77,.95) 82%, rgba(255,216,77,.95) 95%, transparent 95%); }
+#stage.dib-arroz #cap .w.cur { background: linear-gradient(transparent 16%, rgba(214,46,36,.9) 16%, rgba(214,46,36,.9) 90%, transparent 90%); color: #fff6ec; }
+#stage.dib-arroz #cap .w.k { color: #b3261e; }
+#stage.dib-cuaderno #cap .w.cur { background: linear-gradient(transparent 16%, rgba(120,235,140,.9) 16%, rgba(120,235,140,.9) 90%, transparent 90%); }
+#stage.dib-boceto #cap .w.cur { background: linear-gradient(transparent 16%, rgba(244,170,90,.85) 16%, rgba(244,170,90,.85) 90%, transparent 90%); }
+/* a stroke counter at the top (the calligraphy film) */
+@font-face { font-family: Brocha; src: url(../fonts/caveat-brush.ttf) format("truetype"); }
+#cont { position: absolute; left: 0; right: 0; top: 120px; text-align: center; color: #c62828; opacity: 0; }
+#cont b { display: block; font: 400 190px/0.9 Brocha, sans-serif; letter-spacing: -0.02em; }
+#cont span { font: 800 46px Poppins, sans-serif; letter-spacing: .14em; color: #2a211a; }
+/* the lights off: captions light on dark */
+#stage.dib #cap.glow .w { color: #eafff4; text-shadow: 0 0 18px rgba(0,0,0,.9), 0 3px 0 rgba(0,0,0,.5); }
+#stage.dib #cap.glow .w.k { color: #7dffc4; }
+#stage.dib #cap.glow .w.cur { color: #04120c; text-shadow: none; background: linear-gradient(transparent 16%, rgba(63,255,170,.9) 16%, rgba(63,255,170,.9) 90%, transparent 90%); }

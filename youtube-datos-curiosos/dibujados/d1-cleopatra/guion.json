@@ -1,0 +1,11 @@
+{
+ "titulo": "Cleopatra vivió más cerca del iPhone que de las pirámides",
+ "tecnica": "Pizarra blanca y rotulador: una mano lo dibuja mientras se cuenta",
+ "lineas": [
+  { "etiqueta": "[excited]", "texto": "¡Cleopatra vivió más cerca del iPhone que de las pirámides!" },
+  { "etiqueta": "[curious]", "texto": "La Gran Pirámide se terminó hacia el {2560|dos mil quinientos sesenta} antes de Cristo." },
+  { "etiqueta": "", "texto": "Cleopatra llegó unos {2500|dos mil quinientos} años después." },
+  { "etiqueta": "[amazed]", "texto": "Y del primer iPhone la separan solo {2000|dos mil}." },
+  { "etiqueta": "[whispers]", "texto": "Para ella, las pirámides ya eran antiguas." }
+ ]
+}

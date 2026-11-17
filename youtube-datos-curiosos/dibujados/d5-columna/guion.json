@@ -1,0 +1,11 @@
+{
+ "titulo": "Ahora mismo eres más bajo que esta mañana",
+ "tecnica": "Papel recortado en stop-motion",
+ "lineas": [
+  { "etiqueta": "[excited]", "texto": "¡Ahora mismo eres más bajo que esta mañana!" },
+  { "etiqueta": "[curious]", "texto": "Durante el día, los discos de tu columna se aplastan con tu peso…" },
+  { "etiqueta": "", "texto": "y pierdes alrededor de un centímetro." },
+  { "etiqueta": "[relieved]", "texto": "Por la noche, tumbado, se vuelven a hinchar." },
+  { "etiqueta": "[excited]", "texto": "Mañana te levantarás más alto. Y esta tarde, otra vez más bajo." }
+ ]
+}

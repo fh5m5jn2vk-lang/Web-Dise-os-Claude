@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>Datos dibujados</title>
+<link rel="stylesheet" href="../kit/kit.css">
+<link rel="stylesheet" href="../kit/dibujo.css">
+<script src="../vendor/gsap/gsap.min.js"></script>
+<script src="../vendor/gsap/DrawSVGPlugin.min.js"></script>
+<script src="../vendor/gsap/MotionPathPlugin.min.js"></script>
+<script src="../vendor/gsap/MorphSVGPlugin.min.js"></script>
+<script src="../vendor/gsap/CustomEase.min.js"></script>
+<style>@font-face { font-family: Pix; src: url(../fonts/press-start-2p.woff2) format("woff2"); } #px { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; image-rendering: pixelated; } #cap { display: none; }</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="px" width="180" height="320"></canvas>
+  <div id="items"></div>
+  <div id="bar"><i></i></div>
+  <div id="hook"></div>
+  <div id="cap"></div>
+  <div id="endc"></div>
+  <div id="flash"></div>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

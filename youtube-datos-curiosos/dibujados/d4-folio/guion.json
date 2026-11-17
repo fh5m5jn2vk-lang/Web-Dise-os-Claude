@@ -1,0 +1,11 @@
+{
+ "titulo": "Si doblas un folio 42 veces, llega a la Luna",
+ "tecnica": "Pixel art de videojuego retro",
+ "lineas": [
+  { "etiqueta": "[excited]", "texto": "¡Si doblas un folio {42|cuarenta y dos} veces, llega a la Luna!" },
+  { "etiqueta": "[curious]", "texto": "Cada doblez duplica su grosor." },
+  { "etiqueta": "", "texto": "Con {10|diez} dobleces mide {10|diez} centímetros. Con {27|veintisiete}, más que el Everest." },
+  { "etiqueta": "[amazed]", "texto": "Y con {42|cuarenta y dos}: {440.000|cuatrocientos cuarenta mil} kilómetros. Más que la distancia a la Luna." },
+  { "etiqueta": "[laughs]", "texto": "El récord real son {12|doce} dobleces." }
+ ]
+}

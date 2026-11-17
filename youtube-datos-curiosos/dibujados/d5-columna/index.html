@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>Datos dibujados</title>
+<link rel="stylesheet" href="../kit/kit.css">
+<link rel="stylesheet" href="../kit/dibujo.css">
+<script src="../vendor/gsap/gsap.min.js"></script>
+<script src="../vendor/gsap/DrawSVGPlugin.min.js"></script>
+<script src="../vendor/gsap/MotionPathPlugin.min.js"></script>
+<script src="../vendor/gsap/MorphSVGPlugin.min.js"></script>
+<script src="../vendor/gsap/CustomEase.min.js"></script>
+<style>@font-face { font-family: Marker; src: url(../fonts/marker.woff2) format("woff2"); } #scene { position: absolute; left: 0; top: 0; } #cap { top: 200px; font: 400 80px/1.25 Marker, sans-serif; letter-spacing: 0; } #cap .w { color: #1d1a2b; text-shadow: none; -webkit-text-stroke: 0; background: #fffdf6; box-shadow: 5px 7px 0 rgba(0,0,0,.35); border-radius: 2px; margin: 0 .1em .12em; } #cap .w.cur { background: #ffd43b; color: #1d1a2b; } #cap .w.k { color: #e0312b; } #cap .w.k.cur { background: #ffd43b; color: #e0312b; } .tag { background: #fffdf6; color: #1d1a2b; font: 400 64px/1 Marker; padding: 14px 26px 10px; box-shadow: 6px 9px 0 rgba(0,0,0,.35); white-space: nowrap; } .tag.red { background: #ff3b4e; color: #fff; } .tag.yel { background: #ffd43b; }</style>
+</head>
+<body>
+<div id="stage">
+  <svg id="scene" width="1080" height="1920" viewBox="0 0 1080 1920"></svg>
+  <div id="items"></div>
+  <div id="bar"><i></i></div>
+  <div id="hook"></div>
+  <div id="cap"></div>
+  <div id="endc"></div>
+  <div id="flash"></div>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

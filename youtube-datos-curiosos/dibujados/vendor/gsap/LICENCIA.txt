@@ -1,0 +1,2 @@
+GSAP 3.15.1 (gsap.min.js, DrawSVGPlugin, MotionPathPlugin, MorphSVGPlugin, CustomEase), from the public gsap npm package.
+Standard "no charge" license: https://gsap.com/standard-license

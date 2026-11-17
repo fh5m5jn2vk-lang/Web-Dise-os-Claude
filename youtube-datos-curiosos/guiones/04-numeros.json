@@ -1,0 +1,136 @@
+{
+  "id": "04-numeros",
+  "numero": 4,
+  "tema": "NÚMEROS",
+  "acento": "#FF5B36",
+  "titulo": "Nadie ha barajado nunca las cartas como tú",
+  "segmentos": [
+    {
+      "tipo": "gancho",
+      "say": "Cada vez que barajas bien una baraja, creas un orden que casi seguro no ha existido nunca.",
+      "foto": "playing cards shuffle",
+      "viz": {
+        "tipo": "slam",
+        "lineas": [
+          "CADA BARAJADA",
+          "crea un orden que",
+          "NUNCA HA EXISTIDO"
+        ]
+      },
+      "foto_id": "f25934837"
+    },
+    {
+      "say": "Con {52|cincuenta y dos} cartas hay un {8|ocho} seguido de {67|sesenta y siete} ceros de formas de ordenarlas. Ni barajando desde el Big Bang se acabarían. Y espera al último, que es todavía más grande.",
+      "foto": "playing cards",
+      "viz": {
+        "tipo": "ceros",
+        "cabeza": "8",
+        "n": 67,
+        "label": "52 cartas"
+      },
+      "foto_id": "f16170851"
+    },
+    {
+      "say": "Un millón de segundos son {11|once} días y medio. Mil millones de segundos son casi {32|treinta y dos} años.",
+      "foto": "clock mechanism",
+      "viz": {
+        "tipo": "versus",
+        "items": [
+          {
+            "l": "1.000.000 de segundos",
+            "v": "11,5 días"
+          },
+          {
+            "l": "1.000.000.000 de segundos",
+            "v": "31,7 años"
+          }
+        ]
+      },
+      "foto_id": "f192538714"
+    },
+    {
+      "say": "En un grupo de solo {23|veintitrés} personas, hay más de un {50 %|cincuenta por ciento} de probabilidades de que dos cumplan años el mismo día. Con {70|setenta}, es casi seguro.",
+      "foto": "birthday cake candles",
+      "viz": {
+        "tipo": "counter",
+        "a": 50.7,
+        "dec": 1,
+        "suf": " %",
+        "label": "23 personas · mismo cumpleaños"
+      },
+      "foto_id": "f23334231"
+    },
+    {
+      "say": "Si pudieras doblar un folio {42|cuarenta y dos} veces, su grosor llegaría hasta la Luna.",
+      "foto": "full moon",
+      "viz": {
+        "tipo": "counter",
+        "a": 439805,
+        "suf": " km",
+        "label": "folio de 0,1 mm × 2⁴²"
+      },
+      "foto_id": "f11901243"
+    },
+    {
+      "say": "Y el más grande: en el ajedrez hay más partidas posibles que átomos en todo el universo observable.",
+      "foto": "chess pieces board",
+      "viz": {
+        "tipo": "potencias",
+        "items": [
+          {
+            "l": "Partidas de ajedrez",
+            "base": "10",
+            "exp": "120"
+          },
+          {
+            "l": "Átomos del universo",
+            "base": "10",
+            "exp": "80"
+          }
+        ]
+      },
+      "foto_id": "f148042600"
+    },
+    {
+      "tipo": "cierre",
+      "say": "Así que la próxima vez que juegues a las cartas, piénsalo:",
+      "foto": "card deck table",
+      "viz": {
+        "tipo": "stamp",
+        "texto": "VERIFICADO"
+      },
+      "foto_id": "f25934837"
+    }
+  ],
+  "youtube": {
+    "titulos": [
+      "Nadie ha barajado nunca las cartas como tú 🃏",
+      "5 números que tu cerebro no puede imaginar",
+      "Dobla un folio 42 veces y llegas a la Luna"
+    ],
+    "descripcion": "52 cartas, un millón de segundos, la paradoja del cumpleaños, el folio que llega a la Luna y el ajedrez contra el universo.",
+    "fuentes": [
+      "52! ≈ 8,07 × 10⁶⁷ ordenaciones",
+      "10⁶ s ≈ 11,6 días; 10⁹ s ≈ 31,7 años",
+      "Paradoja del cumpleaños: 23 personas → 50,7 %; 70 → 99,9 %",
+      "0,1 mm × 2⁴² ≈ 439 805 km; distancia media a la Luna: 384 400 km (NASA)",
+      "Número de Shannon ~10¹²⁰ partidas de ajedrez; ~10⁸⁰ átomos en el universo observable"
+    ],
+    "tags": [
+      "datos curiosos",
+      "matemáticas",
+      "números",
+      "probabilidad",
+      "ajedrez",
+      "shorts",
+      "paradoja del cumpleaños"
+    ],
+    "comentario": "La próxima vez que barajes, piensa que ese orden casi seguro es único en la historia 👇",
+    "hashtags": [
+      "#Shorts",
+      "#DatosCuriosos",
+      "#Matemáticas",
+      "#Números"
+    ]
+  }
+}

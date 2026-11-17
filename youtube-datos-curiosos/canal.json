@@ -1,0 +1,9 @@
+{
+  "nombre": "INFORME CURIOSO",
+  "voz": {
+    "voice_id": "1ZoFqQ08wWANbhoAYAZ4",
+    "nombre": "Velion2",
+    "model_id": "eleven_multilingual_v2",
+    "settings": { "stability": 0.42, "similarity_boost": 0.8, "style": 0.3, "use_speaker_boost": true, "speed": 1.08 }
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "id": "05-cuerpo",
+  "numero": 5,
+  "tema": "CUERPO HUMANO",
+  "acento": "#FF4563",
+  "titulo": "Ahora mismo eres más bajo que esta mañana",
+  "segmentos": [
+    {
+      "tipo": "gancho",
+      "say": "Ahora mismo eres más bajo que cuando te levantaste esta mañana.",
+      "foto": "human spine",
+      "viz": {
+        "tipo": "slam",
+        "lineas": [
+          "AHORA MISMO",
+          "eres más",
+          "BAJO",
+          "que esta mañana"
+        ]
+      },
+      "foto_id": "f99658053"
+    },
+    {
+      "say": "Durante el día, los discos de tu columna se comprimen y pierdes alrededor de un centímetro. Por la noche, tumbado, lo recuperas. Y el último dato es el que menos te esperas.",
+      "foto": "spine model vertebrae",
+      "viz": {
+        "tipo": "counter",
+        "a": -1,
+        "suf": " cm",
+        "label": "de la mañana a la noche"
+      },
+      "foto_id": "f15958591",
+      "foco": 0.25
+    },
+    {
+      "say": "Tu corazón late unas {100.000|cien mil} veces al día. En una vida larga, casi {3.000|tres mil} millones de latidos.",
+      "foto": "human heart anatomical model",
+      "viz": {
+        "tipo": "counter",
+        "a": 100000,
+        "suf": " latidos",
+        "label": "cada día"
+      },
+      "foto_id": "f40999080"
+    },
+    {
+      "say": "El ADN de una sola de tus células, estirado, mide unos {2|dos} metros. Y cabe en un núcleo de unas milésimas de milímetro.",
+      "foto": "DNA double helix model",
+      "viz": {
+        "tipo": "counter",
+        "a": 2,
+        "suf": " m",
+        "label": "ADN de una célula, estirado"
+      },
+      "foto_id": "f47882698"
+    },
+    {
+      "say": "Cada segundo, tu médula ósea fabrica unos {2|dos} millones de glóbulos rojos nuevos.",
+      "foto": "red blood cells",
+      "viz": {
+        "tipo": "counter",
+        "a": 2000000,
+        "label": "glóbulos rojos por segundo"
+      },
+      "foto_id": "f64875452"
+    },
+    {
+      "say": "Y tu estómago fabrica un ácido tan fuerte que tiene que renovar su revestimiento cada pocos días para no dañarse a sí mismo.",
+      "foto": "stomach anatomy",
+      "viz": {
+        "tipo": "stamp",
+        "texto": "pH 1,5 – 3,5"
+      },
+      "foto_id": "f99658213"
+    },
+    {
+      "tipo": "cierre",
+      "say": "Todo eso pasa sin que te des cuenta. Igual que esto:",
+      "foto": "human skeleton",
+      "viz": {
+        "tipo": "stamp",
+        "texto": "VERIFICADO"
+      },
+      "foto_id": "f99658053"
+    }
+  ],
+  "youtube": {
+    "titulos": [
+      "Ahora mismo eres más bajo que esta mañana 📏",
+      "5 cosas que tu cuerpo hace sin que lo sepas",
+      "Tu ADN mide 2 metros (en cada célula)"
+    ],
+    "descripcion": "Encoges un centímetro al día, tu corazón late cien mil veces, cada célula guarda dos metros de ADN y tu estómago se renueva para no dañarse.",
+    "fuentes": [
+      "Variación diurna de la estatura (~1 cm) por compresión de los discos intervertebrales",
+      "Frecuencia cardiaca en reposo 60–100 lpm → ~100 000 latidos al día (American Heart Association)",
+      "ADN de una célula humana: ~2 m (Alberts, Molecular Biology of the Cell)",
+      "Producción de glóbulos rojos: ~2 millones por segundo",
+      "pH gástrico 1,5–3,5; renovación del epitelio gástrico cada pocos días"
+    ],
+    "tags": [
+      "datos curiosos",
+      "cuerpo humano",
+      "salud",
+      "biología",
+      "adn",
+      "corazón",
+      "shorts",
+      "sabías que"
+    ],
+    "comentario": "Mídete por la mañana y por la noche: verás la diferencia 😉 ¿Qué dato te ha sorprendido más?",
+    "hashtags": [
+      "#Shorts",
+      "#DatosCuriosos",
+      "#CuerpoHumano",
+      "#Ciencia"
+    ]
+  }
+}

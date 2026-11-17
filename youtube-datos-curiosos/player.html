@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Informe Curioso · reproductor</title>
+<style>
+@font-face { font-family: 'Archivo'; src: url(fonts/archivo-latin.woff2) format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215; }
+@font-face { font-family: 'Archivo'; src: url(fonts/archivo-latin-ext.woff2) format('woff2'); font-weight: 100 900; font-stretch: 62% 125%; unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+20AD-20C0, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Mono'; src: url(fonts/mono-latin.woff2) format('woff2'); font-weight: 100 800; }
+@font-face { font-family: 'Mono'; src: url(fonts/mono-latin-ext.woff2) format('woff2'); font-weight: 100 800; unicode-range: U+0100-02BA, U+1E00-1E9F, U+2070-209F; }
+:root { --acc: #FFB21A; --ink: #F4F1EA; --bg: #0A0B0D; --dim: rgba(244,241,234,.62); }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--bg); }
+body { font-family: 'Archivo', sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+#stage { position: absolute; inset: 0; overflow: hidden; }
+#photos { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.ph { position: absolute; inset: -2%; background-size: cover; background-position: center; will-change: transform, filter; }
+#grade { position: absolute; inset: 0; background:
+  linear-gradient(180deg, rgba(10,11,13,.86) 0%, rgba(10,11,13,.25) 18%, rgba(10,11,13,.18) 40%, rgba(10,11,13,.55) 58%, rgba(10,11,13,.94) 78%, #0A0B0D 100%); }
+#vig { position: absolute; inset: 0; background: radial-gradient(120% 80% at 50% 42%, transparent 55%, rgba(0,0,0,.55) 100%); }
+#grain { position: absolute; inset: 0; opacity: .09; mix-blend-mode: overlay; background-size: 360px 360px; }
+#flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+
+/* cabecera de informe */
+#hud { position: absolute; left: 64px; right: 64px; top: 128px; }
+#hud .row { display: flex; align-items: baseline; gap: 18px; font-family: 'Mono'; font-size: 28px; letter-spacing: .14em; text-transform: uppercase; }
+#hud .brand { font-weight: 800; color: var(--ink); }
+#hud .num { color: var(--acc); font-weight: 800; }
+#hud .tema { color: var(--dim); }
+#bars { display: flex; gap: 10px; margin-top: 22px; }
+#bars i { flex: 1; height: 8px; border-radius: 4px; background: rgba(244,241,234,.2); overflow: hidden; position: relative; }
+#bars i b { position: absolute; inset: 0; background: var(--acc); transform-origin: left; transform: scaleX(0); }
+#bars i.done b { background: var(--ink); }
+
+/* panel de datos */
+#panel { position: absolute; left: 64px; width: 952px; top: 330px; height: 760px; }
+.card { position: absolute; inset: 0; border-radius: 34px; background: linear-gradient(180deg, rgba(14,15,18,.74), rgba(10,11,13,.82)); border: 1.5px solid rgba(244,241,234,.14); box-shadow: 0 40px 90px rgba(0,0,0,.45); overflow: hidden; }
+.card::before, .card::after { content: ''; position: absolute; width: 46px; height: 46px; border: 5px solid var(--acc); }
+.card::before { left: 22px; top: 22px; border-right: 0; border-bottom: 0; border-radius: 10px 0 0 0; }
+.card::after { right: 22px; bottom: 22px; border-left: 0; border-top: 0; border-radius: 0 0 10px 0; }
+.tag { position: absolute; left: 88px; top: 40px; font-family: 'Mono'; font-weight: 800; font-size: 30px; letter-spacing: .18em; color: var(--acc); }
+.tag span { color: var(--dim); font-weight: 500; }
+.body { position: absolute; left: 56px; right: 56px; top: 120px; bottom: 60px; display: flex; flex-direction: column; justify-content: center; }
+
+/* slam (gancho) */
+.slam { position: absolute; left: 40px; right: 40px; top: 440px; text-align: center; }
+.slam div { font-weight: 900; font-stretch: 72%; text-transform: uppercase; line-height: .9; letter-spacing: -.01em; text-shadow: 0 10px 40px rgba(0,0,0,.6); }
+.slam .big { font-size: 190px; }
+.slam .mid { font-family: 'Mono'; font-weight: 800; font-size: 46px; letter-spacing: .12em; color: var(--ink); margin: 28px 0 22px; text-transform: uppercase; text-shadow: 0 4px 18px rgba(0,0,0,.8); }
+.slam .hl { display: inline-block; background: var(--acc); color: #0A0B0D; padding: 14px 30px 4px; border-radius: 18px; text-shadow: none; }
+
+/* contador */
+.cnt { align-self: center; width: max-content; font-weight: 900; font-stretch: 70%; font-size: 260px; line-height: .9; text-align: center; white-space: nowrap; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+.cnt small { font-size: .42em; font-weight: 800; color: var(--acc); letter-spacing: 0; }
+.lbl { font-family: 'Mono'; font-weight: 500; font-size: 32px; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); text-align: center; margin-top: 34px; }
+.meter { height: 14px; border-radius: 7px; background: rgba(244,241,234,.12); margin: 48px 40px 0; overflow: hidden; }
+.meter b { display: block; height: 100%; background: var(--acc); transform-origin: left; }
+
+/* versus */
+.vs { display: flex; flex-direction: column; gap: 44px; }
+.vs .it { position: relative; }
+.vs .l { font-family: 'Mono'; font-weight: 500; font-size: 30px; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+.vs .v { transform-origin: left center; width: max-content; font-weight: 900; font-stretch: 70%; font-size: 168px; line-height: .92; white-space: nowrap; }
+.vs .v small { font-size: .38em; color: var(--acc); font-weight: 800; margin-left: 12px; }
+.vs .bar { height: 22px; border-radius: 11px; background: var(--acc); margin-top: 14px; transform-origin: left; }
+.vs .it.b .bar { background: var(--ink); }
+.vs .sep { height: 2px; background: rgba(244,241,234,.14); }
+
+/* línea temporal */
+.tl { position: relative; height: 520px; }
+.tl .axis { position: absolute; left: 0; right: 0; top: 260px; height: 6px; border-radius: 3px; background: rgba(244,241,234,.85); transform-origin: left; }
+.tl .mk { position: absolute; top: 263px; width: 0; }
+.tl .dot { position: absolute; left: -17px; top: -17px; width: 34px; height: 34px; border-radius: 50%; background: var(--acc); box-shadow: 0 0 0 8px rgba(10,11,13,.9), 0 0 30px var(--acc); }
+.tl .stem { position: absolute; left: -2px; width: 4px; background: var(--acc); }
+.tl .txt { position: absolute; transform: translateX(-50%); white-space: nowrap; text-align: center; }
+.tl .txt b { display: block; font-weight: 900; font-stretch: 75%; font-size: 64px; line-height: 1; text-transform: uppercase; }
+.tl .txt i { display: block; font-style: normal; font-family: 'Mono'; font-weight: 800; font-size: 30px; color: var(--acc); margin-top: 8px; letter-spacing: .06em; }
+.tl .gap { position: absolute; top: 300px; height: 0; }
+.tl .gapl { position: absolute; top: 240px; font-family: 'Mono'; font-weight: 800; font-size: 26px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink); background: rgba(10,11,13,.9); padding: 4px 10px; border-radius: 8px; transform: translateX(-50%); white-space: nowrap; border: 1.5px solid rgba(244,241,234,.25); }
+
+/* sello */
+.stamp { align-self: center; border: 10px solid var(--acc); color: var(--acc); border-radius: 22px; padding: 30px 46px 18px; font-weight: 900; font-stretch: 75%; font-size: 120px; line-height: 1; text-align: center; transform: rotate(-7deg); max-width: 820px; box-shadow: inset 0 0 0 4px rgba(10,11,13,.6); }
+
+/* ceros */
+.zeros { font-family: 'Mono'; font-weight: 800; font-size: 62px; line-height: 1.12; letter-spacing: .06em; word-break: break-all; text-align: left; color: var(--ink); }
+.zeros .h { color: var(--acc); }
+.zeros .c { opacity: 0; }
+
+/* potencias */
+.pw .v sup { font-size: .5em; vertical-align: .9em; color: var(--acc); }
+
+/* reloj */
+.clock { position: relative; width: 420px; height: 420px; margin: 0 auto; }
+.clock svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+.clock .t { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-weight: 900; font-stretch: 70%; font-size: 150px; font-variant-numeric: tabular-nums; }
+
+/* cubo */
+.cubeWrap { width: 360px; height: 360px; margin: 10px auto 0; perspective: 1200px; }
+.cube { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
+.cube i { position: absolute; inset: 0; border: 8px solid var(--acc); background: rgba(10,11,13,.35); border-radius: 18px; }
+
+/* subtítulos */
+#cap { position: absolute; left: 110px; right: 110px; top: 1188px; height: 300px; text-align: center; }
+#cap .ln { font-weight: 900; font-stretch: 78%; font-size: 100px; line-height: 1.02; text-transform: uppercase; letter-spacing: -.005em; }
+#cap .w { display: inline-block; margin: 0 .12em; paint-order: stroke fill; -webkit-text-stroke: 14px #0A0B0D; text-shadow: 0 8px 30px rgba(0,0,0,.7); transform-origin: 50% 80%; }
+#cap .w.on { color: var(--acc); }
+
+#cta { position: absolute; left: 64px; top: 1110px; font-family: 'Mono'; font-weight: 800; font-size: 30px; letter-spacing: .14em; color: #0A0B0D; background: var(--acc); padding: 14px 22px; border-radius: 12px; opacity: 0; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="photos"></div>
+  <div id="grade"></div><div id="vig"></div><div id="grain"></div>
+  <div id="hud"><div class="row"><span class="brand"></span><span class="num"></span><span class="tema"></span></div><div id="bars"></div></div>
+  <div id="panel"></div>
+  <div id="slam" class="slam"></div>
+  <div id="cap"></div>
+  <div id="cta"></div>
+  <div id="flash"></div>
+</div>
+<script>
+const Q = new URLSearchParams(location.search);
+const ID = Q.get('id') || '01-historia';
+const $ = (s, r = document) => r.querySelector(s);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, k) => a + (b - a) * k;
+const eOut = (x) => 1 - Math.pow(1 - clamp(x), 3);
+const eExpo = (x) => (x = clamp(x), x === 1 ? 1 : 1 - Math.pow(2, -10 * x));
+const eBack = (x) => { x = clamp(x); const c = 1.7; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const fmt = (n, dec = 0, plain = false) => { const s = Math.abs(n).toFixed(dec).split('.'); const int = plain ? s[0] : s[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.'); return (n < 0 ? '−' : '') + int + (dec ? ',' + s[1] : ''); };
+const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9ñ]/g, '');
+
+let T, SEGS, WORDS, FACTS, scenes = [];
+
+// ruido de grano precalculado (4 fotogramas que se alternan)
+const grains = [0, 1, 2, 3].map((k) => { const c = document.createElement('canvas'); c.width = c.height = 360; const g = c.getContext('2d'); const im = g.createImageData(360, 360); let s = 1234 + k * 999; for (let i = 0; i < im.data.length; i += 4) { s = (s * 16807) % 2147483647; const v = s % 255; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; } g.putImageData(im, 0, 0); return c.toDataURL(); });
+
+// momento en que se dice una palabra clave dentro de un segmento
+function when(seg, key, fallback) {
+  const k = norm(key || '');
+  if (k) { const w = WORDS.find((w) => w.seg === seg.i && norm(w.w).startsWith(k.slice(0, Math.max(4, Math.min(k.length, 8))))); if (w) return w.t0; }
+  return fallback;
+}
+
+function build() {
+  document.documentElement.style.setProperty('--acc', T.acento);
+  $('#hud .brand').textContent = T.canal;
+  $('#hud .num').textContent = 'Nº ' + String(T.numero).padStart(2, '0');
+  $('#hud .tema').textContent = '· ' + T.tema;
+  FACTS = SEGS.filter((s) => !s.tipo);
+  $('#bars').innerHTML = FACTS.map(() => '<i><b></b></i>').join('');
+  $('#cta').textContent = `SIGUE ▸ INFORME Nº ${String(T.numero + 1).padStart(2, '0')}`;
+  // fotos
+  $('#photos').innerHTML = SEGS.map((s) => `<div class="ph" style="background-image:url(build/${ID}/fotos/${s.i}.jpg);background-position:${(s.foco ?? 0.5) * 100}% 50%;opacity:0"></div>`).join('');
+  // escenas
+  SEGS.forEach((s) => {
+    const v = s.viz || {}; let el, upd = () => {};
+    const factN = FACTS.indexOf(s) + 1;
+    const card = (inner) => { const d = document.createElement('div'); d.className = 'card'; d.style.opacity = 0; d.innerHTML = `<div class="tag">${s.tipo === 'cierre' ? 'INFORME' : 'DATO ' + String(factN).padStart(2, '0')} <span>/ ${String(FACTS.length).padStart(2, '0')}</span></div><div class="body">${inner}</div>`; $('#panel').appendChild(d); return d; };
+    if (v.tipo === 'slam') {
+      el = document.createElement('div'); el.style.opacity = 0; $('#slam').appendChild(el);
+      const hl = v.resalta ?? 2;
+      el.innerHTML = v.lineas.map((l, i) => i % 2 ? `<div class="mid">${l}</div>` : `<div class="big">${i === hl ? `<span class="hl">${l}</span>` : l}</div>`).join('');
+      const ls = [...el.children];
+      const lts = []; v.lineas.forEach((l, i) => { const w = i ? when(s, l.split(' ')[0], null) : 0; lts.push(i === 0 ? 0 : Math.max(lts[i - 1] + 0.18, w != null ? w - 0.08 : lts[i - 1] + 0.3)); });
+      s._hits = lts.filter((x, i) => i % 2 === 0);
+      upd = (lt) => ls.forEach((d, i) => { if (i === 0) { d.style.opacity = 1; d.style.transform = `scale(${1 + 0.03 * eOut(lt / 3)})`; return; } const st = lts[i]; d.style.opacity = eOut((lt - st) / 0.12); d.style.transform = `scale(${lerp(1.6, 1, eBack((lt - st) / 0.3))})`; });
+    } else if (v.tipo === 'counter') {
+      el = card(`<div class="cnt"><small class="pre"></small><span class="n"></span><small></small></div><div class="lbl">${v.label || ''}</div><div class="meter"><b></b></div>`);
+      let sm; const n = $('.n', el), m = $('.meter b', el), from = v.de ?? 0, dec = v.dec || 0;
+      $('.pre', el).textContent = v.pre ? v.pre.trim() + ' ' : ''; const pre = ''; sm = $('small:last-child', el); sm.textContent = (v.suf || '').trim(); if (v.suf && v.suf.startsWith(' ')) sm.style.marginLeft = '.18em';
+      const t0 = 0.25, t1 = Math.min(1.9, (s.fin - s.start) * 0.45);
+      s._ticks = [t0, t1];
+      upd = (lt) => { const k = eOut((lt - t0) / (t1 - t0)); n.textContent = pre + fmt(lerp(from, v.a, k), dec, v.sinmiles); m.style.transform = `scaleX(${k})`; fit(n.parentElement, 830); };
+    } else if (v.tipo === 'versus') {
+      el = card(`<div class="vs">${v.items.map((it, i) => `<div class="it ${i ? 'b' : 'a'}"><div class="l">${it.l}</div><div class="v">${it.v}${v.unidad ? `<small>${v.unidad}</small>` : ''}</div>${v.barras ? '<div class="bar"></div>' : ''}</div>${i === 0 ? '<div class="sep"></div>' : ''}`).join('')}</div>`);
+      const its = [...el.querySelectorAll('.it')]; const nums = v.items.map((it) => parseFloat(String(it.v).replace(/\./g, '').replace(',', '.')));
+      const mx = Math.max(...nums);
+      const half = (() => { const w = WORDS.filter((w) => w.seg === s.i); return w[Math.floor(w.length * 0.5)].t0; })();
+      const tb = (when(s, v.items[1].k || v.items[1].v, null) ?? half) - s.start - 0.1; s._hits = [0.15, tb];
+      upd = (lt) => its.forEach((d, i) => { const st = i ? tb : 0.15; const k = eExpo((lt - st) / 0.5); d.style.opacity = clamp((lt - st) / 0.15); d.style.transform = `translateX(${(1 - k) * 80}px)`; const b = $('.bar', d); if (b) b.style.transform = `scaleX(${eOut((lt - st - 0.1) / 0.9) * nums[i] / mx})`; fit($('.v', d), 830); });
+    } else if (v.tipo === 'timeline') {
+      const span = v.max - v.min, x = (val) => ((val - v.min) / span) * 840;
+      el = card(`<div class="tl"><div class="axis"></div>${v.marcas.map((mk, i) => `<div class="mk" style="left:${x(mk.v)}px"><div class="stem" style="${i % 2 ? 'top:0;height:120px' : 'bottom:0;height:120px'}"></div><div class="dot"></div><div class="txt" style="${i % 2 ? 'top:130px' : 'bottom:130px'}"><b>${mk.l}</b><i>${mk.s}</i></div></div>`).join('')}</div>`);
+      // posición horizontal de las etiquetas: dentro del panel
+      (v.gaps || []).forEach((g, i) => { const d = document.createElement('div'); d.className = 'gapl'; d.textContent = g; d.style.left = `${(x(v.marcas[i].v) + x(v.marcas[i + 1].v)) / 2}px`; $('.tl', el).appendChild(d); });
+      const gaps = [...el.querySelectorAll('.gapl')];
+      const marks = [...el.querySelectorAll('.mk')]; const ax = $('.axis', el);
+      const times = []; v.marcas.forEach((mk, i) => { const w = when(s, mk.k || mk.l.split(' ').slice(-1)[0], null); times.push(w != null ? Math.max(0.5, w - s.start - 0.15) : (i ? times[i - 1] + 1.1 : 0.6)); });
+      s._hits = times;
+      upd = (lt) => { ax.style.transform = `scaleX(${eExpo(lt / 0.8)})`; gaps.forEach((g, i) => { const st = times[i + 1] + 0.45; g.style.opacity = clamp((lt - st) / 0.2); g.style.transform = `translateX(-50%) scale(${lerp(1.3, 1, eOut((lt - st) / 0.3))})`; }); marks.forEach((m, i) => { const k = eBack((lt - times[i]) / 0.4); m.style.opacity = clamp((lt - times[i]) / 0.12); $('.dot', m).style.transform = `scale(${k})`; const tx = $('.txt', m), L = parseFloat(m.style.left), hw = tx.offsetWidth / 2; tx.style.left = `${clamp(0, -L + hw, 840 - L - hw)}px`; tx.style.transform = `translateX(-50%) translateY(${(1 - eExpo((lt - times[i]) / 0.5)) * (marks.indexOf(m) % 2 ? -30 : 30)}px)`; $('.stem', m).style.transform = `scaleY(${eOut((lt - times[i]) / 0.35)})`; $('.stem', m).style.transformOrigin = marks.indexOf(m) % 2 ? 'top' : 'bottom'; }); };
+    } else if (v.tipo === 'stamp') {
+      el = card(`<div class="stamp">${v.texto}</div>`);
+      const st = $('.stamp', el); s._hits = [0.35];
+      upd = (lt) => { const k = clamp((lt - 0.35) / 0.18); st.style.opacity = k; st.style.transform = `rotate(-7deg) scale(${lerp(2.2, 1, eOut(k))})`; };
+    } else if (v.tipo === 'ceros') {
+      const digits = v.cabeza + '0'.repeat(v.n);
+      el = card(`<div class="zeros">${[...digits].map((c, i) => `<span class="${i ? 'c' : 'h'}">${c}</span>`).join('')}</div><div class="lbl">${v.label} → ${v.cabeza} × 10<sup>${v.n}</sup> órdenes</div>`);
+      const cs = [...el.querySelectorAll('.zeros .c')]; s._ticks = [0.3, 2.6];
+      upd = (lt) => cs.forEach((c, i) => { const k = clamp((lt - 0.3 - i * 0.034) / 0.08); c.style.opacity = k; c.style.color = k < 1 ? 'var(--acc)' : ''; });
+    } else if (v.tipo === 'potencias') {
+      el = card(`<div class="vs pw">${v.items.map((it, i) => `<div class="it ${i ? 'b' : 'a'}"><div class="l">${it.l}</div><div class="v">${it.base}<sup>${it.exp}</sup></div><div class="bar"></div></div>${i === 0 ? '<div class="sep"></div>' : ''}`).join('')}</div>`);
+      const its = [...el.querySelectorAll('.it')]; const mx = Math.max(...v.items.map((i) => +i.exp));
+      const tb = (when(s, 'átomos', null) ?? s.start + 2.5) - s.start - 0.1; s._hits = [0.15, tb];
+      upd = (lt) => its.forEach((d, i) => { const st = i ? tb : 0.15; const k = eExpo((lt - st) / 0.5); d.style.opacity = clamp((lt - st) / 0.15); d.style.transform = `translateX(${(1 - k) * 80}px)`; $('.bar', d).style.transform = `scaleX(${eOut((lt - st - 0.1) / 0.9) * v.items[i].exp / mx})`; });
+    } else if (v.tipo === 'reloj') {
+      el = card(`<div class="clock"><svg viewBox="0 0 420 420"><circle cx="210" cy="210" r="190" fill="none" stroke="rgba(244,241,234,.14)" stroke-width="22"/><circle class="arc" cx="210" cy="210" r="190" fill="none" stroke="var(--acc)" stroke-width="22" stroke-linecap="round" stroke-dasharray="1194" stroke-dashoffset="1194"/></svg><div class="t">0:00</div></div><div class="lbl">${v.label}</div>`);
+      const arc = $('.arc', el), tx = $('.t', el); s._ticks = [0.3, 2.6];
+      upd = (lt) => { const k = eOut((lt - 0.3) / 2.3); const sec = Math.round(v.seg * k); tx.textContent = `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, '0')}`; arc.style.strokeDashoffset = 1194 * (1 - k); };
+    } else if (v.tipo === 'cubo') {
+      el = card(`<div class="cubeWrap"><div class="cube">${['rotateY(0deg)', 'rotateY(90deg)', 'rotateY(180deg)', 'rotateY(-90deg)', 'rotateX(90deg)', 'rotateX(-90deg)'].map((r) => `<i style="transform:${r} translateZ(180px)"></i>`).join('')}</div></div><div class="lbl">${v.label}</div>`);
+      const cb = $('.cube', el); s._hits = [0.2];
+      upd = (lt) => { cb.style.transform = `scale(${eBack(lt / 0.5) * 0.8}) rotateX(${-22 + lt * 14}deg) rotateY(${35 + lt * 40}deg)`; };
+    }
+    scenes.push({ s, el, upd });
+  });
+  // los subtítulos: grupos de palabras que caben en dos líneas cortas
+  const groups = []; let g = [];
+  for (const w of WORDS) {
+    const len = g.reduce((a, x) => a + x.w.length + 1, 0);
+    const brk = g.length && (len + w.w.length > 16 || g.length >= 3 || w.seg !== g[0].seg || /[.,:;!?…]$/.test(g[g.length - 1].w) || w.t0 - g[g.length - 1].t1 > 0.35);
+    if (brk) { groups.push(g); g = []; }
+    g.push(w);
+  }
+  if (g.length) groups.push(g);
+  GROUPS = groups.map((ws, i) => ({ ws, t0: ws[0].t0 - 0.04, t1: groups[i + 1] ? groups[i + 1][0].t0 - 0.04 : T.dur }));
+}
+let GROUPS = [];
+
+function fit(node, max) { node.style.transform = ''; const w = node.scrollWidth; if (w > max) node.style.transform = `scale(${max / w})`; }
+
+let lastGroup = -1;
+function render(t) {
+  // foto activa con zoom lento y entrada con golpe de zoom
+  const phs = [...document.querySelectorAll('.ph')];
+  const si = SEGS.findIndex((s) => t >= s.start && t < s.fin); const cur = si < 0 ? SEGS.length - 1 : si;
+  phs.forEach((p, i) => {
+    const s = SEGS[i]; const lt = t - s.start; const d = s.fin - s.start;
+    const vis = i === cur || (i === cur - 1 && t - SEGS[cur].start < 0.25);
+    if (!vis) { p.style.opacity = 0; return; }
+    const inK = i === 0 ? 1 : eExpo(lt / 0.45);
+    const z = lerp(1.22, 1.0, eOut(lt / Math.max(d, 1))) + (1 - inK) * 0.25;
+    const pan = (i % 2 ? -1 : 1) * 18 * (lt / Math.max(d, 1));
+    p.style.opacity = i === cur ? 1 : 1 - clamp((t - SEGS[cur].start) / 0.25);
+    p.style.zIndex = i === cur ? 2 : 1;
+    p.style.transform = `translateX(${pan}px) scale(${z})`;
+    p.style.filter = `blur(${(1 - inK) * 14}px) saturate(1.05) contrast(1.06) brightness(.92)`;
+  });
+  // destello en cada corte
+  const sc = SEGS[cur]; const since = t - sc.start;
+  $('#flash').style.opacity = cur > 0 ? 0.32 * (1 - clamp(since / 0.14)) : 0;
+  $('#grain').style.backgroundImage = `url(${grains[Math.floor(t * 24) % 4]})`;
+  // barras de progreso
+  const bars = [...document.querySelectorAll('#bars i')];
+  FACTS.forEach((f, k) => { const b = bars[k]; const p = clamp((t - f.start) / (f.fin - f.start)); b.firstChild.style.transform = `scaleX(${p})`; b.classList.toggle('done', t >= f.fin); });
+  // escenas
+  scenes.forEach(({ s, el, upd }) => {
+    if (!el) return; const lt = t - s.start;
+    const on = t >= s.start - 0.01 && t < s.fin;
+    if (!on) { el.style.opacity = 0; return; }
+    const outK = clamp((s.fin - t) / 0.2);
+    const inK = s.i === 0 ? 1 : eExpo(lt / 0.42);
+    el.style.opacity = Math.min(inK * 1.4, outK);
+    if (el.classList.contains('card')) el.style.transform = `translateY(${(1 - inK) * 120}px) scale(${lerp(0.94, 1, inK) * lerp(0.97, 1, outK)})`;
+    upd(lt);
+  });
+  // subtítulos (no durante el gancho, ahí manda el titular)
+  const gi = GROUPS.findIndex((g) => t >= g.t0 && t < g.t1);
+  const cap = $('#cap');
+  if (gi < 0 || GROUPS[gi].ws[0].seg === 0) { cap.innerHTML = ''; lastGroup = -1; }
+  else {
+    const g = GROUPS[gi];
+    if (gi !== lastGroup) { cap.innerHTML = `<div class="ln">${g.ws.map((w) => `<span class="w">${w.w.replace(/[,.:;]$/, '')}</span>`).join(' ')}</div>`; lastGroup = gi; }
+    const ln = $('.ln', cap); ln.style.transform = `scale(${lerp(0.86, 1, eBack((t - g.t0) / 0.18))})`; ln.style.opacity = clamp((t - g.t0) / 0.06);
+    fit(ln, 860);
+    [...cap.querySelectorAll('.w')].forEach((sp, k) => { const w = g.ws[k]; const on = t >= w.t0 - 0.03 && t < (g.ws[k + 1]?.t0 ?? g.t1); sp.classList.toggle('on', on); sp.style.transform = on ? `scale(${1 + 0.08 * (1 - clamp((t - w.t0) / 0.2))})` : ''; });
+  }
+  // llamada a seguir en el cierre
+  const last = SEGS[SEGS.length - 1];
+  $('#cta').style.opacity = clamp((t - last.start - 0.6) / 0.25);
+}
+
+window.__ready = (async () => {
+  T = await (await fetch(`build/${ID}/timeline.json`)).json();
+  SEGS = T.segs; WORDS = T.words;
+  build();
+  await document.fonts.ready;
+  await Promise.all(SEGS.map((s) => new Promise((r) => { const im = new Image(); im.onload = im.onerror = r; im.src = `build/${ID}/fotos/${s.i}.jpg`; })));
+  window.__dur = T.dur;
+  // marcas para el diseño de sonido: cortes, golpes y tictacs, en segundos del vídeo
+  window.__cues = { cortes: SEGS.slice(1).map((s) => s.start), golpes: SEGS.flatMap((s) => (s._hits || []).map((h) => s.start + h)), tics: SEGS.flatMap((s) => s._ticks ? [[s.start + s._ticks[0], s.start + s._ticks[1]]] : []) };
+  render(+(Q.get('t') || 0));
+})();
+window.__render = render;
+if (!Q.has('record') && !Q.has('t')) window.__ready.then(() => { const t0 = performance.now(); const loop = (n) => { render(((n - t0) / 1000) % T.dur); requestAnimationFrame(loop); }; requestAnimationFrame(loop); });
+</script>
+</body>
+</html>

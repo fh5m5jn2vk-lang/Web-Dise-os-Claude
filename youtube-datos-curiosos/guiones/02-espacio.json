@@ -1,0 +1,135 @@
+{
+  "id": "02-espacio",
+  "numero": 2,
+  "tema": "ESPACIO",
+  "acento": "#41D7FF",
+  "titulo": "En Venus un día dura más que un año",
+  "segmentos": [
+    {
+      "tipo": "gancho",
+      "say": "En Venus, un día dura más que un año.",
+      "foto": "Venus planet",
+      "viz": {
+        "tipo": "slam",
+        "lineas": [
+          "EN VENUS",
+          "un día dura",
+          "MÁS QUE UN AÑO"
+        ]
+      },
+      "foto_id": "f1215787"
+    },
+    {
+      "say": "Venus tarda {243|doscientos cuarenta y tres} días terrestres en girar sobre sí misma, pero solo {225|doscientos veinticinco} en dar la vuelta al Sol. Y además gira al revés: allí el Sol sale por el oeste. Espera al último, que es el que más impresiona.",
+      "foto": "Venus Magellan",
+      "viz": {
+        "tipo": "versus",
+        "barras": true,
+        "unidad": "días",
+        "items": [
+          {
+            "l": "Girar sobre sí misma",
+            "v": "243"
+          },
+          {
+            "l": "Dar la vuelta al Sol",
+            "v": "225"
+          }
+        ]
+      },
+      "foto_id": "f38214948"
+    },
+    {
+      "say": "Saturno es tan poco denso que, si existiera una bañera lo bastante grande, flotaría.",
+      "foto": "Saturn Cassini",
+      "viz": {
+        "tipo": "versus",
+        "barras": true,
+        "unidad": "g/cm³",
+        "items": [
+          {
+            "l": "Agua",
+            "v": "1,00"
+          },
+          {
+            "l": "Saturno",
+            "v": "0,69"
+          }
+        ]
+      },
+      "foto_id": "f29232326"
+    },
+    {
+      "say": "Un trozo de estrella de neutrones del tamaño de un terrón de azúcar pesaría unos {500|quinientos} millones de toneladas.",
+      "foto": "Crab Nebula",
+      "viz": {
+        "tipo": "counter",
+        "a": 500000000,
+        "suf": " t",
+        "label": "1 cm³ de estrella de neutrones"
+      },
+      "foto_id": "f110234010"
+    },
+    {
+      "say": "La luz del Sol tarda {8|ocho} minutos y {20|veinte} segundos en llegar hasta aquí. El Sol que ves ahora mismo es el de hace {8|ocho} minutos.",
+      "foto": "Sun Solar Dynamics Observatory",
+      "viz": {
+        "tipo": "reloj",
+        "seg": 500,
+        "label": "del Sol a la Tierra"
+      },
+      "foto_id": "f11348559"
+    },
+    {
+      "say": "Y las huellas que dejaron los astronautas en la Luna siguen ahí. Sin viento ni lluvia, podrían durar millones de años.",
+      "foto": "Apollo 11 bootprint",
+      "viz": {
+        "tipo": "stamp",
+        "texto": "SIGUEN AHÍ"
+      },
+      "foto_id": "f6457547"
+    },
+    {
+      "tipo": "cierre",
+      "say": "Mientras tanto, en Venus, el día de hoy aún no ha terminado. Porque…",
+      "foto": "Venus Mariner 10",
+      "viz": {
+        "tipo": "stamp",
+        "texto": "VERIFICADO"
+      },
+      "foto_id": "f1215787"
+    }
+  ],
+  "youtube": {
+    "titulos": [
+      "En Venus un día dura más que un año 🪐",
+      "5 datos del espacio que parecen mentira",
+      "Saturno flotaría en el agua (de verdad)"
+    ],
+    "descripcion": "Venus gira al revés, Saturno flotaría, un terrón de estrella de neutrones pesaría 500 millones de toneladas… y las huellas de la Luna siguen ahí.",
+    "fuentes": [
+      "Rotación de Venus: 243 días; órbita: 225 días; rotación retrógrada (NASA)",
+      "Densidad media de Saturno: 0,69 g/cm³ (NASA)",
+      "Densidad de una estrella de neutrones: ~4–6 × 10¹⁷ kg/m³ (NASA Goddard)",
+      "Luz del Sol a la Tierra: ~8 min 20 s (NASA)",
+      "Huellas lunares y erosión por micrometeoritos (NASA)"
+    ],
+    "tags": [
+      "datos curiosos",
+      "espacio",
+      "venus",
+      "saturno",
+      "astronomía",
+      "shorts",
+      "estrella de neutrones",
+      "luna"
+    ],
+    "comentario": "Dato extra: en Venus el Sol sale por el oeste. ¿Cuál te ha volado la cabeza? 👇",
+    "hashtags": [
+      "#Shorts",
+      "#DatosCuriosos",
+      "#Espacio",
+      "#Astronomía"
+    ]
+  }
+}

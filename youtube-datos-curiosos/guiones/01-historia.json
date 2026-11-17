@@ -1,0 +1,162 @@
+{
+  "id": "01-historia",
+  "numero": 1,
+  "tema": "HISTORIA",
+  "acento": "#FFB21A",
+  "titulo": "Cleopatra vivió más cerca del iPhone que de las pirámides",
+  "segmentos": [
+    {
+      "tipo": "gancho",
+      "say": "Cleopatra vivió más cerca del primer iPhone que de la Gran Pirámide.",
+      "foto": "Great Pyramid of Giza",
+      "viz": {
+        "tipo": "slam",
+        "lineas": [
+          "CLEOPATRA",
+          "vivió más cerca del",
+          "iPHONE",
+          "que de la Gran Pirámide"
+        ]
+      },
+      "foto_id": "f98657588"
+    },
+    {
+      "say": "La pirámide se terminó hacia el {2560|dos mil quinientos sesenta} antes de Cristo. Cleopatra murió en el año {30|treinta} antes de Cristo. Entre ellas hay unos {2500|dos mil quinientos} años. Entre Cleopatra y el primer iPhone, unos {2000|dos mil}. Y quédate, que el último dato es aún más raro.",
+      "foto": "Giza pyramids",
+      "viz": {
+        "tipo": "timeline",
+        "min": -2700,
+        "max": 2100,
+        "marcas": [
+          {
+            "v": -2560,
+            "l": "Gran Pirámide",
+            "s": "2560 a. C."
+          },
+          {
+            "v": -30,
+            "l": "Cleopatra",
+            "s": "30 a. C."
+          },
+          {
+            "v": 2007,
+            "l": "iPhone",
+            "s": "2007"
+          }
+        ],
+        "gaps": [
+          "2.530 años",
+          "2.036 años"
+        ]
+      },
+      "foto_id": "f42494301"
+    },
+    {
+      "say": "Cuando se construía esa pirámide, aún quedaban mamuts vivos. Los últimos resistieron en la isla de Wrangel, en el Ártico, hasta hace unos {4000|cuatro mil} años.",
+      "foto": "woolly mammoth skeleton",
+      "viz": {
+        "tipo": "counter",
+        "a": 4000,
+        "pre": "hace ",
+        "suf": " años",
+        "label": "últimos mamuts · isla de Wrangel"
+      },
+      "foto_id": "f79994235"
+    },
+    {
+      "say": "La Universidad de Oxford es más antigua que el Imperio azteca. En Oxford ya se daban clases en {1096|mil noventa y seis}. Tenochtitlan no se fundó hasta {1325|mil trescientos veinticinco}.",
+      "foto": "Radcliffe Camera Oxford",
+      "viz": {
+        "tipo": "versus",
+        "items": [
+          {
+            "l": "Clases en Oxford",
+            "v": "1096"
+          },
+          {
+            "l": "Fundación de Tenochtitlan",
+            "v": "1325"
+          }
+        ]
+      },
+      "foto_id": "f3428212"
+    },
+    {
+      "say": "Nintendo se fundó en {1889|mil ochocientos ochenta y nueve}, el año en que se inauguró la Torre Eiffel. Y no hacía videojuegos: hacía cartas.",
+      "foto": "hanafuda cards",
+      "viz": {
+        "tipo": "counter",
+        "a": 1889,
+        "de": 2026,
+        "sinmiles": true,
+        "label": "Nintendo · cartas hanafuda"
+      },
+      "foto_id": "f100222272"
+    },
+    {
+      "say": "Y el más raro: el fax se patentó en {1843|mil ochocientos cuarenta y tres}. {33|Treinta y tres} años antes que el teléfono.",
+      "foto": "fax machine",
+      "viz": {
+        "tipo": "versus",
+        "items": [
+          {
+            "l": "Patente del fax",
+            "v": "1843"
+          },
+          {
+            "l": "Patente del teléfono",
+            "v": "1876",
+            "k": "teléfono"
+          }
+        ]
+      },
+      "foto_id": "f16332894"
+    },
+    {
+      "tipo": "cierre",
+      "say": "Así que no, la historia no está tan lejos como crees. Si no, piensa en esto.",
+      "foto": "Cleopatra bust",
+      "viz": {
+        "tipo": "stamp",
+        "texto": "VERIFICADO"
+      },
+      "foto_id": "f98657588"
+    }
+  ],
+  "youtube": {
+    "titulos": [
+      "Cleopatra vivió más cerca del iPhone que de las pirámides 🤯",
+      "5 datos que rompen tu idea del tiempo",
+      "¿Mamuts vivos con las pirámides? Sí"
+    ],
+    "descripcion": "Cleopatra, los últimos mamuts, Oxford, Nintendo y el fax: cinco fechas reales que no encajan con lo que imaginas. ¿Cuál te ha sorprendido más?",
+    "fuentes": [
+      "Gran Pirámide de Guiza, terminada hacia 2560 a. C. (Encyclopaedia Britannica)",
+      "Muerte de Cleopatra VII, 30 a. C. (Britannica)",
+      "Primer iPhone, 2007 (Apple)",
+      "Mamuts de la isla de Wrangel, hasta hace unos 4000 años (Vartanyan et al., Nature 1993; Current Biology 2024)",
+      "Enseñanza en Oxford desde 1096; fundación de Tenochtitlan en 1325 (University of Oxford; Britannica)",
+      "Nintendo, fundada en 1889 como fabricante de cartas hanafuda (Nintendo)",
+      "Torre Eiffel, inaugurada en 1889 (Société d'Exploitation de la Tour Eiffel)",
+      "Patente de Alexander Bain, 1843; patente del teléfono de Bell, 1876 (Britannica)"
+    ],
+    "tags": [
+      "datos curiosos",
+      "historia",
+      "cleopatra",
+      "pirámides",
+      "curiosidades",
+      "shorts",
+      "sabías que",
+      "mamuts",
+      "nintendo"
+    ],
+    "comentario": "¿Sabías alguno de los cinco? 👇 El del fax es real: la patente es de 1843.",
+    "hashtags": [
+      "#Shorts",
+      "#DatosCuriosos",
+      "#Historia",
+      "#SabíasQue"
+    ]
+  }
+}

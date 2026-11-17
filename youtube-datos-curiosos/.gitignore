@@ -1,0 +1,10 @@
+# intermedios que se regeneran con ./hacer.sh
+build/*/imagen.mp4
+build/*/musica.wav
+build/*/efectos.wav
+build/*/control/
+build/*/thumbs/
+build/*/.taste-skill/
+build/*/candidatos.jpg
+build/log-*.txt
+build/*/fotos/

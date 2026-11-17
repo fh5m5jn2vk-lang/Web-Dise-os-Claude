@@ -19,6 +19,7 @@ ffmpeg -y -v error -i "$B/imagen.mp4" -i "$B/voz.mp3" -i "$B/musica.wav" -i "$B/
 [2:a]volume=0.55[m];[m][v2]sidechaincompress=threshold=0.03:ratio=8:attack=15:release=350[md];\
 [3:a]volume=0.8[fx];\
 [v1][md][fx]amix=inputs=3:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]" \
-  -map 0:v -map "[a]" -c:v copy -c:a aac -b:a 192k -movflags +faststart -t "$DUR" "videos/$ID.mp4"
+  -map 0:v -map "[a]" -c:v libx264 -preset slow -crf 23 -pix_fmt yuv420p -c:a aac -b:a 192k -movflags +faststart -t "$DUR" "videos/$ID.mp4"
+ffmpeg -y -v error -ss 1.2 -i "videos/$ID.mp4" -frames:v 1 -q:v 3 "videos/$ID-portada.jpg"
 node lib/metadatos.mjs "$G"
 echo "listo: videos/$ID.mp4"

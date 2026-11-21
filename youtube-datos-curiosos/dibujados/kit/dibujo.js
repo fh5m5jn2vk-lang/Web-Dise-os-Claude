@@ -30,6 +30,7 @@ export const ESTILOS = {
   cuaderno: { tex: 'cuaderno', tool: 'boli',   ink: '#1e3fa6', w: 4.2, filtro: 'f-boli',  sombra: 0.18 },
   boceto:   { tex: 'boceto',   tool: 'lapiz',  ink: '#3a332b', w: 4,   filtro: 'f-lapiz', sombra: 0.2 },
   arroz:    { tex: 'arroz',    tool: 'pincel', ink: '#17130f', w: 10,  filtro: 'f-tinta', sombra: 0.2 },
+  neon:     { tex: 'ladrillo', tool: 'rotu',   ink: '#3ff5ff', w: 9,   filtro: 'f-neon',  sombra: 0 },
 };
 
 const FILTROS = `
@@ -62,6 +63,10 @@ const FILTROS = `
     <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" seed="6" result="w"/>
     <feDisplacementMap in="SourceGraphic" in2="w" scale="5" xChannelSelector="R" yChannelSelector="G" result="d"/>
     <feGaussianBlur in="d" stdDeviation="0.7"/>
+  </filter>
+  <filter id="f-neon" x="-25%" y="-25%" width="150%" height="150%">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="16" result="b1"/><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="b2"/>
+    <feMerge><feMergeNode in="b1"/><feMergeNode in="b1"/><feMergeNode in="b2"/><feMergeNode in="SourceGraphic"/></feMerge>
   </filter>
   <filter id="f-sombra" x="-20%" y="-20%" width="140%" height="140%">
     <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/><feGaussianBlur stdDeviation="9"/>
@@ -149,7 +154,7 @@ export function pizarra(estilo, { mundo = [-2000, -2000, 5080, 7000], mano = tru
     return el('path', { d: F.getPath(txt, x0, y, size, { kerning: true }).toPathData(1), fill: color }, g);
   }
   // already on the board when the film starts
-  function ya(els) { [].concat(els).forEach((e) => { tl.killTweensOf(e); gsap.set(e, { drawSVG: '0% 100%' }); e.setAttribute('opacity', e.getAttribute('data-op') || 1); }); }
+  function ya(els) { [].concat(els).forEach((e) => { tl.killTweensOf(e); gsap.set(e, { drawSVG: '0% 100%' }); e.style.opacity = ''; e.setAttribute('opacity', e.getAttribute('data-op') || 1); }); }
   // the hand leaves the frame at these times (until its next stroke)
   const OUTS = []; function salida(t) { OUTS.push(t); OUTS.sort((a, b) => a - b); }
   // words: each letter's outline traced, then filled

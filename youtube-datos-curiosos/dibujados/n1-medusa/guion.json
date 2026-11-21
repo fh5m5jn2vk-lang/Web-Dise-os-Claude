@@ -1,0 +1,26 @@
+{
+ "titulo": "Esta medusa no se muere de vieja",
+ "tecnica": "Neón sobre ladrillo",
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "Esta medusa no se muere de vieja. Nunca."
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "Se llama Turritopsis y es más pequeña que una uña."
+  },
+  {
+   "etiqueta": "",
+   "texto": "Cuando envejece o se hace daño, se encoge… y vuelve a ser un pólipo, como un bebé."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "Y crece otra vez desde cero. Una y otra vez."
+  },
+  {
+   "etiqueta": "[whispers]",
+   "texto": "Lo único que puede con ella es que se la coman."
+  }
+ ]
+}

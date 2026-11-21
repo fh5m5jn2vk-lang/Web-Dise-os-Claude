@@ -1,0 +1,26 @@
+{
+ "titulo": "Las nutrias se dan la mano para dormir",
+ "tecnica": "Sombras chinescas",
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "¡Las nutrias se dan la mano para dormir!"
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "Duermen flotando boca arriba en el mar."
+  },
+  {
+   "etiqueta": "",
+   "texto": "Y se agarran para que la corriente no las separe."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "Algunas incluso se enrollan en algas, como si fueran mantas."
+  },
+  {
+   "etiqueta": "[whispers]",
+   "texto": "A un grupo de nutrias así se le llama balsa."
+  }
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "titulo": "Hay más árboles en la Tierra que estrellas en la Vía Láctea",
+ "tecnica": "Tinta china y pincel sobre papel de arroz",
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "¡En la Tierra hay más árboles que estrellas en nuestra galaxia!"
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "La Vía Láctea tiene, como mucho, {400.000|cuatrocientos mil} millones de estrellas."
+  },
+  {
+   "etiqueta": "",
+   "texto": "En la Tierra hay unos tres billones de árboles. Siete veces más."
+  },
+  {
+   "etiqueta": "[sad]",
+   "texto": "Pero cada año cortamos más de {15.000|quince mil} millones."
+  },
+  {
+   "etiqueta": "[whispers]",
+   "texto": "Desde que empezó la agricultura, ya hemos perdido casi la mitad."
+  }
+ ]
+}

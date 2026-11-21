@@ -1,0 +1,26 @@
+{
+ "titulo": "Tu cerebro pesa el 2 % y gasta el 20 % de tu energía",
+ "tecnica": "Boceto a lápiz, estilo cuaderno de inventor",
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "Tu cerebro pesa un {2 %|dos por ciento} de tu cuerpo… y se come el {20 %|veinte por ciento} de tu energía."
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "Funciona con unos {20|veinte} vatios: como una bombilla tenue."
+  },
+  {
+   "etiqueta": "",
+   "texto": "Y no se apaga nunca, ni cuando duermes."
+  },
+  {
+   "etiqueta": "[laughs]",
+   "texto": "Lo malo: pensar mucho apenas gasta más."
+  },
+  {
+   "etiqueta": "[whispers]",
+   "texto": "Así que estudiar no adelgaza. Lo siento."
+  }
+ ]
+}

@@ -10,6 +10,19 @@ Cinco Shorts de datos aleatorios, cada uno dibujado con una técnica distinta. E
 | `d4-folio` | Si doblas un folio 42 veces, llega a la Luna | Pixel art de videojuego, con marcador de dobleces y grosor |
 | `d5-columna` | Ahora mismo eres más bajo que esta mañana | Papel recortado en stop-motion (12 pasos por segundo) |
 
+### Segunda tanda: 6 técnicas más, con doble giro y música original
+
+| Vídeo | Dato | Técnica |
+|---|---|---|
+| `n1-medusa` | Esta medusa no se muere de vieja | Neón sobre ladrillo, con parpadeo de tubos y un ciclo que da vueltas |
+| `n2-arboles` | Hay más árboles en la Tierra que estrellas en la Vía Láctea | Tinta china y pincel sobre papel de arroz, con sellos rojos |
+| `n3-flamencos` | Los flamencos no nacen rosas | Cuaderno de cuadros, boli azul y fosforitos |
+| `n4-rayo` | Un rayo está 5 veces más caliente que el Sol | Cómic con viñetas y onomatopeyas; las viñetas sin leer, tapadas |
+| `n5-cerebro` | Tu cerebro pesa el 2 % y gasta el 20 % | Boceto a lápiz, cuaderno de inventor |
+| `n6-nutrias` | Las nutrias se dan la mano para dormir | Sombras chinescas con varillas, luz cálida detrás |
+
+`musica.py <vídeo> <estilo>` compone la música de fondo (neon, tinta, cuaderno, comic, lapiz, sombras); cada `main.js` la pide en `window.__cues.musica` y `mezcla.py` la baja cuando habla la voz.
+
 Salen en `../videos-dibujados/` (MP4 + portada) y las fichas de subida en `../videos-dibujados/FICHAS.md`.
 
 ## Cómo se hace uno

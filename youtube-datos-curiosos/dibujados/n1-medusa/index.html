@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>Datos dibujados</title>
+<link rel="stylesheet" href="../kit/kit.css">
+<link rel="stylesheet" href="../kit/dibujo.css">
+<script src="../vendor/gsap/gsap.min.js"></script>
+<script src="../vendor/gsap/DrawSVGPlugin.min.js"></script>
+<script src="../vendor/gsap/MotionPathPlugin.min.js"></script>
+<script src="../vendor/gsap/MorphSVGPlugin.min.js"></script>
+<script src="../vendor/gsap/CustomEase.min.js"></script>
+<style>#stage.dib-neon { background: #120c10; } #stage.dib-neon #cap .w { color: #fff; text-shadow: 0 0 18px rgba(255,79,216,.9), 0 3px 0 rgba(0,0,0,.6); } #stage.dib-neon #cap .w.k { color: #ffe94d; } #stage.dib-neon #cap .w.cur { color: #120c10; text-shadow: none; background: linear-gradient(transparent 14%, #3ff5ff 14%, #3ff5ff 90%, transparent 90%); }</style>
+</head>
+<body>
+<div id="stage">
+  <!--escena-->
+  <div id="items"></div>
+  <div id="bar"><i></i></div>
+  <div id="hook"></div>
+  <div id="cap"></div>
+  <div id="endc"></div>
+  <div id="flash"></div>
+</div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

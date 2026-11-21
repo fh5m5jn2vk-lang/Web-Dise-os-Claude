@@ -1,0 +1,26 @@
+{
+ "titulo": "Un rayo está cinco veces más caliente que el Sol",
+ "tecnica": "Cómic con viñetas",
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "¡Un rayo está cinco veces más caliente que el Sol!"
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "La superficie del Sol ronda los {5.500|cinco mil quinientos} grados."
+  },
+  {
+   "etiqueta": "",
+   "texto": "Un rayo calienta el aire a casi {28.000|veintiocho mil}… en una fracción de segundo."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "El aire se expande tan rápido que explota."
+  },
+  {
+   "etiqueta": "[excited]",
+   "texto": "Y eso es el trueno."
+  }
+ ]
+}

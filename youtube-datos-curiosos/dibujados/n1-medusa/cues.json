@@ -1,0 +1,113 @@
+{
+ "dur": 14.901,
+ "voz": {
+  "gain": 1
+ },
+ "sfx": [
+  {
+   "t": 1.667,
+   "tipo": "click",
+   "g": 0.12,
+   "pan": 0
+  },
+  {
+   "t": 1.687,
+   "tipo": "shimmer",
+   "g": 0.06,
+   "pan": 0
+  },
+  {
+   "t": 4.343,
+   "tipo": "click",
+   "g": 0.12,
+   "pan": 0
+  },
+  {
+   "t": 4.363,
+   "tipo": "shimmer",
+   "g": 0.06,
+   "pan": 0
+  },
+  {
+   "t": 5.922,
+   "tipo": "click",
+   "g": 0.12,
+   "pan": 0
+  },
+  {
+   "t": 9.345,
+   "tipo": "click",
+   "g": 0.12,
+   "pan": 0
+  },
+  {
+   "t": 9.365,
+   "tipo": "shimmer",
+   "g": 0.06,
+   "pan": 0
+  },
+  {
+   "t": 11.557,
+   "tipo": "click",
+   "g": 0.12,
+   "pan": 0
+  },
+  {
+   "t": 11.577,
+   "tipo": "shimmer",
+   "g": 0.06,
+   "pan": 0
+  },
+  {
+   "t": 14.061,
+   "tipo": "click",
+   "g": 0.12,
+   "pan": 0
+  },
+  {
+   "t": 14.081,
+   "tipo": "shimmer",
+   "g": 0.06,
+   "pan": 0
+  },
+  {
+   "t": 14.061,
+   "tipo": "pop",
+   "g": 0.35,
+   "pan": 0
+  },
+  {
+   "t": 14.061,
+   "tipo": "thump",
+   "g": 0.3,
+   "pan": 0
+  },
+  {
+   "t": 0,
+   "tipo": "thump",
+   "g": 0.25,
+   "pan": 0
+  },
+  {
+   "t": 0.02,
+   "tipo": "shimmer",
+   "g": 0.12,
+   "pan": 0
+  }
+ ],
+ "musica": {
+  "archivo": "n1-medusa.wav",
+  "gain": 0.32,
+  "duck": 0.55,
+  "fadein": 0.05,
+  "fadeout": 0.6
+ },
+ "ambiente": [
+  {
+   "tipo": "sala",
+   "desde": 0,
+   "hasta": 14.901,
+   "g": 0.6
+  }
+ ]
+}

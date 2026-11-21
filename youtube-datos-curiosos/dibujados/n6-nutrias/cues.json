@@ -1,0 +1,77 @@
+{
+ "dur": 12.12,
+ "voz": {
+  "gain": 1
+ },
+ "sfx": [
+  {
+   "t": 0,
+   "tipo": "paper",
+   "g": 0.3,
+   "pan": 0
+  },
+  {
+   "t": 0.05,
+   "tipo": "thump",
+   "g": 0.18,
+   "pan": 0
+  },
+  {
+   "t": 1.941,
+   "tipo": "paper",
+   "g": 0.2,
+   "pan": 0
+  },
+  {
+   "t": 4.348,
+   "tipo": "pop",
+   "g": 0.25,
+   "pan": 0
+  },
+  {
+   "t": 4.398,
+   "tipo": "bell",
+   "g": 0.12,
+   "pan": 0
+  },
+  {
+   "t": 6.859,
+   "tipo": "swish",
+   "g": 0.2,
+   "pan": 0
+  },
+  {
+   "t": 9.018,
+   "tipo": "whoosh",
+   "g": 0.18,
+   "pan": 0
+  },
+  {
+   "t": 10.955,
+   "tipo": "paper",
+   "g": 0.3,
+   "pan": 0
+  },
+  {
+   "t": 11.155,
+   "tipo": "thump",
+   "g": 0.25,
+   "pan": 0
+  }
+ ],
+ "ambiente": [
+  {
+   "tipo": "viento",
+   "desde": 0,
+   "hasta": 12.12,
+   "g": 0.35
+  }
+ ],
+ "musica": {
+  "archivo": "n6-nutrias.wav",
+  "gain": 0.3,
+  "duck": 0.5,
+  "fadein": 0.05,
+  "fadeout": 0.7
+ }
+}

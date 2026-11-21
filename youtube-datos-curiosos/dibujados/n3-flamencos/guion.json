@@ -1,0 +1,26 @@
+{
+ "titulo": "Los flamencos no nacen rosas",
+ "tecnica": "Cuaderno, boli y fosforito",
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "¡Los flamencos no nacen rosas!"
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "Las crías salen del huevo grises."
+  },
+  {
+   "etiqueta": "",
+   "texto": "El rosa viene de lo que comen: algas y gambitas llenas de pigmentos naranjas."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "Son de la misma familia que el de las zanahorias."
+  },
+  {
+   "etiqueta": "[laughs]",
+   "texto": "Si dejan de comerlos, se van quedando blancos."
+  }
+ ]
+}

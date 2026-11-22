@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Banner Dato Bomba</title>
+<style>
+@font-face { font-family: Bungee; src: url(bungee.woff2) format("woff2"); }
+html, body { margin: 0; background: #ff3b4e; }
+svg { display: block; }
+</style></head><body>
+<!-- Banner de YouTube: 2560 × 1440. Zona segura (se ve en móvil, ordenador y tele): 1546 × 423 en el centro. -->
+<svg id="banner" width="2560" height="1440" viewBox="0 0 2560 1440">
+  <defs>
+    <pattern id="pt" width="34" height="34" patternUnits="userSpaceOnUse"><circle cx="17" cy="17" r="7" fill="#ff7a8f"/></pattern>
+    <radialGradient id="mascaraG" cx="50%" cy="50%" r="60%"><stop offset="0.25" stop-color="#000"/><stop offset="0.75" stop-color="#fff"/></radialGradient>
+    <mask id="mascara"><rect width="2560" height="1440" fill="url(#mascaraG)"/></mask>
+    <radialGradient id="vineta" cx="50%" cy="50%" r="75%"><stop offset="0.6" stop-color="#7a0f1c" stop-opacity="0"/><stop offset="1" stop-color="#7a0f1c" stop-opacity="0.45"/></radialGradient>
+  </defs>
+  <rect width="2560" height="1440" fill="#ff3b4e"/>
+  <g id="rayos"></g>
+  <rect width="2560" height="1440" fill="url(#pt)" opacity="0.55" mask="url(#mascara)"/>
+  <rect width="2560" height="1440" fill="url(#vineta)"/>
+  <g id="deco"></g>
+  <!-- el logo: la explosión con «?!» -->
+  <g transform="translate(770 720) scale(0.64) translate(-400 -400)">
+    <path d="M400 95 L455 250 L620 180 L540 330 L705 400 L540 470 L620 620 L455 550 L400 705 L345 550 L180 620 L260 470 L95 400 L260 330 L180 180 L345 250 Z" fill="#141414" transform="translate(16 16)"/>
+    <path d="M400 95 L455 250 L620 180 L540 330 L705 400 L540 470 L620 620 L455 550 L400 705 L345 550 L180 620 L260 470 L95 400 L260 330 L180 180 L345 250 Z" fill="#fff200" stroke="#141414" stroke-width="16" stroke-linejoin="round"/>
+    <g transform="rotate(-8 400 410)">
+      <text x="414" y="548" text-anchor="middle" font-family="Bungee" font-size="400" fill="#141414">?!</text>
+      <text x="400" y="534" text-anchor="middle" font-family="Bungee" font-size="400" fill="#ffffff" stroke="#141414" stroke-width="16" paint-order="stroke">?!</text>
+    </g>
+  </g>
+  <!-- el nombre y el lema -->
+  <g id="texto" transform="translate(0 -8) rotate(-3 1500 720) translate(1500 720) scale(0.96) translate(-1500 -720)">
+    <text id="t1s" x="1028" y="652" font-family="Bungee" font-size="128" fill="#141414">DATO</text>
+    <text id="t1" x="1018" y="642" font-family="Bungee" font-size="128" fill="#ffffff" stroke="#141414" stroke-width="12" paint-order="stroke">DATO</text>
+    <text id="t2s" x="1030" y="815" font-family="Bungee" font-size="196" fill="#141414">BOMBA</text>
+    <text id="t2" x="1018" y="803" font-family="Bungee" font-size="196" fill="#fff200" stroke="#141414" stroke-width="15" paint-order="stroke">BOMBA</text>
+    <g id="lema">
+      <rect id="lemaS" x="1030" y="846" width="10" height="70" fill="#141414"/>
+      <rect id="lemaR" x="1018" y="834" width="10" height="70" fill="#ffffff" stroke="#141414" stroke-width="8"/>
+      <text id="lemaT" x="1040" y="885" font-family="Bungee" font-size="38" fill="#141414">DATOS CURIOSOS QUE TE EXPLOTAN LA CABEZA</text>
+    </g>
+  </g>
+</svg>
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const el = (tag, at, p, txt) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); if (p) p.appendChild(e); if (txt) e.textContent = txt; return e; };
+// rayos de cómic desde el centro
+const R = document.getElementById('rayos');
+for (let i = 0; i < 40; i++) { if (i % 2) continue; const a0 = (i / 40) * Math.PI * 2, a1 = ((i + 1) / 40) * Math.PI * 2, r = 2200;
+  el('path', { d: `M1280 720 L${1280 + Math.cos(a0) * r} ${720 + Math.sin(a0) * r} L${1280 + Math.cos(a1) * r} ${720 + Math.sin(a1) * r} Z`, fill: '#ff4d60' }, R); }
+// adornos fuera de la zona segura: un rayo a la izquierda, «¡BUM!» a la derecha, y signos sueltos arriba y abajo (solo en la tele)
+const Dg = document.getElementById('deco');
+const estallido = (cx, cy, r, fill, n = 14) => { let d = ''; for (let i = 0; i < n * 2; i++) { const a = (i / (n * 2)) * Math.PI * 2, rr = i % 2 ? r * 0.68 : r; d += (i ? 'L' : 'M') + (cx + Math.cos(a) * rr).toFixed(0) + ' ' + (cy + Math.sin(a) * rr * 0.85).toFixed(0); } return d + 'Z'; };
+const g1 = el('g', { transform: 'translate(300 720) rotate(-14) scale(0.7) translate(-325 -730)' }, Dg);
+el('path', { d: 'M330 470 L230 730 L320 730 L210 990 L440 660 L345 660 L430 470 Z', fill: '#141414', transform: 'translate(14 14)' }, g1);
+el('path', { d: 'M330 470 L230 730 L320 730 L210 990 L440 660 L345 660 L430 470 Z', fill: '#fff200', stroke: '#141414', 'stroke-width': 14, 'stroke-linejoin': 'round' }, g1);
+const g2 = el('g', {}, Dg);
+el('path', { d: estallido(2300, 720, 200, '#fff'), fill: '#141414', transform: 'translate(14 14)' }, g2);
+el('path', { d: estallido(2300, 720, 200, '#fff'), fill: '#ffffff', stroke: '#141414', 'stroke-width': 12, 'stroke-linejoin': 'round' }, g2);
+el('text', { x: 2310, y: 763, 'text-anchor': 'middle', 'font-family': 'Bungee', 'font-size': 96, fill: '#141414', transform: 'rotate(8 2300 720)' }, g2, '¡BUM!');
+el('text', { x: 2300, y: 753, 'text-anchor': 'middle', 'font-family': 'Bungee', 'font-size': 96, fill: '#ff3b4e', stroke: '#141414', 'stroke-width': 9, 'paint-order': 'stroke', transform: 'rotate(8 2300 720)' }, g2, '¡BUM!');
+const signos = [['?', 260, 260, -18, 150], ['!', 700, 330, 12, 130], ['?', 1180, 230, 8, 120], ['!', 1720, 300, -10, 140], ['?', 2200, 250, 16, 160], ['!', 380, 1240, 10, 140], ['?', 900, 1180, -12, 130], ['!', 1500, 1250, 14, 120], ['?', 2000, 1200, -8, 150], ['?', 2420, 1300, 10, 120], ['!', 120, 980, -6, 0]];
+signos.forEach(([c, x, y, r, s]) => { if (!s) return; const g = el('g', { transform: `rotate(${r} ${x} ${y})` }, Dg);
+  el('text', { x: x + 8, y: y + 8, 'text-anchor': 'middle', 'font-family': 'Bungee', 'font-size': s, fill: '#141414' }, g, c);
+  el('text', { x, y, 'text-anchor': 'middle', 'font-family': 'Bungee', 'font-size': s, fill: c === '?' ? '#ffffff' : '#fff200', stroke: '#141414', 'stroke-width': 9, 'paint-order': 'stroke' }, g, c); });
+[[560, 420, 40], [1960, 430, 34], [2480, 440, 30], [80, 440, 28], [1260, 1120, 36], [640, 1110, 26]].forEach(([x, y, r]) => el('path', { d: estallido(x, y, r, '#fff', 4), fill: '#fff200', stroke: '#141414', 'stroke-width': 6 }, Dg));
+// el lema: su caja se ajusta al texto
+document.fonts.ready.then(() => {
+  const t = document.getElementById('lemaT'), w = t.getComputedTextLength();
+  ['lemaR', 'lemaS'].forEach((id) => document.getElementById(id).setAttribute('width', w + 44));
+  window.__medidas = { lema: w, bomba: document.getElementById('t2').getComputedTextLength(), dato: document.getElementById('t1').getComputedTextLength() };
+  window.__listo = true;
+});
+</script>
+</body></html>

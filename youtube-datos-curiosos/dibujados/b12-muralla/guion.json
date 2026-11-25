@@ -1,0 +1,27 @@
+{
+ "titulo": "La Gran Muralla no se ve desde el espacio",
+ "estilo": "tiza",
+ "bum": 3,
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "Te han mentido: la Gran Muralla china no se ve desde el espacio."
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "Es larguísima, pero solo mide unos metros de ancho y es del color del terreno."
+  },
+  {
+   "etiqueta": "",
+   "texto": "Ni los astronautas la distinguen a simple vista."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "Lo que sí se ve desde la Estación Espacial es una mancha blanca enorme: los invernaderos de Almería."
+  },
+  {
+   "etiqueta": "[laughs]",
+   "texto": "Almería, uno. China, cero."
+  }
+ ]
+}

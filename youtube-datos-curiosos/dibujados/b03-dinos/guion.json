@@ -1,0 +1,27 @@
+{
+ "titulo": "Con los dinosaurios el día duraba media hora menos",
+ "estilo": "tiza",
+ "bum": 3,
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "En la época de los dinosaurios, el día duraba media hora menos."
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "Hace {70|setenta} millones de años, un día tenía unas {23,5|veintitrés y media} horas."
+  },
+  {
+   "etiqueta": "",
+   "texto": "Y un año tenía {372|trescientos setenta y dos} días."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "La culpa es de la Luna: frena la Tierra poco a poco, y se aleja de nosotros casi cuatro centímetros cada año."
+  },
+  {
+   "etiqueta": "[whispers]",
+   "texto": "Ahora mismo, tu día se está alargando."
+  }
+ ]
+}

@@ -1,0 +1,27 @@
+{
+ "titulo": "Las estrellas de mar no tienen cerebro ni sangre",
+ "estilo": "arroz",
+ "bum": 3,
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "Las estrellas de mar no tienen cerebro."
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "Ni sangre: por dentro les circula agua de mar."
+  },
+  {
+   "etiqueta": "",
+   "texto": "Y para comer, sacan el estómago fuera del cuerpo y digieren a su presa por fuera."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "Y si pierden un brazo, les vuelve a crecer."
+  },
+  {
+   "etiqueta": "[laughs]",
+   "texto": "Sin cerebro… y lo tiene todo resuelto."
+  }
+ ]
+}

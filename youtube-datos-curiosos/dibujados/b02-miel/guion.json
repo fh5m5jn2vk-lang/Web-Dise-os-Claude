@@ -1,0 +1,27 @@
+{
+ "titulo": "La miel no caduca nunca",
+ "estilo": "boceto",
+ "bum": 3,
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "La miel no caduca. Nunca."
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "En tumbas egipcias se ha encontrado miel de hace miles de años… y seguía bien conservada."
+  },
+  {
+   "etiqueta": "",
+   "texto": "Tiene tan poca agua y es tan ácida que las bacterias no pueden vivir en ella."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "Y una abeja, en toda su vida, solo fabrica la doceava parte de una cucharadita."
+  },
+  {
+   "etiqueta": "[whispers]",
+   "texto": "Así que no la desperdicies."
+  }
+ ]
+}

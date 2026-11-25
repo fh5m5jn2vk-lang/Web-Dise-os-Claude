@@ -1,0 +1,27 @@
+{
+ "titulo": "Una nube normal pesa 500.000 kilos",
+ "estilo": "blanca",
+ "bum": 3,
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "Una nube normal pesa unos {500.000|quinientos mil} kilos."
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "Lo mismo que cien elefantes."
+  },
+  {
+   "etiqueta": "",
+   "texto": "Y aun así, no se cae."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "Ese peso está repartido en gotitas diminutas, y el aire seco de debajo pesa todavía más."
+  },
+  {
+   "etiqueta": "[laughs]",
+   "texto": "La próxima vez que mires al cielo, cuenta elefantes."
+  }
+ ]
+}

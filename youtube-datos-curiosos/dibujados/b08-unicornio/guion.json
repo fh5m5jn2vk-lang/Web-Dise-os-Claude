@@ -1,0 +1,27 @@
+{
+ "titulo": "El animal nacional de Escocia es el unicornio",
+ "estilo": "boceto",
+ "bum": 3,
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "El animal nacional de Escocia es el unicornio."
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "Es oficial: aparece en su escudo desde hace siglos."
+  },
+  {
+   "etiqueta": "",
+   "texto": "Para los escoceses representaba la pureza, la fuerza… y la libertad."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "Por eso en el escudo real lo dibujan encadenado: era tan salvaje que solo un rey podía domarlo."
+  },
+  {
+   "etiqueta": "[laughs]",
+   "texto": "Un animal que no existe… con cadenas, por si acaso."
+  }
+ ]
+}

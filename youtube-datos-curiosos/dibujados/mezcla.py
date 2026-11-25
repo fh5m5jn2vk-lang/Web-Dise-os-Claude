@@ -113,7 +113,11 @@ def trazo(d, tool):
     y = y * e
     if tap > 0: k = min(n, int(0.04 * SR)); y[:k] += tap * (band(noise(k), 800, 6000) * np.exp(-tt(k) * 140) + 0.4 * np.sin(2 * np.pi * 180 * tt(k)) * np.exp(-tt(k) * 60))
     return y
-AMB = {'lluvia': rain, 'sala': room, 'publico': crowd, 'viento': lambda d: band(noise(int(d * SR)), 80, 900) * 0.12 * (1 + 0.5 * np.sin(tt(int(d * SR)) * 0.7))}
+def mecha(d):   # una mecha encendida: siseo y chasquidos
+    n = int(d * SR); x = band(noise(n), 2500, 9000) * 0.05
+    for _ in range(int(d * 45)): s0 = int(rng.random() * max(1, n - 400)); x[s0:s0 + 400] += band(noise(400), 1500, 9000) * env(400, 0.0002, 0.003) * rng.random() * 0.9
+    return x
+AMB = {'mecha': mecha, 'lluvia': rain, 'sala': room, 'publico': crowd, 'viento': lambda d: band(noise(int(d * SR)), 80, 900) * 0.12 * (1 + 0.5 * np.sin(tt(int(d * SR)) * 0.7))}
 
 mix = np.zeros((N, 2))
 def add(sig, start, g=1.0, pan=0.0):

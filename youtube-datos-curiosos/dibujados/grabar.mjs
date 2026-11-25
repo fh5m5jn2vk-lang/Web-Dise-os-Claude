@@ -12,7 +12,7 @@ const b = await pw.chromium.launch();
 const p = await b.newPage({ viewport: { width: 1080, height: 1920 } });
 p.setDefaultTimeout(300000);
 p.on('pageerror', (e) => console.log('[error de página]', e.message)); p.on('console', (m) => { if (m.type() === 'error') console.log('[consola]', m.text().slice(0, 300)); });
-await p.goto(`http://127.0.0.1:${srv.address().port}/${film}/index.html?record`);
+await p.goto(`http://127.0.0.1:${srv.address().port}/${film}/index.html?record${args.q ? '&' + args.q : ''}`);
 await p.waitForFunction(() => window.__ready === true, null, { timeout: 120000 });
 const dur = await p.evaluate(() => window.__dur);
 fs.writeFileSync(path.join(dir, 'cues.json'), JSON.stringify(await p.evaluate(() => window.__cues), null, 1));

@@ -1,0 +1,27 @@
+{
+ "titulo": "El Sahara fue verde y tenía hipopótamos",
+ "estilo": "arroz",
+ "bum": 3,
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "El Sahara fue verde… y tenía hipopótamos."
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "Hace unos {10.000|diez mil} años había lagos, ríos y sabana."
+  },
+  {
+   "etiqueta": "",
+   "texto": "En pleno desierto se han encontrado restos de hipopótamos y cocodrilos."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "Un pequeño cambio en la inclinación de la Tierra lo convirtió en el mayor desierto cálido del mundo."
+  },
+  {
+   "etiqueta": "[whispers]",
+   "texto": "Y dentro de miles de años… podría volver a ser verde."
+  }
+ ]
+}

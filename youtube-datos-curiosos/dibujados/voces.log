@@ -1,0 +1,134 @@
+total 16.872
+Traceback (most recent call last):
+  File "/home/user/Web-Dise-os-Claude/youtube-datos-curiosos/dibujados/voz.py", line 34, in <module>
+    r.raise_for_status(); open(cache, 'w').write(r.text)
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/root/.local/lib/python3.13/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.elevenlabs.io/v1/text-to-speech/GXq4Jv31YgA7lk5pj1Cs/with-timestamps?output_format=mp3_44100_128
+Traceback (most recent call last):
+  File "/home/user/Web-Dise-os-Claude/youtube-datos-curiosos/dibujados/voz.py", line 34, in <module>
+    r.raise_for_status(); open(cache, 'w').write(r.text)
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/root/.local/lib/python3.13/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.elevenlabs.io/v1/text-to-speech/GXq4Jv31YgA7lk5pj1Cs/with-timestamps?output_format=mp3_44100_128
+Traceback (most recent call last):
+  File "/home/user/Web-Dise-os-Claude/youtube-datos-curiosos/dibujados/voz.py", line 34, in <module>
+    r.raise_for_status(); open(cache, 'w').write(r.text)
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/root/.local/lib/python3.13/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.elevenlabs.io/v1/text-to-speech/GXq4Jv31YgA7lk5pj1Cs/with-timestamps?output_format=mp3_44100_128
+Traceback (most recent call last):
+  File "/home/user/Web-Dise-os-Claude/youtube-datos-curiosos/dibujados/voz.py", line 34, in <module>
+    r.raise_for_status(); open(cache, 'w').write(r.text)
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/root/.local/lib/python3.13/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.elevenlabs.io/v1/text-to-speech/GXq4Jv31YgA7lk5pj1Cs/with-timestamps?output_format=mp3_44100_128
+Traceback (most recent call last):
+  File "/home/user/Web-Dise-os-Claude/youtube-datos-curiosos/dibujados/voz.py", line 34, in <module>
+    r.raise_for_status(); open(cache, 'w').write(r.text)
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/root/.local/lib/python3.13/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.elevenlabs.io/v1/text-to-speech/GXq4Jv31YgA7lk5pj1Cs/with-timestamps?output_format=mp3_44100_128
+Traceback (most recent call last):
+  File "/home/user/Web-Dise-os-Claude/youtube-datos-curiosos/dibujados/voz.py", line 34, in <module>
+    r.raise_for_status(); open(cache, 'w').write(r.text)
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/root/.local/lib/python3.13/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.elevenlabs.io/v1/text-to-speech/GXq4Jv31YgA7lk5pj1Cs/with-timestamps?output_format=mp3_44100_128
+Traceback (most recent call last):
+  File "/home/user/Web-Dise-os-Claude/youtube-datos-curiosos/dibujados/voz.py", line 34, in <module>
+    r.raise_for_status(); open(cache, 'w').write(r.text)
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/root/.local/lib/python3.13/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.elevenlabs.io/v1/text-to-speech/GXq4Jv31YgA7lk5pj1Cs/with-timestamps?output_format=mp3_44100_128
+Traceback (most recent call last):
+  File "/home/user/Web-Dise-os-Claude/youtube-datos-curiosos/dibujados/voz.py", line 34, in <module>
+    r.raise_for_status(); open(cache, 'w').write(r.text)
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/root/.local/lib/python3.13/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.elevenlabs.io/v1/text-to-speech/GXq4Jv31YgA7lk5pj1Cs/with-timestamps?output_format=mp3_44100_128
+Traceback (most recent call last):
+  File "/home/user/Web-Dise-os-Claude/youtube-datos-curiosos/dibujados/voz.py", line 34, in <module>
+    r.raise_for_status(); open(cache, 'w').write(r.text)
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/root/.local/lib/python3.13/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.elevenlabs.io/v1/text-to-speech/GXq4Jv31YgA7lk5pj1Cs/with-timestamps?output_format=mp3_44100_128
+Traceback (most recent call last):
+  File "/home/user/Web-Dise-os-Claude/youtube-datos-curiosos/dibujados/voz.py", line 34, in <module>
+    r.raise_for_status(); open(cache, 'w').write(r.text)
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/root/.local/lib/python3.13/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.elevenlabs.io/v1/text-to-speech/GXq4Jv31YgA7lk5pj1Cs/with-timestamps?output_format=mp3_44100_128
+Traceback (most recent call last):
+  File "/home/user/Web-Dise-os-Claude/youtube-datos-curiosos/dibujados/voz.py", line 34, in <module>
+    r.raise_for_status(); open(cache, 'w').write(r.text)
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/root/.local/lib/python3.13/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.elevenlabs.io/v1/text-to-speech/GXq4Jv31YgA7lk5pj1Cs/with-timestamps?output_format=mp3_44100_128
+Traceback (most recent call last):
+  File "/home/user/Web-Dise-os-Claude/youtube-datos-curiosos/dibujados/voz.py", line 34, in <module>
+    r.raise_for_status(); open(cache, 'w').write(r.text)
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/root/.local/lib/python3.13/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.elevenlabs.io/v1/text-to-speech/GXq4Jv31YgA7lk5pj1Cs/with-timestamps?output_format=mp3_44100_128
+Traceback (most recent call last):
+  File "/home/user/Web-Dise-os-Claude/youtube-datos-curiosos/dibujados/voz.py", line 34, in <module>
+    r.raise_for_status(); open(cache, 'w').write(r.text)
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/root/.local/lib/python3.13/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.elevenlabs.io/v1/text-to-speech/GXq4Jv31YgA7lk5pj1Cs/with-timestamps?output_format=mp3_44100_128
+Traceback (most recent call last):
+  File "/home/user/Web-Dise-os-Claude/youtube-datos-curiosos/dibujados/voz.py", line 34, in <module>
+    r.raise_for_status(); open(cache, 'w').write(r.text)
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/root/.local/lib/python3.13/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.elevenlabs.io/v1/text-to-speech/GXq4Jv31YgA7lk5pj1Cs/with-timestamps?output_format=mp3_44100_128
+Traceback (most recent call last):
+  File "/home/user/Web-Dise-os-Claude/youtube-datos-curiosos/dibujados/voz.py", line 34, in <module>
+    r.raise_for_status(); open(cache, 'w').write(r.text)
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/root/.local/lib/python3.13/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.elevenlabs.io/v1/text-to-speech/GXq4Jv31YgA7lk5pj1Cs/with-timestamps?output_format=mp3_44100_128
+Traceback (most recent call last):
+  File "/home/user/Web-Dise-os-Claude/youtube-datos-curiosos/dibujados/voz.py", line 34, in <module>
+    r.raise_for_status(); open(cache, 'w').write(r.text)
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/root/.local/lib/python3.13/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.elevenlabs.io/v1/text-to-speech/GXq4Jv31YgA7lk5pj1Cs/with-timestamps?output_format=mp3_44100_128
+Traceback (most recent call last):
+  File "/home/user/Web-Dise-os-Claude/youtube-datos-curiosos/dibujados/voz.py", line 34, in <module>
+    r.raise_for_status(); open(cache, 'w').write(r.text)
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/root/.local/lib/python3.13/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.elevenlabs.io/v1/text-to-speech/GXq4Jv31YgA7lk5pj1Cs/with-timestamps?output_format=mp3_44100_128
+Traceback (most recent call last):
+  File "/home/user/Web-Dise-os-Claude/youtube-datos-curiosos/dibujados/voz.py", line 34, in <module>
+    r.raise_for_status(); open(cache, 'w').write(r.text)
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/root/.local/lib/python3.13/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.elevenlabs.io/v1/text-to-speech/GXq4Jv31YgA7lk5pj1Cs/with-timestamps?output_format=mp3_44100_128
+Traceback (most recent call last):
+  File "/home/user/Web-Dise-os-Claude/youtube-datos-curiosos/dibujados/voz.py", line 34, in <module>
+    r.raise_for_status(); open(cache, 'w').write(r.text)
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/root/.local/lib/python3.13/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://api.elevenlabs.io/v1/text-to-speech/GXq4Jv31YgA7lk5pj1Cs/with-timestamps?output_format=mp3_44100_128

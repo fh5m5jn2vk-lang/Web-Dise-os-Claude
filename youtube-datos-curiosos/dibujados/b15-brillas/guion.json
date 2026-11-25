@@ -1,0 +1,27 @@
+{
+ "titulo": "Tu cuerpo brilla en la oscuridad",
+ "estilo": "neon",
+ "bum": 3,
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "Tu cuerpo brilla en la oscuridad. De verdad."
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "Emite una luz visible, sobre todo en la cara."
+  },
+  {
+   "etiqueta": "",
+   "texto": "Pero es mil veces más débil de lo que tus ojos pueden ver."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "En Japón la fotografiaron con cámaras ultrasensibles, y brillas más por la tarde."
+  },
+  {
+   "etiqueta": "[whispers]",
+   "texto": "Así que ahora mismo… estás brillando."
+  }
+ ]
+}

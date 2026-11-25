@@ -1,0 +1,27 @@
+{
+ "titulo": "El corazón de una ballena azul pesa como una moto",
+ "estilo": "arroz",
+ "bum": 3,
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "El corazón de una ballena azul pesa como una moto."
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "Unos {180|ciento ochenta} kilos, y mide metro y medio de alto."
+  },
+  {
+   "etiqueta": "",
+   "texto": "Es el animal más grande que ha existido jamás: más que cualquier dinosaurio."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "Y cuando bucea, ese corazón gigante puede latir solo dos veces por minuto."
+  },
+  {
+   "etiqueta": "[whispers]",
+   "texto": "Dos. Por minuto."
+  }
+ ]
+}

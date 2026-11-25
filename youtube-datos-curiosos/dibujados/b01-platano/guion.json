@@ -1,0 +1,27 @@
+{
+ "titulo": "El plátano es una baya y la fresa no",
+ "estilo": "cuaderno",
+ "bum": 3,
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "¡El plátano es una baya… y la fresa no!"
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "Para la botánica, una baya es un fruto carnoso con las semillas dentro."
+  },
+  {
+   "etiqueta": "",
+   "texto": "El plátano cumple. La fresa lleva sus semillas por fuera, así que no cuenta."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "Y con esa regla, la sandía, la calabaza y hasta el pepino… también son bayas."
+  },
+  {
+   "etiqueta": "[laughs]",
+   "texto": "La fresa, en cambio, se queda fuera del club."
+  }
+ ]
+}

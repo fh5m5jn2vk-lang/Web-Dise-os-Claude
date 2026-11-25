@@ -1,0 +1,27 @@
+{
+ "titulo": "Una jirafa tiene las mismas vértebras en el cuello que tú",
+ "estilo": "boceto",
+ "bum": 3,
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "Una jirafa tiene las mismas vértebras en el cuello que tú."
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "Siete. Ni una más."
+  },
+  {
+   "etiqueta": "",
+   "texto": "La diferencia es que cada una de las suyas mide unos {25|veinticinco} centímetros."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "Y para subir la sangre hasta la cabeza, su corazón tiene una de las tensiones más altas del reino animal."
+  },
+  {
+   "etiqueta": "[laughs]",
+   "texto": "Mismas piezas. Otro tamaño."
+  }
+ ]
+}

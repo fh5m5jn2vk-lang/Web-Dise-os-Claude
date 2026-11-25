@@ -1,0 +1,27 @@
+{
+ "titulo": "La luz de la estrella Polar salió cuando vivía Cervantes",
+ "estilo": "neon",
+ "bum": 3,
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "Cuando miras la estrella Polar, ves luz de la época de Cervantes."
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "Está a unos {430|cuatrocientos treinta} años luz."
+  },
+  {
+   "etiqueta": "",
+   "texto": "La luz que te llega esta noche salió de allí a finales del siglo {XVI|dieciséis}."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "Cuando salió, Cervantes todavía no había publicado el Quijote."
+  },
+  {
+   "etiqueta": "[whispers]",
+   "texto": "Mirar al cielo es mirar al pasado."
+  }
+ ]
+}

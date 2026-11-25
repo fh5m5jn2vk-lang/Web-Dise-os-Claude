@@ -1,0 +1,21 @@
+/* Dato Bomba: la capa de marca sobre los vídeos dibujados. La mecha arriba, la tarjeta del gancho, la explosión del
+   giro y los subtítulos en cajas de cómic. Zonas del Short: arriba hasta y=130 y abajo desde y=1420 los tapa YouTube. */
+@font-face { font-family: Bungee; src: url(../fonts/bungee.woff2) format("woff2"); }
+#bomba { position: absolute; inset: 0; pointer-events: none; }
+#bomba svg { position: absolute; left: 0; top: 0; }
+#gancho { position: absolute; left: 70px; right: 70px; top: 236px; display: flex; justify-content: center; transform-origin: 50% 0; }
+#gancho .caja { position: relative; background: #fff200; border: 8px solid #141414; box-shadow: 12px 12px 0 #141414; padding: 22px 34px 18px 34px; transform: rotate(-2deg); text-align: center; font: 400 72px/1.04 Bungee, sans-serif; color: #141414; letter-spacing: 0; max-width: 900px; }
+#gancho .caja em { font-style: normal; color: #ff3b4e; -webkit-text-stroke: 3px #141414; paint-order: stroke fill; }
+#gancho .logo { position: absolute; left: -46px; top: -54px; width: 116px; height: 116px; }
+/* subtítulos: cajas blancas de cómic, la palabra que suena en amarillo, las palabras clave en rojo */
+#stage.bomba.dib #cap { top: 1235px; left: 60px; right: 60px; font: 400 66px/1.22 Bungee, sans-serif; letter-spacing: 0; }
+#stage.bomba.dib #cap .w { color: #141414; background: #fff; border: 5px solid #141414; border-radius: 0; text-shadow: none; -webkit-text-stroke: 0; margin: 0 .05em .12em; padding: .02em .16em 0; box-shadow: 6px 6px 0 #141414; }
+#stage.bomba.dib #cap .w.cur { background: #fff200; color: #141414; }
+#stage.bomba.dib #cap .w.k { color: #ff3b4e; }
+#stage.bomba.dib #cap .w.k.cur { background: #fff200; color: #ff3b4e; }
+#stage.bomba.dib #cap.glow .w { color: #141414; background: #fff; }
+/* pegatinas de cómic */
+.sello { background: #ff3b4e; color: #fff; font: 400 70px/1 Bungee, sans-serif; padding: 16px 26px 10px; border: 7px solid #141414; box-shadow: 9px 9px 0 #141414; white-space: nowrap; text-align: center; }
+.sello.am { background: #fff200; color: #141414; }
+.sello.bl { background: #fff; color: #141414; }
+.sello small { display: block; font-size: .5em; margin-top: 6px; }

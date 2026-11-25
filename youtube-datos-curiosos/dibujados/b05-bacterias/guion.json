@@ -1,0 +1,27 @@
+{
+ "titulo": "La mitad de tus células no son tuyas",
+ "estilo": "blanca",
+ "bum": 3,
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "La mitad de las células de tu cuerpo no son tuyas."
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "Tienes unos {30|treinta} billones de células humanas…"
+  },
+  {
+   "etiqueta": "",
+   "texto": "y unos {38|treinta y ocho} billones de bacterias, casi todas en el intestino."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "Están tan igualadas que cada vez que vas al baño, la balanza puede cambiar de lado."
+  },
+  {
+   "etiqueta": "[laughs]",
+   "texto": "Así que, técnicamente, eres mitad bacteria."
+  }
+ ]
+}

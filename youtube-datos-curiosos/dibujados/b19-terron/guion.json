@@ -1,0 +1,27 @@
+{
+ "titulo": "Toda la humanidad cabría en un terrón de azúcar",
+ "estilo": "neon",
+ "bum": 3,
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "Toda la humanidad cabría en un terrón de azúcar."
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "Los átomos son casi todo espacio vacío."
+  },
+  {
+   "etiqueta": "",
+   "texto": "Si quitaras ese vacío a los ocho mil millones de personas del planeta, quedaría algo del tamaño de un terrón."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "Eso sí: ese terrón pesaría unos {400|cuatrocientos} millones de toneladas."
+  },
+  {
+   "etiqueta": "[whispers]",
+   "texto": "Eres casi todo… nada."
+  }
+ ]
+}

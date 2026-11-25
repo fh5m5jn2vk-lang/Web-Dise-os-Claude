@@ -1,0 +1,27 @@
+{
+ "titulo": "Hay tortugas que respiran por el trasero",
+ "estilo": "blanca",
+ "bum": 3,
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "Hay tortugas que respiran por el trasero."
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "La tortuga del río Fitzroy, en Australia, saca oxígeno del agua por la cloaca."
+  },
+  {
+   "etiqueta": "",
+   "texto": "Es la abertura de atrás. La misma que usa para todo lo demás."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "Así puede pasar días enteros bajo el agua sin subir a respirar."
+  },
+  {
+   "etiqueta": "[laughs]",
+   "texto": "Cada uno respira como puede."
+  }
+ ]
+}

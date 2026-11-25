@@ -1,0 +1,27 @@
+{
+ "titulo": "Por cada persona hay 2,5 millones de hormigas",
+ "estilo": "cuaderno",
+ "bum": 3,
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "Por cada persona en la Tierra hay {2,5 millones|dos millones y medio} de hormigas."
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "En total, unos {20.000|veinte mil} billones."
+  },
+  {
+   "etiqueta": "",
+   "texto": "Juntas pesan más que todas las aves y todos los mamíferos salvajes del planeta."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "Y llevan aquí más de cien millones de años: vieron pasar a los dinosaurios."
+  },
+  {
+   "etiqueta": "[whispers]",
+   "texto": "Este planeta es más suyo que nuestro."
+  }
+ ]
+}

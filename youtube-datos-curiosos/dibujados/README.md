@@ -44,3 +44,16 @@ Para ver un vídeo mientras lo escribes: sirve esta carpeta (`npx http-server .`
 - `voz.py`: voz de ElevenLabs con tiempos por palabra; recorta los silencios largos como cortes de montaje. Guarda la respuesta en caché, así que repetir un vídeo no gasta créditos.
 - `mezcla.py`: efectos sintetizados (rotulador, tiza, papel, golpes, blips) colocados donde los marca la animación.
 - Fuentes OFL y Apache (Permanent Marker, Caveat, Kalam, Schoolbell, Press Start 2P, Bungee, Poppins, Anton, Inter). GSAP 3.15 con su licencia estándar gratuita y opentype.js con licencia MIT, en `vendor/`.
+
+## Dato Bomba: el formato del canal (b01 a b20)
+
+Los 20 Shorts `b01-platano` … `b20-sahara` comparten la capa de marca de `kit/bomba.js` y `kit/bomba.css`:
+- **Arranque:** la tarjeta amarilla con el gancho y el logo «?!» desde el primer fotograma.
+- **La mecha:** se quema hasta la bomba (bucle abierto).
+- **El giro:** en la cuarta frase, «¡BUM!» con destello, sacudida y la música cortada un instante; después aparece el sello «DATO BOMBA».
+- **Subtítulos:** en cajas de cómic, por encima de la zona que tapa YouTube.
+
+Cada `main.js` solo dice qué se dibuja y en qué palabra. Los dibujos están en `kit/doodles.js` (los ves todos con `node grabar.mjs catalogo --at 0`).
+
+- `./hacer-bomba.sh` hace los 20 de una vez: voz de ElevenLabs para los que no la tienen, música, grabación y MP4 en `../videos-bomba/`.
+- `tiempos_provisionales.py` estima los tiempos sin voz, para montar y revisar la animación antes de grabar la voz. `hacer.sh` no graba un vídeo con tiempos provisionales.

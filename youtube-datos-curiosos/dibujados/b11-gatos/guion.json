@@ -1,0 +1,27 @@
+{
+ "titulo": "Tu gato no puede saborear el azúcar",
+ "estilo": "cuaderno",
+ "bum": 3,
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "Tu gato no puede saborear el azúcar."
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "Le falta el sensor del sabor dulce: el gen que lo fabrica está roto."
+  },
+  {
+   "etiqueta": "",
+   "texto": "Como solo come carne, nunca le hizo falta."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "Los perros, en cambio, sí notan el dulce… por eso te piden galletas."
+  },
+  {
+   "etiqueta": "[laughs]",
+   "texto": "Si tu gato te roba el bizcocho… va a por la mantequilla."
+  }
+ ]
+}

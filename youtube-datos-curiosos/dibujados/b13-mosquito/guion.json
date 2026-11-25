@@ -1,0 +1,27 @@
+{
+ "titulo": "El animal más mortal del mundo cabe en tu dedo",
+ "estilo": "neon",
+ "bum": 3,
+ "lineas": [
+  {
+   "etiqueta": "[excited]",
+   "texto": "El animal más mortal del mundo cabe en la punta de tu dedo."
+  },
+  {
+   "etiqueta": "[curious]",
+   "texto": "No es el tiburón, ni la serpiente: es el mosquito."
+  },
+  {
+   "etiqueta": "",
+   "texto": "Las enfermedades que transmite, como la malaria, matan a cientos de miles de personas cada año."
+  },
+  {
+   "etiqueta": "[amazed]",
+   "texto": "Y solo pican las hembras: necesitan tu sangre para sus huevos."
+  },
+  {
+   "etiqueta": "[whispers]",
+   "texto": "Los machos… solo beben néctar."
+  }
+ ]
+}
